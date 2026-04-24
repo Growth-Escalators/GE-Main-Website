@@ -465,7 +465,7 @@ export default function GrowthBot() {
           timestamp: Date.now(),
         }
         setBotState(prev => {
-          const next = { ...prev, currentState: 'service_selected', selectedService: chip, messages: [...prev.messages, msg] }
+          const next = { ...prev, currentState: 'service_selected' as StateKey, selectedService: chip, messages: [...prev.messages, msg] }
           if (!open) next.unreadCount = prev.unreadCount + 1
           saveSession(next)
           return next
