@@ -197,7 +197,12 @@ export default function Footer() {
           style={{ borderTop: '1px solid var(--border-subtle)' }}
         >
           <p className="font-outfit text-xs" style={{ color: 'var(--text-muted)', opacity: 0.5 }}>
-            © 2025 Growth Escalators. All Rights Reserved. Jaipur, Rajasthan.
+            © 2025 Growth Escalators. All Rights Reserved. Jaipur, Rajasthan.</p>
+          <div className="flex justify-center gap-6 mt-3">
+            <a href="/privacy-policy" className="font-outfit text-xs transition-colors duration-300 hover:opacity-80" style={{ color: "var(--text-muted)", opacity: 0.5 }}>Privacy Policy</a>
+            <span style={{ color: "var(--text-muted)", opacity: 0.3 }}>|</span>
+            <a href="/terms-and-conditions" className="font-outfit text-xs transition-colors duration-300 hover:opacity-80" style={{ color: "var(--text-muted)", opacity: 0.5 }}>Terms &amp; Conditions</a>
+          </div>
           </p>
         </div>
       </div>
