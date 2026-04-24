@@ -1,1 +1,0 @@
-self.__REACT_LOADABLE_MANIFEST='{"app/page.tsx -> @/components/ui/SmoothScrollProvider":{"id":8552,"files":["static/chunks/552.e7477feca146802e.js"]},"components/ui/CursorWrapper.tsx -> @/components/ui/CustomCursor":{"id":4260,"files":["static/chunks/260.66808e56710de904.js"]}}';
