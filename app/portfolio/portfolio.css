@@ -1,0 +1,438 @@
+/* ============================================================
+   Portfolio-only stylesheet (scoped under .portfolio-root)
+   Merged from growth-portfolio-2026/src/styles/{variables,
+   global, animations, glass}.css. Hostile selectors (*, html,
+   body, img, a, ul, button, ::selection, ::-webkit-scrollbar,
+   :focus-visible, :root) are scoped under .portfolio-root so
+   they do not bleed into the rest of the Next.js site.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;800;900&display=swap');
+
+/* ── Variables (scoped to .portfolio-root, NOT :root, to avoid
+       collision with main site's --orange / --text-primary / etc.) ── */
+.portfolio-root {
+  --bg-white:       #ffffff;
+  --bg-near-white:  #f8f9ff;
+  --bg-dark:        #0f0f1a;
+
+  --glass-bg:       rgba(255, 255, 255, 0.60);
+  --glass-bg-dark:  rgba(255, 255, 255, 0.05);
+  --glass-border:   rgba(255, 255, 255, 0.85);
+  --glass-border-dark: rgba(255, 255, 255, 0.10);
+
+  --glass-shadow:
+    0 8px 32px rgba(100, 100, 180, 0.10),
+    0 2px 8px  rgba(100, 100, 180, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.90);
+  --glass-shadow-hover:
+    0 16px 48px rgba(100, 100, 180, 0.18),
+    0 4px  16px rgba(100, 100, 180, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 1.00);
+  --glass-shadow-dark:
+    0 8px 32px rgba(0, 0, 0, 0.30),
+    inset 0 1px 0 rgba(255, 255, 255, 0.07);
+
+  --orange:  #FF6B35;
+  --violet:  #6C63FF;
+  --teal:    #00D4AA;
+  --green-wa: #25D366;
+
+  --text-primary:   #0f0f1a;
+  --text-secondary: #4b4b6a;
+  --text-muted:     #9898b8;
+  --text-white:     #ffffff;
+
+  --font: 'Plus Jakarta Sans', sans-serif;
+  --fs-h1:   clamp(52px, 8vw, 92px);
+  --fs-h2:   clamp(36px, 5vw, 52px);
+  --fs-h3:   clamp(20px, 2.5vw, 28px);
+  --fs-body: 16px;
+  --fs-sm:   14px;
+  --fs-xs:   13px;
+  --fw-regular: 400;
+  --fw-medium:  500;
+  --fw-semi:    600;
+  --fw-bold:    800;
+  --fw-black:   900;
+  --lh-body: 1.7;
+  --ls-tight: -0.02em;
+  --ls-tighter: -0.03em;
+
+  --section-py: 100px;
+  --container-max: 1200px;
+  --container-px: 24px;
+
+  --radius:      20px;
+  --radius-md:   14px;
+  --radius-sm:   10px;
+  --radius-pill: 999px;
+
+  --t-fast:   0.2s ease;
+  --t-base:   0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --t-slow:   0.7s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --t-bounce: 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* ── Reset (scoped) ── */
+.portfolio-root,
+.portfolio-root *,
+.portfolio-root *::before,
+.portfolio-root *::after {
+  box-sizing: border-box;
+}
+.portfolio-root *,
+.portfolio-root *::before,
+.portfolio-root *::after {
+  margin: 0;
+  padding: 0;
+}
+
+/* ── Wrapper acts as the "body" for portfolio pages ── */
+.portfolio-root {
+  font-family: var(--font);
+  background: var(--bg-white);
+  color: var(--text-primary);
+  line-height: var(--lh-body);
+  font-size: 16px;
+  min-height: 100vh;
+  position: relative;
+}
+
+.portfolio-root img {
+  max-width: 100%;
+  display: block;
+}
+
+.portfolio-root a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.portfolio-root ul {
+  list-style: none;
+}
+
+.portfolio-root button {
+  font-family: var(--font);
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* ── Container / section helpers (scoped to avoid clashing with
+       Tailwind's default .container utility used elsewhere) ── */
+.portfolio-root .container {
+  max-width: var(--container-max);
+  margin: 0 auto;
+  padding: 0 var(--container-px);
+}
+
+.portfolio-root .section-padding {
+  padding: var(--section-py) 0;
+}
+
+.portfolio-root .section-header {
+  text-align: center;
+  margin-bottom: 64px;
+}
+
+.portfolio-root .section-header .section-tag {
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+
+.portfolio-root .section-headline {
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-black);
+  line-height: 1.15;
+  letter-spacing: var(--ls-tight);
+  color: var(--text-primary);
+  margin-bottom: 16px;
+}
+
+.portfolio-root .section-subheadline {
+  font-size: 18px;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: var(--lh-body);
+}
+
+.portfolio-root :focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ── Cursor glow (rendered as a fixed-position child of .portfolio-root) ── */
+.portfolio-root .cursor-glow {
+  position: fixed;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--orange);
+  box-shadow: 0 0 16px 4px rgba(255, 107, 53, 0.45);
+  pointer-events: none;
+  z-index: 99999;
+  transform: translate(-50%, -50%);
+  transition: width 0.2s ease, height 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  mix-blend-mode: multiply;
+}
+.portfolio-root .cursor-glow.cursor--hover {
+  width: 40px; height: 40px;
+  background: var(--violet);
+  box-shadow: 0 0 24px 8px rgba(108, 99, 255, 0.45);
+}
+
+/* ── Scroll progress bar ── */
+.portfolio-root .scroll-progress {
+  position: fixed;
+  top: 0; left: 0;
+  height: 3px;
+  width: 0%;
+  background: linear-gradient(90deg, var(--orange), var(--violet));
+  z-index: 9999;
+  transition: width 0.1s linear;
+}
+
+/* ── Back to top ── */
+.portfolio-root .back-to-top {
+  position: fixed;
+  bottom: 32px; right: 32px;
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--t-base), background var(--t-base), color var(--t-base);
+  color: var(--orange);
+  font-size: 14px;
+  font-weight: var(--fw-bold);
+  padding: 10px 20px;
+  cursor: pointer;
+}
+.portfolio-root .back-to-top--visible {
+  opacity: 1;
+  pointer-events: all;
+}
+.portfolio-root .back-to-top:hover {
+  background: var(--orange) !important;
+  color: #fff;
+  border-color: var(--orange);
+}
+
+/* ── Glass surfaces ── */
+.portfolio-root .glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius);
+  box-shadow: var(--glass-shadow);
+}
+.portfolio-root .glass:hover {
+  box-shadow: var(--glass-shadow-hover);
+  border-color: rgba(255, 255, 255, 1);
+}
+
+.portfolio-root .glass-dark {
+  background: var(--glass-bg-dark);
+  backdrop-filter: blur(12px) saturate(160%);
+  -webkit-backdrop-filter: blur(12px) saturate(160%);
+  border: 1px solid var(--glass-border-dark);
+  border-radius: var(--radius);
+  box-shadow: var(--glass-shadow-dark);
+}
+
+.portfolio-root .glass-pill {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--glass-shadow);
+}
+
+.portfolio-root .section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(255, 107, 53, 0.10);
+  color: var(--orange);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 6px 16px;
+  border-radius: var(--radius-pill);
+  border: 1px solid rgba(255, 107, 53, 0.20);
+  margin-bottom: 20px;
+}
+
+.portfolio-root .btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: linear-gradient(135deg, var(--orange), #ff8c5a);
+  color: #fff;
+  font-family: var(--font);
+  font-size: 16px;
+  font-weight: var(--fw-bold);
+  padding: 14px 32px;
+  border-radius: var(--radius-pill);
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 20px rgba(255, 107, 53, 0.35);
+  transition: transform var(--t-base), box-shadow var(--t-base), background var(--t-base);
+  text-decoration: none;
+}
+.portfolio-root .btn-primary:hover {
+  transform: scale(1.04);
+  background: linear-gradient(135deg, var(--violet), var(--orange));
+  box-shadow: 0 8px 32px rgba(108, 99, 255, 0.40);
+}
+.portfolio-root .btn-primary:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 4px;
+}
+
+.portfolio-root .btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  color: var(--text-primary);
+  font-family: var(--font);
+  font-size: 16px;
+  font-weight: var(--fw-semi);
+  padding: 14px 32px;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+  cursor: pointer;
+  transition: transform var(--t-base), box-shadow var(--t-base), background var(--t-base);
+  text-decoration: none;
+}
+.portfolio-root .btn-outline:hover {
+  transform: scale(1.04);
+  background: rgba(255, 255, 255, 0.90);
+  box-shadow: var(--glass-shadow-hover);
+}
+.portfolio-root .btn-outline:focus-visible {
+  outline: 3px solid var(--orange);
+  outline-offset: 4px;
+}
+
+.portfolio-root .btn-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: rgba(37, 211, 102, 0.12);
+  color: var(--green-wa);
+  font-family: var(--font);
+  font-size: 16px;
+  font-weight: var(--fw-bold);
+  padding: 14px 32px;
+  border-radius: var(--radius-pill);
+  border: 2px solid rgba(37, 211, 102, 0.35);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  cursor: pointer;
+  transition: background var(--t-base), transform var(--t-base), box-shadow var(--t-base);
+  box-shadow: var(--glass-shadow);
+  text-decoration: none;
+}
+.portfolio-root .btn-whatsapp:hover {
+  background: rgba(37, 211, 102, 0.22);
+  transform: scale(1.04);
+  box-shadow: 0 8px 28px rgba(37, 211, 102, 0.25);
+}
+.portfolio-root .btn-whatsapp:focus-visible {
+  outline: 3px solid var(--green-wa);
+  outline-offset: 4px;
+}
+
+.portfolio-root .gradient-text {
+  background: linear-gradient(90deg, var(--orange), var(--violet), var(--teal), var(--orange));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: portfolio-gradient-shift 3s linear infinite;
+  display: inline-block;
+}
+
+.portfolio-root .aurora-bg {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 107,  53, 0.08),
+    rgba(108,  99, 255, 0.08),
+    rgba(  0, 212, 170, 0.08),
+    rgba(255, 107,  53, 0.06)
+  );
+  background-size: 400% 400%;
+  animation: portfolio-aurora 8s ease infinite;
+}
+
+/* ── Keyframes (renamed with portfolio- prefix to avoid colliding
+       with main site's marquee-left / marquee-right which already
+       exist in app/globals.css with different durations) ── */
+@keyframes portfolio-aurora {
+  0%   { background-position: 0%   50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0%   50%; }
+}
+
+@keyframes portfolio-gradient-shift {
+  0%   { background-position: 0%   50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0%   50%; }
+}
+
+@keyframes orb-drift-1 {
+  0%, 100% { transform: translate(0,    0)    scale(1);    }
+  50%       { transform: translate(40px, -60px) scale(1.08); }
+}
+@keyframes orb-drift-2 {
+  0%, 100% { transform: translate(0,     0)    scale(1);    }
+  50%       { transform: translate(-50px, 40px) scale(1.05); }
+}
+@keyframes orb-drift-3 {
+  0%, 100% { transform: translate(0,    0)    scale(1);    }
+  50%       { transform: translate(30px, 50px) scale(1.10); }
+}
+
+@keyframes portfolio-marquee-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes portfolio-marquee-right {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+@keyframes stats-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+@keyframes fade-slide-up {
+  from { opacity: 0; transform: translateY(32px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+@keyframes detail-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+@media (max-width: 768px) {
+  .portfolio-root {
+    --section-py: 72px;
+    --container-px: 20px;
+  }
+  .portfolio-root .section-header { margin-bottom: 40px; }
+  .portfolio-root .back-to-top { bottom: 20px; right: 20px; padding: 8px 16px; }
+}

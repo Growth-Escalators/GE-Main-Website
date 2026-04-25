@@ -1,0 +1,197 @@
+.section {
+  position: relative;
+  background: var(--bg-dark);
+  padding: 100px 0 72px;
+  overflow: clip;
+}
+
+/* Orbs */
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(100px);
+  z-index: 0;
+}
+.orb1 {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(255,107,53,0.10) 0%, transparent 70%);
+  top: -120px; left: -160px;
+  animation: orb-drift-1 26s ease-in-out infinite;
+}
+.orb2 {
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(108,99,255,0.10) 0%, transparent 70%);
+  bottom: -80px; right: -120px;
+  animation: orb-drift-2 32s ease-in-out infinite;
+}
+
+/* Top content */
+.top {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.headline {
+  font-size: clamp(36px, 5.5vw, 56px);
+  font-weight: var(--fw-black);
+  letter-spacing: -0.03em;
+  line-height: 1.12;
+  color: #fff;
+  margin-bottom: 16px;
+}
+
+.sub {
+  font-size: 17px;
+  color: rgba(255,255,255,0.45);
+  line-height: 1.65;
+  max-width: 480px;
+  margin: 0 auto 48px;
+}
+
+/* Stats row */
+.statsRow {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  flex-wrap: wrap;
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 0 36px;
+  position: relative;
+}
+.stat + .stat::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 15%;
+  height: 70%;
+  width: 1px;
+  background: rgba(255,255,255,0.12);
+}
+
+.statNum {
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: var(--fw-black);
+  letter-spacing: -0.04em;
+  background: linear-gradient(135deg, var(--orange), var(--violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+.statLabel {
+  font-size: 12px;
+  font-weight: var(--fw-bold);
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* Divider */
+.divider {
+  position: relative;
+  z-index: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.10) 20%, rgba(255,255,255,0.10) 80%, transparent);
+  margin-bottom: 40px;
+}
+
+/* ── Marquee section ── */
+.marqueeSection {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-bottom: 56px;
+}
+
+.rowWrap {
+  overflow: hidden;
+  mask-image: linear-gradient(90deg, transparent 0%, black 7%, black 93%, transparent 100%);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, black 7%, black 93%, transparent 100%);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  width: max-content;
+  will-change: transform;
+}
+
+/* Inline keyframes — guaranteed in scope */
+@keyframes cl-left {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes cl-right {
+  from { transform: translateX(-50%); }
+  to   { transform: translateX(0); }
+}
+
+.rowLeft  { animation: cl-left  30s linear infinite; }
+.rowRight { animation: cl-right 38s linear infinite; }
+.rowLeft3 { animation: cl-left  46s linear infinite; }
+
+/* Brand pill */
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 20px 9px 10px;
+  margin-right: 12px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.09);
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: background var(--t-base), border-color var(--t-base), transform var(--t-base);
+  cursor: default;
+}
+.pill:hover {
+  background: rgba(255,255,255,0.10);
+  border-color: rgba(255,107,53,0.35);
+  transform: translateY(-2px);
+}
+
+.pillLogo {
+  width: 22px; height: 22px;
+  border-radius: 5px;
+  object-fit: contain;
+  flex-shrink: 0;
+  opacity: 0.75;
+}
+.pill:hover .pillLogo { opacity: 1; }
+
+.pillName {
+  font-size: 13px;
+  font-weight: var(--fw-semi);
+  color: rgba(255,255,255,0.55);
+  letter-spacing: 0.01em;
+  transition: color var(--t-base);
+}
+.pill:hover .pillName { color: rgba(255,255,255,0.90); }
+
+/* Bottom CTA */
+.bottomCta {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .section    { padding: 72px 0 56px; }
+  .statsRow   { gap: 8px; }
+  .stat       { padding: 0 20px; }
+  .stat + .stat::before { display: none; }
+  .top        { margin-bottom: 40px; }
+}
