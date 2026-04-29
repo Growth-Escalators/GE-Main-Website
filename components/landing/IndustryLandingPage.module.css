@@ -1,8 +1,8 @@
-/* ── Doctors landing page styles (page-scoped via CSS module) ─────────────── */
+/* ── Shared styles for industry landing pages (doctors, roofing, restaurants, …) */
 
 .page { background: var(--bg-primary); color: var(--text-primary); }
 
-/* ── Minimal landing-page header (logo + CTA only) ────────────────────────── */
+/* ── Minimal landing-page header ──────────────────────────────────────────── */
 .header {
   position: sticky;
   top: 0;
@@ -143,7 +143,7 @@
   line-height: var(--lh-body);
 }
 
-/* ── PAIN POINTS — 2x2 grid ───────────────────────────────────────────────── */
+/* ── PAIN POINTS ──────────────────────────────────────────────────────────── */
 .painGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -170,7 +170,89 @@
   margin: 0;
 }
 
-/* ── SERVICES — 3-col grid ────────────────────────────────────────────────── */
+/* ── AI ADVANTAGE ─────────────────────────────────────────────────────────── */
+.aiSection {
+  position: relative;
+  padding: var(--section-py) 0;
+  overflow: clip;
+  background: linear-gradient(180deg, transparent 0%, rgba(108,99,255,0.04) 50%, transparent 100%);
+}
+.aiAurora { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.aiOrb1, .aiOrb2 {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(80px);
+}
+.aiOrb1 {
+  width: 520px; height: 520px;
+  background: radial-gradient(circle, rgba(108,99,255,0.18) 0%, transparent 70%);
+  top: 5%; left: -150px;
+  animation: orb-drift-2 24s ease-in-out infinite;
+}
+.aiOrb2 {
+  width: 440px; height: 440px;
+  background: radial-gradient(circle, rgba(0,212,170,0.14) 0%, transparent 70%);
+  bottom: 5%; right: -100px;
+  animation: orb-drift-3 28s ease-in-out infinite;
+}
+.aiInner { position: relative; z-index: 1; }
+.aiTag {
+  background: linear-gradient(135deg, rgba(108,99,255,0.12), rgba(0,212,170,0.10)) !important;
+  color: var(--violet) !important;
+  border-color: rgba(108,99,255,0.25) !important;
+}
+.aiGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.aiCard {
+  position: relative;
+  padding: 32px;
+  border-radius: 22px;
+  background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(108,99,255,0.18);
+  box-shadow: 0 8px 32px rgba(108,99,255,0.10);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  transition: transform var(--t-base), box-shadow var(--t-base), border-color var(--t-base);
+  overflow: hidden;
+}
+.aiCard::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--orange), var(--violet), var(--teal));
+  opacity: 0.6;
+}
+.aiCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(108,99,255,0.18);
+  border-color: rgba(108,99,255,0.35);
+}
+.aiCardEmoji {
+  font-size: 32px;
+  margin-bottom: 14px;
+  display: inline-block;
+  filter: drop-shadow(0 4px 12px rgba(108,99,255,0.25));
+}
+.aiCardTitle {
+  font-size: 19px;
+  font-weight: var(--fw-bold);
+  margin: 0 0 10px;
+  color: var(--text-primary);
+}
+.aiCardBody {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ── SERVICES ─────────────────────────────────────────────────────────────── */
 .svcGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -270,7 +352,7 @@
   font-weight: var(--fw-medium);
 }
 
-/* ── PROCESS — 4 numbered cards ──────────────────────────────────────────── */
+/* ── PROCESS ──────────────────────────────────────────────────────────────── */
 .procGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -306,7 +388,7 @@
   margin: 0;
 }
 
-/* ── WHY-US — 2x2 grid ────────────────────────────────────────────────────── */
+/* ── WHY-US ───────────────────────────────────────────────────────────────── */
 .whyGrid {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -332,7 +414,7 @@
   margin: 0;
 }
 
-/* ── FAQ — accordion ──────────────────────────────────────────────────────── */
+/* ── FAQ ──────────────────────────────────────────────────────────────────── */
 .faqList { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
 .faqItem {
   border-radius: 16px;
@@ -371,7 +453,7 @@
   line-height: 1.65;
 }
 
-/* ── FINAL CTA BANNER ─────────────────────────────────────────────────────── */
+/* ── FINAL CTA ────────────────────────────────────────────────────────────── */
 .ctaBanner {
   position: relative;
   padding: 80px 0;
@@ -400,6 +482,7 @@
   .svcGrid { grid-template-columns: repeat(2, 1fr); }
   .procGrid { grid-template-columns: repeat(2, 1fr); }
   .resultBlock { grid-template-columns: 1fr; padding: 32px; }
+  .aiGrid { grid-template-columns: 1fr; }
 }
 @media (max-width: 640px) {
   .painGrid, .svcGrid, .procGrid, .whyGrid { grid-template-columns: 1fr; }
