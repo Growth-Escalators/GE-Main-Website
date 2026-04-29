@@ -1,0 +1,408 @@
+/* ── Doctors landing page styles (page-scoped via CSS module) ─────────────── */
+
+.page { background: var(--bg-primary); color: var(--text-primary); }
+
+/* ── Minimal landing-page header (logo + CTA only) ────────────────────────── */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(255,255,255,0.78);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  border-bottom: 1px solid rgba(13,13,15,0.06);
+}
+.headerInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0;
+}
+.logo { display: inline-flex; align-items: center; gap: 8px; }
+.logo img { height: 32px; width: auto; display: block; }
+.headerCta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.01em;
+}
+
+/* ── HERO ─────────────────────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  padding: 120px 0 100px;
+  overflow: clip;
+  text-align: center;
+}
+.heroAurora { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.heroAurora > div {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+}
+.heroOrb1 {
+  width: 520px; height: 520px;
+  background: radial-gradient(circle, rgba(255,107,53,0.20) 0%, transparent 70%);
+  top: -100px; left: -120px;
+  animation: orb-drift-1 22s ease-in-out infinite;
+}
+.heroOrb2 {
+  width: 460px; height: 460px;
+  background: radial-gradient(circle, rgba(108,99,255,0.16) 0%, transparent 70%);
+  top: 60px; right: -80px;
+  animation: orb-drift-2 26s ease-in-out infinite;
+}
+.heroOrb3 {
+  width: 360px; height: 360px;
+  background: radial-gradient(circle, rgba(0,212,170,0.13) 0%, transparent 70%);
+  bottom: -80px; left: 30%;
+  animation: orb-drift-3 30s ease-in-out infinite;
+}
+
+.heroInner { position: relative; z-index: 1; }
+.heroBadge {
+  display: inline-block;
+  border-left: 3px solid var(--orange);
+  font-size: 12px;
+  font-weight: var(--fw-bold);
+  color: var(--text-secondary);
+  padding: 6px 16px;
+  margin-bottom: 28px;
+  letter-spacing: 0.06em;
+}
+.heroTitle {
+  font-size: var(--fs-h1);
+  font-weight: 900;
+  line-height: 1.05;
+  letter-spacing: var(--ls-tighter);
+  color: var(--text-primary);
+  margin: 0 0 12px;
+}
+.heroCycle {
+  font-size: clamp(28px, 4vw, 44px);
+  font-weight: var(--fw-bold);
+  color: var(--orange);
+  display: inline-block;
+  margin-top: 4px;
+  min-height: 1.2em;
+}
+.heroSub {
+  font-size: 18px;
+  color: var(--text-secondary);
+  line-height: var(--lh-body);
+  max-width: 720px;
+  margin: 24px auto 36px;
+}
+.heroCtas {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 56px;
+}
+.heroPills {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.heroPill {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: var(--fw-bold);
+  color: var(--text-primary);
+}
+.heroPillEmoji { font-size: 20px; }
+.heroPillValue { color: var(--orange); }
+
+/* ── Generic section wrapper ──────────────────────────────────────────────── */
+.section {
+  position: relative;
+  padding: var(--section-py) 0;
+  overflow: clip;
+}
+.sectionHeader { text-align: center; margin-bottom: 56px; }
+.sectionHeadline {
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-black);
+  line-height: 1.15;
+  letter-spacing: var(--ls-tight);
+  margin: 16px 0 12px;
+}
+.sectionSub {
+  font-size: 18px;
+  color: var(--text-secondary);
+  max-width: 640px;
+  margin: 0 auto;
+  line-height: var(--lh-body);
+}
+
+/* ── PAIN POINTS — 2x2 grid ───────────────────────────────────────────────── */
+.painGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.painCard {
+  background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(13,13,15,0.08);
+  border-radius: 20px;
+  padding: 28px;
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+}
+.painEmoji { font-size: 28px; margin-bottom: 12px; }
+.painTitle {
+  font-size: 18px;
+  font-weight: var(--fw-bold);
+  margin: 0 0 8px;
+}
+.painBody {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── SERVICES — 3-col grid ────────────────────────────────────────────────── */
+.svcGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.svcCard {
+  padding: 28px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.6);
+  border: 1px solid rgba(255,255,255,0.85);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  transition: box-shadow var(--t-base), transform var(--t-base);
+}
+.svcCard:hover {
+  box-shadow: var(--glass-shadow-hover);
+  transform: translateY(-3px);
+}
+.svcTitle {
+  font-size: 18px;
+  font-weight: var(--fw-bold);
+  margin: 0 0 8px;
+  color: var(--text-primary);
+}
+.svcBody {
+  font-size: 14.5px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── RESULT HIGHLIGHT ─────────────────────────────────────────────────────── */
+.resultBlock {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 48px;
+  align-items: center;
+  padding: 48px;
+  border-radius: 28px;
+  background: rgba(255,255,255,0.65);
+  border: 1px solid rgba(255,255,255,0.85);
+  box-shadow: var(--glass-shadow);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+}
+.resultMeta {
+  font-size: 13px;
+  color: var(--orange);
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0 0 8px;
+}
+.resultDoctor {
+  font-size: 28px;
+  font-weight: var(--fw-black);
+  margin: 0 0 4px;
+  letter-spacing: var(--ls-tight);
+}
+.resultSpec {
+  font-size: 15px;
+  color: var(--text-secondary);
+  margin: 0 0 24px;
+}
+.resultQuote {
+  font-size: 17px;
+  line-height: 1.7;
+  font-style: italic;
+  color: var(--text-primary);
+  margin: 0;
+  padding-left: 16px;
+  border-left: 3px solid var(--orange);
+}
+.resultMetrics {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.metric {
+  padding: 18px 22px;
+  border-radius: 14px;
+  background: rgba(255,107,53,0.08);
+  border: 1px solid rgba(255,107,53,0.18);
+}
+.metricValue {
+  font-size: 28px;
+  font-weight: var(--fw-black);
+  color: var(--orange);
+  line-height: 1.1;
+  margin-bottom: 4px;
+  letter-spacing: var(--ls-tight);
+}
+.metricLabel {
+  font-size: 13px;
+  color: var(--text-secondary);
+  font-weight: var(--fw-medium);
+}
+
+/* ── PROCESS — 4 numbered cards ──────────────────────────────────────────── */
+.procGrid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+.procCard {
+  padding: 28px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.55);
+  border: 1px solid rgba(255,255,255,0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+}
+.procStep {
+  font-size: 36px;
+  font-weight: var(--fw-black);
+  background: linear-gradient(135deg, var(--orange), #ff8c5a, var(--violet));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin: 0 0 12px;
+  line-height: 1;
+}
+.procTitle {
+  font-size: 17px;
+  font-weight: var(--fw-bold);
+  margin: 0 0 8px;
+}
+.procBody {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* ── WHY-US — 2x2 grid ────────────────────────────────────────────────────── */
+.whyGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+.whyCard {
+  padding: 32px;
+  border-radius: 20px;
+  background: rgba(255,255,255,0.6);
+  border: 1px solid rgba(255,255,255,0.8);
+  backdrop-filter: blur(20px) saturate(160%);
+  -webkit-backdrop-filter: blur(20px) saturate(160%);
+}
+.whyTitle {
+  font-size: 19px;
+  font-weight: var(--fw-bold);
+  margin: 0 0 10px;
+}
+.whyBody {
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin: 0;
+}
+
+/* ── FAQ — accordion ──────────────────────────────────────────────────────── */
+.faqList { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+.faqItem {
+  border-radius: 16px;
+  border: 1px solid rgba(13,13,15,0.08);
+  background: rgba(255,255,255,0.65);
+  backdrop-filter: blur(12px);
+  overflow: hidden;
+}
+.faqHead {
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  border: none;
+  padding: 18px 22px;
+  font-size: 16px;
+  font-weight: var(--fw-bold);
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  font-family: inherit;
+}
+.faqIcon {
+  flex-shrink: 0;
+  font-size: 18px;
+  color: var(--orange);
+  transition: transform var(--t-base);
+}
+.faqOpen .faqIcon { transform: rotate(45deg); }
+.faqBody {
+  padding: 0 22px 18px;
+  font-size: 15px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+}
+
+/* ── FINAL CTA BANNER ─────────────────────────────────────────────────────── */
+.ctaBanner {
+  position: relative;
+  padding: 80px 0;
+  text-align: center;
+  overflow: clip;
+  background: linear-gradient(135deg, rgba(255,107,53,0.06), rgba(108,99,255,0.05), rgba(0,212,170,0.06));
+}
+.ctaTitle {
+  font-size: clamp(32px, 5vw, 48px);
+  font-weight: var(--fw-black);
+  line-height: 1.15;
+  letter-spacing: var(--ls-tight);
+  margin: 0 0 16px;
+}
+.ctaSub {
+  font-size: 18px;
+  color: var(--text-secondary);
+  margin: 0 0 28px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 960px) {
+  .svcGrid { grid-template-columns: repeat(2, 1fr); }
+  .procGrid { grid-template-columns: repeat(2, 1fr); }
+  .resultBlock { grid-template-columns: 1fr; padding: 32px; }
+}
+@media (max-width: 640px) {
+  .painGrid, .svcGrid, .procGrid, .whyGrid { grid-template-columns: 1fr; }
+  .hero { padding: 80px 0 64px; }
+  .resultBlock { padding: 24px; }
+}
