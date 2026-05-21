@@ -10,10 +10,10 @@ export const clients = [
     logoStyle: 'italic',
     industry: 'Fashion / Comfort Wear',
     service: 'Social Media + Performance Marketing',
-    result: '5M+',
-    resultLabel: 'Views on One Reel',
+    result: '₹33k → ₹3.4L',
+    resultLabel: 'Sales in 30 Days',
     description:
-      'Scaled sales from ₹33k to ₹3.4 Lakhs in 30 days. One reel crossed 5 million views, 20M+ overall reach on the professional dashboard — organic + paid working together.',
+      'Scaled monthly sales from ₹33k to ₹3.4 Lakhs in 30 days — a 10× jump. One reel crossed 5M views with 20M+ overall reach on the professional dashboard. Organic + paid working together.',
     gradient: 'linear-gradient(135deg, #1a0a2e 0%, #6d28d9 55%, #a855f7 100%)',
     category: 'performance branding',
     size: 'large',
