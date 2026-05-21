@@ -31,7 +31,7 @@ const MapPinIcon = () => (
 
 const CONTACT_ITEMS = [
   { icon: <PhoneIcon />, label: 'Call / WhatsApp', value: '+91 77338 88883', href: 'tel:+917733888883' },
-  { icon: <MailIcon />,  label: 'Email',           value: 'hello@growthescalators.com', href: 'mailto:hello@growthescalators.com' },
+  { icon: <MailIcon />,  label: 'Email',           value: 'Info@growthescalators.com', href: 'mailto:Info@growthescalators.com' },
   { icon: <MapPinIcon />,label: 'Office',          value: 'Jaipur, Rajasthan, India',  href: 'https://maps.google.com/?q=Jaipur,Rajasthan' },
 ];
 

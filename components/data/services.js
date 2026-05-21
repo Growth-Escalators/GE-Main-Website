@@ -18,9 +18,9 @@ export const services = [
   {
     id: 'web',
     icon: '🖥️',
-    title: 'Website Development',
+    title: 'Software & Website Development',
     description:
-      'Fast, conversion-optimized websites built to rank and convert. From Shopify stores to custom Next.js builds.',
+      'Fast, conversion-optimized websites and custom software built to rank and convert. From Shopify stores to custom Next.js builds and full SaaS products.',
     keyStat: '40% avg conversion rate improvement',
   },
   {
@@ -42,9 +42,9 @@ export const services = [
   {
     id: 'seo',
     icon: '📈',
-    title: 'SEO & Growth Marketing',
+    title: 'AI SEO & Growth Marketing',
     description:
-      'Organic traffic systems that compound over time. Content, technical SEO, and authority building combined.',
+      'AI-powered organic traffic systems that compound over time. Content, technical SEO, AI-driven keyword targeting, and authority building combined.',
     keyStat: 'First-page rankings in 90 days',
   },
 ];
