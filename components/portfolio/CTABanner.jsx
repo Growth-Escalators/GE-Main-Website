@@ -137,7 +137,7 @@ export default function CTABanner() {
 
           {/* Trust badges */}
           <div className={styles.trustBadges}>
-            {['187+ Brands Scaled', '98% Satisfaction', 'Free Consultation', 'Jaipur Based'].map(b => (
+            {['187+ Brands Scaled', '98% Satisfaction', 'Free Consultation', 'India Based'].map(b => (
               <span key={b} className={`${styles.badge} glass-pill`}>{b}</span>
             ))}
           </div>

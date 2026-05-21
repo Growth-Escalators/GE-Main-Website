@@ -66,7 +66,7 @@ export default function Footer() {
             </a>
             <p className={styles.tagline}>Your Growth, Our Mission</p>
             <p className={styles.blurb}>
-              Jaipur's most results-obsessed performance marketing agency. We help brands across India scale through data, creativity, and execution.
+              India's most results-obsessed performance marketing agency. We help brands across India scale through data, creativity, and execution.
             </p>
             <div className={styles.socials}>
               <a href="https://facebook.com/growthescalators" target="_blank" rel="noopener noreferrer" className={`${styles.socialPill} glass-pill`} aria-label="Facebook">

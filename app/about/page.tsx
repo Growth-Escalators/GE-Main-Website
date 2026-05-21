@@ -12,7 +12,7 @@ const TIMELINE = [
   { year: '2021', event: 'Founded in Jaipur with 2 clients and one mission: make every rupee work harder.' },
   { year: '2022', event: 'First ₹1Cr in ad spend managed. Proof that the system works.' },
   { year: '2023', event: '50+ brands served. First enterprise client. Team grows to 5.' },
-  { year: '2024', event: '100+ brands. ₹10Cr+ in ad spend. Team of 8. Jaipur\'s fastest-growing growth agency.' },
+  { year: '2024', event: '100+ brands. ₹10Cr+ in ad spend. Team of 8. India\'s fastest-growing growth agency.' },
   { year: '2025', event: 'Expanding beyond Rajasthan. Becoming India\'s go-to growth partner.' },
 ]
 

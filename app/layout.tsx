@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     'restaurant marketing',
     'Meta ads agency',
     'Google ads agency',
-    'Jaipur marketing agency',
+    'India marketing agency',
   ],
   alternates: { canonical: '/' },
   openGraph: {

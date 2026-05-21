@@ -150,7 +150,7 @@ export default function ClientLogos() {
           viewport={{ once: true, amount: 0.4 }}
           transition={{ duration: 0.6, delay: 0.15 }}
         >
-          From Jaipur startups to national brands — one agency, one goal: your growth.
+          From Indian startups to national brands — one agency, one goal: your growth.
         </motion.p>
 
         {/* Stats row */}
