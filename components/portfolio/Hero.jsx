@@ -110,27 +110,20 @@ export default function Hero() {
           <span>🏆</span> India's #1 Performance Marketing Agency
         </motion.div>
 
-        {/* H1 with cycling verb — grid-stack so the slot sizes to the widest
-            word, eliminating the layout shift the old typewriter had. Active
-            word fades + slides in; others stay in the same grid cell. */}
+        {/* H1 with cycling verb — only the active word lives in the DOM so
+            the slot sizes naturally to whichever word is showing (no big gap
+            for short words like "Scale"). The CSS animation re-fires every
+            time React remounts the span via the changing `key`. */}
         <motion.h1 className={styles.h1} {...fadeUp(0.1)}>
           We Don't Just Market.<br />
           We{' '}
-          <span
-            className={styles.wordSlot}
-            role="text"
-            aria-live="polite"
-            aria-atomic="true"
-          >
-            {WORDS.map((w, i) => (
-              <span
-                key={w}
-                aria-hidden={i !== activeIdx}
-                className={`gradient-text ${styles.cycleWord} ${i === activeIdx ? styles.cycleWordActive : ''}`}
-              >
-                {w}
-              </span>
-            ))}
+          <span className={styles.wordSlot} aria-live="polite" aria-atomic="true">
+            <span
+              key={WORDS[activeIdx]}
+              className={`gradient-text ${styles.cycleWord}`}
+            >
+              {WORDS[activeIdx]}
+            </span>
           </span>{' '}
           Brands.
         </motion.h1>
