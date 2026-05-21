@@ -92,7 +92,9 @@ export default function CTABanner() {
           <div className={styles.buttons}>
             <a
               ref={callBtnRef}
-              href="tel:+917733888883"
+              href="https://cal.com/growth-escalators/discovery-call"
+              target="_blank"
+              rel="noopener noreferrer"
               className={`btn-primary ${styles.mainBtn}`}
               aria-label="Book free strategy call"
               {...makeMagnetic(callBtnRef)}
