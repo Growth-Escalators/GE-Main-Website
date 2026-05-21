@@ -13,7 +13,7 @@ export const clients = [
     result: '5M+',
     resultLabel: 'Views on One Reel',
     description:
-      'Scaled Instagram from 33k to 3.4 Lakh followers. One reel crossed 5 million views, 20M+ overall reach on the professional dashboard. ₹4 Lakhs in sales within 28 days — organic + paid working together.',
+      'Scaled sales from ₹33k to ₹3.4 Lakhs in 30 days. One reel crossed 5 million views, 20M+ overall reach on the professional dashboard — organic + paid working together.',
     gradient: 'linear-gradient(135deg, #1a0a2e 0%, #6d28d9 55%, #a855f7 100%)',
     category: 'performance branding',
     size: 'large',
