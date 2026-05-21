@@ -135,7 +135,7 @@ export default function Hero() {
       <div className={`${styles.content} container`}>
         {/* Badge */}
         <motion.div className={`${styles.badge} glass-pill`} {...fadeUp(0)}>
-          <span>🏆</span> Jaipur's #1 Performance Marketing Agency
+          <span>🏆</span> India's #1 Performance Marketing Agency
         </motion.div>
 
         {/* H1 with typewriter */}

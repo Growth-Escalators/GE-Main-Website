@@ -32,7 +32,7 @@ const TICKER_ITEMS = [
   '3+ Years of Proven Results',
   '120% Avg ROAS Improvement',
   '2.5x Customer Lifetime Value',
-  'Jaipur\'s #1 Performance Agency',
+  'India\'s #1 Performance Agency',
 ];
 
 function easeOutQuart(t) { return 1 - Math.pow(1 - t, 4); }

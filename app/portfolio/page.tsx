@@ -19,7 +19,7 @@ import Footer from '@/components/portfolio/Footer';
 export const metadata = {
   title: 'Portfolio — Growth Escalators',
   description:
-    "100+ brands scaled. ₹Crores in ad spend managed. Jaipur's #1 AI-first performance marketing agency.",
+    "100+ brands scaled. ₹Crores in ad spend managed. India's #1 AI-first performance marketing agency.",
   alternates: { canonical: '/portfolio' },
   openGraph: {
     title: 'Portfolio — Growth Escalators',
