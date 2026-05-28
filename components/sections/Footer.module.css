@@ -40,7 +40,7 @@
 }
 .socials { display: flex; gap: 10px; }
 .socialPill {
-  width: 40px; height: 40px;
+  width: 44px; height: 44px;
   border-radius: 50% !important;
   display: flex;
   align-items: center;

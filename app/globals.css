@@ -318,3 +318,17 @@ button {
     --container-px: 20px;
   }
 }
+
+/* GrowthBot — full-bleed chat sheet on phones so it doesn't crop content.
+   Inline-style widths (380px / 560px) cover ~80% of viewport on small phones;
+   below 640px we override to a bottom sheet that respects safe areas. */
+@media (max-width: 640px) {
+  .growthbot-window {
+    left: 8px !important;
+    right: 8px !important;
+    bottom: 84px !important;
+    width: auto !important;
+    height: min(72vh, 560px) !important;
+    border-radius: 16px !important;
+  }
+}

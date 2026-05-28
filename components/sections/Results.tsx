@@ -68,10 +68,10 @@ export default function Results() {
 
         <div className="stats-grid grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
           {STATS.map((stat, i) => (
-            <div key={i} className="stat-block text-center">
+            <div key={i} className="stat-block text-center min-w-0">
               <div
-                className="font-bebas leading-none mb-3"
-                style={{ fontSize: 'clamp(72px, 13vw, 150px)', color: 'var(--orange)' }}
+                className="font-bebas leading-none mb-3 tabular-nums"
+                style={{ fontSize: 'clamp(44px, 7vw, 76px)', color: 'var(--orange)' }}
               >
                 <CountUp
                   end={stat.value}
