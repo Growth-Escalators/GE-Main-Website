@@ -3,6 +3,7 @@ import type { Service, Stat, ProcessStep, WorkItem, Testimonial, NavLink } from 
 export const NAV_LINKS: NavLink[] = [
   { label: 'Home', href: '/' },
   { label: 'Services', href: '/services' },
+  { label: 'Staffing', href: '/staffing' },
   { label: 'Work', href: '/work' },
   { label: 'Portfolio', href: '/portfolio' },
   { label: 'About', href: '/about' },

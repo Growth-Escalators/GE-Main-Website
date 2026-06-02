@@ -30,6 +30,13 @@ interface LeadPayload {
   message?: string
   /** Set by the form so server-side knows which industry the lead came from */
   source?: string
+  // ── Staffing fields (only populated by /staffing form) ──
+  company?: string
+  role?: string
+  seats?: string
+  engagement?: string     // Contract | Permanent | Either
+  workMode?: string       // Remote | Hybrid | Onsite
+  timeline?: string
 }
 
 /* ── Hand-rolled validation. No Zod dep. ─────────────────────────────── */
@@ -60,6 +67,12 @@ function validate(body: unknown): { ok: true; data: LeadPayload } | { ok: false;
       budget:         str(b.budget),
       message:        str(b.message).slice(0, 4000),
       source:         str(b.source) || 'unknown',
+      company:        str(b.company),
+      role:           str(b.role),
+      seats:          str(b.seats),
+      engagement:     str(b.engagement),
+      workMode:       str(b.workMode),
+      timeline:       str(b.timeline),
     },
   }
 }
@@ -101,10 +114,16 @@ async function sendViaResend(lead: LeadPayload): Promise<{ ok: boolean; reason?:
     `Name: ${lead.name}`,
     `Phone: ${lead.phone}`,
     `Email: ${lead.email}`,
+    lead.company        && `Company: ${lead.company}`,
     lead.clinic         && `Practice / Business: ${lead.clinic}`,
     lead.specialization && `Specialization / Type: ${lead.specialization}`,
     lead.city           && `City: ${lead.city}`,
     lead.budget         && `Monthly marketing spend: ${lead.budget}`,
+    lead.role           && `Role needed: ${lead.role}`,
+    lead.seats          && `Number of hires: ${lead.seats}`,
+    lead.engagement     && `Engagement: ${lead.engagement}`,
+    lead.workMode       && `Work mode: ${lead.workMode}`,
+    lead.timeline       && `Timeline: ${lead.timeline}`,
     `Source: ${lead.source}`,
     '',
     'Message:',
