@@ -1,0 +1,266 @@
+/* ─────────────────── Card shell ─────────────────── */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  grid-column: span var(--col, 1);
+  grid-row: span var(--row, 1);
+  min-width: 0;
+}
+.card[data-col='2'] { --col: 2; }
+.card[data-col='3'] { --col: 3; }
+.card[data-row='2'] { --row: 2; }
+
+.canvas {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background: var(--w-bg);
+  color: var(--w-fg);
+  border-radius: 4px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.55s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.55s cubic-bezier(0.16, 1, 0.3, 1);
+  isolation: isolate;
+}
+
+/* Span 2-row cards become a taller editorial rectangle */
+.card[data-row='2'] .canvas { aspect-ratio: 4 / 5; }
+.card[data-col='2'][data-row='2'] .canvas { aspect-ratio: 1 / 1; }
+
+.card:hover .canvas { transform: translateY(-4px); box-shadow: 0 24px 48px rgba(0,0,0,0.45); }
+
+/* registration tick marks at corners */
+.tickTL, .tickTR, .tickBL, .tickBR {
+  position: absolute;
+  width: 10px; height: 10px;
+  border: 1px solid var(--w-fg);
+  opacity: 0.4;
+}
+.tickTL { top: 14px; left: 14px; border-right: none; border-bottom: none; }
+.tickTR { top: 14px; right: 14px; border-left: none; border-bottom: none; }
+.tickBL { bottom: 14px; left: 14px; border-right: none; border-top: none; }
+.tickBR { bottom: 14px; right: 14px; border-left: none; border-top: none; }
+
+/* ─────────────────── Card meta below image ─────────────────── */
+.meta {
+  font-family: var(--font-jakarta), sans-serif;
+  color: var(--cf-fg);
+}
+.metaRow {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase;
+  color: var(--cf-mute);
+  margin-bottom: 8px;
+}
+.metaTag { color: var(--cf-accent); }
+.metaTitle {
+  font-family: var(--font-display), serif;
+  font-weight: 400;
+  font-size: clamp(18px, 1.6vw, 24px);
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  margin: 0 0 4px;
+  font-style: italic;
+}
+.metaClient { font-size: 12px; color: var(--cf-mute); margin: 0; }
+
+/* ─────────────────── Variant: initial ─────────────────── */
+.initial {
+  position: relative;
+  width: 100%; height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.initialLetter {
+  font-family: var(--font-display), serif;
+  font-weight: 900;
+  font-size: clamp(160px, 26vw, 360px);
+  line-height: 0.78;
+  letter-spacing: -0.06em;
+  color: var(--w-fg);
+  user-select: none;
+  font-style: italic;
+  font-variation-settings: 'opsz' 144, 'SOFT' 30;
+  transform: translateY(0.08em);
+}
+.initialFootnote {
+  position: absolute;
+  bottom: 22px; left: 22px;
+  font-family: var(--font-jakarta), sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.28em;
+  color: var(--w-fg);
+  opacity: 0.7;
+}
+
+/* ─────────────────── Variant: mark (SVG abstraction) ─────────────────── */
+.markWrap {
+  width: 100%; height: 100%;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  padding: 36px;
+}
+.markSvg {
+  width: 100%; height: 100%;
+  max-width: 260px;
+  margin: 0 auto;
+}
+.markCaption {
+  display: flex; flex-direction: column; gap: 4px;
+  margin-top: 12px;
+  font-family: var(--font-jakarta), sans-serif;
+  color: var(--w-fg);
+}
+.markRule {
+  display: block;
+  width: 40px; height: 1px;
+  background: var(--w-fg);
+  margin-bottom: 8px;
+  opacity: 0.55;
+}
+.markClient { font-size: 13px; font-weight: 700; letter-spacing: -0.01em; }
+.markCat { font-size: 10px; letter-spacing: 0.3em; opacity: 0.6; }
+
+/* ─────────────────── Variant: field (caption stack on color) ─────────────────── */
+.field {
+  position: relative;
+  width: 100%; height: 100%;
+  padding: 38px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.fieldLines {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.fieldLine {
+  font-family: var(--font-display), serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(28px, 4vw, 56px);
+  line-height: 1.02;
+  color: var(--w-fg);
+  letter-spacing: -0.02em;
+}
+.fieldCorner {
+  position: absolute;
+  bottom: 28px; right: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  font-family: var(--font-jakarta), sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: var(--w-accent);
+}
+
+/* ─────────────────── Variant: poster (vertical word stack) ─────────────────── */
+.poster {
+  position: relative;
+  width: 100%; height: 100%;
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  overflow: hidden;
+}
+.posterStack {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  width: 100%;
+}
+.posterWord {
+  font-family: var(--font-display), serif;
+  font-style: italic;
+  font-weight: 800;
+  font-size: clamp(36px, 6vw, 90px);
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  color: var(--w-fg);
+}
+.posterWord:nth-child(odd) { color: var(--w-accent); }
+.posterFootnote {
+  position: absolute;
+  bottom: 22px; right: 22px;
+  font-family: var(--font-jakarta), sans-serif;
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: var(--w-fg);
+  opacity: 0.65;
+}
+
+/* ─────────────────── Variant: spec (project spec sheet) ─────────────────── */
+.spec {
+  width: 100%; height: 100%;
+  padding: 36px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  font-family: var(--font-jakarta), sans-serif;
+  color: var(--w-fg);
+}
+.specHeader, .specFooter {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  letter-spacing: 0.32em;
+  color: var(--w-fg);
+  opacity: 0.65;
+}
+.specRows {
+  list-style: none;
+  padding: 0; margin: 0;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 14px;
+}
+.specRow {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: baseline;
+  gap: 12px;
+}
+.specKey {
+  font-size: 11px;
+  letter-spacing: 0.28em;
+  color: var(--w-fg);
+  opacity: 0.7;
+}
+.specDots {
+  flex: 1;
+  border-bottom: 1px dotted var(--w-fg);
+  opacity: 0.3;
+  margin: 0 4px 4px;
+  height: 1px;
+}
+.specVal {
+  text-align: right;
+  font-family: var(--font-display), serif;
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(18px, 1.8vw, 26px);
+  letter-spacing: -0.01em;
+  color: var(--w-accent);
+}
+
+/* ─────────────────── Mobile tightening ─────────────────── */
+@media (max-width: 768px) {
+  .card[data-col='2'] { --col: 1; }
+  .card[data-row='2'] { --row: 1; }
+  .card[data-col='2'] .canvas,
+  .card[data-row='2'] .canvas { aspect-ratio: 1 / 1; }
+  .markWrap, .field, .poster, .spec { padding: 24px; }
+  .initialLetter { font-size: clamp(140px, 50vw, 200px); }
+}
