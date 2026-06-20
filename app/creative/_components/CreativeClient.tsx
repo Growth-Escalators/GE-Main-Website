@@ -1,36 +1,27 @@
 'use client'
 
 import { useEffect, useMemo, useRef } from 'react'
-import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { ArrowDown, ArrowUpRight } from 'lucide-react'
 
 import { WORKS, CATEGORIES } from '../_data/works'
-import { type Presenter } from '../_data/presenters'
-
-import PresenterSwitch from './PresenterSwitch'
 import WorkCard from './WorkCard'
 import styles from './CreativeClient.module.css'
 
-type Props = { presenter: Presenter }
-
-export default function CreativeClient({ presenter }: Props) {
+export default function CreativeClient() {
   const prefersReduced = useReducedMotion()
-  const heroRef = useRef<HTMLDivElement>(null)
-  const { scrollY } = useScroll()
-
-  // Subtle parallax for the presenter card sitting in the hero.
-  const presenterY = useTransform(scrollY, [0, 600], [0, prefersReduced ? 0 : -40])
 
   // Featured row = first 4 works with their span hints baked in.
   const featured = useMemo(() => WORKS.filter((w) => w.featured).slice(0, 4), [])
   const rest = useMemo(() => WORKS.filter((w) => !w.featured), [])
-
-  // Build the marquee track (categories repeated for seamless loop).
   const marquee = useMemo(() => [...CATEGORIES, ...CATEGORIES], [])
 
-  // Reveal — split a phrase into masked words; framer staggers via parent.
+  // Hero: word-by-word mask reveal.
   const headlineWords = ['Sharp', 'work.', 'Real', 'graphics.', 'Indian', 'heat.']
   const headlineDelay = 0.08
+
+  // Year range for the masthead column.
+  const disciplineCount = new Set(WORKS.map((w) => w.category)).size
 
   // Mouse-following crosshair on the gallery area (desktop only).
   const crosshairRef = useRef<HTMLDivElement>(null)
@@ -74,25 +65,21 @@ export default function CreativeClient({ presenter }: Props) {
 
   return (
     <div className={`creative-root ${styles.root}`}>
-      {/* mouse-follower crosshair (gallery zone only) */}
       <div className={styles.crosshair} ref={crosshairRef} aria-hidden />
 
-      {/* ─────────────── Top utility bar ─────────────── */}
+      {/* ─────────────── Minimal utility bar (no parent-site link) ─────────────── */}
       <div className={styles.utilityBar}>
-        <a href="/" className={styles.backLink} aria-label="Back to growthescalators.com">
-          <span className={styles.backMark}>GE</span>
-          <span className={styles.backText}>← growthescalators.com</span>
-        </a>
-        <PresenterSwitch active={presenter} />
+        <span className={styles.brandMark} aria-label="Folio">F.</span>
+        <span className={styles.utilityRight}>Vol. 01 · 2026</span>
       </div>
 
       {/* ─────────────── Hero ─────────────── */}
-      <section ref={heroRef} className={styles.hero}>
+      <section className={styles.hero}>
         <div className={styles.heroGrid}>
           <div className={styles.heroLeft}>
             <span className={styles.eyebrow}>
               <span className={styles.eyebrowDot} aria-hidden />
-              {presenter.badge} · Vol. 01
+              Folio · Selected Works
             </span>
 
             <h1 className={styles.headline} aria-label={headlineWords.join(' ')}>
@@ -109,7 +96,7 @@ export default function CreativeClient({ presenter }: Props) {
                     }}
                   >
                     {w}
-                    {i < headlineWords.length - 1 && ' '}
+                    {i < headlineWords.length - 1 && ' '}
                   </motion.span>
                 </span>
               ))}
@@ -122,8 +109,7 @@ export default function CreativeClient({ presenter }: Props) {
               transition={{ delay: 0.95, duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             >
               A working folio of brand systems, social creative, posters,
-              and identity work shipped for clients across India and beyond —
-              by the team at Growth Escalators.
+              identity, and web design — shipped for clients across India and beyond.
             </motion.p>
 
             <motion.div
@@ -136,37 +122,39 @@ export default function CreativeClient({ presenter }: Props) {
                 <ArrowDown size={14} />
                 <span>Scroll to the work</span>
               </a>
-              <span className={styles.heroIndex}>{String(WORKS.length).padStart(2, '0')} pieces, {new Set(WORKS.map((w) => w.category)).size} disciplines</span>
             </motion.div>
           </div>
 
+          {/* Masthead-style data column — replaces the old presenter card. Neutral. */}
           <motion.aside
-            className={styles.presenterCard}
-            style={{ y: presenterY }}
+            className={styles.masthead}
             initial={{ opacity: 0, x: 24 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.5, duration: 0.85, ease: [0.16, 1, 0.3, 1] }}
           >
-            <div className={styles.presenterCorner}>
-              <span className={styles.presenterBadge}>{presenter.badge.toUpperCase()}</span>
-              <span className={styles.presenterCornerTick} aria-hidden />
-            </div>
-            <div className={styles.presenterAvatar} style={{ background: presenter.accent }}>
-              {presenter.initials}
-            </div>
-            <div className={styles.presenterMeta}>
-              <h2 className={styles.presenterName}>{presenter.name}</h2>
-              <p className={styles.presenterRole}>{presenter.role}</p>
-              <p className={styles.presenterEst}>{presenter.established}</p>
-            </div>
-            <blockquote className={styles.presenterQuote}>
-              <span className={styles.quoteMark} aria-hidden>“</span>
-              {presenter.quote}
-            </blockquote>
-            <a className={styles.presenterContact} href={`mailto:${presenter.contactEmail}`}>
-              <span>{presenter.contactEmail}</span>
-              <ArrowUpRight size={14} />
-            </a>
+            <span className={styles.mastheadRule} aria-hidden />
+            <dl className={styles.mastheadRows}>
+              <div className={styles.mastheadRow}>
+                <dt>Pieces</dt>
+                <dd>{String(WORKS.length).padStart(2, '0')}</dd>
+              </div>
+              <div className={styles.mastheadRow}>
+                <dt>Disciplines</dt>
+                <dd>{String(disciplineCount).padStart(2, '0')}</dd>
+              </div>
+              <div className={styles.mastheadRow}>
+                <dt>Range</dt>
+                <dd>2021—{'26'}</dd>
+              </div>
+              <div className={styles.mastheadRow}>
+                <dt>Made in</dt>
+                <dd>India</dd>
+              </div>
+            </dl>
+            <span className={styles.mastheadRule} aria-hidden />
+            <p className={styles.mastheadList}>
+              {CATEGORIES.join(' · ')}
+            </p>
           </motion.aside>
         </div>
       </section>
@@ -188,7 +176,7 @@ export default function CreativeClient({ presenter }: Props) {
         <header className={styles.sectionHead}>
           <span className={styles.sectionTag}>Featured · 01 / 03</span>
           <h2 className={styles.sectionTitle}>
-            What we’ve <em>shipped lately</em>
+            What’s been <em>shipping lately</em>
           </h2>
           <span className={styles.sectionRule} aria-hidden />
         </header>
@@ -213,11 +201,10 @@ export default function CreativeClient({ presenter }: Props) {
           >
             <span aria-hidden className={styles.pullMark}>“</span>
             <span>
-              We <em>don’t</em> make work that wins awards. We make work that earns
-              sales — then, quietly, wins the awards too.
+              The work <em>doesn’t</em> have to win awards. It has to earn sales —
+              the awards arrive on their own, quietly.
             </span>
           </motion.blockquote>
-          <span className={styles.pullSign}>— {presenter.kind === 'studio' ? 'Growth Escalators' : presenter.name}</span>
         </div>
       </section>
 
@@ -243,16 +230,16 @@ export default function CreativeClient({ presenter }: Props) {
         <header className={styles.sectionHead}>
           <span className={styles.sectionTag}>Working method · 03 / 03</span>
           <h2 className={styles.sectionTitle}>
-            How we <em>make</em>
+            How it’s <em>made</em>
           </h2>
           <span className={styles.sectionRule} aria-hidden />
         </header>
         <ol className={styles.processList}>
           {[
-            { n: '①', t: 'Read the room', d: 'A brief from a founder is never just a brief. We translate the underlying ask — sales, perception, talent, traction — before a single pixel.' },
-            { n: '②', t: 'Set the system', d: 'Identity, palette, voice — built once, deployed everywhere. We avoid one-off campaigns that age in 30 days.' },
+            { n: '①', t: 'Read the room', d: 'A brief is never just a brief. We translate the underlying ask — sales, perception, talent, traction — before a single pixel.' },
+            { n: '②', t: 'Set the system', d: 'Identity, palette, voice — built once, deployed everywhere. No one-off campaigns that age in 30 days.' },
             { n: '③', t: 'Ship daily', d: 'Posters, reels, decks, landing pages — calendar-paced. The folio you’re scrolling was built in fragments, every weekday.' },
-            { n: '④', t: 'Measure, then refine', d: 'Every asset has a metric attached. CTRs, CPLs, engagement, sales. The good ones get cloned. The bad ones get retired.' },
+            { n: '④', t: 'Measure, then refine', d: 'Every asset has a metric attached. CTRs, CPLs, engagement, sales. Good ones get cloned. Bad ones get retired.' },
           ].map((p, i) => (
             <motion.li
               key={p.n}
@@ -295,20 +282,18 @@ export default function CreativeClient({ presenter }: Props) {
       <section className={styles.cta}>
         <div className={styles.ctaInner}>
           <p className={styles.ctaPretitle}>End of folio</p>
-          <h2 className={styles.ctaTitle}>{presenter.signoff}</h2>
+          <h2 className={styles.ctaTitle}>
+            Like the work? <em>Get in touch.</em>
+          </h2>
           <div className={styles.ctaActions}>
-            <a href={`mailto:${presenter.contactEmail}?subject=${encodeURIComponent('Creative brief')}`} className={styles.ctaPrimary}>
-              <span>Brief by email</span>
+            <a href="mailto:Info@growthescalators.com?subject=Creative%20brief" className={styles.ctaPrimary}>
+              <span>Send a brief</span>
               <ArrowUpRight size={16} />
-            </a>
-            <a href="/contact" className={styles.ctaSecondary}>
-              <span>Or use the contact form</span>
-              <ArrowUpRight size={14} />
             </a>
           </div>
           <p className={styles.colophon}>
             Folio set in <em>Fraunces</em> &amp; <em>Plus Jakarta Sans</em>.
-            Built by hand at Growth Escalators, Jaipur · India.
+            Handmade. Independent.
           </p>
         </div>
       </section>
