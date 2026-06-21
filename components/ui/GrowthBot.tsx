@@ -1100,6 +1100,7 @@ export default function GrowthBot() {
       <button
         ref={buttonRef}
         onClick={handleOpen}
+        className="gb-fab"
         style={{
           position: 'fixed',
           bottom: '24px',
@@ -1153,6 +1154,12 @@ export default function GrowthBot() {
 
       {/* Global styles */}
       <style>{`
+        /* On mobile the homepage shows a fixed bottom CTA bar; lift the FAB
+           above it (mock: bottom 78px, right 16px) so they don't collide. */
+        @media (max-width: 768px) {
+          .gb-fab { bottom: 88px !important; right: 16px !important; }
+          .growthbot-window { bottom: 88px !important; right: 16px !important; }
+        }
         @keyframes gbShake {
           0%, 100% { transform: translateX(0); }
           20% { transform: translateX(-6px); }

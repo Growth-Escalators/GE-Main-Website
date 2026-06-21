@@ -1,40 +1,47 @@
 'use client'
 
-import Navbar from '@/components/sections/Navbar'
-import Hero from '@/components/sections/Hero'
-import TrustBar from '@/components/sections/TrustBar'
-import AboutStatement from '@/components/sections/AboutStatement'
-import Services from '@/components/sections/Services'
-import Results from '@/components/sections/Results'
-import Team from '@/components/sections/Team'
-import Work from '@/components/sections/Work'
-import Testimonials from '@/components/sections/Testimonials'
-import CTA from '@/components/sections/CTA'
-import SocialProofTicker from '@/components/ui/SocialProofTicker'
-import Footer from '@/components/sections/Footer'
+import TopTrustStrip from '@/components/home/TopTrustStrip'
+import SiteNav from '@/components/home/SiteNav'
+import Hero from '@/components/home/Hero'
+import LogoTrustBar from '@/components/home/LogoTrustBar'
+import StatsBand from '@/components/home/StatsBand'
+import ServicesGrid from '@/components/home/ServicesGrid'
+import CaseStudies from '@/components/home/CaseStudies'
+import Industries from '@/components/home/Industries'
+import WhyUs from '@/components/home/WhyUs'
+import Testimonials from '@/components/home/Testimonials'
+import AIConsultant from '@/components/home/AIConsultant'
+import LeadFormBand from '@/components/home/LeadFormBand'
+import SiteFooter from '@/components/home/SiteFooter'
+import StickyCTABar from '@/components/home/StickyCTABar'
+import ExitIntentPopup from '@/components/home/ExitIntentPopup'
 
-// Preloader removed (brand-foundation PR). Each section owns its own
-// GSAP ScrollTrigger entrance animation and initializes on mount; smooth
-// scrolling relies on CSS `scroll-behavior: smooth` (globals.css).
-// Lenis/Three.js retired here; GSAP stays until the final cleanup PR.
-
+// Redesigned homepage (feat/homepage-redesign). Composed from clean
+// Framer-Motion sections under components/home/*. The legacy GSAP-era
+// components/sections/* are no longer used by `/` — other routes still
+// reference them until their own rebuilds. GrowthBot mounts globally
+// via app/layout.tsx (GrowthBotLoader).
 export default function Home() {
   return (
     <>
-      <Navbar />
+      <TopTrustStrip />
+      <SiteNav />
       <main>
         <Hero />
-        <TrustBar />
-        <AboutStatement />
-        <Services />
-        <Results />
-        <Team />
-        <Work />
+        <LogoTrustBar />
+        <StatsBand />
+        <ServicesGrid />
+        <CaseStudies />
+        <Industries />
+        <WhyUs />
         <Testimonials />
-        <CTA />
+        <AIConsultant />
+        <LeadFormBand />
       </main>
-      <SocialProofTicker />
-      <Footer />
+      <SiteFooter />
+      {/* Fixed overlays — self-positioning, mounted once */}
+      <StickyCTABar />
+      <ExitIntentPopup />
     </>
   )
 }
