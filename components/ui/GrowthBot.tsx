@@ -25,7 +25,13 @@ type StateKey =
   | 'collect_service_interest'
   | 'collect_budget'
   | 'collect_time'
+  | 'staffing_intro'
+  | 'collect_role'
+  | 'collect_openings'
+  | 'collect_phone'
+  | 'collect_email'
   | 'booking_confirmed'
+  | 'staffing_confirmed'
   | 'all_set'
   | 'contact_info'
   | 'location_info'
@@ -53,6 +59,13 @@ interface BotState {
   businessName: string
   selectedService: string
   selectedBudget: string
+  /** 'marketing' = grow-my-brand audit path, 'staffing' = hiring path */
+  flow: 'marketing' | 'staffing'
+  selectedRole: string
+  selectedOpenings: string
+  userPhone: string
+  userEmail: string
+  leadSubmitted: boolean
   messages: Message[]
   unreadCount: number
 }
@@ -77,15 +90,15 @@ const SERVICE_MESSAGES: Record<string, string> = {
 
 const getStateConfig = (
   state: StateKey,
-  data: { userName: string; businessName: string }
+  data: { userName: string; businessName: string; flow?: 'marketing' | 'staffing' }
 ): { text: string; chips?: string[]; showInput?: boolean } => {
-  const { userName, businessName } = data
+  const { userName, businessName, flow } = data
 
   switch (state) {
     case 'welcome':
       return {
-        text: "Hey there 👋 I'm Growth Bot — your personal guide to everything Growth Escalators. Are you looking to grow your brand, or just exploring?",
-        chips: ["I want to grow my brand 🚀", "Just browsing 👀", "I have a quick question ❓"],
+        text: "Hey there 👋 I'm GrowthBot — your AI growth consultant at Growth Escalators. What brings you in today?",
+        chips: ["I want to grow my brand 🚀", "I'm hiring talent 🧑‍💼", "Just browsing 👀", "I have a quick question ❓"],
       }
     case 'just_browsing':
       return {
@@ -137,13 +150,50 @@ const getStateConfig = (
       }
     case 'collect_name':
       return {
-        text: "Amazing! Let's get you booked for your free 30-minute growth audit 🎯 First — what's your name?",
+        text: flow === 'staffing'
+          ? "Great — let's line up the right people for you 🧑‍💼 First, what's your name?"
+          : "Amazing! Let's get you booked for your free 30-minute growth audit 🎯 First — what's your name?",
         showInput: true,
       }
     case 'collect_business':
       return {
-        text: `Great to meet you, ${userName}! What's the name of your business or brand?`,
+        text: `Great to meet you, ${userName}! What's the name of your company?`,
         showInput: true,
+      }
+    case 'collect_role':
+      return {
+        text: `Got it. What kind of role are you hiring for at ${businessName || 'your company'}?`,
+        chips: [
+          'Software Development',
+          'Design & Product',
+          'Data, AI & Automation',
+          'Performance Marketing',
+          'Content & Social',
+          'SEO & Growth',
+          'Something else',
+        ],
+      }
+    case 'collect_openings':
+      return {
+        text: "How many openings are we talking about?",
+        chips: ['1–3', '4–10', '10+'],
+      }
+    case 'collect_phone':
+      return {
+        text: "Almost done — what's the best WhatsApp / phone number to reach you on?",
+        showInput: true,
+      }
+    case 'collect_email':
+      return {
+        text: flow === 'staffing'
+          ? "And your email, so we can send across a hiring plan?"
+          : "And your email, so we can send your audit details?",
+        showInput: true,
+      }
+    case 'staffing_confirmed':
+      return {
+        text: `🎉 Perfect, ${userName}! Our staffing team will reach out within a few hours about hiring for ${businessName || 'your company'}.\n\nWhat you get: AI-matched tech & marketing talent from a deep, vetted pool — full-time or contract, remote-ready — sourced by a team that does the work itself.\n\nAnything else I can help with?`,
+        chips: ['Ask another question', 'No thanks, all set!'],
       }
     case 'collect_service_interest':
       return {
@@ -272,9 +322,42 @@ const initialState = (): BotState => ({
   businessName: '',
   selectedService: '',
   selectedBudget: '',
+  flow: 'marketing',
+  selectedRole: '',
+  selectedOpenings: '',
+  userPhone: '',
+  userEmail: '',
+  leadSubmitted: false,
   messages: [],
   unreadCount: 0,
 })
+
+/**
+ * POST a qualified lead to /api/lead, which fans out to Resend + the CRM webhook
+ * (LEAD_WEBHOOK_URL). Best-effort: failures are swallowed so the chat UX never
+ * breaks. Called once per conversation when the qualify flow completes.
+ */
+async function postLead(state: BotState): Promise<void> {
+  const isStaffing = state.flow === 'staffing'
+  const payload = {
+    name: state.userName || 'GrowthBot lead',
+    email: state.userEmail,
+    phone: state.userPhone,
+    source: isStaffing ? 'GrowthBot — Staffing' : 'GrowthBot — Growth audit',
+    message: isStaffing
+      ? `Hiring enquiry via GrowthBot.\nCompany: ${state.businessName}\nRole: ${state.selectedRole}\nOpenings: ${state.selectedOpenings}`
+      : `Growth audit via GrowthBot.\nBusiness: ${state.businessName}\nService interest: ${state.selectedService}\nMonthly budget: ${state.selectedBudget}`,
+  }
+  try {
+    await fetch('/api/lead', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload),
+    })
+  } catch {
+    /* silent — CRM delivery is best-effort, chat continues regardless */
+  }
+}
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
@@ -350,7 +433,7 @@ export default function GrowthBot() {
   }, [open, typing, botState.messages])
 
   const queueBotMessage = useCallback(
-    (state: StateKey, data: { userName: string; businessName: string }, delay = 0) => {
+    (state: StateKey, data: { userName: string; businessName: string; flow?: 'marketing' | 'staffing' }, delay = 0) => {
       const config = getStateConfig(state, data)
       const typingDelay = 800 + Math.random() * 400
 
@@ -398,6 +481,7 @@ export default function GrowthBot() {
       const data = {
         userName: stateOverrides?.userName ?? botState.userName,
         businessName: stateOverrides?.businessName ?? botState.businessName,
+        flow: stateOverrides?.flow ?? botState.flow,
       }
       queueBotMessage(newState, data, 200)
 
@@ -416,7 +500,8 @@ export default function GrowthBot() {
       const cur = botState.currentState
 
       // Welcome
-      if (chip === "I want to grow my brand 🚀") return transition('collect_name')
+      if (chip === "I want to grow my brand 🚀") return transition('collect_name', undefined, { flow: 'marketing' })
+      if (chip === "I'm hiring talent 🧑‍💼") return transition('collect_name', undefined, { flow: 'staffing' })
       if (chip === "Just browsing 👀") return transition('just_browsing')
       if (chip === "I have a quick question ❓") return transition('quick_question')
 
@@ -482,8 +567,18 @@ export default function GrowthBot() {
         return transition('collect_time', undefined, { selectedBudget: chip })
       }
 
-      // Time
-      if (cur === 'collect_time') return transition('booking_confirmed')
+      // Time → collect contact details before confirming
+      if (cur === 'collect_time') return transition('collect_phone')
+
+      // Staffing: role → openings → contact details
+      if (cur === 'collect_role') {
+        setBotState(prev => ({ ...prev, selectedRole: chip }))
+        return transition('collect_openings', undefined, { selectedRole: chip })
+      }
+      if (cur === 'collect_openings') {
+        setBotState(prev => ({ ...prev, selectedOpenings: chip }))
+        return transition('collect_phone', undefined, { selectedOpenings: chip })
+      }
 
       // Booking confirmed
       if (chip === 'See your work') {
@@ -536,7 +631,24 @@ export default function GrowthBot() {
     if (cur === 'collect_business') {
       const biz = text
       setBotState(prev => ({ ...prev, businessName: biz }))
-      return transition('collect_service_interest', undefined, { businessName: biz })
+      // Staffing path asks for the role next; growth path asks for the service.
+      const next = botState.flow === 'staffing' ? 'collect_role' : 'collect_service_interest'
+      return transition(next, undefined, { businessName: biz })
+    }
+    if (cur === 'collect_phone') {
+      const phone = text
+      setBotState(prev => ({ ...prev, userPhone: phone }))
+      return transition('collect_email', undefined, { userPhone: phone })
+    }
+    if (cur === 'collect_email') {
+      const email = text
+      // Build the final lead from the latest state + this email, then POST it
+      // to /api/lead (→ CRM webhook). Fire-and-forget; UX continues either way.
+      const finalState: BotState = { ...botState, userEmail: email, leadSubmitted: true }
+      setBotState(prev => ({ ...prev, userEmail: email, leadSubmitted: true }))
+      if (!botState.leadSubmitted) void postLead(finalState)
+      const confirm = botState.flow === 'staffing' ? 'staffing_confirmed' : 'booking_confirmed'
+      return transition(confirm, undefined, { userEmail: email, leadSubmitted: true })
     }
 
     // Free text keyword routing
