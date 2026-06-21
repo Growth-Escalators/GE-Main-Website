@@ -26,7 +26,7 @@ export default function MarqueeStrip({
         {doubled.map((item, i) => (
           <span key={i} className="flex items-center">
             <span
-              className="font-outfit text-xs uppercase tracking-[0.2em]"
+              className="text-xs uppercase tracking-[0.2em]"
               style={{ color: 'var(--text-muted)' }}
             >
               {item}

@@ -27,14 +27,14 @@ export default function SocialProofTicker() {
       }}
     >
       <span
-        className="font-outfit text-[10px] uppercase tracking-[0.3em] shrink-0"
+        className="text-[10px] uppercase tracking-[0.3em] shrink-0"
         style={{ color: 'var(--orange)' }}
       >
         Client Win
       </span>
       <span className="w-px h-3 shrink-0" style={{ background: 'var(--border)' }} />
       <span
-        className="font-outfit text-xs"
+        className="text-xs"
         style={{
           color: 'var(--text-muted)',
           opacity: visible ? 1 : 0,

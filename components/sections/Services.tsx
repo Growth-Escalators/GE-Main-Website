@@ -258,9 +258,9 @@ function ServiceCard({
         padding: 36,
         transition: 'transform 0.4s cubic-bezier(0.23,1,0.32,1), border-color 0.3s ease, box-shadow 0.4s ease',
         transform: hovered ? 'translateY(-8px)' : 'translateY(0)',
-        borderColor: hovered ? 'rgba(255,101,0,0.45)' : 'var(--border)',
+        borderColor: hovered ? 'rgba(255, 107, 53,0.45)' : 'var(--border)',
         boxShadow: hovered
-          ? '0 20px 60px rgba(0,0,0,0.15), 0 4px 16px rgba(255,101,0,0.08)'
+          ? '0 20px 60px rgba(0,0,0,0.15), 0 4px 16px rgba(255, 107, 53,0.08)'
           : '0 2px 20px rgba(0,0,0,0.06)',
         cursor: 'default',
         ['--mouse-x' as string]: '50%',
@@ -274,7 +274,7 @@ function ServiceCard({
           position: 'absolute',
           inset: 0,
           borderRadius: 16,
-          background: `radial-gradient(${spotlightSize}px circle at var(--mouse-x) var(--mouse-y), rgba(255,101,0,0.07), transparent 70%)`,
+          background: `radial-gradient(${spotlightSize}px circle at var(--mouse-x) var(--mouse-y), rgba(255, 107, 53,0.07), transparent 70%)`,
           opacity: hovered ? 1 : 0,
           transition: 'opacity 0.3s ease',
           pointerEvents: 'none',
@@ -308,7 +308,7 @@ function ServiceCard({
           top: s.featured ? 'auto' : 12,
           bottom: s.featured ? 24 : 'auto',
           right: s.featured ? 24 : 16,
-          fontFamily: 'var(--font-bebas)',
+          fontFamily: 'var(--font-bold tracking-[0.02em])',
           fontSize: s.featured ? 180 : 80,
           lineHeight: 1,
           color: 'var(--text-primary)',
@@ -328,7 +328,7 @@ function ServiceCard({
             width: 48,
             height: 48,
             borderRadius: 12,
-            background: 'rgba(255,101,0,0.1)',
+            background: 'rgba(255, 107, 53,0.1)',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
@@ -341,7 +341,7 @@ function ServiceCard({
 
       {/* Title */}
       <h3
-        className="font-syne font-bold relative z-10"
+        className="font-extrabold font-bold relative z-10"
         style={{
           fontSize: s.featured ? 'clamp(20px,2.2vw,28px)' : 'clamp(16px,1.6vw,20px)',
           color: 'var(--text-primary)',
@@ -354,7 +354,7 @@ function ServiceCard({
 
       {/* Copy */}
       <p
-        className="font-outfit font-light relative z-10"
+        className="font-light relative z-10"
         style={{
           fontSize: 14,
           color: 'var(--text-muted)',
@@ -368,7 +368,7 @@ function ServiceCard({
       {/* Featured italic sub-copy */}
       {s.featured && s.copyItalic && (
         <p
-          className="font-outfit relative z-10"
+          className="relative z-10"
           style={{
             fontSize: 13,
             fontStyle: 'italic',
@@ -394,13 +394,13 @@ function ServiceCard({
           {s.stats.map((st) => (
             <div key={st.label} className="flex flex-col gap-0.5">
               <span
-                className="font-bebas"
+                className="font-bold tracking-[0.02em]"
                 style={{ fontSize: 28, color: 'var(--orange)', lineHeight: 1 }}
               >
                 {st.val}
               </span>
               <span
-                className="font-outfit"
+               
                 style={{ fontSize: 10, color: 'var(--text-muted)', textTransform: 'uppercase', letterSpacing: '0.12em' }}
               >
                 {st.label}
@@ -419,13 +419,13 @@ function ServiceCard({
           style={{
             display: 'inline-flex',
             alignItems: 'center',
-            background: 'rgba(255,101,0,0.1)',
-            border: '1px solid rgba(255,101,0,0.2)',
+            background: 'rgba(255, 107, 53,0.1)',
+            border: '1px solid rgba(255, 107, 53,0.2)',
             borderRadius: 999,
             padding: '4px 14px',
             color: 'var(--orange)',
             fontSize: 12,
-            fontFamily: 'var(--font-outfit)',
+            fontFamily: 'var(--)',
             fontWeight: 500,
           }}
         >
@@ -434,7 +434,7 @@ function ServiceCard({
 
         {/* Arrow */}
         <span
-          className="font-outfit font-medium"
+          className="font-medium"
           style={{
             fontSize: 13,
             color: 'var(--orange)',
@@ -540,7 +540,7 @@ export default function Services() {
           {/* Label + divider row */}
           <div className="flex items-center gap-4 mb-6">
             <span
-              className="svc-label font-outfit"
+              className="svc-label"
               style={{
                 fontSize: 10,
                 letterSpacing: '0.42em',
@@ -568,7 +568,7 @@ export default function Services() {
               {/* Line 1 — clip reveal */}
               <div style={{ overflow: 'hidden', lineHeight: 1 }}>
                 <h2
-                  className="svc-line1 font-syne font-extrabold"
+                  className="svc-line1 font-extrabold"
                   style={{
                     fontSize: 'clamp(36px, 5.5vw, 78px)',
                     color: 'var(--text-primary)',
@@ -583,7 +583,7 @@ export default function Services() {
               {/* Line 2 — clip reveal, orange accent */}
               <div style={{ overflow: 'hidden', lineHeight: 1 }}>
                 <h2
-                  className="svc-line2 font-syne font-extrabold"
+                  className="svc-line2 font-extrabold"
                   style={{
                     fontSize: 'clamp(36px, 5.5vw, 78px)',
                     letterSpacing: '-0.03em',
@@ -600,7 +600,7 @@ export default function Services() {
 
             {/* Subtext */}
             <p
-              className="svc-subtext font-outfit font-light"
+              className="svc-subtext font-light"
               style={{
                 fontSize: 13.5,
                 color: 'var(--text-muted)',
@@ -661,7 +661,7 @@ export default function Services() {
         >
           <div>
             <p
-              className="font-syne font-bold"
+              className="font-extrabold font-bold"
               style={{
                 fontSize: 'clamp(18px, 2vw, 26px)',
                 color: 'var(--text-primary)',
@@ -671,7 +671,7 @@ export default function Services() {
               Not sure which service fits your brand?
             </p>
             <p
-              className="font-outfit font-light"
+              className="font-light"
               style={{ fontSize: 14, color: 'var(--text-muted)' }}
             >
               Let&apos;s map your growth together.
@@ -681,7 +681,7 @@ export default function Services() {
           <MagneticButton
             as="a"
             href="/contact"
-            className="font-outfit font-semibold text-sm px-7 py-4 shrink-0 md:self-auto self-stretch text-center"
+            className="font-semibold text-sm px-7 py-4 shrink-0 md:self-auto self-stretch text-center"
             style={{ background: 'var(--orange)', color: '#fff' }}
           >
             Book a Free Strategy Call →

@@ -196,13 +196,13 @@ export default function Team() {
       </div>
 
       <div className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at 60% 40%, rgba(255,101,0,0.06) 0%, transparent 60%)' }} />
+        style={{ background: 'radial-gradient(ellipse at 60% 40%, rgba(255, 107, 53,0.06) 0%, transparent 60%)' }} />
 
       <div
         className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 relative z-10 flex flex-col justify-center"
         style={{ minHeight: '100vh', paddingTop: '2rem', paddingBottom: '5rem' }}
       >
-        <span className="team-label font-outfit text-[10px] tracking-[0.4em] uppercase block mb-6"
+        <span className="team-label text-[10px] tracking-[0.4em] uppercase block mb-6"
           style={{ color: 'var(--orange)' }}>
           Our Team
         </span>
@@ -215,7 +215,7 @@ export default function Team() {
               style={{
                 width:      activeIdx === i ? '28px' : '6px',
                 height:     '6px',
-                background: activeIdx === i ? 'var(--orange)' : 'rgba(255,101,0,0.18)',
+                background: activeIdx === i ? 'var(--orange)' : 'rgba(255, 107, 53,0.18)',
                 transition: 'width 0.5s cubic-bezier(0.16,1,0.3,1), background 0.4s ease',
               }}
             />
@@ -227,13 +227,13 @@ export default function Team() {
           <div className="flex md:flex-col items-start gap-5 shrink-0 md:pt-2" style={{ width: '180px' }}>
             <div
               ref={initRef}
-              className="w-14 h-14 rounded-full flex items-center justify-center font-syne font-bold text-lg shrink-0"
-              style={{ background: 'linear-gradient(135deg,#FF6500,#FF3D00)', color: '#fff' }}
+              className="w-14 h-14 rounded-full flex items-center justify-center font-extrabold font-bold text-lg shrink-0"
+              style={{ background: 'linear-gradient(135deg,#FF6B35,#FF3D00)', color: '#fff' }}
             />
             <div className="flex flex-col gap-1">
-              <div ref={nameRef} className="font-syne font-bold text-sm leading-snug"
+              <div ref={nameRef} className="font-extrabold font-bold text-sm leading-snug"
                 style={{ color: 'var(--text-primary)' }} />
-              <div ref={roleRef} className="font-outfit text-xs"
+              <div ref={roleRef} className="text-xs"
                 style={{ color: 'var(--orange)' }} />
             </div>
             <div className="hidden md:block w-px mt-4"
@@ -247,7 +247,7 @@ export default function Team() {
                 rotateX so perspective here makes the 3D flip visible */}
             <p
               ref={quoteRef}
-              className="font-syne font-extrabold leading-tight"
+              className="font-extrabold leading-tight"
               style={{
                 fontSize:    'clamp(22px, 3.5vw, 50px)',
                 lineHeight:  1.22,
@@ -258,18 +258,18 @@ export default function Team() {
 
             {/* Counter + hint */}
             <div className="flex items-center gap-4">
-              <span className="font-bebas text-5xl leading-none" style={{ color: 'var(--orange)' }}>
+              <span className="font-bold tracking-[0.02em] text-5xl leading-none" style={{ color: 'var(--orange)' }}>
                 0{activeIdx + 1}
               </span>
               <div className="w-px h-7" style={{ background: 'var(--border)' }} />
-              <span className="font-outfit text-[11px] tracking-widest uppercase"
+              <span className="text-[11px] tracking-widest uppercase"
                 style={{ color: 'var(--text-muted)' }}>
                 of 0{TEAM_MEMBERS.length}
               </span>
 
               {activeIdx < TEAM_MEMBERS.length - 1 && (
                 <span
-                  className="font-outfit text-[10px] tracking-[0.28em] uppercase ml-4"
+                  className="text-[10px] tracking-[0.28em] uppercase ml-4"
                   style={{ color: 'var(--text-muted)', opacity: 0.4 }}
                 >
                   Scroll ↓
@@ -277,7 +277,7 @@ export default function Team() {
               )}
               {activeIdx === TEAM_MEMBERS.length - 1 && (
                 <span
-                  className="font-outfit text-[10px] tracking-[0.28em] uppercase ml-4"
+                  className="text-[10px] tracking-[0.28em] uppercase ml-4"
                   style={{ color: 'var(--orange)', opacity: 0.7 }}
                 >
                   Continue ↓

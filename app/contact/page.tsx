@@ -60,7 +60,7 @@ export default function ContactPage() {
       const particles: HTMLDivElement[] = []
       for (let i = 0; i < 18; i++) {
         const p = document.createElement('div')
-        p.style.cssText = `position:absolute;width:6px;height:6px;border-radius:50%;background:#FF6500;pointer-events:none;left:50%;top:50%;`
+        p.style.cssText = `position:absolute;width:6px;height:6px;border-radius:50%;background:#FF6B35;pointer-events:none;left:50%;top:50%;`
         successRef.current.appendChild(p)
         particles.push(p)
       }
@@ -94,14 +94,14 @@ export default function ContactPage() {
 
               {/* Left column */}
               <div className="contact-left">
-                <span className="font-outfit text-[10px] tracking-[0.4em] uppercase block mb-5" style={{ color: 'var(--orange)' }}>
+                <span className="text-[10px] tracking-[0.4em] uppercase block mb-5" style={{ color: 'var(--orange)' }}>
                   Get In Touch
                 </span>
-                <h1 className="font-syne font-extrabold leading-none mb-6" style={{ fontSize: 'clamp(36px, 5.5vw, 72px)', color: 'var(--text-primary)' }}>
+                <h1 className="font-extrabold leading-none mb-6" style={{ fontSize: 'clamp(36px, 5.5vw, 72px)', color: 'var(--text-primary)' }}>
                   Let&apos;s Build Something<br />
                   <span style={{ color: 'var(--orange)' }}>That Grows.</span>
                 </h1>
-                <p className="font-outfit font-light text-lg mb-10" style={{ color: 'var(--text-muted)', lineHeight: 1.75 }}>
+                <p className="font-light text-lg mb-10" style={{ color: 'var(--text-muted)', lineHeight: 1.75 }}>
                   Whether you have a brief or just a problem — let&apos;s talk. We&apos;ll tell you exactly how to fix it.
                 </p>
 
@@ -114,15 +114,15 @@ export default function ContactPage() {
                     { Icon: Clock, label: 'Office Hours', value: 'Mon–Sat, 10am–7pm IST. Avg response: 4 hours.', href: undefined },
                   ].map(({ Icon, label, value, href }) => (
                     <div key={label} className="flex items-start gap-4">
-                      <div className="w-9 h-9 flex items-center justify-center shrink-0 mt-0.5" style={{ background: 'rgba(255,101,0,0.1)', color: 'var(--orange)' }}>
+                      <div className="w-9 h-9 flex items-center justify-center shrink-0 mt-0.5" style={{ background: 'rgba(255, 107, 53,0.1)', color: 'var(--orange)' }}>
                         <Icon size={15} />
                       </div>
                       <div>
-                        <div className="font-outfit text-[10px] uppercase tracking-widest mb-0.5" style={{ color: 'var(--text-muted)', opacity: 0.6 }}>{label}</div>
+                        <div className="text-[10px] uppercase tracking-widest mb-0.5" style={{ color: 'var(--text-muted)', opacity: 0.6 }}>{label}</div>
                         {href ? (
-                          <a href={href} className="font-outfit text-sm hover:opacity-70 transition-opacity" style={{ color: 'var(--text-primary)' }}>{value}</a>
+                          <a href={href} className="text-sm hover:opacity-70 transition-opacity" style={{ color: 'var(--text-primary)' }}>{value}</a>
                         ) : (
-                          <p className="font-outfit text-sm" style={{ color: 'var(--text-primary)' }}>{value}</p>
+                          <p className="text-sm" style={{ color: 'var(--text-primary)' }}>{value}</p>
                         )}
                       </div>
                     </div>
@@ -131,11 +131,11 @@ export default function ContactPage() {
 
                 {/* Social proof block */}
                 <div className="ge-card p-6 mb-6">
-                  <div className="font-outfit text-[10px] uppercase tracking-widest mb-3" style={{ color: 'var(--orange)' }}>Why Choose Us</div>
-                  <p className="font-outfit font-light text-sm leading-relaxed mb-4" style={{ color: 'var(--text-muted)' }}>
+                  <div className="text-[10px] uppercase tracking-widest mb-3" style={{ color: 'var(--orange)' }}>Why Choose Us</div>
+                  <p className="font-light text-sm leading-relaxed mb-4" style={{ color: 'var(--text-muted)' }}>
                     Join 100+ brands that chose Growth Escalators. Average client ROI: <strong style={{ color: 'var(--text-primary)' }}>4.2x in year one.</strong>
                   </p>
-                  <blockquote className="font-outfit italic text-sm leading-relaxed border-l-2 pl-4" style={{ color: 'var(--text-muted)', borderColor: 'var(--orange)' }}>
+                  <blockquote className="italic text-sm leading-relaxed border-l-2 pl-4" style={{ color: 'var(--text-muted)', borderColor: 'var(--orange)' }}>
                     &ldquo;Growth Escalators completely transformed our Facebook Ad Management. Our ROAS went from 1.4x to 4.8x in just 45 days.&rdquo;
                     <span className="block mt-2 not-italic font-semibold" style={{ color: 'var(--text-primary)', fontStyle: 'normal' }}>— Muaaz Shaikh, Business Owner</span>
                   </blockquote>
@@ -146,7 +146,7 @@ export default function ContactPage() {
                   href="https://wa.me/917733888883?text=Hi%20Growth%20Escalators!%20I%27d%20like%20to%20discuss%20my%20brand%27s%20growth%20strategy."
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 font-outfit font-medium px-6 py-3 transition-all duration-300 hover:opacity-90"
+                  className="inline-flex items-center gap-3 font-medium px-6 py-3 transition-all duration-300 hover:opacity-90"
                   style={{ background: '#25D366', color: '#fff' }}
                 >
                   <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
@@ -165,22 +165,22 @@ export default function ContactPage() {
                     style={{ minHeight: 400 }}
                   >
                     <div className="text-5xl mb-6">🔥</div>
-                    <h3 className="font-syne font-bold text-2xl mb-3" style={{ color: 'var(--text-primary)' }}>
+                    <h3 className="font-extrabold font-bold text-2xl mb-3" style={{ color: 'var(--text-primary)' }}>
                       Received. Let&apos;s Grow.
                     </h3>
-                    <p className="font-outfit font-light" style={{ color: 'var(--text-muted)' }}>
+                    <p className="font-light" style={{ color: 'var(--text-muted)' }}>
                       We&apos;ll be in touch within <strong style={{ color: 'var(--orange)' }}>4 hours</strong>. Check your email — we move fast.
                     </p>
                   </div>
                 ) : (
                   <form onSubmit={handleSubmit} className="ge-card p-8 space-y-5">
-                    <h2 className="font-syne font-bold text-xl mb-2" style={{ color: 'var(--text-primary)' }}>
+                    <h2 className="font-extrabold font-bold text-xl mb-2" style={{ color: 'var(--text-primary)' }}>
                       Tell Us About Your Brand
                     </h2>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="font-outfit text-[10px] uppercase tracking-widest block mb-2" style={{ color: 'var(--text-muted)' }}>Full Name *</label>
+                        <label className="text-[10px] uppercase tracking-widest block mb-2" style={{ color: 'var(--text-muted)' }}>Full Name *</label>
                         <input
                           required
                           className="form-input"
@@ -190,7 +190,7 @@ export default function ContactPage() {
                         />
                       </div>
                       <div>
-                        <label className="font-outfit text-[10px] uppercase tracking-widest block mb-2" style={{ color: 'var(--text-muted)' }}>Email *</label>
+                        <label className="text-[10px] uppercase tracking-widest block mb-2" style={{ color: 'var(--text-muted)' }}>Email *</label>
                         <input
                           required
                           type="email"
@@ -204,7 +204,7 @@ export default function ContactPage() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="font-outfit text-[10px] uppercase tracking-widest block mb-2" style={{ color: 'var(--text-muted)' }}>Phone (Optional)</label>
+                        <label className="text-[10px] uppercase tracking-widest block mb-2" style={{ color: 'var(--text-muted)' }}>Phone (Optional)</label>
                         <input
                           className="form-input"
                           placeholder="+91 98765 43210"
@@ -213,7 +213,7 @@ export default function ContactPage() {
                         />
                       </div>
                       <div>
-                        <label className="font-outfit text-[10px] uppercase tracking-widest block mb-2" style={{ color: 'var(--text-muted)' }}>Company / Brand *</label>
+                        <label className="text-[10px] uppercase tracking-widest block mb-2" style={{ color: 'var(--text-muted)' }}>Company / Brand *</label>
                         <input
                           required
                           className="form-input"
@@ -225,7 +225,7 @@ export default function ContactPage() {
                     </div>
 
                     <div>
-                      <label className="font-outfit text-[10px] uppercase tracking-widest block mb-2" style={{ color: 'var(--text-muted)' }}>Monthly Marketing Budget *</label>
+                      <label className="text-[10px] uppercase tracking-widest block mb-2" style={{ color: 'var(--text-muted)' }}>Monthly Marketing Budget *</label>
                       <select
                         required
                         className="form-input"
@@ -240,7 +240,7 @@ export default function ContactPage() {
                     </div>
 
                     <div>
-                      <label className="font-outfit text-[10px] uppercase tracking-widest block mb-3" style={{ color: 'var(--text-muted)' }}>Services You&apos;re Interested In</label>
+                      <label className="text-[10px] uppercase tracking-widest block mb-3" style={{ color: 'var(--text-muted)' }}>Services You&apos;re Interested In</label>
                       <div className="flex flex-wrap gap-2">
                         {SERVICES_LIST.map((s) => {
                           const active = selectedServices.includes(s)
@@ -249,7 +249,7 @@ export default function ContactPage() {
                               key={s}
                               type="button"
                               onClick={() => toggleService(s)}
-                              className="font-outfit text-xs px-3 py-2 transition-all duration-200"
+                              className="text-xs px-3 py-2 transition-all duration-200"
                               style={{
                                 background: active ? 'var(--orange)' : 'var(--bg-secondary)',
                                 color: active ? '#06060A' : 'var(--text-muted)',
@@ -264,7 +264,7 @@ export default function ContactPage() {
                     </div>
 
                     <div>
-                      <label className="font-outfit text-[10px] uppercase tracking-widest block mb-2" style={{ color: 'var(--text-muted)' }}>Tell Us Your Biggest Challenge</label>
+                      <label className="text-[10px] uppercase tracking-widest block mb-2" style={{ color: 'var(--text-muted)' }}>Tell Us Your Biggest Challenge</label>
                       <textarea
                         rows={4}
                         className="form-input resize-none"
@@ -275,13 +275,13 @@ export default function ContactPage() {
                     </div>
 
                     <MagneticButton
-                      className="w-full font-outfit font-semibold py-4 text-base transition-colors duration-300 mt-2"
+                      className="w-full font-semibold py-4 text-base transition-colors duration-300 mt-2"
                       style={{ background: 'var(--orange)', color: '#06060A' } as React.CSSProperties}
                     >
                       Send It Over →
                     </MagneticButton>
 
-                    <p className="font-outfit text-xs text-center" style={{ color: 'var(--text-muted)', opacity: 0.6 }}>
+                    <p className="text-xs text-center" style={{ color: 'var(--text-muted)', opacity: 0.6 }}>
                       We respond within 4 hours Mon–Sat.
                     </p>
                   </form>

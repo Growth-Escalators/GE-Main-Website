@@ -101,6 +101,7 @@ export default function VideoTestimonialsShorts({
                     src={youTubeThumbnail(v.id, 'hq')}
                     alt=""
                     loading="lazy"
+                    decoding="async"
                     className={styles.thumb}
                     onError={(e) => {
                       // hqdefault always exists; if it fails, hide gracefully

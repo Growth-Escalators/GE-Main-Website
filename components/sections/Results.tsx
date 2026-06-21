@@ -52,15 +52,15 @@ export default function Results() {
       {/* Subtle radial accent */}
       <div
         className="absolute inset-0 pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse 50% 35% at 50% 50%, rgba(255,101,0,0.05) 0%, transparent 70%)' }}
+        style={{ background: 'radial-gradient(ellipse 50% 35% at 50% 50%, rgba(255, 107, 53,0.05) 0%, transparent 70%)' }}
       />
 
       <div className="max-w-7xl mx-auto relative z-10">
         <div className="results-heading text-center mb-16">
-          <span className="font-outfit text-[10px] tracking-[0.4em] uppercase block mb-4" style={{ color: 'var(--orange)' }}>
+          <span className="text-[10px] tracking-[0.4em] uppercase block mb-4" style={{ color: 'var(--orange)' }}>
             Results
           </span>
-          <h2 className="font-syne font-bold leading-none" style={{ fontSize: 'clamp(28px, 5vw, 60px)', color: 'var(--text-primary)' }}>
+          <h2 className="font-extrabold font-bold leading-none" style={{ fontSize: 'clamp(28px, 5vw, 60px)', color: 'var(--text-primary)' }}>
             The Numbers Don&apos;t Lie
           </h2>
           <div className="results-divider w-16 h-0.5 mx-auto mt-6 origin-left" style={{ background: 'var(--orange)' }} />
@@ -70,7 +70,7 @@ export default function Results() {
           {STATS.map((stat, i) => (
             <div key={i} className="stat-block text-center">
               <div
-                className="font-bebas leading-none mb-3"
+                className="font-bold tracking-[0.02em] leading-none mb-3"
                 style={{ fontSize: 'clamp(72px, 13vw, 150px)', color: 'var(--orange)' }}
               >
                 <CountUp
@@ -81,7 +81,7 @@ export default function Results() {
                 />
               </div>
               <p
-                className="font-outfit text-xs uppercase tracking-widest leading-relaxed"
+                className="text-xs uppercase tracking-widest leading-relaxed"
                 style={{ color: 'var(--text-muted)' }}
               >
                 {stat.label}

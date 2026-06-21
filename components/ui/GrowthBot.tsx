@@ -1,8 +1,11 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
+// Animation note: this component used to drive the trigger-button shake and the
+// chat-window open transition with GSAP. Both are now pure CSS (keyframes
+// `gbShake` / `gbWindowIn` in the inline <style> below), so GrowthBot no longer
+// depends on the gsap package.
 import { X, Send, MessageCircle } from 'lucide-react'
-import gsap from 'gsap'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -277,6 +280,7 @@ const initialState = (): BotState => ({
 
 export default function GrowthBot() {
   const [open, setOpen] = useState(false)
+  const [shake, setShake] = useState(false)
   const [botState, setBotState] = useState<BotState>(initialState)
   const [typing, setTyping] = useState(false)
   const [inputValue, setInputValue] = useState('')
@@ -303,33 +307,18 @@ export default function GrowthBot() {
     }
   }, [])
 
-  // Shake button after 8s if no interaction
+  // Shake button after 8s if no interaction (CSS keyframe `gbShake`,
+  // reset via onAnimationEnd on the button).
   useEffect(() => {
     shakeTimeoutRef.current = setTimeout(() => {
-      if (!hasInteracted.current && buttonRef.current) {
-        gsap.fromTo(
-          buttonRef.current,
-          { x: 0 },
-          { x: 8, duration: 0.08, repeat: 7, yoyo: true, ease: 'power1.inOut', onComplete: () => gsap.set(buttonRef.current, { x: 0 }) }
-        )
-      }
+      if (!hasInteracted.current) setShake(true)
     }, 8000)
     return () => { if (shakeTimeoutRef.current) clearTimeout(shakeTimeoutRef.current) }
   }, [])
 
-  // GSAP open/close animation
-  useEffect(() => {
-    if (!windowRef.current) return
-    if (open) {
-      gsap.fromTo(
-        windowRef.current,
-        { opacity: 0, y: 24, scale: 0.95 },
-        { opacity: 1, y: 0, scale: 1, duration: 0.35, ease: 'back.out(1.4)' }
-      )
-    } else {
-      gsap.to(windowRef.current, { opacity: 0, y: 16, scale: 0.96, duration: 0.22, ease: 'power2.in' })
-    }
-  }, [open])
+  // Open animation is handled by the `gbWindowIn` CSS keyframe applied to the
+  // window when it mounts (the window only renders while `open`), so there is
+  // no JS animation effect here.
 
   // Scroll to bottom on new message
   useEffect(() => {
@@ -657,14 +646,15 @@ export default function GrowthBot() {
             width: '380px',
             height: '560px',
             zIndex: 99999,
+            animation: 'gbWindowIn 0.32s cubic-bezier(0.34, 1.56, 0.64, 1) both',
             display: 'flex',
             flexDirection: 'column',
             background: '#111118',
-            border: '1px solid rgba(255,101,0,0.2)',
+            border: '1px solid rgba(255, 107, 53,0.2)',
             borderRadius: '20px',
             overflow: 'hidden',
-            boxShadow: '0 24px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,101,0,0.08)',
-            fontFamily: 'var(--font-outfit), sans-serif',
+            boxShadow: '0 24px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255, 107, 53,0.08)',
+            fontFamily: 'var(--), sans-serif',
             cursor: 'auto',
           }}
           className="growthbot-window"
@@ -677,7 +667,7 @@ export default function GrowthBot() {
               gap: '10px',
               padding: '14px 16px',
               background: 'linear-gradient(135deg, #1a1a28 0%, #111118 100%)',
-              borderBottom: '1px solid rgba(255,101,0,0.15)',
+              borderBottom: '1px solid rgba(255, 107, 53,0.15)',
               flexShrink: 0,
               cursor: 'auto',
             }}
@@ -688,14 +678,14 @@ export default function GrowthBot() {
                 width: '36px',
                 height: '36px',
                 borderRadius: '50%',
-                background: 'linear-gradient(135deg, #FF6500, #ff8c42)',
+                background: 'linear-gradient(135deg, #FF6B35, #ff8c42)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 fontSize: '12px',
                 fontWeight: 800,
                 color: '#fff',
-                fontFamily: 'var(--font-syne), sans-serif',
+                fontFamily: 'var(--font-extrabold), sans-serif',
                 flexShrink: 0,
               }}
             >
@@ -707,7 +697,7 @@ export default function GrowthBot() {
                   fontSize: '15px',
                   fontWeight: 700,
                   color: '#fff',
-                  fontFamily: 'var(--font-syne), sans-serif',
+                  fontFamily: 'var(--font-extrabold), sans-serif',
                   lineHeight: 1.2,
                 }}
               >
@@ -822,13 +812,13 @@ export default function GrowthBot() {
                 width: '32px',
                 height: '32px',
                 borderRadius: '8px',
-                background: 'rgba(255,101,0,0.15)',
-                border: '1px solid rgba(255,101,0,0.25)',
+                background: 'rgba(255, 107, 53,0.15)',
+                border: '1px solid rgba(255, 107, 53,0.25)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 cursor: 'pointer',
-                color: '#FF6500',
+                color: '#FF6B35',
                 flexShrink: 0,
               }}
             >
@@ -849,7 +839,7 @@ export default function GrowthBot() {
               flexDirection: 'column',
               gap: '12px',
               scrollbarWidth: 'thin',
-              scrollbarColor: 'rgba(255,101,0,0.3) rgba(255,255,255,0.04)',
+              scrollbarColor: 'rgba(255, 107, 53,0.3) rgba(255,255,255,0.04)',
               cursor: 'auto',
             }}
             onWheel={e => e.stopPropagation()}
@@ -873,14 +863,14 @@ export default function GrowthBot() {
                         width: '26px',
                         height: '26px',
                         borderRadius: '50%',
-                        background: 'linear-gradient(135deg, #FF6500, #ff8c42)',
+                        background: 'linear-gradient(135deg, #FF6B35, #ff8c42)',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
                         fontSize: '8px',
                         fontWeight: 800,
                         color: '#fff',
-                        fontFamily: 'var(--font-syne), sans-serif',
+                        fontFamily: 'var(--font-extrabold), sans-serif',
                         flexShrink: 0,
                       }}
                     >
@@ -907,7 +897,7 @@ export default function GrowthBot() {
                 {msg.role === 'user' && (
                   <div
                     style={{
-                      background: 'linear-gradient(135deg, #FF6500, #e85a00)',
+                      background: 'linear-gradient(135deg, #FF6B35, #e85a00)',
                       borderRadius: '16px 16px 4px 16px',
                       padding: '10px 14px',
                       maxWidth: '78%',
@@ -940,23 +930,23 @@ export default function GrowthBot() {
                         style={{
                           padding: '6px 12px',
                           borderRadius: '99px',
-                          border: '1px solid rgba(255,101,0,0.45)',
-                          background: 'rgba(255,101,0,0.08)',
-                          color: '#FF6500',
+                          border: '1px solid rgba(255, 107, 53,0.45)',
+                          background: 'rgba(255, 107, 53,0.08)',
+                          color: '#FF6B35',
                           fontSize: '12px',
                           fontWeight: 500,
                           cursor: 'pointer',
                           transition: 'all 0.18s',
-                          fontFamily: 'var(--font-outfit), sans-serif',
+                          fontFamily: 'var(--), sans-serif',
                           whiteSpace: 'nowrap',
                         }}
                         onMouseEnter={e => {
-                          ;(e.target as HTMLButtonElement).style.background = 'rgba(255,101,0,0.2)'
-                          ;(e.target as HTMLButtonElement).style.borderColor = '#FF6500'
+                          ;(e.target as HTMLButtonElement).style.background = 'rgba(255, 107, 53,0.2)'
+                          ;(e.target as HTMLButtonElement).style.borderColor = '#FF6B35'
                         }}
                         onMouseLeave={e => {
-                          ;(e.target as HTMLButtonElement).style.background = 'rgba(255,101,0,0.08)'
-                          ;(e.target as HTMLButtonElement).style.borderColor = 'rgba(255,101,0,0.45)'
+                          ;(e.target as HTMLButtonElement).style.background = 'rgba(255, 107, 53,0.08)'
+                          ;(e.target as HTMLButtonElement).style.borderColor = 'rgba(255, 107, 53,0.45)'
                         }}
                       >
                         {chip}
@@ -975,7 +965,7 @@ export default function GrowthBot() {
                     width: '26px',
                     height: '26px',
                     borderRadius: '50%',
-                    background: 'linear-gradient(135deg, #FF6500, #ff8c42)',
+                    background: 'linear-gradient(135deg, #FF6B35, #ff8c42)',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -1005,7 +995,7 @@ export default function GrowthBot() {
                         width: '6px',
                         height: '6px',
                         borderRadius: '50%',
-                        background: '#FF6500',
+                        background: '#FF6B35',
                         animation: `typingBounce 1s ease-in-out ${i * 0.15}s infinite`,
                       }}
                     />
@@ -1045,11 +1035,11 @@ export default function GrowthBot() {
                   color: '#fff',
                   fontSize: '13.5px',
                   outline: 'none',
-                  fontFamily: 'var(--font-outfit), sans-serif',
+                  fontFamily: 'var(--), sans-serif',
                   transition: 'border-color 0.2s',
                   cursor: 'text',
                 }}
-                onFocus={e => { e.target.style.borderColor = 'rgba(255,101,0,0.5)' }}
+                onFocus={e => { e.target.style.borderColor = 'rgba(255, 107, 53,0.5)' }}
                 onBlur={e => { e.target.style.borderColor = 'rgba(255,255,255,0.1)' }}
               />
               <button
@@ -1059,7 +1049,7 @@ export default function GrowthBot() {
                   width: '40px',
                   height: '40px',
                   borderRadius: '12px',
-                  background: inputValue.trim() ? 'linear-gradient(135deg, #FF6500, #e85a00)' : 'rgba(255,255,255,0.06)',
+                  background: inputValue.trim() ? 'linear-gradient(135deg, #FF6B35, #e85a00)' : 'rgba(255,255,255,0.06)',
                   border: 'none',
                   display: 'flex',
                   alignItems: 'center',
@@ -1089,15 +1079,15 @@ export default function GrowthBot() {
               cursor: 'auto',
             }}
           >
-            <span style={{ fontSize: '10.5px', color: 'rgba(255,255,255,0.25)', fontFamily: 'var(--font-outfit), sans-serif' }}>
+            <span style={{ fontSize: '10.5px', color: 'rgba(255,255,255,0.25)', fontFamily: 'var(--), sans-serif' }}>
               Powered by
             </span>
             <span
               style={{
                 fontSize: '10.5px',
                 fontWeight: 700,
-                color: '#FF6500',
-                fontFamily: 'var(--font-syne), sans-serif',
+                color: '#FF6B35',
+                fontFamily: 'var(--font-extrabold), sans-serif',
               }}
             >
               Growth Escalators
@@ -1117,18 +1107,21 @@ export default function GrowthBot() {
           width: '56px',
           height: '56px',
           borderRadius: '50%',
-          background: 'linear-gradient(135deg, #FF6500, #e85a00)',
+          background: 'linear-gradient(135deg, #FF6B35, #e85a00)',
           border: 'none',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           cursor: 'pointer',
           zIndex: 99999,
-          boxShadow: '0 4px 24px rgba(255,101,0,0.45), 0 0 0 0 rgba(255,101,0,0.4)',
-          animation: 'pulseRing 2.5s ease-out infinite',
+          boxShadow: '0 4px 24px rgba(255, 107, 53,0.45), 0 0 0 0 rgba(255, 107, 53,0.4)',
+          animation: shake
+            ? 'gbShake 0.6s ease-in-out, pulseRing 2.5s ease-out infinite'
+            : 'pulseRing 2.5s ease-out infinite',
           color: '#fff',
           transition: 'transform 0.2s',
         }}
+        onAnimationEnd={e => { if (e.animationName === 'gbShake') setShake(false) }}
         onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.transform = 'scale(1.1)' }}
         onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.transform = 'scale(1)' }}
         title="Chat with Growth Bot"
@@ -1160,10 +1153,21 @@ export default function GrowthBot() {
 
       {/* Global styles */}
       <style>{`
+        @keyframes gbShake {
+          0%, 100% { transform: translateX(0); }
+          20% { transform: translateX(-6px); }
+          40% { transform: translateX(6px); }
+          60% { transform: translateX(-4px); }
+          80% { transform: translateX(4px); }
+        }
+        @keyframes gbWindowIn {
+          from { opacity: 0; transform: translateY(24px) scale(0.95); }
+          to   { opacity: 1; transform: translateY(0) scale(1); }
+        }
         @keyframes pulseRing {
-          0% { box-shadow: 0 4px 24px rgba(255,101,0,0.45), 0 0 0 0 rgba(255,101,0,0.35); }
-          70% { box-shadow: 0 4px 24px rgba(255,101,0,0.45), 0 0 0 14px rgba(255,101,0,0); }
-          100% { box-shadow: 0 4px 24px rgba(255,101,0,0.45), 0 0 0 0 rgba(255,101,0,0); }
+          0% { box-shadow: 0 4px 24px rgba(255, 107, 53,0.45), 0 0 0 0 rgba(255, 107, 53,0.35); }
+          70% { box-shadow: 0 4px 24px rgba(255, 107, 53,0.45), 0 0 0 14px rgba(255, 107, 53,0); }
+          100% { box-shadow: 0 4px 24px rgba(255, 107, 53,0.45), 0 0 0 0 rgba(255, 107, 53,0); }
         }
         @keyframes pulse-green {
           0%, 100% { opacity: 1; transform: scale(1); }
@@ -1179,8 +1183,8 @@ export default function GrowthBot() {
         }
         .growthbot-messages::-webkit-scrollbar { width: 4px; }
         .growthbot-messages::-webkit-scrollbar-track { background: rgba(255,255,255,0.04); border-radius: 4px; }
-        .growthbot-messages::-webkit-scrollbar-thumb { background: rgba(255,101,0,0.35); border-radius: 4px; }
-        .growthbot-messages::-webkit-scrollbar-thumb:hover { background: rgba(255,101,0,0.6); }
+        .growthbot-messages::-webkit-scrollbar-thumb { background: rgba(255, 107, 53,0.35); border-radius: 4px; }
+        .growthbot-messages::-webkit-scrollbar-thumb:hover { background: rgba(255, 107, 53,0.6); }
         @media (max-width: 767px) {
           .growthbot-window {
             bottom: 0 !important;

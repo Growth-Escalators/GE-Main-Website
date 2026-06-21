@@ -282,8 +282,8 @@ function CompoundChart({ triggered }: { triggered: boolean }) {
 
       {tooltip && (
         <div style={{ position: 'absolute', left: tooltip.x + 12, top: tooltip.y - 8, background: 'rgba(15,15,15,0.95)', border: '1px solid rgba(232,71,10,0.4)', borderRadius: '8px', padding: '10px 14px', pointerEvents: 'none', zIndex: 10, backdropFilter: 'blur(8px)' }}>
-          <div className="font-syne font-bold" style={{ fontSize: '12px', color: 'var(--orange)', marginBottom: '3px' }}>{tooltip.label}</div>
-          <div className="font-outfit" style={{ fontSize: '11px', color: 'rgba(255,255,255,0.7)' }}>{tooltip.val}</div>
+          <div className="font-extrabold font-bold" style={{ fontSize: '12px', color: 'var(--orange)', marginBottom: '3px' }}>{tooltip.label}</div>
+          <div style={{ fontSize: '11px', color: 'rgba(255,255,255,0.7)' }}>{tooltip.val}</div>
         </div>
       )}
 
@@ -291,7 +291,7 @@ function CompoundChart({ triggered }: { triggered: boolean }) {
         {CHART_LAYERS.map((layer, i) => (
           <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '6px', opacity: i < visibleLayers ? 1 : 0.2, transition: 'opacity 0.4s ease' }}>
             <div style={{ width: '10px', height: '10px', borderRadius: '2px', background: layer.color, flexShrink: 0 }} />
-            <span className="font-outfit text-[11px]" style={{ color: 'rgba(255,255,255,0.55)', letterSpacing: '0.03em' }}>{layer.label}</span>
+            <span className="text-[11px]" style={{ color: 'rgba(255,255,255,0.55)', letterSpacing: '0.03em' }}>{layer.label}</span>
           </div>
         ))}
       </div>
@@ -344,7 +344,7 @@ function ServiceStrip({ svc, index, isOpen, onToggle }: {
       data-index={index}
       style={{
         borderBottom: '1px solid rgba(0,0,0,0.08)',
-        background: isOpen ? 'rgba(255,101,0,0.025)' : 'transparent',
+        background: isOpen ? 'rgba(255, 107, 53,0.025)' : 'transparent',
         transition: 'background 0.4s ease',
         position: 'relative',
         overflow: 'hidden',
@@ -356,14 +356,14 @@ function ServiceStrip({ svc, index, isOpen, onToggle }: {
       <div
         ref={numWmRef}
         aria-hidden
-        className="font-syne"
+        className="font-extrabold"
         style={{
           position: 'absolute',
           right: '-20px',
           top: '50%',
           transform: 'translateY(-50%)',
           fontSize: 'clamp(80px,10vw,140px)',
-          color: 'rgba(255,101,0,0.04)',
+          color: 'rgba(255, 107, 53,0.04)',
           lineHeight: 1,
           pointerEvents: 'none',
           userSelect: 'none',
@@ -392,19 +392,19 @@ function ServiceStrip({ svc, index, isOpen, onToggle }: {
       >
         {/* Number */}
         <span
-          className="font-outfit text-[13px] tracking-[0.08em]"
+          className="text-[13px] tracking-[0.08em]"
           style={{ color: isOpen ? 'var(--orange)' : 'rgba(13,13,15,0.25)', transition: 'color 0.4s ease', lineHeight: 1 }}
         >{svc.number}</span>
 
         {/* Title */}
         <span
-          className="font-syne font-bold"
+          className="font-extrabold font-bold"
           style={{ fontSize: 'clamp(17px,2.2vw,28px)', letterSpacing: '-0.02em', color: 'var(--text-primary)', lineHeight: 1.1 }}
         >{svc.title}</span>
 
         {/* Tagline — desktop only */}
         <span
-          className="svc-tagline font-outfit font-light text-[13px]"
+          className="svc-tagline font-light text-[13px]"
           style={{ color: 'var(--text-muted)', fontStyle: 'italic', maxWidth: '260px', lineHeight: 1.5, display: 'none' }}
         >{svc.tagline}</span>
 
@@ -441,17 +441,17 @@ function ServiceStrip({ svc, index, isOpen, onToggle }: {
         >
           {/* COL 1 — Stats */}
           <div style={{ overflow: 'hidden' }}>
-            <p className="font-outfit text-[10px] tracking-[0.4em] uppercase" style={{ color: 'var(--orange)', marginBottom: '24px' }}>
+            <p className="text-[10px] tracking-[0.4em] uppercase" style={{ color: 'var(--orange)', marginBottom: '24px' }}>
               By The Numbers
             </p>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
               {svc.stats.map((stat, j) => (
                 <div key={j}>
                   <div
-                    className="font-syne font-extrabold"
+                    className="font-extrabold"
                     style={{ fontSize: 'clamp(24px,3vw,40px)', lineHeight: 1, letterSpacing: '-0.02em', color: 'var(--text-primary)', marginBottom: '4px', wordBreak: 'break-all' }}
                   >{counts[j]}</div>
-                  <div className="font-outfit text-[10px] uppercase tracking-[0.25em]" style={{ color: 'var(--text-muted)' }}>
+                  <div className="text-[10px] uppercase tracking-[0.25em]" style={{ color: 'var(--text-muted)' }}>
                     {stat.label}
                   </div>
                 </div>
@@ -461,32 +461,32 @@ function ServiceStrip({ svc, index, isOpen, onToggle }: {
 
           {/* COL 2 — Description + deliverables */}
           <div>
-            <p className="font-outfit text-[10px] tracking-[0.4em] uppercase" style={{ color: 'var(--orange)', marginBottom: '24px' }}>
+            <p className="text-[10px] tracking-[0.4em] uppercase" style={{ color: 'var(--orange)', marginBottom: '24px' }}>
               What We Do
             </p>
-            <p className="font-outfit font-light leading-relaxed" style={{ fontSize: 'clamp(14px,1.2vw,17px)', color: 'var(--text-muted)', marginBottom: '20px' }}>
+            <p className="font-light leading-relaxed" style={{ fontSize: 'clamp(14px,1.2vw,17px)', color: 'var(--text-muted)', marginBottom: '20px' }}>
               {svc.copy}
             </p>
             <div style={{ display: 'flex', gap: '12px', padding: '14px 18px', border: '1px solid var(--border)', background: 'var(--orange-glow)', borderRadius: '8px', marginBottom: '24px' }}>
               <div style={{ width: '18px', height: '18px', borderRadius: '50%', background: 'var(--orange)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, marginTop: '2px' }}>
                 <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3"><polyline points="20 6 9 17 4 12"/></svg>
               </div>
-              <p className="font-outfit font-light" style={{ fontSize: '13px', fontStyle: 'italic', color: 'var(--text-primary)', lineHeight: 1.6, margin: 0 }}>{svc.result}</p>
+              <p className="font-light" style={{ fontSize: '13px', fontStyle: 'italic', color: 'var(--text-primary)', lineHeight: 1.6, margin: 0 }}>{svc.result}</p>
             </div>
-            <p className="font-outfit text-[10px] tracking-[0.4em] uppercase" style={{ color: 'var(--orange)', marginBottom: '12px' }}>
+            <p className="text-[10px] tracking-[0.4em] uppercase" style={{ color: 'var(--orange)', marginBottom: '12px' }}>
               What&apos;s Included
             </p>
             <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: '9px' }}>
               {svc.deliverables.map((d, j) => (
                 <li key={j} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
                   <div style={{ width: '1px', height: '16px', background: 'var(--orange)', opacity: 0.35, flexShrink: 0 }} />
-                  <span className="font-outfit font-light text-[13px]" style={{ color: 'var(--text-muted)' }}>{d}</span>
+                  <span className="font-light text-[13px]" style={{ color: 'var(--text-muted)' }}>{d}</span>
                 </li>
               ))}
             </ul>
             <a
               href="/contact"
-              className="font-outfit font-semibold text-sm"
+              className="font-semibold text-sm"
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: '8px',
                 marginTop: '28px', padding: '11px 26px', borderRadius: '999px',
@@ -502,23 +502,23 @@ function ServiceStrip({ svc, index, isOpen, onToggle }: {
 
           {/* COL 3 — Testimonial */}
           <div>
-            <p className="font-outfit text-[10px] tracking-[0.4em] uppercase" style={{ color: 'var(--orange)', marginBottom: '24px' }}>
+            <p className="text-[10px] tracking-[0.4em] uppercase" style={{ color: 'var(--orange)', marginBottom: '24px' }}>
               Client Voice
             </p>
             <div style={{ background: '#111', borderRadius: '16px', padding: '28px', position: 'relative', overflow: 'hidden' }}>
               <div style={{ position: 'absolute', top: 0, left: 0, width: '3px', height: '100%', background: 'var(--orange)' }} />
-              <div className="font-syne" style={{ fontSize: '30px', color: 'var(--orange)', lineHeight: 1, marginBottom: '12px' }}>&ldquo;</div>
-              <p className="font-outfit font-light" style={{ fontSize: '13px', fontStyle: 'italic', lineHeight: 1.75, color: 'rgba(255,255,255,0.78)', marginBottom: '20px' }}>
+              <div className="font-extrabold" style={{ fontSize: '30px', color: 'var(--orange)', lineHeight: 1, marginBottom: '12px' }}>&ldquo;</div>
+              <p className="font-light" style={{ fontSize: '13px', fontStyle: 'italic', lineHeight: 1.75, color: 'rgba(255,255,255,0.78)', marginBottom: '20px' }}>
                 {svc.testimonial.quote}
               </p>
               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '8px', flexWrap: 'wrap' }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-                  <div className="font-syne font-bold" style={{ width: '30px', height: '30px', borderRadius: '50%', background: 'linear-gradient(135deg,var(--orange),#ff8533)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', color: '#fff', flexShrink: 0 }}>
+                  <div className="font-extrabold font-bold" style={{ width: '30px', height: '30px', borderRadius: '50%', background: 'linear-gradient(135deg,var(--orange),#ff8533)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '10px', color: '#fff', flexShrink: 0 }}>
                     {svc.testimonial.name.split(' ').map(n => n[0]).join('')}
                   </div>
                   <div>
-                    <div className="font-syne font-bold text-[11px]" style={{ color: '#fff' }}>{svc.testimonial.name}</div>
-                    <div className="font-outfit font-light text-[10px]" style={{ color: 'rgba(255,255,255,0.38)', marginTop: '2px' }}>{svc.testimonial.role}</div>
+                    <div className="font-extrabold font-bold text-[11px]" style={{ color: '#fff' }}>{svc.testimonial.name}</div>
+                    <div className="font-light text-[10px]" style={{ color: 'rgba(255,255,255,0.38)', marginTop: '2px' }}>{svc.testimonial.role}</div>
                   </div>
                 </div>
                 <div style={{ display: 'flex', gap: '2px' }}>
@@ -541,16 +541,16 @@ function ServiceStrip({ svc, index, isOpen, onToggle }: {
           paddingTop: '24px', paddingBottom: '36px',
           position: 'relative', zIndex: 1,
         }}>
-          <p className="font-outfit text-[10px] tracking-[0.4em] uppercase" style={{ color: 'var(--orange)', marginBottom: '18px' }}>
+          <p className="text-[10px] tracking-[0.4em] uppercase" style={{ color: 'var(--orange)', marginBottom: '18px' }}>
             How It Works
           </p>
           <div className="how-it-works-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '20px' }}>
             {svc.steps.map((step, j) => (
               <div key={j} style={{ display: 'flex', gap: '12px' }}>
-                <span className="font-outfit text-[11px] tracking-[0.04em]" style={{ color: 'var(--orange)', opacity: 0.5, flexShrink: 0, paddingTop: '2px' }}>{step.n}</span>
+                <span className="text-[11px] tracking-[0.04em]" style={{ color: 'var(--orange)', opacity: 0.5, flexShrink: 0, paddingTop: '2px' }}>{step.n}</span>
                 <div>
-                  <div className="font-syne font-bold text-[13px]" style={{ color: 'var(--text-primary)', marginBottom: '4px', lineHeight: 1.2 }}>{step.title}</div>
-                  <div className="font-outfit font-light text-[12px]" style={{ color: 'var(--text-muted)', lineHeight: 1.65 }}>{step.desc}</div>
+                  <div className="font-extrabold font-bold text-[13px]" style={{ color: 'var(--text-primary)', marginBottom: '4px', lineHeight: 1.2 }}>{step.title}</div>
+                  <div className="font-light text-[12px]" style={{ color: 'var(--text-muted)', lineHeight: 1.65 }}>{step.desc}</div>
                 </div>
               </div>
             ))}
@@ -657,24 +657,24 @@ export default function ServicesPage() {
           {/* Label pill — matches homepage exactly */}
           <div className="hero-item" style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', border: '1px solid var(--border)', background: 'var(--orange-glow)', borderRadius: '100px', padding: '6px 16px', marginBottom: '28px' }}>
             <span className="w-1.5 h-1.5 rounded-full" style={{ background: 'var(--orange)', display: 'inline-block', width: '5px', height: '5px', borderRadius: '50%' }} />
-            <span className="font-outfit text-[11px] tracking-[0.35em] uppercase" style={{ color: 'var(--orange)' }}>
+            <span className="text-[11px] tracking-[0.35em] uppercase" style={{ color: 'var(--orange)' }}>
               Our Services
             </span>
           </div>
 
           {/* Hero h1 — same scale as homepage hero */}
-          <h1 className="hero-item font-syne font-extrabold leading-none" style={{ fontSize: 'clamp(28px,4.5vw,64px)', color: 'var(--text-primary)', letterSpacing: '-0.02em', marginBottom: '28px' }}>
+          <h1 className="hero-item font-extrabold leading-none" style={{ fontSize: 'clamp(28px,4.5vw,64px)', color: 'var(--text-primary)', letterSpacing: '-0.02em', marginBottom: '28px' }}>
             Seven Weapons.<br />
             <span style={{ color: 'var(--orange)' }}>One Mission.</span>
           </h1>
 
           <div className="hero-item" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', gap: '24px', justifyContent: 'space-between' }}>
-            <p className="font-outfit font-light leading-relaxed" style={{ fontSize: 'clamp(14px,1.2vw,17px)', color: 'var(--text-muted)', maxWidth: '480px' }}>
+            <p className="font-light leading-relaxed" style={{ fontSize: 'clamp(14px,1.2vw,17px)', color: 'var(--text-muted)', maxWidth: '480px' }}>
               Every service we offer is a precision growth lever. Pull the right ones and your brand doesn&apos;t just grow — it compounds. We&apos;ve engineered growth for 100+ brands across India.
             </p>
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', alignItems: 'center' }}>
               {['₹10Cr+ Ad Spend', '100+ Brands', '97% Retention', '4.9★ Rating'].map(t => (
-                <span key={t} className="font-outfit text-[11px]" style={{ padding: '7px 16px', borderRadius: '999px', background: 'var(--bg-secondary)', color: 'var(--text-muted)', border: '1px solid var(--border-strong)' }}>{t}</span>
+                <span key={t} className="text-[11px]" style={{ padding: '7px 16px', borderRadius: '999px', background: 'var(--bg-secondary)', color: 'var(--text-muted)', border: '1px solid var(--border-strong)' }}>{t}</span>
               ))}
             </div>
           </div>
@@ -682,14 +682,14 @@ export default function ServicesPage() {
           <div className="hero-item" style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', marginTop: '36px' }}>
             <a
               href="/contact"
-              className="font-outfit font-semibold text-sm"
+              className="font-semibold text-sm"
               style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '14px 32px', background: 'var(--orange)', color: '#fff', textDecoration: 'none', cursor: 'pointer', boxShadow: '0 6px 26px var(--orange-glow)', transition: 'transform 0.2s ease,box-shadow 0.2s ease' }}
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)' }}
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = '' }}
             >Get Free Audit →</a>
             <Link
               href="/work"
-              className="font-outfit font-medium text-sm"
+              className="font-medium text-sm"
               style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '14px 32px', border: '1.5px solid var(--border-strong)', color: 'var(--text-primary)', textDecoration: 'none', cursor: 'pointer', transition: 'border-color 0.2s ease' }}
               onMouseEnter={e => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--orange)' }}
               onMouseLeave={e => { (e.currentTarget as HTMLElement).style.borderColor = 'var(--border-strong)' }}
@@ -705,7 +705,7 @@ export default function ServicesPage() {
             <span key={rep} style={{ display: 'inline-flex' }}>
               {TICKER.map(t => (
                 <span key={t} style={{ display: 'inline-flex', alignItems: 'center', gap: '16px', paddingRight: '32px' }}>
-                  <span className="font-outfit text-[10px] tracking-[0.25em] uppercase" style={{ color: 'var(--orange)' }}>{t}</span>
+                  <span className="text-[10px] tracking-[0.25em] uppercase" style={{ color: 'var(--orange)' }}>{t}</span>
                   <span style={{ color: 'var(--border)', fontSize: '6px' }}>◆</span>
                 </span>
               ))}
@@ -718,14 +718,14 @@ export default function ServicesPage() {
       <section style={{ padding: 'clamp(56px,7vw,96px) 0' }}>
         <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
           <div style={{ padding: '0 clamp(24px,4vw,64px) clamp(28px,4vw,48px)' }}>
-            <span className="font-outfit text-[10px] tracking-[0.4em] uppercase" style={{ color: 'var(--orange)', display: 'block', marginBottom: '10px' }}>
+            <span className="text-[10px] tracking-[0.4em] uppercase" style={{ color: 'var(--orange)', display: 'block', marginBottom: '10px' }}>
               What We Do
             </span>
             <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
-              <h2 className="font-syne font-extrabold leading-none" style={{ fontSize: 'clamp(22px,3vw,40px)', letterSpacing: '-0.02em', color: 'var(--text-primary)', margin: 0 }}>
+              <h2 className="font-extrabold leading-none" style={{ fontSize: 'clamp(22px,3vw,40px)', letterSpacing: '-0.02em', color: 'var(--text-primary)', margin: 0 }}>
                 Click any service to explore
               </h2>
-              <p className="font-outfit font-light text-[12px]" style={{ color: 'var(--text-muted)', margin: 0 }}>
+              <p className="font-light text-[12px]" style={{ color: 'var(--text-muted)', margin: 0 }}>
                 {openIndex !== null ? SERVICES[openIndex].title : '7 services · tap to expand'}
               </p>
             </div>
@@ -747,19 +747,19 @@ export default function ServicesPage() {
 
       {/* ── COMPOUND EFFECT ── */}
       <section ref={chartRef} style={{ background: '#0f0f0f', padding: 'clamp(72px,9vw,128px) clamp(24px,5vw,80px)', position: 'relative', overflow: 'hidden' }}>
-        <div aria-hidden style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, backgroundImage: 'linear-gradient(rgba(255,101,0,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,101,0,0.025) 1px,transparent 1px)', backgroundSize: '60px 60px' }} />
-        <div aria-hidden style={{ position: 'absolute', bottom: '-10%', right: '-5%', width: '700px', height: '500px', background: 'radial-gradient(ellipse,rgba(255,101,0,0.1) 0%,transparent 65%)', filter: 'blur(80px)', pointerEvents: 'none', zIndex: 0 }} />
+        <div aria-hidden style={{ position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 0, backgroundImage: 'linear-gradient(rgba(255, 107, 53,0.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255, 107, 53,0.025) 1px,transparent 1px)', backgroundSize: '60px 60px' }} />
+        <div aria-hidden style={{ position: 'absolute', bottom: '-10%', right: '-5%', width: '700px', height: '500px', background: 'radial-gradient(ellipse,rgba(255, 107, 53,0.1) 0%,transparent 65%)', filter: 'blur(80px)', pointerEvents: 'none', zIndex: 0 }} />
 
         <div style={{ maxWidth: '1200px', margin: '0 auto', position: 'relative', zIndex: 1 }}>
           <div style={{ marginBottom: '64px' }}>
-            <span className="font-outfit text-[10px] tracking-[0.4em] uppercase" style={{ color: 'var(--orange)', display: 'block', marginBottom: '18px' }}>
+            <span className="text-[10px] tracking-[0.4em] uppercase" style={{ color: 'var(--orange)', display: 'block', marginBottom: '18px' }}>
               The Compound Effect
             </span>
-            <h2 className="font-syne font-extrabold leading-none" style={{ fontSize: 'clamp(28px,4.5vw,58px)', letterSpacing: '-0.02em', color: '#ffffff', marginBottom: '16px', maxWidth: '780px' }}>
+            <h2 className="font-extrabold leading-none" style={{ fontSize: 'clamp(28px,4.5vw,58px)', letterSpacing: '-0.02em', color: '#ffffff', marginBottom: '16px', maxWidth: '780px' }}>
               When all 7 work together, growth isn&apos;t linear — it&apos;s{' '}
               <span style={{ color: 'var(--orange)' }}>exponential.</span>
             </h2>
-            <p className="font-outfit font-light leading-relaxed" style={{ fontSize: 'clamp(14px,1.2vw,17px)', color: 'rgba(255,255,255,0.4)', maxWidth: '520px' }}>
+            <p className="font-light leading-relaxed" style={{ fontSize: 'clamp(14px,1.2vw,17px)', color: 'rgba(255,255,255,0.4)', maxWidth: '520px' }}>
               Here&apos;s what our full-stack clients see in 12 months. Each layer compounds the one below it.
             </p>
           </div>
@@ -773,9 +773,9 @@ export default function ServicesPage() {
               { val: '₹10Cr+', label: 'Total ad spend managed', sub: 'Across all services & clients' },
             ].map((stat, i) => (
               <div key={i} style={{ padding: 'clamp(28px,3vw,48px)', background: '#0f0f0f' }}>
-                <div className="font-syne font-extrabold" style={{ fontSize: 'clamp(28px,4vw,52px)', letterSpacing: '-0.02em', color: '#fff', lineHeight: 1, marginBottom: '10px' }}>{stat.val}</div>
-                <div className="font-outfit text-[13px]" style={{ color: 'rgba(255,255,255,0.6)', lineHeight: 1.5, marginBottom: '4px' }}>{stat.label}</div>
-                <div className="font-outfit font-light text-[11px]" style={{ color: 'rgba(255,255,255,0.25)' }}>{stat.sub}</div>
+                <div className="font-extrabold" style={{ fontSize: 'clamp(28px,4vw,52px)', letterSpacing: '-0.02em', color: '#fff', lineHeight: 1, marginBottom: '10px' }}>{stat.val}</div>
+                <div className="text-[13px]" style={{ color: 'rgba(255,255,255,0.6)', lineHeight: 1.5, marginBottom: '4px' }}>{stat.label}</div>
+                <div className="font-light text-[11px]" style={{ color: 'rgba(255,255,255,0.25)' }}>{stat.sub}</div>
               </div>
             ))}
           </div>
@@ -783,55 +783,55 @@ export default function ServicesPage() {
           <div style={{ marginTop: '56px', textAlign: 'center' }}>
             <a
               href="/contact"
-              className="font-outfit font-semibold"
+              className="font-semibold"
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: '12px',
                 padding: '18px 52px',
                 background: 'var(--orange)', color: '#fff',
                 fontSize: '15px',
                 textDecoration: 'none', cursor: 'pointer',
-                boxShadow: '0 8px 40px rgba(255,101,0,0.4)',
+                boxShadow: '0 8px 40px rgba(255, 107, 53,0.4)',
                 transition: 'transform 0.2s ease,box-shadow 0.2s ease',
               }}
-              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 14px 56px rgba(255,101,0,0.55)' }}
-              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = ''; (e.currentTarget as HTMLElement).style.boxShadow = '0 8px 40px rgba(255,101,0,0.4)' }}
+              onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 14px 56px rgba(255, 107, 53,0.55)' }}
+              onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = ''; (e.currentTarget as HTMLElement).style.boxShadow = '0 8px 40px rgba(255, 107, 53,0.4)' }}
             >
               Build Your Full-Stack Growth Engine →
             </a>
-            <p className="font-outfit font-light text-[11px]" style={{ color: 'rgba(255,255,255,0.2)', marginTop: '14px' }}>No contracts. No fluff. Just compounding results.</p>
+            <p className="font-light text-[11px]" style={{ color: 'rgba(255,255,255,0.2)', marginTop: '14px' }}>No contracts. No fluff. Just compounding results.</p>
           </div>
         </div>
       </section>
 
       {/* ── BOTTOM CTA ── */}
       <section style={{ padding: 'clamp(72px,9vw,120px) clamp(24px,5vw,80px)', background: '#0a0a0a', position: 'relative', overflow: 'hidden' }}>
-        <div aria-hidden style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: '600px', height: '400px', background: 'radial-gradient(ellipse,rgba(255,101,0,0.12) 0%,transparent 65%)', pointerEvents: 'none' }} />
+        <div aria-hidden style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%,-50%)', width: '600px', height: '400px', background: 'radial-gradient(ellipse,rgba(255, 107, 53,0.12) 0%,transparent 65%)', pointerEvents: 'none' }} />
         <div style={{ maxWidth: '680px', margin: '0 auto', textAlign: 'center', position: 'relative', zIndex: 1 }}>
-          <span className="font-outfit text-[10px] tracking-[0.4em] uppercase" style={{ color: 'var(--orange)', display: 'block', marginBottom: '18px' }}>
+          <span className="text-[10px] tracking-[0.4em] uppercase" style={{ color: 'var(--orange)', display: 'block', marginBottom: '18px' }}>
             Not sure where to start?
           </span>
-          <h2 className="font-syne font-extrabold leading-none" style={{ fontSize: 'clamp(28px,5vw,60px)', letterSpacing: '-0.02em', color: '#fff', marginBottom: '18px' }}>
+          <h2 className="font-extrabold leading-none" style={{ fontSize: 'clamp(28px,5vw,60px)', letterSpacing: '-0.02em', color: '#fff', marginBottom: '18px' }}>
             Let&apos;s figure it out<br />together.
           </h2>
-          <p className="font-outfit font-light leading-relaxed" style={{ fontSize: 'clamp(14px,1.2vw,17px)', color: 'rgba(255,255,255,0.4)', marginBottom: '32px', maxWidth: '440px', marginLeft: 'auto', marginRight: 'auto' }}>
+          <p className="font-light leading-relaxed" style={{ fontSize: 'clamp(14px,1.2vw,17px)', color: 'rgba(255,255,255,0.4)', marginBottom: '32px', maxWidth: '440px', marginLeft: 'auto', marginRight: 'auto' }}>
             Book a free 30-minute audit and we&apos;ll tell you exactly which services your brand needs — and which ones it doesn&apos;t.
           </p>
           <a
             href="/contact"
-            className="font-outfit font-semibold text-sm"
-            style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '15px 42px', background: 'var(--orange)', color: '#fff', textDecoration: 'none', cursor: 'pointer', boxShadow: '0 8px 34px rgba(255,101,0,0.36)', transition: 'transform 0.2s ease,box-shadow 0.2s ease' }}
-            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 14px 48px rgba(255,101,0,0.5)' }}
-            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = ''; (e.currentTarget as HTMLElement).style.boxShadow = '0 8px 34px rgba(255,101,0,0.36)' }}
+            className="font-semibold text-sm"
+            style={{ display: 'inline-flex', alignItems: 'center', gap: '10px', padding: '15px 42px', background: 'var(--orange)', color: '#fff', textDecoration: 'none', cursor: 'pointer', boxShadow: '0 8px 34px rgba(255, 107, 53,0.36)', transition: 'transform 0.2s ease,box-shadow 0.2s ease' }}
+            onMouseEnter={e => { (e.currentTarget as HTMLElement).style.transform = 'translateY(-2px)'; (e.currentTarget as HTMLElement).style.boxShadow = '0 14px 48px rgba(255, 107, 53,0.5)' }}
+            onMouseLeave={e => { (e.currentTarget as HTMLElement).style.transform = ''; (e.currentTarget as HTMLElement).style.boxShadow = '0 8px 34px rgba(255, 107, 53,0.36)' }}
           >Claim Your Free Audit →</a>
-          <p className="font-outfit font-light text-[11px]" style={{ color: 'rgba(255,255,255,0.18)', marginTop: '14px' }}>No contracts. No fluff. Just clarity.</p>
+          <p className="font-light text-[11px]" style={{ color: 'rgba(255,255,255,0.18)', marginTop: '14px' }}>No contracts. No fluff. Just clarity.</p>
         </div>
       </section>
 
       {/* Floating badge */}
       <div style={{ position: 'fixed', bottom: '32px', left: '24px', zIndex: 9998, background: 'var(--nav-bg)', backdropFilter: 'blur(16px)', border: '1px solid var(--border-subtle)', borderRadius: '999px', padding: '9px 16px', display: 'flex', alignItems: 'center', gap: '8px', boxShadow: '0 4px 20px rgba(0,0,0,0.08)' }}>
         <div style={{ width: '6px', height: '6px', borderRadius: '50%', background: 'var(--orange)' }} />
-        <span className="font-outfit text-[10px]" style={{ color: 'var(--text-muted)' }}>Service</span>
-        <span className="font-syne font-bold" style={{ fontSize: '14px', color: 'var(--orange)', letterSpacing: '-0.01em' }}>
+        <span className="text-[10px]" style={{ color: 'var(--text-muted)' }}>Service</span>
+        <span className="font-extrabold font-bold" style={{ fontSize: '14px', color: 'var(--orange)', letterSpacing: '-0.01em' }}>
           {String(activeService).padStart(2,'0')}<span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>/07</span>
         </span>
       </div>

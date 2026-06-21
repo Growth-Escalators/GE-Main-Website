@@ -38,7 +38,7 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-6 md:px-12 h-[68px] flex items-center justify-between">
           <Link href="/" className="flex items-center select-none">
             <span
-              className="font-syne font-extrabold"
+              className="font-extrabold"
               style={{ fontSize: '1.15rem', letterSpacing: '-0.03em', lineHeight: 1, color: 'var(--text-primary)' }}
             >
               <span style={{ color: 'var(--orange)' }}>G</span>rowth Escalators
@@ -52,7 +52,7 @@ export default function Navbar() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="relative font-outfit text-sm font-medium transition-colors duration-200"
+                  className="relative text-sm font-medium transition-colors duration-200"
                   style={{ color: isActive ? 'var(--orange)' : 'var(--text-muted)' }}
                 >
                   {link.label}
@@ -69,7 +69,7 @@ export default function Navbar() {
             <MagneticButton
               as="a"
               href="/contact"
-              className="hidden md:inline-flex font-outfit font-semibold text-sm px-5 py-2.5"
+              className="hidden md:inline-flex font-semibold text-sm px-5 py-2.5"
               style={{ border: '1.5px solid var(--orange)', color: 'var(--orange)', background: 'transparent' }}
             >
               Get Free Audit →
@@ -111,7 +111,7 @@ export default function Navbar() {
               key={link.href}
               href={link.href}
               onClick={() => setMenuOpen(false)}
-              className="font-syne font-bold text-4xl transition-all duration-300"
+              className="font-extrabold font-bold text-4xl transition-all duration-300"
               style={{
                 color: pathname === link.href ? 'var(--orange)' : 'var(--text-primary)',
                 opacity: menuOpen ? 1 : 0,

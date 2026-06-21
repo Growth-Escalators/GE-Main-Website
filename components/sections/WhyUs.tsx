@@ -59,10 +59,10 @@ export default function WhyUs() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
           {/* Left */}
           <div>
-            <span className="font-outfit text-[10px] tracking-[0.4em] uppercase block mb-4" style={{ color: 'var(--orange)' }}>
+            <span className="text-[10px] tracking-[0.4em] uppercase block mb-4" style={{ color: 'var(--orange)' }}>
               Why Us
             </span>
-            <h2 className="whyus-heading font-syne font-bold leading-tight mb-12" style={{ fontSize: 'clamp(28px, 4.5vw, 60px)', color: 'var(--text-primary)' }}>
+            <h2 className="whyus-heading font-extrabold font-bold leading-tight mb-12" style={{ fontSize: 'clamp(28px, 4.5vw, 60px)', color: 'var(--text-primary)' }}>
               Why Brands Choose Growth Escalators
             </h2>
 
@@ -71,13 +71,13 @@ export default function WhyUs() {
                 <div key={i} className="why-item flex gap-4">
                   <div
                     className="mt-0.5 w-5 h-5 rounded-full flex items-center justify-center shrink-0"
-                    style={{ background: 'rgba(255,101,0,0.1)', border: '1px solid rgba(255,101,0,0.25)' }}
+                    style={{ background: 'rgba(255, 107, 53,0.1)', border: '1px solid rgba(255, 107, 53,0.25)' }}
                   >
                     <Check size={10} style={{ color: 'var(--orange)' }} />
                   </div>
                   <div>
-                    <h4 className="font-syne font-bold mb-1" style={{ color: 'var(--text-primary)' }}>{r.title}</h4>
-                    <p className="font-outfit font-light text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>{r.desc}</p>
+                    <h4 className="font-extrabold font-bold mb-1" style={{ color: 'var(--text-primary)' }}>{r.title}</h4>
+                    <p className="font-light text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>{r.desc}</p>
                   </div>
                 </div>
               ))}
@@ -88,11 +88,11 @@ export default function WhyUs() {
           <div className="metrics-panel relative">
             <div className="ge-card p-6">
               <div className="flex items-center justify-between mb-6">
-                <span className="font-outfit text-xs uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>Performance Dashboard</span>
+                <span className="text-xs uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>Performance Dashboard</span>
                 <div className="flex gap-1.5">
                   <div className="w-2 h-2 rounded-full" style={{ background: 'var(--orange)' }} />
-                  <div className="w-2 h-2 rounded-full" style={{ background: 'rgba(255,101,0,0.3)' }} />
-                  <div className="w-2 h-2 rounded-full" style={{ background: 'rgba(255,101,0,0.12)' }} />
+                  <div className="w-2 h-2 rounded-full" style={{ background: 'rgba(255, 107, 53,0.3)' }} />
+                  <div className="w-2 h-2 rounded-full" style={{ background: 'rgba(255, 107, 53,0.12)' }} />
                 </div>
               </div>
 
@@ -103,7 +103,7 @@ export default function WhyUs() {
                     className="flex-1 rounded-t-sm"
                     style={{
                       height: `${h * 0.7}%`,
-                      background: i === 11 ? 'var(--orange)' : i > 7 ? 'rgba(255,101,0,0.4)' : 'rgba(255,101,0,0.12)',
+                      background: i === 11 ? 'var(--orange)' : i > 7 ? 'rgba(255, 107, 53,0.4)' : 'rgba(255, 107, 53,0.12)',
                     }}
                   />
                 ))}
@@ -116,10 +116,10 @@ export default function WhyUs() {
                   { label: 'CPA', val: '₹180', change: '-14%', up: true },
                 ].map((m) => (
                   <div key={m.label} className="metric-card flex items-center justify-between py-2" style={{ borderBottom: '1px solid var(--border-subtle)' }}>
-                    <span className="font-outfit text-xs uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>{m.label}</span>
+                    <span className="text-xs uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>{m.label}</span>
                     <div className="flex items-center gap-3">
-                      <span className="font-syne font-bold" style={{ color: 'var(--text-primary)' }}>{m.val}</span>
-                      <span className="font-outfit text-xs" style={{ color: '#4ADE80' }}>{m.change}</span>
+                      <span className="font-extrabold font-bold" style={{ color: 'var(--text-primary)' }}>{m.val}</span>
+                      <span className="text-xs" style={{ color: '#4ADE80' }}>{m.change}</span>
                     </div>
                   </div>
                 ))}
@@ -127,12 +127,12 @@ export default function WhyUs() {
             </div>
 
             <div className="metric-card absolute -top-5 -right-5 ge-card p-4 hidden lg:block">
-              <div className="font-bebas text-3xl" style={{ color: 'var(--orange)' }}>97%</div>
-              <div className="font-outfit text-[10px] uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>Retention</div>
+              <div className="font-bold tracking-[0.02em] text-3xl" style={{ color: 'var(--orange)' }}>97%</div>
+              <div className="text-[10px] uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>Retention</div>
             </div>
             <div className="metric-card absolute -bottom-5 -left-5 ge-card p-4 hidden lg:block">
-              <div className="font-bebas text-3xl" style={{ color: 'var(--orange)' }}>100+</div>
-              <div className="font-outfit text-[10px] uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>Brands</div>
+              <div className="font-bold tracking-[0.02em] text-3xl" style={{ color: 'var(--orange)' }}>100+</div>
+              <div className="text-[10px] uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>Brands</div>
             </div>
           </div>
         </div>
