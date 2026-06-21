@@ -5,7 +5,7 @@ import { gsap } from '@/lib/gsap'
 import { ALL_TESTIMONIALS } from '@/lib/constants'
 
 const CATEGORY_COLORS: Record<string, string> = {
-  'Performance Marketing': '#FF6500',
+  'Performance Marketing': '#FF6B35',
   'Funnel Marketing':      '#e05500',
   'D2C eCommerce':         '#cc4400',
   'eCommerce':             '#cc4400',
@@ -23,7 +23,7 @@ function StarRating({ rating }: { rating: number }) {
   return (
     <div className="flex gap-0.5">
       {Array.from({ length: 5 }).map((_, i) => (
-        <svg key={i} width="14" height="14" viewBox="0 0 24 24" fill={i < rating ? '#FF6500' : 'rgba(255,101,0,0.2)'}>
+        <svg key={i} width="14" height="14" viewBox="0 0 24 24" fill={i < rating ? '#FF6B35' : 'rgba(255, 107, 53,0.2)'}>
           <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
         </svg>
       ))}
@@ -34,11 +34,11 @@ function StarRating({ rating }: { rating: number }) {
 function VerifiedBadge() {
   return (
     <div className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full"
-      style={{ background: 'rgba(255,101,0,0.08)', border: '1px solid rgba(255,101,0,0.2)' }}>
-      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#FF6500" strokeWidth="3">
+      style={{ background: 'rgba(255, 107, 53,0.08)', border: '1px solid rgba(255, 107, 53,0.2)' }}>
+      <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="#FF6B35" strokeWidth="3">
         <path d="M20 6L9 17l-5-5" />
       </svg>
-      <span className="font-outfit text-[9px] tracking-wider uppercase" style={{ color: 'var(--orange)' }}>
+      <span className="text-[9px] tracking-wider uppercase" style={{ color: 'var(--orange)' }}>
         Verified
       </span>
     </div>
@@ -95,7 +95,7 @@ export default function Testimonials() {
       gsap.to(card, {
         scale:   isActive ? 1.03 : 1,
         opacity: isActive ? 1 : 0.55,
-        borderColor: isActive ? 'rgba(255,101,0,0.45)' : 'var(--border)',
+        borderColor: isActive ? 'rgba(255, 107, 53,0.45)' : 'var(--border)',
         duration: 0.5,
         ease: 'power2.out',
         overwrite: 'auto',
@@ -106,7 +106,7 @@ export default function Testimonials() {
       gsap.to(card, {
         scale:   isActive ? 1.03 : 1,
         opacity: isActive ? 1 : 0.55,
-        borderColor: isActive ? 'rgba(255,101,0,0.45)' : 'var(--border)',
+        borderColor: isActive ? 'rgba(255, 107, 53,0.45)' : 'var(--border)',
         duration: 0.5,
         ease: 'power2.out',
         overwrite: 'auto', // FIXED: same tween accumulation prevention
@@ -131,40 +131,40 @@ export default function Testimonials() {
       </div>
 
       <span
-        className="font-outfit text-[9px] uppercase tracking-widest px-2 py-0.5 rounded-full self-start"
+        className="text-[9px] uppercase tracking-widest px-2 py-0.5 rounded-full self-start"
         style={{
-          background: `${CATEGORY_COLORS[t.category] || '#FF6500'}15`,
-          color: CATEGORY_COLORS[t.category] || '#FF6500',
-          border: `1px solid ${CATEGORY_COLORS[t.category] || '#FF6500'}30`,
+          background: `${CATEGORY_COLORS[t.category] || '#FF6B35'}15`,
+          color: CATEGORY_COLORS[t.category] || '#FF6B35',
+          border: `1px solid ${CATEGORY_COLORS[t.category] || '#FF6B35'}30`,
         }}
       >
         {t.category}
       </span>
 
       <div
-        className="font-outfit font-semibold text-xs px-3 py-1.5 rounded-sm self-start"
-        style={{ background: 'rgba(255,101,0,0.08)', color: 'var(--orange)' }}
+        className="font-semibold text-xs px-3 py-1.5 rounded-sm self-start"
+        style={{ background: 'rgba(255, 107, 53,0.08)', color: 'var(--orange)' }}
       >
         {t.highlight}
       </div>
 
-      <p className="font-outfit font-light text-sm leading-relaxed flex-1"
+      <p className="font-light text-sm leading-relaxed flex-1"
         style={{ color: 'var(--text-muted)', fontSize: '13px' }}>
         &ldquo;{t.quote}&rdquo;
       </p>
 
       <div className="flex items-center gap-3 pt-2" style={{ borderTop: '1px solid var(--border-subtle)' }}>
         <div
-          className="w-9 h-9 rounded-full flex items-center justify-center font-syne font-bold text-xs shrink-0"
-          style={{ background: 'linear-gradient(135deg,#FF6500,#FF3D00)', color: '#fff' }}
+          className="w-9 h-9 rounded-full flex items-center justify-center font-extrabold font-bold text-xs shrink-0"
+          style={{ background: 'linear-gradient(135deg,#FF6B35,#FF3D00)', color: '#fff' }}
         >
           {t.name.split(' ').map((n) => n[0]).join('').slice(0, 2)}
         </div>
         <div>
-          <div className="font-syne font-bold text-sm leading-tight" style={{ color: 'var(--text-primary)' }}>
+          <div className="font-extrabold font-bold text-sm leading-tight" style={{ color: 'var(--text-primary)' }}>
             {t.name}
           </div>
-          <div className="font-outfit text-[11px] mt-0.5" style={{ color: 'var(--text-muted)' }}>
+          <div className="text-[11px] mt-0.5" style={{ color: 'var(--text-muted)' }}>
             {t.role}
           </div>
         </div>
@@ -187,11 +187,11 @@ export default function Testimonials() {
       <div className="px-6 md:px-12 lg:px-24 max-w-7xl mx-auto mb-14">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
           <div>
-            <span className="test-heading font-outfit text-[10px] tracking-[0.4em] uppercase block mb-4"
+            <span className="test-heading text-[10px] tracking-[0.4em] uppercase block mb-4"
               style={{ color: 'var(--orange)' }}>
               Client Reviews
             </span>
-            <h2 className="test-heading font-syne font-extrabold leading-tight"
+            <h2 className="test-heading font-extrabold leading-tight"
               style={{ fontSize: 'clamp(32px, 5vw, 68px)', color: 'var(--text-primary)' }}>
               Brands That Grew With Us
             </h2>
@@ -202,15 +202,15 @@ export default function Testimonials() {
               <path d="M21.35 11.1H12.18V13.83H18.69C18.36 17.64 15.19 19.27 12.19 19.27C8.36 19.27 5 16.25 5 12C5 7.9 8.2 4.73 12.2 4.73C15.29 4.73 17.1 6.7 17.1 6.7L19 4.72C19 4.72 16.56 2 12.1 2C6.42 2 2.03 6.8 2.03 12C2.03 17.05 6.16 22 12.25 22C17.6 22 21.5 18.33 21.5 12.91C21.5 11.76 21.35 11.1 21.35 11.1Z" fill="#4285F4"/>
             </svg>
             <div>
-              <div className="font-bebas text-2xl leading-none" style={{ color: 'var(--text-primary)' }}>4.9</div>
+              <div className="font-bold tracking-[0.02em] text-2xl leading-none" style={{ color: 'var(--text-primary)' }}>4.9</div>
               <div className="flex gap-0.5 mt-0.5">
                 {[1,2,3,4,5].map((i) => (
-                  <svg key={i} width="10" height="10" viewBox="0 0 24 24" fill="#FF6500">
+                  <svg key={i} width="10" height="10" viewBox="0 0 24 24" fill="#FF6B35">
                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                   </svg>
                 ))}
               </div>
-              <div className="font-outfit text-[9px] uppercase tracking-widest mt-0.5"
+              <div className="text-[9px] uppercase tracking-widest mt-0.5"
                 style={{ color: 'var(--text-muted)' }}>Google Rating</div>
             </div>
           </div>
@@ -249,10 +249,10 @@ export default function Testimonials() {
 
       {/* Bottom count */}
       <div className="px-6 md:px-12 lg:px-24 max-w-7xl mx-auto mt-12 flex items-center gap-3">
-        <span className="font-bebas text-3xl" style={{ color: 'var(--orange)' }}>
+        <span className="font-bold tracking-[0.02em] text-3xl" style={{ color: 'var(--orange)' }}>
           4,212+
         </span>
-        <span className="font-outfit text-sm" style={{ color: 'var(--text-muted)' }}>
+        <span className="text-sm" style={{ color: 'var(--text-muted)' }}>
           verified client reviews across India · Real brands · Real results
         </span>
       </div>

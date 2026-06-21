@@ -107,7 +107,7 @@ export default function AboutStatement() {
           {/* Vertical label */}
           <div className="flex md:flex-col items-start gap-4 shrink-0">
             <span
-              className="font-outfit text-[10px] tracking-[0.4em] uppercase"
+              className="text-[10px] tracking-[0.4em] uppercase"
               style={{ color: 'var(--orange)' }}
             >
               About Us
@@ -123,7 +123,7 @@ export default function AboutStatement() {
                 rotateX animations on child words render correctly in 3D space */}
             <p
               ref={textRef}
-              className="font-syne font-bold leading-tight mb-14"
+              className="font-extrabold font-bold leading-tight mb-14"
               style={{
                 fontSize: 'clamp(22px, 3.8vw, 50px)',
                 lineHeight: 1.3,
@@ -144,13 +144,13 @@ export default function AboutStatement() {
               {AGENCY_FACTS.map((fact) => (
                 <div key={fact.label} className="about-fact">
                   <div
-                    className="font-bebas text-3xl md:text-4xl mb-1"
+                    className="font-bold tracking-[0.02em] text-3xl md:text-4xl mb-1"
                     style={{ color: 'var(--orange)' }}
                   >
                     {fact.value}
                   </div>
                   <div
-                    className="font-outfit text-xs uppercase tracking-widest"
+                    className="text-xs uppercase tracking-widest"
                     style={{ color: 'var(--text-muted)' }}
                   >
                     {fact.label}

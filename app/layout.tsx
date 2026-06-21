@@ -3,7 +3,9 @@ import { Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
 import dynamic from 'next/dynamic'
 
-const GrowthBot = dynamic(() => import('@/components/ui/GrowthBot'), { ssr: false })
+// GrowthBot is mounted lazily (on first interaction / browser idle) by
+// GrowthBotLoader so it doesn't weigh down initial hydration.
+const GrowthBotLoader = dynamic(() => import('@/components/ui/GrowthBotLoader'), { ssr: false })
 const CursorGlow = dynamic(() => import('@/components/portfolio/CursorGlow'), { ssr: false })
 
 const jakarta = Plus_Jakarta_Sans({
@@ -39,6 +41,9 @@ export const metadata: Metadata = {
     url: 'https://www.growthescalators.com',
     images: [
       {
+        // TODO(logo): replace with the official self-hosted asset once provided,
+        // e.g. '/logos/growth-escalators-og.png' (see public/logos/README.md).
+        // Placeholder remote WordPress logo kept working until then.
         url: 'https://growthescalators.com/wp-content/uploads/2023/10/growth-escalator-logo.png',
         width: 1200,
         height: 630,
@@ -65,6 +70,8 @@ const ORGANIZATION_SCHEMA = {
   '@type': 'Organization',
   name: 'Growth Escalators',
   url: 'https://www.growthescalators.com',
+  // TODO(logo): swap to the self-hosted official logo when provided
+  // (e.g. 'https://www.growthescalators.com/logos/growth-escalators.png').
   logo: 'https://growthescalators.com/wp-content/uploads/2023/10/growth-escalator-logo.png',
   description: 'AI-first performance marketing agency. Specialists for doctors, roofing contractors, restaurants, and growing brands.',
   email: 'Info@growthescalators.com',
@@ -96,7 +103,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={jakarta.variable}>
         <CursorGlow />
         {children}
-        <GrowthBot />
+        <GrowthBotLoader />
       </body>
     </html>
   )

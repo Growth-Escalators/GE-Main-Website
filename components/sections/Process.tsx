@@ -109,9 +109,9 @@ export default function Process() {
 
       {/* Centred compact header */}
       <div className="pt-16 pb-10 px-6 text-center mx-auto" style={{ maxWidth: '600px' }}>
-        <span className="proc-head font-outfit text-[10px] tracking-[0.4em] uppercase block mb-3"
+        <span className="proc-head text-[10px] tracking-[0.4em] uppercase block mb-3"
           style={{ color: 'var(--orange)' }}>How We Work</span>
-        <h2 className="proc-head font-syne font-extrabold leading-snug"
+        <h2 className="proc-head font-extrabold leading-snug"
           style={{ fontSize: 'clamp(17px, 2vw, 28px)', color: 'var(--text-primary)' }}>
           How we work?{' '}
           <span style={{ color: 'var(--text-muted)', fontWeight: 400 }}>
@@ -165,31 +165,31 @@ export default function Process() {
                     <div className="flex items-center gap-2 mb-4">
                       <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg" style={{ background: '#f5f5f5', border: '1px solid #e8e8e8' }}>
                         <div className="w-1.5 h-1.5 rounded-full" style={{ background: '#aaa' }} />
-                        <span className="font-outfit text-[11px]" style={{ color: '#666' }}>{step.tag}</span>
+                        <span className="text-[11px]" style={{ color: '#666' }}>{step.tag}</span>
                       </div>
                     </div>
-                    <h3 className="font-syne font-extrabold leading-tight mb-3" style={{ fontSize: 'clamp(18px,2.2vw,34px)', color: '#0D0D0F', letterSpacing: '-0.02em' }}>
+                    <h3 className="font-extrabold leading-tight mb-3" style={{ fontSize: 'clamp(18px,2.2vw,34px)', color: '#0D0D0F', letterSpacing: '-0.02em' }}>
                       {step.headline}
                     </h3>
-                    <p className="font-outfit font-light leading-relaxed mb-5" style={{ fontSize: '13px', color: '#888', maxWidth: '340px', lineHeight: 1.75 }}>
+                    <p className="font-light leading-relaxed mb-5" style={{ fontSize: '13px', color: '#888', maxWidth: '340px', lineHeight: 1.75 }}>
                       {step.body}
                     </p>
                     <div className="flex gap-6 items-center mb-5">
                       <div>
-                        <div className="font-bebas text-xl leading-none mb-0.5" style={{ color: '#FF6500' }}>{step.stat1.value}</div>
-                        <div className="font-outfit text-[9px] uppercase tracking-widest" style={{ color: '#aaa' }}>{step.stat1.label}</div>
+                        <div className="font-bold tracking-[0.02em] text-xl leading-none mb-0.5" style={{ color: '#FF6B35' }}>{step.stat1.value}</div>
+                        <div className="text-[9px] uppercase tracking-widest" style={{ color: '#aaa' }}>{step.stat1.label}</div>
                       </div>
                       <div className="w-px h-6" style={{ background: '#e8e8e8' }} />
                       <div>
-                        <div className="font-bebas text-xl leading-none mb-0.5" style={{ color: '#FF6500' }}>{step.stat2.value}</div>
-                        <div className="font-outfit text-[9px] uppercase tracking-widest" style={{ color: '#aaa' }}>{step.stat2.label}</div>
+                        <div className="font-bold tracking-[0.02em] text-xl leading-none mb-0.5" style={{ color: '#FF6B35' }}>{step.stat2.value}</div>
+                        <div className="text-[9px] uppercase tracking-widest" style={{ color: '#aaa' }}>{step.stat2.label}</div>
                       </div>
                     </div>
                     <div className="flex items-center gap-1.5">
                       {STEPS.map((_, j) => (
-                        <div key={j} className="rounded-full" style={{ width: j === i ? '16px' : '5px', height: '5px', background: j <= i ? '#FF6500' : '#e0e0e0' }} />
+                        <div key={j} className="rounded-full" style={{ width: j === i ? '16px' : '5px', height: '5px', background: j <= i ? '#FF6B35' : '#e0e0e0' }} />
                       ))}
-                      <span className="font-outfit text-[9px] ml-1.5" style={{ color: '#bbb' }}>{i + 1} / {STEPS.length}</span>
+                      <span className="text-[9px] ml-1.5" style={{ color: '#bbb' }}>{i + 1} / {STEPS.length}</span>
                     </div>
                   </div>
 
@@ -198,27 +198,27 @@ export default function Process() {
                     <div className="w-full max-w-xs flex flex-col gap-2.5">
                       <div className="rounded-2xl p-4" style={{ background: 'rgba(255,255,255,0.88)', backdropFilter: 'blur(20px)', boxShadow: '0 6px 28px rgba(0,0,0,0.09)', border: '1px solid rgba(255,255,255,0.95)' }}>
                         <div className="flex items-center gap-2 mb-3">
-                          <div className="w-5 h-5 rounded-md flex items-center justify-center" style={{ background: '#FF6500' }}>
+                          <div className="w-5 h-5 rounded-md flex items-center justify-center" style={{ background: '#FF6B35' }}>
                             <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17" /></svg>
                           </div>
-                          <span className="font-outfit text-xs font-semibold" style={{ color: '#222' }}>{step.tag}</span>
+                          <span className="text-xs font-semibold" style={{ color: '#222' }}>{step.tag}</span>
                         </div>
                         {[{ label: 'Campaign Performance', val: 92 }, { label: 'Audience Match', val: 78 }, { label: 'Creative Score', val: 85 }, { label: 'Funnel Conversion', val: 67 }].map((bar, j) => (
                           <div key={j} className="mb-2">
                             <div className="flex justify-between mb-1">
-                              <span className="font-outfit text-[10px]" style={{ color: '#999' }}>{bar.label}</span>
-                              <span className="font-outfit text-[10px] font-semibold" style={{ color: '#FF6500' }}>{bar.val}%</span>
+                              <span className="text-[10px]" style={{ color: '#999' }}>{bar.label}</span>
+                              <span className="text-[10px] font-semibold" style={{ color: '#FF6B35' }}>{bar.val}%</span>
                             </div>
                             <div className="h-1 rounded-full" style={{ background: '#f0f0f0' }}>
-                              <div className="h-full rounded-full" style={{ width: `${bar.val}%`, background: j === 0 ? '#FF6500' : `rgba(255,101,0,${0.3 + j * 0.15})` }} />
+                              <div className="h-full rounded-full" style={{ width: `${bar.val}%`, background: j === 0 ? '#FF6B35' : `rgba(255, 107, 53,${0.3 + j * 0.15})` }} />
                             </div>
                           </div>
                         ))}
                       </div>
                       <div className="rounded-xl px-4 py-2.5 flex items-center justify-between" style={{ background: 'rgba(255,255,255,0.8)', backdropFilter: 'blur(16px)', border: '1px solid rgba(255,255,255,0.9)', boxShadow: '0 2px 12px rgba(0,0,0,0.06)' }}>
                         <div>
-                          <div className="font-outfit text-xs font-semibold" style={{ color: '#222' }}>Stage {step.number} Active</div>
-                          <div className="font-outfit text-[10px]" style={{ color: '#aaa' }}>Growth Escalators · Live</div>
+                          <div className="text-xs font-semibold" style={{ color: '#222' }}>Stage {step.number} Active</div>
+                          <div className="text-[10px]" style={{ color: '#aaa' }}>Growth Escalators · Live</div>
                         </div>
                         <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: '#22c55e' }} />
                       </div>
@@ -226,7 +226,7 @@ export default function Process() {
                   </div>
                 </div>
 
-                <div className="absolute bottom-2 left-8 font-bebas pointer-events-none select-none" style={{ fontSize: 'clamp(50px,8vw,110px)', color: 'rgba(0,0,0,0.04)', lineHeight: 0.85 }}>
+                <div className="absolute bottom-2 left-8 font-bold tracking-[0.02em] pointer-events-none select-none" style={{ fontSize: 'clamp(50px,8vw,110px)', color: 'rgba(0,0,0,0.04)', lineHeight: 0.85 }}>
                   {step.number}
                 </div>
               </div>

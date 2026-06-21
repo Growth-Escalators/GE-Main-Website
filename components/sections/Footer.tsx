@@ -56,11 +56,14 @@ export default function Footer() {
           <div className={styles.brand}>
             <Link href="/" className={styles.logoLink} aria-label="Growth Escalators home">
               {/* eslint-disable-next-line @next/next/no-img-element */}
+              {/* TODO(logo): swap to self-hosted '/logos/growth-escalators.svg'
+                  once the official asset lands (see public/logos/README.md). */}
               <img
                 src="https://growthescalators.com/wp-content/uploads/2023/10/growth-escalator-logo.png"
                 alt="Growth Escalators logo"
                 height={36}
                 loading="lazy"
+                decoding="async"
               />
             </Link>
             <p className={styles.tagline}>Your Growth, Our Mission</p>

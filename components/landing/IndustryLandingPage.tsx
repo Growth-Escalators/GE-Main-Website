@@ -132,6 +132,8 @@ export default function IndustryLandingPage({ content }: { content: LandingConte
         <div className={`${styles.headerInner} container-x`}>
           <Link href="/" className={styles.logo} aria-label="Growth Escalators home">
             {/* eslint-disable-next-line @next/next/no-img-element */}
+            {/* TODO(logo): swap to self-hosted '/logos/growth-escalators.svg'
+                once the official asset lands (see public/logos/README.md). */}
             <img
               src="https://growthescalators.com/wp-content/uploads/2023/10/growth-escalator-logo.png"
               alt="Growth Escalators"

@@ -83,36 +83,36 @@ export default function Hero() {
       style={{ background: 'var(--bg-primary)' }}
     >
       <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[420px] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(255,101,0,0.11) 0%, transparent 68%)' }} />
+        style={{ background: 'radial-gradient(ellipse at 50% 0%, rgba(255, 107, 53,0.11) 0%, transparent 68%)' }} />
       <div className="absolute bottom-0 left-0 w-[450px] h-[280px] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at 0% 100%, rgba(255,101,0,0.07) 0%, transparent 70%)' }} />
+        style={{ background: 'radial-gradient(ellipse at 0% 100%, rgba(255, 107, 53,0.07) 0%, transparent 70%)' }} />
       <div className="absolute bottom-0 right-0 w-[380px] h-[280px] pointer-events-none"
-        style={{ background: 'radial-gradient(ellipse at 100% 100%, rgba(255,101,0,0.05) 0%, transparent 70%)' }} />
+        style={{ background: 'radial-gradient(ellipse at 100% 100%, rgba(255, 107, 53,0.05) 0%, transparent 70%)' }} />
 
       <div className="relative z-10 flex flex-col items-center max-w-5xl w-full">
         <div className="hero-label mb-8 inline-flex items-center gap-2 px-4 py-1.5"
-          style={{ border: '1px solid rgba(255,101,0,0.3)', background: 'rgba(255,101,0,0.06)', borderRadius: '100px' }}>
+          style={{ border: '1px solid rgba(255, 107, 53,0.3)', background: 'rgba(255, 107, 53,0.06)', borderRadius: '100px' }}>
           <span className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: 'var(--orange)' }} />
-          <span className="font-outfit text-[11px] tracking-[0.35em] uppercase" style={{ color: 'var(--orange)' }}>
+          <span className="text-[11px] tracking-[0.35em] uppercase" style={{ color: 'var(--orange)' }}>
             Your Growth Partner
           </span>
         </div>
 
         <h1
-          className="hero-line-1 font-syne font-extrabold leading-none mb-2"
+          className="hero-line-1 font-extrabold leading-none mb-2"
           style={{ fontSize: 'clamp(28px, 4.5vw, 64px)', color: 'var(--text-primary)', letterSpacing: '-0.02em' }}
         >
           We Don&apos;t Just Market.
         </h1>
 
         <h1
-          className="hero-line-2 font-syne font-extrabold leading-none mb-9"
+          className="hero-line-2 font-extrabold leading-none mb-9"
           style={{ fontSize: 'clamp(28px, 4.5vw, 64px)', color: 'var(--text-primary)', letterSpacing: '-0.02em' }}
         >
           We <CyclingWord />.
         </h1>
 
-        <p className="hero-sub font-outfit font-light max-w-xl mx-auto mb-10 leading-relaxed"
+        <p className="hero-sub font-light max-w-xl mx-auto mb-10 leading-relaxed"
           style={{ fontSize: 'clamp(14px, 1.2vw, 17px)', color: 'var(--text-muted)' }}>
           10,000+ campaigns run. ₹10Cr+ in ad spend managed. 97% client retention.{' '}
           <strong style={{ color: 'var(--text-primary)', fontWeight: 500 }}>
@@ -122,12 +122,12 @@ export default function Hero() {
 
         <div className="hero-ctas flex flex-wrap items-center justify-center gap-4 mb-16">
           <MagneticButton as="a" href="/contact"
-            className="font-outfit font-semibold px-8 py-4 text-sm"
+            className="font-semibold px-8 py-4 text-sm"
             style={{ background: 'var(--orange)', color: '#fff' }}>
             Start Your Ascent →
           </MagneticButton>
           <Link href="/work"
-            className="font-outfit font-medium px-8 py-4 text-sm"
+            className="font-medium px-8 py-4 text-sm"
             style={{ border: '1.5px solid var(--border-strong)', color: 'var(--text-primary)' }}>
             See Our Work
           </Link>
@@ -136,11 +136,11 @@ export default function Hero() {
         <div className="flex flex-wrap items-center justify-center gap-8 md:gap-14">
           {HERO_STATS.map((stat, i) => (
             <div key={i} className="hero-stat flex flex-col items-center gap-1">
-              <span className="font-bebas tracking-wide"
+              <span className="font-bold tracking-[0.02em] tracking-wide"
                 style={{ fontSize: 'clamp(20px, 2.2vw, 28px)', color: 'var(--text-primary)', lineHeight: 1 }}>
                 {stat.value}
               </span>
-              <span className="font-outfit text-[10px] uppercase tracking-[0.25em]"
+              <span className="text-[10px] uppercase tracking-[0.25em]"
                 style={{ color: 'var(--text-muted)' }}>
                 {stat.label}
               </span>

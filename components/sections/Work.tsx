@@ -43,16 +43,16 @@ export default function Work() {
       <div className="max-w-7xl mx-auto">
         <div className="work-heading flex flex-col md:flex-row md:items-end md:justify-between mb-14 gap-6">
           <div>
-            <span className="font-outfit text-[10px] tracking-[0.4em] uppercase block mb-4" style={{ color: 'var(--orange)' }}>
+            <span className="text-[10px] tracking-[0.4em] uppercase block mb-4" style={{ color: 'var(--orange)' }}>
               Selected Projects
             </span>
-            <h2 className="font-syne font-bold leading-tight" style={{ fontSize: 'clamp(36px, 6vw, 80px)', color: 'var(--text-primary)' }}>
+            <h2 className="font-extrabold font-bold leading-tight" style={{ fontSize: 'clamp(36px, 6vw, 80px)', color: 'var(--text-primary)' }}>
               Work That Speaks
             </h2>
           </div>
           <Link
             href="/work"
-            className="font-outfit text-sm transition-colors duration-300 whitespace-nowrap hover:opacity-80"
+            className="text-sm transition-colors duration-300 whitespace-nowrap hover:opacity-80"
             style={{ color: 'var(--text-muted)' }}
           >
             View All Case Studies →
@@ -68,17 +68,17 @@ export default function Work() {
             >
               <div className="absolute inset-0 p-8 flex flex-col justify-end z-10">
                 <span
-                  className="inline-block font-outfit text-[10px] tracking-[0.2em] uppercase px-3 py-1.5 mb-4 w-fit"
+                  className="inline-block text-[10px] tracking-[0.2em] uppercase px-3 py-1.5 mb-4 w-fit"
                   style={{
                     color: 'var(--orange)',
-                    background: 'rgba(255,101,0,0.1)',
-                    border: '1px solid rgba(255,101,0,0.2)',
+                    background: 'rgba(255, 107, 53,0.1)',
+                    border: '1px solid rgba(255, 107, 53,0.2)',
                   }}
                 >
                   {item.category}
                 </span>
-                <h3 className="font-syne font-bold text-2xl mb-2" style={{ color: '#F0EDE8' }}>{item.name}</h3>
-                <p className="font-outfit text-sm" style={{ color: 'rgba(240,237,232,0.6)' }}>{item.result}</p>
+                <h3 className="font-extrabold font-bold text-2xl mb-2" style={{ color: '#F0EDE8' }}>{item.name}</h3>
+                <p className="text-sm" style={{ color: 'rgba(240,237,232,0.6)' }}>{item.result}</p>
               </div>
 
               {/* Hover overlay */}
@@ -92,7 +92,7 @@ export default function Work() {
                 onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.clipPath = 'inset(0 0 0 0)' }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.clipPath = 'inset(100% 0 0 0)' }}
               >
-                <Link href="/work" className="font-syne font-bold text-[#06060A] text-lg">
+                <Link href="/work" className="font-extrabold font-bold text-[#06060A] text-lg">
                   View Case Study →
                 </Link>
               </div>
