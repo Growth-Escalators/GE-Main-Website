@@ -167,7 +167,7 @@
   border-radius: 5px;
   object-fit: contain;
   flex-shrink: 0;
-  opacity: 0.75;
+  opacity: 0.95;
 }
 .pill:hover .pillLogo { opacity: 1; }
 
