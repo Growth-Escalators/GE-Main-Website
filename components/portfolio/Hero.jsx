@@ -12,28 +12,28 @@ const STAT_PILLS = [
   { emoji: '💰', value: '2.5x',  label: 'CLTV'      },
 ];
 
-/* ── Trusted brands with Google favicon + name ── */
+/* ── Trusted brands — self-hosted.
+   `logo` is optional: drop a grayscale SVG/PNG into /public/brands/ and
+   reference it here (e.g. logo: '/brands/paraiso.svg'). Until then we
+   render a styled initial chip in the brand's gradient — no external
+   dependency on Google's favicon API. */
 const BRANDS = [
-  { name: 'Growth Escalators',    domain: 'growthescalators.com'      },
-  { name: 'Dr. Dheeraj Dubay',   domain: 'drdubay.in'                },
-  { name: 'Elixzor AI',          domain: 'elixzor.com'               },
-  { name: 'SN Herbals',          domain: 'snherbals.com'             },
-  { name: 'Cklakart',            domain: 'cklakart.com'              },
-  { name: 'Atatica Studios',     domain: 'ataticastudios.com'        },
-  { name: 'Paraiso Comfort',     domain: 'paraisocomfortwears.com'   },
-  { name: 'Credo World',         domain: 'credoworld.in'             },
-  { name: 'Yellow Diaries',      domain: 'yellowdiaries.in'          },
-  { name: 'Genosub',             domain: 'genosub.com'               },
-  { name: 'ExZept',              domain: 'exzept.com'                },
-  { name: 'Fashion Hub',         domain: 'fashionhub.in'             },
+  { name: 'Growth Escalators',  initials: 'GE', gradient: 'linear-gradient(135deg, #FF6B35, #FF9A5A)' },
+  { name: 'Dr. Dheeraj Dubay',  initials: 'DD', gradient: 'linear-gradient(135deg, #2563eb, #1a4bb5)' },
+  { name: 'Elixzor AI',         initials: 'EX', gradient: 'linear-gradient(135deg, #6d28d9, #3b0f72)' },
+  { name: 'SN Herbals',         initials: 'SN', gradient: 'linear-gradient(135deg, #00D4AA, #00b894)' },
+  { name: 'Cklakart',           initials: 'CK', gradient: 'linear-gradient(135deg, #FF6B35, #ff8c5a)' },
+  { name: 'Atatica Studios',    initials: 'AT', gradient: 'linear-gradient(135deg, #1a1a2e, #6d28d9)' },
+  { name: 'Paraiso Comfort',    initials: 'PA', gradient: 'linear-gradient(135deg, #a855f7, #6d28d9)' },
+  { name: 'Credo World',        initials: 'CW', gradient: 'linear-gradient(135deg, #2d1500, #ff9554)' },
+  { name: 'Yellow Diaries',     initials: 'YD', gradient: 'linear-gradient(135deg, #f7e35b, #0b0a08)' },
+  { name: 'Genosub',            initials: 'GS', gradient: 'linear-gradient(135deg, #00D4AA, #6C63FF)' },
+  { name: 'ExZept',             initials: 'EZ', gradient: 'linear-gradient(135deg, #1a1a2e, #0f3460)' },
+  { name: 'Fashion Hub',        initials: 'FH', gradient: 'linear-gradient(135deg, #FF6B35, #6C63FF)' },
 ];
 
 const ROW1 = [...BRANDS, ...BRANDS];
 const ROW2 = [...BRANDS.slice(6), ...BRANDS.slice(0,6), ...BRANDS.slice(6), ...BRANDS.slice(0,6)];
-
-function faviconUrl(domain) {
-  return `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
-}
 
 /* ── Word cycler ──
  * Cycles an index through the words array on a fixed interval.
@@ -172,13 +172,33 @@ export default function Hero() {
           <div className={`${styles.marqueeInner} ${styles.rowLeft}`}>
             {ROW1.map((b, i) => (
               <span key={i} className={`${styles.brandPill} glass-pill`}>
-                <img
-                  src={faviconUrl(b.domain)}
-                  alt=""
-                  className={styles.brandLogo}
-                  loading="lazy"
-                  aria-hidden="true"
-                />
+                {b.logo ? (
+                  <img
+                    src={b.logo}
+                    alt=""
+                    className={styles.brandLogo}
+                    loading="lazy"
+                    aria-hidden="true"
+                  />
+                ) : (
+                  <span
+                    className={styles.brandLogo}
+                    aria-hidden="true"
+                    style={{
+                      background: b.gradient,
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#fff',
+                      fontWeight: 800,
+                      fontSize: 10,
+                      letterSpacing: '0.02em',
+                      borderRadius: '50%',
+                    }}
+                  >
+                    {b.initials}
+                  </span>
+                )}
                 <span className={styles.brandName}>{b.name}</span>
               </span>
             ))}
@@ -190,13 +210,33 @@ export default function Hero() {
           <div className={`${styles.marqueeInner} ${styles.rowRight}`}>
             {ROW2.map((b, i) => (
               <span key={i} className={`${styles.brandPill} glass-pill`}>
-                <img
-                  src={faviconUrl(b.domain)}
-                  alt=""
-                  className={styles.brandLogo}
-                  loading="lazy"
-                  aria-hidden="true"
-                />
+                {b.logo ? (
+                  <img
+                    src={b.logo}
+                    alt=""
+                    className={styles.brandLogo}
+                    loading="lazy"
+                    aria-hidden="true"
+                  />
+                ) : (
+                  <span
+                    className={styles.brandLogo}
+                    aria-hidden="true"
+                    style={{
+                      background: b.gradient,
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      color: '#fff',
+                      fontWeight: 800,
+                      fontSize: 10,
+                      letterSpacing: '0.02em',
+                      borderRadius: '50%',
+                    }}
+                  >
+                    {b.initials}
+                  </span>
+                )}
                 <span className={styles.brandName}>{b.name}</span>
               </span>
             ))}
