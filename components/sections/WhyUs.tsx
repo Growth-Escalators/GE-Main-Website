@@ -1,142 +1,93 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import { gsap } from '@/lib/gsap'
-import { Check } from 'lucide-react'
+import Link from 'next/link'
+import { motion } from 'framer-motion'
 
 const REASONS = [
-  { title: 'Data-First Decisions', desc: 'Every move is backed by analytics. We test, measure, and iterate — no guessing.' },
-  { title: 'Full-Funnel Thinking', desc: 'We engineer the entire journey from awareness to purchase — not just one channel.' },
-  { title: 'Owned by Results', desc: 'Our contracts are simple: perform or we fix it. No hiding behind vanity metrics.' },
-  { title: 'Speed to Market', desc: 'Your strategy is live within 7 days. Startup speed with enterprise precision.' },
-  { title: 'Transparent Reporting', desc: 'Real dashboards. Real numbers. Weekly calls. You always know where every rupee goes.' },
+  { n: '01', title: 'Transparent reporting',  body: 'Live dashboards. You see every click and every result, anytime.' },
+  { n: '02', title: 'Certified specialists',  body: 'Meta- & Google-certified strategists running on best-practice playbooks.' },
+  { n: '03', title: 'Dedicated team',         body: 'A real strategist on WhatsApp — not a ticket queue or a chatbot.' },
+  { n: '04', title: 'ROI-first, always',      body: 'We optimize for revenue and retention — not likes that don’t pay.' },
 ]
 
 export default function WhyUs() {
-  const sectionRef = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    if (!sectionRef.current) return
-    const ctx = gsap.context(() => {
-      gsap.fromTo('.why-item', { x: -28, opacity: 0 }, {
-        x: 0, opacity: 1, duration: 0.6, stagger: 0.1, ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.why-list',
-          start: 'top 80%',
-          toggleActions: 'play none none none',
-          invalidateOnRefresh: true,
-        },
-      })
-      gsap.fromTo('.metric-card', { y: 28, opacity: 0 }, {
-        y: 0, opacity: 1, duration: 0.7, stagger: 0.1, ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.metrics-panel',
-          start: 'top 80%',
-          toggleActions: 'play none none none',
-          invalidateOnRefresh: true,
-        },
-      })
-      gsap.fromTo('.whyus-heading', { y: 28, opacity: 0 }, {
-        y: 0, opacity: 1, duration: 0.7, ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.whyus-heading',
-          start: 'top 85%',
-          toggleActions: 'play none none none',
-        },
-      })
-    }, sectionRef.current)
-    return () => ctx.revert()
-  }, [])
-
   return (
-    <section
-      ref={sectionRef}
-      data-animate="why-us"
-      className="py-24 md:py-36 px-6 md:px-12 lg:px-24"
-      style={{ background: 'var(--bg-secondary)' }}
-    >
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
-          {/* Left */}
-          <div>
-            <span className="font-outfit text-[10px] tracking-[0.4em] uppercase block mb-4" style={{ color: 'var(--orange)' }}>
-              Why Us
+    <section style={{ background: 'var(--bg-dark)', color: '#fff' }}>
+      <div className="container-x" style={{ padding: 'clamp(56px, 9vw, 90px) clamp(20px, 4vw, 40px)' }}>
+        <div
+          className="grid grid-cols-1 lg:grid-cols-[0.85fr_1.15fr] items-center"
+          style={{ gap: 56 }}
+        >
+          <motion.div
+            initial={{ opacity: 0, x: -24 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <span style={{ fontSize: 12, fontWeight: 800, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--orange)' }}>
+              Why brands stay
             </span>
-            <h2 className="whyus-heading font-syne font-bold leading-tight mb-12" style={{ fontSize: 'clamp(28px, 4.5vw, 60px)', color: 'var(--text-primary)' }}>
-              Why Brands Choose Growth Escalators
+            <h2
+              style={{
+                fontSize: 'clamp(28px, 4vw, 40px)',
+                fontWeight: 800, letterSpacing: '-0.025em',
+                margin: '14px 0 18px', lineHeight: 1.1,
+              }}
+            >
+              Reliable enough to bet your budget on.
             </h2>
+            <p style={{ fontSize: 16.5, color: 'var(--text-on-dark)', lineHeight: 1.7, margin: '0 0 28px' }}>
+              No vanity metrics, no disappearing account managers. Just transparent reporting and
+              a team that treats your spend like our own — which is why 97% of clients renew.
+            </p>
+            <Link
+              href="/#book"
+              className="btn-cta inline-block"
+              style={{
+                background: 'linear-gradient(135deg, var(--orange), var(--orange-light))',
+                color: '#fff', fontSize: 15, fontWeight: 800,
+                padding: '15px 30px', borderRadius: 12,
+                boxShadow: '0 8px 26px rgba(255,107,53,0.34)',
+                transition: 'transform .25s, box-shadow .25s',
+              }}
+            >
+              Book a Free Strategy Call
+            </Link>
+          </motion.div>
 
-            <div className="why-list space-y-6">
-              {REASONS.map((r, i) => (
-                <div key={i} className="why-item flex gap-4">
-                  <div
-                    className="mt-0.5 w-5 h-5 rounded-full flex items-center justify-center shrink-0"
-                    style={{ background: 'rgba(255,101,0,0.1)', border: '1px solid rgba(255,101,0,0.25)' }}
-                  >
-                    <Check size={10} style={{ color: 'var(--orange)' }} />
-                  </div>
-                  <div>
-                    <h4 className="font-syne font-bold mb-1" style={{ color: 'var(--text-primary)' }}>{r.title}</h4>
-                    <p className="font-outfit font-light text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>{r.desc}</p>
-                  </div>
+          <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: 16 }}>
+            {REASONS.map((r, i) => (
+              <motion.div
+                key={r.n}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.5, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+                style={{
+                  background: 'rgba(255,255,255,0.04)',
+                  border: '1px solid var(--border-on-dark)',
+                  borderRadius: 16,
+                  padding: 24,
+                }}
+              >
+                <div style={{ fontSize: 13, fontWeight: 800, color: 'var(--orange)', marginBottom: 8 }}>
+                  {r.n}
                 </div>
-              ))}
-            </div>
-          </div>
-
-          {/* Right: metrics dashboard */}
-          <div className="metrics-panel relative">
-            <div className="ge-card p-6">
-              <div className="flex items-center justify-between mb-6">
-                <span className="font-outfit text-xs uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>Performance Dashboard</span>
-                <div className="flex gap-1.5">
-                  <div className="w-2 h-2 rounded-full" style={{ background: 'var(--orange)' }} />
-                  <div className="w-2 h-2 rounded-full" style={{ background: 'rgba(255,101,0,0.3)' }} />
-                  <div className="w-2 h-2 rounded-full" style={{ background: 'rgba(255,101,0,0.12)' }} />
+                <div style={{ fontSize: 16, fontWeight: 700, marginBottom: 6, color: '#fff' }}>
+                  {r.title}
                 </div>
-              </div>
-
-              <div className="flex items-end gap-1.5 h-28 mb-6">
-                {[40, 65, 45, 80, 60, 95, 70, 100, 85, 110, 90, 130].map((h, i) => (
-                  <div
-                    key={i}
-                    className="flex-1 rounded-t-sm"
-                    style={{
-                      height: `${h * 0.7}%`,
-                      background: i === 11 ? 'var(--orange)' : i > 7 ? 'rgba(255,101,0,0.4)' : 'rgba(255,101,0,0.12)',
-                    }}
-                  />
-                ))}
-              </div>
-
-              <div className="space-y-3">
-                {[
-                  { label: 'ROAS', val: '4.2x', change: '+38%', up: true },
-                  { label: 'CTR', val: '3.8%', change: '+21%', up: true },
-                  { label: 'CPA', val: '₹180', change: '-14%', up: true },
-                ].map((m) => (
-                  <div key={m.label} className="metric-card flex items-center justify-between py-2" style={{ borderBottom: '1px solid var(--border-subtle)' }}>
-                    <span className="font-outfit text-xs uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>{m.label}</span>
-                    <div className="flex items-center gap-3">
-                      <span className="font-syne font-bold" style={{ color: 'var(--text-primary)' }}>{m.val}</span>
-                      <span className="font-outfit text-xs" style={{ color: '#4ADE80' }}>{m.change}</span>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="metric-card absolute -top-5 -right-5 ge-card p-4 hidden lg:block">
-              <div className="font-bebas text-3xl" style={{ color: 'var(--orange)' }}>97%</div>
-              <div className="font-outfit text-[10px] uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>Retention</div>
-            </div>
-            <div className="metric-card absolute -bottom-5 -left-5 ge-card p-4 hidden lg:block">
-              <div className="font-bebas text-3xl" style={{ color: 'var(--orange)' }}>100+</div>
-              <div className="font-outfit text-[10px] uppercase tracking-widest" style={{ color: 'var(--text-muted)' }}>Brands</div>
-            </div>
+                <p style={{ fontSize: 13.5, color: 'var(--text-on-dark-mute)', lineHeight: 1.55, margin: 0 }}>
+                  {r.body}
+                </p>
+              </motion.div>
+            ))}
           </div>
         </div>
       </div>
+
+      <style jsx>{`
+        :global(.btn-cta:hover) { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(255,107,53,0.4); }
+      `}</style>
     </section>
   )
 }

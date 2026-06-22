@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useEffect, useRef, useCallback } from 'react'
-import { X, Send, MessageCircle } from 'lucide-react'
+import { X, Send, Sparkles } from 'lucide-react'
 import gsap from 'gsap'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
@@ -652,79 +652,135 @@ export default function GrowthBot() {
           ref={windowRef}
           style={{
             position: 'fixed',
-            bottom: '88px',
+            bottom: '92px',
             right: '24px',
             width: '380px',
             height: '560px',
             zIndex: 99999,
             display: 'flex',
             flexDirection: 'column',
-            background: '#111118',
-            border: '1px solid rgba(255,101,0,0.2)',
-            borderRadius: '20px',
+            /* Layered dark surface for depth */
+            background:
+              'radial-gradient(120% 80% at 0% 0%, rgba(255,107,53,0.10), transparent 55%), ' +
+              'linear-gradient(180deg, #15151f 0%, #0e0e16 100%)',
+            border: '1px solid rgba(255,107,53,0.25)',
+            borderRadius: '22px',
             overflow: 'hidden',
-            boxShadow: '0 24px 80px rgba(0,0,0,0.6), 0 0 0 1px rgba(255,101,0,0.08)',
-            fontFamily: 'var(--font-outfit), sans-serif',
+            boxShadow:
+              '0 32px 90px rgba(0,0,0,0.65), ' +
+              '0 0 0 1px rgba(255,107,53,0.10), ' +
+              '0 -8px 32px rgba(255,107,53,0.06)',
+            fontFamily: 'var(--font-jakarta), sans-serif',
             cursor: 'auto',
+            animation: 'gbWindowIn 0.42s cubic-bezier(0.16, 1, 0.3, 1)',
+            transformOrigin: 'bottom right',
           }}
           className="growthbot-window"
         >
-          {/* Header */}
+          {/* Header — brighter gradient + SVG brand mark + animated halo */}
           <div
             style={{
+              position: 'relative',
               display: 'flex',
               alignItems: 'center',
-              gap: '10px',
-              padding: '14px 16px',
-              background: 'linear-gradient(135deg, #1a1a28 0%, #111118 100%)',
-              borderBottom: '1px solid rgba(255,101,0,0.15)',
+              gap: '12px',
+              padding: '16px 16px 14px',
+              background:
+                'linear-gradient(135deg, rgba(255,107,53,0.16) 0%, rgba(255,107,53,0.04) 35%, rgba(255,255,255,0.02) 100%), ' +
+                'linear-gradient(180deg, #1c1c28 0%, #14141d 100%)',
+              borderBottom: '1px solid rgba(255,107,53,0.22)',
               flexShrink: 0,
               cursor: 'auto',
+              overflow: 'hidden',
             }}
           >
-            {/* Avatar */}
+            {/* Faint shine slice across the header */}
+            <span
+              aria-hidden
+              style={{
+                position: 'absolute',
+                top: 0, left: '-30%',
+                width: '60%', height: '100%',
+                background: 'linear-gradient(115deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%)',
+                pointerEvents: 'none',
+                animation: 'gbHeaderShine 6s ease-in-out infinite',
+              }}
+            />
+
+            {/* Avatar with gradient halo ring + brand SVG mark */}
             <div
               style={{
-                width: '36px',
-                height: '36px',
-                borderRadius: '50%',
-                background: 'linear-gradient(135deg, #FF6500, #ff8c42)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '12px',
-                fontWeight: 800,
-                color: '#fff',
-                fontFamily: 'var(--font-syne), sans-serif',
+                position: 'relative',
+                width: '40px',
+                height: '40px',
                 flexShrink: 0,
               }}
             >
-              GE
+              <span
+                aria-hidden
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  borderRadius: '50%',
+                  padding: 2,
+                  background: 'conic-gradient(from 210deg at 50% 50%, #FF6B35, #FF9A5A, #FFC83D, #FF6B35)',
+                  WebkitMask:
+                    'linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)',
+                  WebkitMaskComposite: 'xor',
+                  maskComposite: 'exclude',
+                  animation: 'gbRingSpin 8s linear infinite',
+                }}
+              />
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 3,
+                  borderRadius: '50%',
+                  background: 'linear-gradient(135deg, #FF6B35, #ff8c42)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  boxShadow:
+                    'inset 0 1px 0 rgba(255,255,255,0.4), ' +
+                    'inset 0 -2px 4px rgba(180,60,0,0.4)',
+                }}
+              >
+                <svg width="18" height="18" viewBox="0 0 32 32" fill="none" aria-hidden>
+                  <rect x="3" y="19" width="6" height="10" rx="2" fill="#fff" opacity="0.6" />
+                  <rect x="13" y="13" width="6" height="16" rx="2" fill="#fff" opacity="0.85" />
+                  <rect x="23" y="6" width="6" height="23" rx="2" fill="#fff" />
+                  <path d="M19.5 10.5 L27 4" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" />
+                  <path d="M22.6 4 L27.2 4 L27.2 8.6" stroke="#fff" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+                </svg>
+              </div>
             </div>
+
             <div style={{ flex: 1, minWidth: 0 }}>
               <div
                 style={{
                   fontSize: '15px',
-                  fontWeight: 700,
+                  fontWeight: 800,
                   color: '#fff',
-                  fontFamily: 'var(--font-syne), sans-serif',
+                  letterSpacing: '-0.01em',
                   lineHeight: 1.2,
                 }}
               >
-                Growth Bot
+                GrowthBot
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '5px', marginTop: '2px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px', marginTop: '3px' }}>
                 <div
                   style={{
-                    width: '6px',
-                    height: '6px',
+                    width: '7px',
+                    height: '7px',
                     borderRadius: '50%',
-                    background: '#22c55e',
+                    background: '#10b981',
+                    boxShadow: '0 0 0 3px rgba(16,185,129,0.22)',
                     animation: 'pulse-green 2s infinite',
                   }}
                 />
-                <span style={{ fontSize: '11px', color: '#22c55e', fontWeight: 500 }}>Online</span>
-                <span style={{ fontSize: '11px', color: 'rgba(255,255,255,0.35)', marginLeft: '4px' }}>• Typically replies instantly</span>
+                <span style={{ fontSize: '11px', color: '#10b981', fontWeight: 700, letterSpacing: '0.02em' }}>
+                  AI Growth Consultant · Online
+                </span>
               </div>
             </div>
             {/* WhatsApp */}
@@ -1106,51 +1162,106 @@ export default function GrowthBot() {
         </div>
       )}
 
-      {/* Trigger button */}
+      {/* Trigger button — glassy orange disc with sparkle icon, halo pulse ring,
+          inner highlight, and a small teal online dot. */}
       <button
         ref={buttonRef}
         onClick={handleOpen}
+        className="gb-trigger"
+        title="Chat with Growth Bot"
         style={{
           position: 'fixed',
           bottom: '24px',
           right: '24px',
-          width: '56px',
-          height: '56px',
+          width: '60px',
+          height: '60px',
           borderRadius: '50%',
-          background: 'linear-gradient(135deg, #FF6500, #e85a00)',
+          /* Inner highlight + warm core + dark edge for depth */
+          background:
+            'radial-gradient(circle at 30% 28%, rgba(255,235,210,0.55) 0%, rgba(255,154,90,0) 35%), ' +
+            'linear-gradient(135deg, #FF8C5A 0%, #FF6B35 45%, #E55A2A 100%)',
           border: 'none',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
           cursor: 'pointer',
           zIndex: 99999,
-          boxShadow: '0 4px 24px rgba(255,101,0,0.45), 0 0 0 0 rgba(255,101,0,0.4)',
-          animation: 'pulseRing 2.5s ease-out infinite',
           color: '#fff',
-          transition: 'transform 0.2s',
+          /* Layered shadow: warm halo + soft drop + tight orange ring */
+          boxShadow:
+            '0 14px 32px rgba(255,107,53,0.45), ' +
+            '0 4px 10px rgba(17,18,26,0.30), ' +
+            'inset 0 1px 0 rgba(255,255,255,0.45), ' +
+            'inset 0 -3px 8px rgba(180,60,0,0.35)',
+          transition: 'transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s',
         }}
-        onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.transform = 'scale(1.1)' }}
-        onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.transform = 'scale(1)' }}
-        title="Chat with Growth Bot"
       >
-        {open ? <X size={22} /> : <MessageCircle size={22} />}
+        {/* Halo ring — animated separately so the button stays crisp */}
+        {!open && (
+          <span
+            aria-hidden
+            style={{
+              position: 'absolute',
+              inset: -4,
+              borderRadius: '50%',
+              border: '2px solid rgba(255,107,53,0.45)',
+              animation: 'gbHalo 2.2s ease-out infinite',
+              pointerEvents: 'none',
+            }}
+          />
+        )}
+
+        <span
+          aria-hidden
+          style={{
+            transition: 'transform 0.35s cubic-bezier(0.16, 1, 0.3, 1)',
+            transform: open ? 'rotate(90deg) scale(0.95)' : 'rotate(0deg) scale(1)',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            filter: 'drop-shadow(0 1px 1px rgba(0,0,0,0.25))',
+          }}
+        >
+          {open ? <X size={22} strokeWidth={2.5} /> : <Sparkles size={22} strokeWidth={2.2} />}
+        </span>
+
+        {/* Online indicator dot (only when closed) */}
+        {!open && (
+          <span
+            aria-label="Online"
+            style={{
+              position: 'absolute',
+              bottom: 3,
+              right: 3,
+              width: 14,
+              height: 14,
+              borderRadius: '50%',
+              background: '#10b981',
+              border: '2px solid #fff',
+              boxShadow: '0 0 0 2px rgba(16,185,129,0.35)',
+            }}
+          />
+        )}
+
         {!open && botState.unreadCount > 0 && (
           <div
             style={{
               position: 'absolute',
               top: '-4px',
               right: '-4px',
-              width: '20px',
+              minWidth: '20px',
               height: '20px',
-              borderRadius: '50%',
+              padding: '0 5px',
+              borderRadius: '999px',
               background: '#ef4444',
-              border: '2px solid #111118',
+              border: '2px solid #fff',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
               fontSize: '10px',
               fontWeight: 700,
               color: '#fff',
+              boxShadow: '0 4px 10px rgba(239,68,68,0.45)',
             }}
           >
             {botState.unreadCount > 9 ? '9+' : botState.unreadCount}
@@ -1168,6 +1279,43 @@ export default function GrowthBot() {
         @keyframes pulse-green {
           0%, 100% { opacity: 1; transform: scale(1); }
           50% { opacity: 0.5; transform: scale(1.4); }
+        }
+        /* New: halo ring expanding around the trigger */
+        @keyframes gbHalo {
+          0%   { transform: scale(1);    opacity: 0.7; }
+          70%  { transform: scale(1.6);  opacity: 0;   }
+          100% { transform: scale(1.6);  opacity: 0;   }
+        }
+        /* New: window entrance — pops up from bottom-right */
+        @keyframes gbWindowIn {
+          from { opacity: 0; transform: translateY(14px) scale(0.96); }
+          to   { opacity: 1; transform: translateY(0)    scale(1);    }
+        }
+        /* New: subtle shine slice across header every ~6s */
+        @keyframes gbHeaderShine {
+          0%   { transform: translateX(0); }
+          55%  { transform: translateX(260%); }
+          100% { transform: translateX(260%); }
+        }
+        /* New: avatar gradient ring rotation */
+        @keyframes gbRingSpin {
+          to { transform: rotate(360deg); }
+        }
+        /* Hover lifts the trigger button */
+        .gb-trigger { will-change: transform, box-shadow; }
+        .gb-trigger:hover {
+          transform: translateY(-2px) scale(1.06);
+          box-shadow:
+            0 18px 40px rgba(255,107,53,0.55),
+            0 6px 14px rgba(17,18,26,0.30),
+            inset 0 1px 0 rgba(255,255,255,0.5),
+            inset 0 -3px 8px rgba(180,60,0,0.40) !important;
+        }
+        .gb-trigger:active { transform: translateY(0) scale(0.97); }
+        @media (prefers-reduced-motion: reduce) {
+          .gb-trigger,
+          .gb-trigger * { animation: none !important; }
+          .growthbot-window { animation: none !important; }
         }
         @keyframes typingBounce {
           0%, 60%, 100% { transform: translateY(0); }

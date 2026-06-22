@@ -1,14 +1,14 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Tech Staffing — Hire Pre-Vetted Developers, Designers & AI/DevOps Engineers',
+  title: 'AI Staffing & Recruiting — Tech & Marketing Talent',
   description:
-    'Staffing on your terms. Pre-vetted developers, designers, QA, and AI/DevOps engineers — remote-first, contract or permanent. Share your requirement and get a curated shortlist within days.',
+    'AI-matched tech & marketing staffing. Vetted developers, designers, and marketers — full-time or contract, remote-ready. Get a free hiring audit from Growth Escalators.',
   alternates: { canonical: '/staffing' },
   openGraph: {
-    title: 'Tech Staffing — Growth Escalators',
+    title: 'AI Staffing & Recruiting — Growth Escalators',
     description:
-      'Pre-vetted developers, designers, QA, and AI/DevOps engineers. Remote-first. Contract or permanent.',
+      'AI-matched tech & marketing talent. Full-time or contract. Remote-ready. The same people we use for our own clients.',
     url: 'https://www.growthescalators.com/staffing',
   },
 }

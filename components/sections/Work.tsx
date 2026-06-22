@@ -1,110 +1,129 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import { gsap } from '@/lib/gsap'
-import { WORK_ITEMS } from '@/lib/constants'
 import Link from 'next/link'
+import { motion } from 'framer-motion'
+
+const CASES = [
+  {
+    id: 'paraiso',
+    tag: 'Fashion · Social + Ads',
+    metric: '10× Sales',
+    metricSize: 40,
+    caption: 'Paraiso Comfortwears — 10× monthly sales in 30 days. One reel hit 5M views, 20M+ total reach.',
+    gradient: 'linear-gradient(150deg, #1a0a2e 0%, #6d28d9 55%, #a855f7 100%)',
+    href: '/work',
+  },
+  {
+    id: 'elixzor',
+    tag: 'YouTube · USA',
+    metric: '10× ROAS',
+    metricSize: 34,
+    caption: 'Elixzor Media — scaled a US YouTube-automation business with lead gen & full-funnel marketing.',
+    gradient: 'linear-gradient(150deg, #1a0533 0%, #3b0f72 55%, #6d28d9 100%)',
+    href: '/work',
+  },
+  {
+    id: 'dubay',
+    tag: 'Healthcare · Web',
+    metric: '35,000+',
+    metricSize: 34,
+    caption: 'Dr. Dheeraj Dubay — leads + PR for North India’s top joint-replacement surgeon. Forbes record holder.',
+    gradient: 'linear-gradient(150deg, #0a2a6e 0%, #1a4bb5 60%, #2563eb 100%)',
+    href: '/work',
+  },
+]
 
 export default function Work() {
-  const sectionRef = useRef<HTMLElement>(null)
-
-  useEffect(() => {
-    if (!sectionRef.current) return
-    const ctx = gsap.context(() => {
-      gsap.fromTo('.work-card', { y: 60, opacity: 0 }, {
-        y: 0, opacity: 1, duration: 0.8, stagger: 0.1, ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.work-grid',
-          start: 'top 80%',
-          toggleActions: 'play none none none',
-          invalidateOnRefresh: true,
-        },
-      })
-      gsap.fromTo('.work-heading', { y: 28, opacity: 0 }, {
-        y: 0, opacity: 1, duration: 0.7, ease: 'power3.out',
-        scrollTrigger: {
-          trigger: '.work-heading',
-          start: 'top 85%',
-          toggleActions: 'play none none none',
-        },
-      })
-    }, sectionRef.current)
-    return () => ctx.revert()
-  }, [])
-
   return (
-    <section
-      id="work"
-      ref={sectionRef}
-      data-animate="work"
-      className="py-24 md:py-36 px-6 md:px-12 lg:px-24"
-      style={{ background: 'var(--bg-primary)' }}
-    >
-      <div className="max-w-7xl mx-auto">
-        <div className="work-heading flex flex-col md:flex-row md:items-end md:justify-between mb-14 gap-6">
-          <div>
-            <span className="font-outfit text-[10px] tracking-[0.4em] uppercase block mb-4" style={{ color: 'var(--orange)' }}>
-              Selected Projects
-            </span>
-            <h2 className="font-syne font-bold leading-tight" style={{ fontSize: 'clamp(36px, 6vw, 80px)', color: 'var(--text-primary)' }}>
-              Work That Speaks
-            </h2>
-          </div>
-          <Link
-            href="/work"
-            className="font-outfit text-sm transition-colors duration-300 whitespace-nowrap hover:opacity-80"
-            style={{ color: 'var(--text-muted)' }}
-          >
-            View All Case Studies →
-          </Link>
+    <section className="container-x" style={{ padding: 'clamp(56px, 9vw, 92px) clamp(20px, 4vw, 40px)' }}>
+      <motion.div
+        initial={{ opacity: 0, y: 16 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-80px' }}
+        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+        className="flex items-end justify-between flex-wrap"
+        style={{ marginBottom: 44, gap: 24 }}
+      >
+        <div>
+          <span style={{ fontSize: 12, fontWeight: 800, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--orange)' }}>
+            Proof, not promises
+          </span>
+          <h2 style={{ fontSize: 'clamp(28px, 4.5vw, 42px)', fontWeight: 800, letterSpacing: '-0.025em', margin: '14px 0 0', color: 'var(--text-primary)' }}>
+            Results that speak for themselves
+          </h2>
         </div>
+        <Link href="/work" style={{ fontSize: 14.5, fontWeight: 700, color: 'var(--text-secondary)' }} className="hover:text-[var(--orange)]">
+          View all case studies →
+        </Link>
+      </motion.div>
 
-        <div className="work-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {WORK_ITEMS.map((item) => (
+      <div className="work-grid" style={{ display: 'grid', gap: 20 }}>
+        {CASES.map((c, i) => (
+          <motion.div
+            key={c.id}
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.6, delay: i * 0.08, ease: [0.16, 1, 0.3, 1] }}
+          >
             <Link
-              href="/work"
-              key={item.id}
-              aria-label={`View ${item.name} case study`}
-              className="work-card relative overflow-hidden group cursor-pointer block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--orange)]"
-              style={{ minHeight: 300, background: item.gradient }}
+              href={c.href}
+              aria-label={`${c.metric} case — ${c.caption}`}
+              className="case-card block relative overflow-hidden"
+              style={{
+                minHeight: 360,
+                borderRadius: 20,
+                background: c.gradient,
+                transition: 'transform .4s cubic-bezier(.16,1,.3,1), box-shadow .4s',
+              }}
             >
-              <div className="absolute inset-0 p-8 flex flex-col justify-end z-10">
+              <div
+                className="absolute inset-0 flex flex-col justify-between"
+                style={{ padding: 32 }}
+              >
                 <span
-                  className="inline-block font-outfit text-[10px] tracking-[0.2em] uppercase px-3 py-1.5 mb-4 w-fit"
+                  className="self-start"
                   style={{
-                    color: 'var(--orange)',
-                    background: 'rgba(255,101,0,0.1)',
-                    border: '1px solid rgba(255,101,0,0.2)',
+                    fontSize: 11, fontWeight: 800, letterSpacing: '0.14em',
+                    textTransform: 'uppercase', color: '#fff',
+                    background: 'rgba(255,255,255,0.16)',
+                    padding: '6px 12px', borderRadius: 999,
                   }}
                 >
-                  {item.category}
+                  {c.tag}
                 </span>
-                <h3 className="font-syne font-bold text-2xl mb-2" style={{ color: '#F0EDE8' }}>{item.name}</h3>
-                <p className="font-outfit text-sm" style={{ color: 'rgba(240,237,232,0.6)' }}>{item.result}</p>
-                <span className="mt-4 font-outfit text-xs tracking-widest uppercase md:hidden" style={{ color: 'var(--orange)' }}>
-                  View Case Study →
-                </span>
-              </div>
-
-              {/* Hover overlay — desktop only (touch devices show the CTA above instead) */}
-              <div
-                className="absolute inset-0 z-20 hidden md:flex items-center justify-center"
-                style={{
-                  background: 'var(--orange)',
-                  clipPath: 'inset(100% 0 0 0)',
-                  transition: 'clip-path 0.5s cubic-bezier(0.16, 1, 0.3, 1)',
-                }}
-                onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.clipPath = 'inset(0 0 0 0)' }}
-                onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.clipPath = 'inset(100% 0 0 0)' }}
-              >
-                <span className="font-syne font-bold text-[#06060A] text-lg">
-                  View Case Study →
-                </span>
+                <div>
+                  <div
+                    style={{
+                      fontSize: c.metricSize,
+                      fontWeight: 800,
+                      color: '#fff',
+                      letterSpacing: '-0.02em',
+                      lineHeight: 1,
+                    }}
+                  >
+                    {c.metric}
+                  </div>
+                  <div style={{ fontSize: 14, color: 'rgba(255,255,255,0.75)', marginTop: 8, lineHeight: 1.5 }}>
+                    {c.caption}
+                  </div>
+                </div>
               </div>
             </Link>
-          ))}
-        </div>
+          </motion.div>
+        ))}
       </div>
+
+      <style jsx>{`
+        .work-grid { grid-template-columns: 1fr; }
+        @media (min-width: 900px) {
+          .work-grid { grid-template-columns: 1.4fr 1fr 1fr; }
+        }
+        :global(.case-card:hover) {
+          transform: translateY(-4px);
+          box-shadow: 0 24px 60px rgba(17,18,26,0.16);
+        }
+      `}</style>
     </section>
   )
 }

@@ -1,10 +1,16 @@
 import type { Metadata } from 'next'
 import { Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
+// Load the portfolio-scoped stylesheet site-wide so any page can opt into
+// the portfolio look by wrapping its content in `<div class="portfolio-root">`.
+// Selectors inside portfolio.css are all prefixed with .portfolio-root, so
+// loading it globally doesn't bleed styling into pages that don't use the wrapper.
+import './portfolio/portfolio.css'
 import dynamic from 'next/dynamic'
 
 const GrowthBot = dynamic(() => import('@/components/ui/GrowthBot'), { ssr: false })
 const CursorGlow = dynamic(() => import('@/components/portfolio/CursorGlow'), { ssr: false })
+const ScrollProgress = dynamic(() => import('@/components/portfolio/ScrollProgress'), { ssr: false })
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -94,6 +100,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className={jakarta.variable}>
+        <ScrollProgress />
         <CursorGlow />
         {children}
         <GrowthBot />

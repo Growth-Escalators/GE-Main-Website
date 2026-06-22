@@ -1,295 +1,640 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
-import { gsap } from '@/lib/gsap'
+import { useState } from 'react'
+import { motion } from 'framer-motion'
+import {
+  MapPin, Mail, Phone, Clock, Check, MessageCircle, Calendar, Star, Sparkles,
+} from 'lucide-react'
+
+import TrustStrip from '@/components/sections/TrustStrip'
 import Navbar from '@/components/sections/Navbar'
 import Footer from '@/components/sections/Footer'
-import MagneticButton from '@/components/ui/MagneticButton'
-import { MapPin, Mail, Phone, Clock } from 'lucide-react'
 
-const SERVICES_LIST = [
-  'Performance Marketing',
-  'Funnel Marketing & Automation',
-  'Website Development',
-  'Personal Branding',
+const easeOut = [0.16, 1, 0.3, 1] as const
+
+const SERVICE_OPTIONS = [
+  'Performance Ads',
+  'Funnels & Automation',
+  'Web & Software',
   'Social Media Marketing',
   'Branding & Identity',
-  'SEO',
+  'SEO & AI Growth',
+  'Staffing & Recruiting',
+  'Not sure — help me pick',
 ]
-
 const BUDGET_OPTIONS = [
-  'Under ₹50K/month',
-  '₹50K – ₹2L/month',
-  '₹2L – ₹10L/month',
-  '₹10L+/month',
+  'Under ₹50K / $1k',
+  '₹50K–2L / $1k–$5k',
+  '₹2L–10L / $5k–$15k',
+  '₹10L+ / $15k+',
 ]
 
-export default function ContactPage() {
-  const heroRef = useRef<HTMLDivElement>(null)
-  const [submitted, setSubmitted] = useState(false)
-  const [selectedServices, setSelectedServices] = useState<string[]>([])
-  const [formData, setFormData] = useState({
-    name: '', email: '', phone: '', company: '', budget: '', message: '',
-  })
-  const successRef = useRef<HTMLDivElement>(null)
+const WA_LINK = 'https://wa.me/917733888883?text=Hi%20Growth%20Escalators%2C%20I%27d%20like%20to%20discuss%20a%20project.'
+const TEL_LINK = 'tel:+917733888883'
+const MAIL_LINK = 'mailto:Info@growthescalators.com'
+const CAL_LINK = 'https://cal.com/growth-escalators/discovery-call'
+const MAP_EMBED =
+  'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3559.2!2d75.83!3d26.81!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zR3Jvd3RoIEVzY2FsYXRvcnM!5e0!3m2!1sen!2sin'
 
-  useEffect(() => {
-    if (!heroRef.current) return
-    const ctx = gsap.context(() => {
-      gsap.fromTo('.contact-left > *', { y: 28, opacity: 0 }, {
-        y: 0, opacity: 1, duration: 0.7, stagger: 0.1, ease: 'power3.out', delay: 0.2,
-      })
-      gsap.fromTo('.contact-form', { y: 28, opacity: 0 }, {
-        y: 0, opacity: 1, duration: 0.7, ease: 'power3.out', delay: 0.35,
-      })
-    }, heroRef.current)
-    return () => ctx.revert()
-  }, [])
+/* ───────── HERO ───────── */
+function HeroSection() {
+  return (
+    <section className="relative overflow-hidden" style={{ background: 'linear-gradient(180deg, #fff 0%, var(--bg-secondary) 100%)' }}>
+      <div
+        aria-hidden
+        className="hidden md:block pointer-events-none"
+        style={{
+          position: 'absolute',
+          width: 520, height: 520, borderRadius: '50%',
+          filter: 'blur(110px)',
+          background: 'radial-gradient(circle, rgba(255,107,53,0.10), transparent 70%)',
+          top: -160, right: -100,
+        }}
+      />
+      <div className="container-x text-center" style={{ padding: 'clamp(56px, 9vw, 96px) clamp(20px, 4vw, 40px) clamp(40px, 6vw, 60px)' }}>
+        <motion.div
+          initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7, ease: easeOut }}
+        >
+          <div
+            className="inline-flex items-center"
+            style={{
+              gap: 9,
+              border: '1px solid rgba(255,107,53,0.25)',
+              background: 'rgba(255,107,53,0.06)',
+              padding: '7px 16px', borderRadius: 999, marginBottom: 22,
+            }}
+          >
+            <span style={{ width: 7, height: 7, borderRadius: '50%', background: 'var(--orange)' }} />
+            <span style={{ fontSize: 12, fontWeight: 800, letterSpacing: '0.16em', textTransform: 'uppercase', color: 'var(--orange)' }}>
+              We reply within 24 hours
+            </span>
+          </div>
 
-  const toggleService = (s: string) => {
-    setSelectedServices((prev) =>
-      prev.includes(s) ? prev.filter((x) => x !== s) : [...prev, s]
-    )
-  }
+          <h1
+            style={{
+              fontSize: 'clamp(34px, 5.4vw, 60px)',
+              fontWeight: 800, lineHeight: 1.05, letterSpacing: '-0.035em',
+              margin: '0 0 18px', color: 'var(--text-primary)',
+            }}
+          >
+            Let&rsquo;s map your next <span style={{ color: 'var(--orange)' }}>growth move</span>.
+          </h1>
+          <p
+            style={{
+              fontSize: 18, color: 'var(--text-secondary)', lineHeight: 1.6,
+              maxWidth: 620, margin: '0 auto',
+            }}
+          >
+            Tell us what you need — performance marketing, a website, or talent for your team —
+            and a real strategist (not a chatbot) replies within a business day.
+          </p>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
 
-  const handleSubmit = (e: React.FormEvent) => {
+/* ───────── DIRECT CHANNELS ───────── */
+
+function ChannelsSection() {
+  const channels = [
+    {
+      Icon: MessageCircle, label: 'Chat on WhatsApp',
+      sub: 'Fastest path · usually replies in minutes',
+      href: WA_LINK, target: '_blank' as const,
+      tone: { bg: 'rgba(37,211,102,0.10)', color: '#1f9d50', ring: 'rgba(37,211,102,0.28)' },
+    },
+    {
+      Icon: Phone, label: '+91 77338 88883',
+      sub: 'Mon–Sat · 10:00–19:00 IST',
+      href: TEL_LINK,
+      tone: { bg: 'rgba(255,107,53,0.10)', color: 'var(--orange)', ring: 'rgba(255,107,53,0.28)' },
+    },
+    {
+      Icon: Mail, label: 'Info@growthescalators.com',
+      sub: 'Reply within one business day',
+      href: MAIL_LINK,
+      tone: { bg: 'rgba(108,99,255,0.10)', color: 'var(--violet)', ring: 'rgba(108,99,255,0.28)' },
+    },
+  ]
+  return (
+    <section className="container-x" style={{ padding: 'clamp(8px, 1.5vw, 16px) clamp(20px, 4vw, 40px) clamp(40px, 6vw, 60px)' }}>
+      <div className="grid grid-cols-1 md:grid-cols-3" style={{ gap: 16 }}>
+        {channels.map((c, i) => {
+          const { Icon } = c
+          return (
+            <motion.a
+              key={c.label}
+              href={c.href}
+              target={c.target}
+              rel={c.target ? 'noopener noreferrer' : undefined}
+              className="channel-card flex items-center"
+              initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-80px' }}
+              transition={{ duration: 0.5, delay: i * 0.06, ease: easeOut }}
+              style={{
+                gap: 14, padding: 22,
+                background: '#fff',
+                border: '1px solid var(--border-hair-2)',
+                borderRadius: 18,
+                textDecoration: 'none', color: 'var(--text-primary)',
+                transition: 'transform .25s, box-shadow .25s, border-color .25s',
+              }}
+            >
+              <span
+                className="inline-flex items-center justify-center flex-shrink-0"
+                style={{
+                  width: 48, height: 48, borderRadius: 12,
+                  background: c.tone.bg, color: c.tone.color,
+                  border: `1px solid ${c.tone.ring}`,
+                }}
+              >
+                <Icon size={22} />
+              </span>
+              <div style={{ minWidth: 0 }}>
+                <div style={{ fontSize: 15, fontWeight: 800, color: 'var(--text-primary)' }}>{c.label}</div>
+                <div style={{ fontSize: 12.5, color: 'var(--text-muted)', marginTop: 2 }}>{c.sub}</div>
+              </div>
+            </motion.a>
+          )
+        })}
+      </div>
+
+      <style jsx>{`
+        :global(.channel-card:hover) {
+          transform: translateY(-3px);
+          border-color: rgba(255,107,53,0.30) !important;
+          box-shadow: 0 14px 36px rgba(17,18,26,0.08);
+        }
+      `}</style>
+    </section>
+  )
+}
+
+/* ───────── FORM + WHAT HAPPENS ───────── */
+
+type Status = 'idle' | 'submitting' | 'success' | 'error'
+
+function FormSection() {
+  const [status, setStatus] = useState<Status>('idle')
+  const [errorMsg, setErrorMsg] = useState<string | null>(null)
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
-    setSubmitted(true)
-    // Particle burst animation on success
-    if (successRef.current) {
-      const particles: HTMLDivElement[] = []
-      for (let i = 0; i < 18; i++) {
-        const p = document.createElement('div')
-        p.style.cssText = `position:absolute;width:6px;height:6px;border-radius:50%;background:#FF6500;pointer-events:none;left:50%;top:50%;`
-        successRef.current.appendChild(p)
-        particles.push(p)
+    setStatus('submitting')
+    setErrorMsg(null)
+    const form = e.currentTarget
+    const data = new FormData(form)
+    const fields: Record<string, string> = { source: 'Contact Page' }
+    data.forEach((v, k) => { fields[k] = String(v) })
+
+    const minWait = new Promise((r) => setTimeout(r, 220))
+    try {
+      const [res] = await Promise.all([
+        fetch('/api/lead', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(fields),
+        }),
+        minWait,
+      ])
+      if (!res.ok) {
+        const body = (await res.json().catch(() => ({}))) as { error?: string }
+        throw new Error(body.error || `Server returned ${res.status}`)
       }
-      particles.forEach((p, i) => {
-        const angle = (i / particles.length) * Math.PI * 2
-        const dist = 60 + Math.random() * 60
-        gsap.to(p, {
-          x: Math.cos(angle) * dist,
-          y: Math.sin(angle) * dist,
-          opacity: 0,
-          scale: 0,
-          duration: 0.9 + Math.random() * 0.4,
-          ease: 'power2.out',
-          onComplete: () => p.remove(),
-        })
-      })
+      setStatus('success')
+      form.reset()
+    } catch (err) {
+      setStatus('error')
+      setErrorMsg((err as Error).message || 'Something went wrong')
     }
   }
+  const submitting = status === 'submitting'
 
   return (
-    <>
-      <Navbar />
-      <main>
-        <section
-          ref={heroRef}
-          className="pt-36 pb-24 px-6 md:px-12 lg:px-24 min-h-screen"
-          style={{ background: 'var(--bg-primary)' }}
+    <section
+      id="book"
+      style={{ background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-hair)' }}
+    >
+      <div
+        className="container-x grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] items-start"
+        style={{ padding: 'clamp(56px, 9vw, 88px) clamp(20px, 4vw, 40px)', gap: 'clamp(32px, 5vw, 56px)' }}
+      >
+        {/* Left — what happens after you submit */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.6, ease: easeOut }}
         >
-          <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24">
+          <span style={{ fontSize: 12, fontWeight: 800, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--orange)' }}>
+            What happens next
+          </span>
+          <h2
+            style={{
+              fontSize: 'clamp(28px, 4.5vw, 40px)', fontWeight: 800, letterSpacing: '-0.025em',
+              lineHeight: 1.08, margin: '12px 0 18px', color: 'var(--text-primary)',
+            }}
+          >
+            A simple, no-pressure path to a yes.
+          </h2>
 
-              {/* Left column */}
-              <div className="contact-left">
-                <span className="font-outfit text-[10px] tracking-[0.4em] uppercase block mb-5" style={{ color: 'var(--orange)' }}>
-                  Get In Touch
-                </span>
-                <h1 className="font-syne font-extrabold leading-none mb-6" style={{ fontSize: 'clamp(36px, 5.5vw, 72px)', color: 'var(--text-primary)' }}>
-                  Let&apos;s Build Something<br />
-                  <span style={{ color: 'var(--orange)' }}>That Grows.</span>
-                </h1>
-                <p className="font-outfit font-light text-lg mb-10" style={{ color: 'var(--text-muted)', lineHeight: 1.75 }}>
-                  Whether you have a brief or just a problem — let&apos;s talk. We&apos;ll tell you exactly how to fix it.
-                </p>
-
-                {/* Contact details */}
-                <div className="space-y-5 mb-10">
-                  {[
-                    { Icon: Mail, label: 'Email', value: 'Info@growthescalators.com', href: 'mailto:Info@growthescalators.com' },
-                    { Icon: Phone, label: 'Phone', value: '+91 77338 88883', href: 'tel:+917733888883' },
-                    { Icon: MapPin, label: 'Location', value: 'Jaipur, Rajasthan, India', href: undefined },
-                    { Icon: Clock, label: 'Office Hours', value: 'Mon–Sat, 10am–7pm IST. Avg response: 4 hours.', href: undefined },
-                  ].map(({ Icon, label, value, href }) => (
-                    <div key={label} className="flex items-start gap-4">
-                      <div className="w-9 h-9 flex items-center justify-center shrink-0 mt-0.5" style={{ background: 'rgba(255,101,0,0.1)', color: 'var(--orange)' }}>
-                        <Icon size={15} />
-                      </div>
-                      <div>
-                        <div className="font-outfit text-[10px] uppercase tracking-widest mb-0.5" style={{ color: 'var(--text-muted)', opacity: 0.6 }}>{label}</div>
-                        {href ? (
-                          <a href={href} className="font-outfit text-sm hover:opacity-70 transition-opacity" style={{ color: 'var(--text-primary)' }}>{value}</a>
-                        ) : (
-                          <p className="font-outfit text-sm" style={{ color: 'var(--text-primary)' }}>{value}</p>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-
-                {/* Social proof block */}
-                <div className="ge-card p-6 mb-6">
-                  <div className="font-outfit text-[10px] uppercase tracking-widest mb-3" style={{ color: 'var(--orange)' }}>Why Choose Us</div>
-                  <p className="font-outfit font-light text-sm leading-relaxed mb-4" style={{ color: 'var(--text-muted)' }}>
-                    Join 100+ brands that chose Growth Escalators. Average client ROI: <strong style={{ color: 'var(--text-primary)' }}>4.2x in year one.</strong>
-                  </p>
-                  <blockquote className="font-outfit italic text-sm leading-relaxed border-l-2 pl-4" style={{ color: 'var(--text-muted)', borderColor: 'var(--orange)' }}>
-                    &ldquo;Growth Escalators completely transformed our Facebook Ad Management. Our ROAS went from 1.4x to 4.8x in just 45 days.&rdquo;
-                    <span className="block mt-2 not-italic font-semibold" style={{ color: 'var(--text-primary)', fontStyle: 'normal' }}>— Muaaz Shaikh, Business Owner</span>
-                  </blockquote>
-                </div>
-
-                {/* WhatsApp CTA */}
-                <a
-                  href="https://wa.me/917733888883?text=Hi%20Growth%20Escalators!%20I%27d%20like%20to%20discuss%20my%20brand%27s%20growth%20strategy."
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-3 font-outfit font-medium px-6 py-3 transition-all duration-300 hover:opacity-90"
-                  style={{ background: '#25D366', color: '#fff' }}
+          <ol className="flex flex-col" style={{ gap: 18, listStyle: 'none', padding: 0, marginBottom: 30 }}>
+            {[
+              { n: '01', t: 'You send the brief',  d: 'Fill the form below or WhatsApp / call us. Takes under 2 minutes.' },
+              { n: '02', t: 'A strategist replies', d: 'A real human (not a sales bot) reads it and writes back within a business day.' },
+              { n: '03', t: 'Quick discovery call', d: '20–30 minutes. We listen, ask the right questions, and tell you honestly if we can help.' },
+            ].map((s) => (
+              <li key={s.n} className="flex" style={{ gap: 16 }}>
+                <span
+                  className="flex-shrink-0 inline-flex items-center justify-center"
+                  style={{
+                    width: 40, height: 40, borderRadius: 12,
+                    background: 'linear-gradient(135deg, rgba(255,107,53,0.12), rgba(255,107,53,0.04))',
+                    color: 'var(--orange)', fontWeight: 800, fontSize: 14,
+                    border: '1px solid rgba(255,107,53,0.20)',
+                  }}
                 >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                  </svg>
-                  Prefer WhatsApp? Message us directly
-                </a>
+                  {s.n}
+                </span>
+                <div>
+                  <div style={{ fontSize: 16, fontWeight: 800, color: 'var(--text-primary)', marginBottom: 4 }}>{s.t}</div>
+                  <p style={{ fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.6, margin: 0 }}>{s.d}</p>
+                </div>
+              </li>
+            ))}
+          </ol>
+
+          {/* Trust mini */}
+          <div
+            className="flex items-center"
+            style={{ gap: 14, padding: '18px 20px', background: '#fff', borderRadius: 14, border: '1px solid var(--border-hair-2)' }}
+          >
+            <span className="flex" style={{ color: 'var(--gold)', gap: 1 }} aria-label="4.9 of 5 stars">
+              {[0, 1, 2, 3, 4].map((s) => (<Star key={s} size={15} fill="currentColor" stroke="none" />))}
+            </span>
+            <div style={{ fontSize: 13.5, color: 'var(--text-secondary)' }}>
+              <strong style={{ color: 'var(--text-primary)' }}>4.9 / 5</strong> from 187+ Google reviews ·
+              No spam · No commitment
+            </div>
+          </div>
+        </motion.div>
+
+        {/* Right — form card */}
+        <motion.div
+          initial={{ opacity: 0, y: 22 }} whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.6, delay: 0.1, ease: easeOut }}
+          style={{
+            background: '#fff',
+            border: '1px solid var(--border-hair-2)',
+            borderRadius: 22,
+            boxShadow: '0 24px 60px rgba(17,18,26,0.10)',
+            padding: 'clamp(20px, 4vw, 32px)',
+          }}
+        >
+          {status === 'success' ? (
+            <div className="text-center" style={{ padding: '40px 0' }}>
+              <div
+                className="inline-flex items-center justify-center"
+                style={{
+                  width: 56, height: 56, borderRadius: '50%',
+                  background: 'rgba(0,212,170,0.16)', color: 'var(--teal-dark)',
+                  marginBottom: 16,
+                }}
+              >
+                <Check size={28} strokeWidth={3} />
               </div>
+              <h3 style={{ fontSize: 22, fontWeight: 800, color: 'var(--text-primary)', marginBottom: 10 }}>
+                Got it — we&rsquo;re on it.
+              </h3>
+              <p style={{ fontSize: 15, color: 'var(--text-secondary)', lineHeight: 1.6, marginBottom: 20 }}>
+                We&rsquo;ll reply within 24 hours (weekdays). If it&rsquo;s urgent, ping us on WhatsApp.
+              </p>
+              <a
+                href={WA_LINK} target="_blank" rel="noopener noreferrer"
+                style={{
+                  display: 'inline-block', background: 'var(--green-wa)',
+                  color: '#fff', fontSize: 14, fontWeight: 800,
+                  padding: '12px 22px', borderRadius: 999,
+                }}
+              >
+                Chat on WhatsApp
+              </a>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="flex flex-col" style={{ gap: 14 }}>
+              <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 14 }}>
+                <Field name="name"  label="Your name"        placeholder="Jane Doe"      required />
+                <Field name="phone" label="WhatsApp / Phone" placeholder="+1 / +91 …"    required type="tel" />
+              </div>
+              <Field name="email"   label="Work email"       placeholder="jane@company.com" required type="email" />
+              <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 14 }}>
+                <SelectField name="service" label="I need help with" options={SERVICE_OPTIONS} />
+                <SelectField name="budget"  label="Monthly budget"    options={BUDGET_OPTIONS} />
+              </div>
+              <label className="block">
+                <span style={{ display: 'block', fontSize: 12.5, fontWeight: 700, color: 'var(--text-secondary)', marginBottom: 6 }}>
+                  Tell us a bit (optional)
+                </span>
+                <textarea
+                  name="message" rows={3}
+                  placeholder="What you're working on, what you've tried, what success looks like…"
+                  style={{
+                    width: '100%', padding: '13px 15px',
+                    border: '1px solid rgba(17,18,26,0.14)', borderRadius: 11,
+                    fontSize: 14, color: 'var(--text-primary)', boxSizing: 'border-box',
+                  }}
+                />
+              </label>
+              <button
+                type="submit"
+                disabled={submitting}
+                className="lf-submit"
+                style={{
+                  textAlign: 'center',
+                  background: 'linear-gradient(135deg, var(--orange), var(--orange-light))',
+                  color: '#fff', fontSize: 16, fontWeight: 800,
+                  padding: 16, borderRadius: 12,
+                  boxShadow: '0 8px 26px rgba(255,107,53,0.34)',
+                  marginTop: 8, border: 'none',
+                  transition: 'transform .25s, box-shadow .25s, opacity .25s',
+                  opacity: submitting ? 0.65 : 1,
+                  cursor: submitting ? 'wait' : 'pointer',
+                }}
+              >
+                {submitting ? 'Sending…' : 'Send my brief →'}
+              </button>
 
-              {/* Right column — form */}
-              <div className="contact-form">
-                {submitted ? (
-                  <div
-                    ref={successRef}
-                    className="relative ge-card p-12 flex flex-col items-center justify-center text-center"
-                    style={{ minHeight: 400 }}
-                  >
-                    <div className="text-5xl mb-6">🔥</div>
-                    <h3 className="font-syne font-bold text-2xl mb-3" style={{ color: 'var(--text-primary)' }}>
-                      Received. Let&apos;s Grow.
-                    </h3>
-                    <p className="font-outfit font-light" style={{ color: 'var(--text-muted)' }}>
-                      We&apos;ll be in touch within <strong style={{ color: 'var(--orange)' }}>4 hours</strong>. Check your email — we move fast.
-                    </p>
-                  </div>
-                ) : (
-                  <form onSubmit={handleSubmit} className="ge-card p-8 space-y-5">
-                    <h2 className="font-syne font-bold text-xl mb-2" style={{ color: 'var(--text-primary)' }}>
-                      Tell Us About Your Brand
-                    </h2>
+              <div className="flex items-center" style={{ gap: 10, marginTop: 6 }}>
+                <div style={{ flex: 1, height: 1, background: 'rgba(17,18,26,0.1)' }} />
+                <span style={{ fontSize: 12, color: 'var(--text-muted)', fontWeight: 600 }}>or</span>
+                <div style={{ flex: 1, height: 1, background: 'rgba(17,18,26,0.1)' }} />
+              </div>
+              <a
+                href={WA_LINK} target="_blank" rel="noopener noreferrer"
+                className="text-center"
+                style={{
+                  background: 'var(--green-wa)', color: '#fff',
+                  fontSize: 15, fontWeight: 800, padding: 14,
+                  borderRadius: 12, marginTop: 2, display: 'block',
+                  textDecoration: 'none',
+                }}
+              >
+                Chat on WhatsApp
+              </a>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="font-outfit text-[10px] uppercase tracking-widest block mb-2" style={{ color: 'var(--text-muted)' }}>Full Name *</label>
-                        <input
-                          required
-                          className="form-input"
-                          placeholder="Rajesh Kumar"
-                          value={formData.name}
-                          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        />
-                      </div>
-                      <div>
-                        <label className="font-outfit text-[10px] uppercase tracking-widest block mb-2" style={{ color: 'var(--text-muted)' }}>Email *</label>
-                        <input
-                          required
-                          type="email"
-                          className="form-input"
-                          placeholder="hello@yourbrand.com"
-                          value={formData.email}
-                          onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                        />
-                      </div>
-                    </div>
+              {status === 'error' && (
+                <p role="alert" style={{ fontSize: 13, color: '#b91c1c', marginTop: 6 }}>
+                  Couldn&rsquo;t send{errorMsg ? ` (${errorMsg})` : ''}.{' '}
+                  <a href={MAIL_LINK} className="underline">Email us directly →</a>
+                </p>
+              )}
+              <p style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>
+                We&rsquo;ll only use these details to reply. No newsletters, no third-parties.
+              </p>
+            </form>
+          )}
+        </motion.div>
+      </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                      <div>
-                        <label className="font-outfit text-[10px] uppercase tracking-widest block mb-2" style={{ color: 'var(--text-muted)' }}>Phone (Optional)</label>
-                        <input
-                          className="form-input"
-                          placeholder="+91 98765 43210"
-                          value={formData.phone}
-                          onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                        />
-                      </div>
-                      <div>
-                        <label className="font-outfit text-[10px] uppercase tracking-widest block mb-2" style={{ color: 'var(--text-muted)' }}>Company / Brand *</label>
-                        <input
-                          required
-                          className="form-input"
-                          placeholder="Your Brand Name"
-                          value={formData.company}
-                          onChange={(e) => setFormData({ ...formData, company: e.target.value })}
-                        />
-                      </div>
-                    </div>
+      <style jsx>{`
+        :global(.lf-submit:hover) { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(255,107,53,0.4); }
+      `}</style>
+    </section>
+  )
+}
 
-                    <div>
-                      <label className="font-outfit text-[10px] uppercase tracking-widest block mb-2" style={{ color: 'var(--text-muted)' }}>Monthly Marketing Budget *</label>
-                      <select
-                        required
-                        className="form-input"
-                        value={formData.budget}
-                        onChange={(e) => setFormData({ ...formData, budget: e.target.value })}
-                      >
-                        <option value="">Select your budget range</option>
-                        {BUDGET_OPTIONS.map((b) => (
-                          <option key={b} value={b}>{b}</option>
-                        ))}
-                      </select>
-                    </div>
+function Field({
+  name, label, placeholder, type = 'text', required,
+}: { name: string; label: string; placeholder?: string; type?: string; required?: boolean }) {
+  return (
+    <label className="block">
+      <span style={{ display: 'block', fontSize: 12.5, fontWeight: 700, color: 'var(--text-secondary)', marginBottom: 6 }}>
+        {label}{required ? ' *' : ''}
+      </span>
+      <input
+        type={type} name={name} required={required} placeholder={placeholder}
+        autoComplete={type === 'email' ? 'email' : type === 'tel' ? 'tel' : undefined}
+        style={{
+          width: '100%', padding: '13px 15px',
+          border: '1px solid rgba(17,18,26,0.14)', borderRadius: 11,
+          fontSize: 14, color: 'var(--text-primary)', boxSizing: 'border-box', background: '#fff',
+        }}
+      />
+    </label>
+  )
+}
+function SelectField({ name, label, options }: { name: string; label: string; options: string[] }) {
+  return (
+    <label className="block">
+      <span style={{ display: 'block', fontSize: 12.5, fontWeight: 700, color: 'var(--text-secondary)', marginBottom: 6 }}>
+        {label}
+      </span>
+      <select
+        name={name} defaultValue=""
+        style={{
+          width: '100%', padding: '13px 15px',
+          border: '1px solid rgba(17,18,26,0.14)', borderRadius: 11,
+          fontSize: 14, color: 'var(--text-primary)', boxSizing: 'border-box',
+          background: '#fff', appearance: 'none',
+        }}
+      >
+        <option value="" disabled>Select…</option>
+        {options.map((o) => <option key={o} value={o}>{o}</option>)}
+      </select>
+    </label>
+  )
+}
 
-                    <div>
-                      <label className="font-outfit text-[10px] uppercase tracking-widest block mb-3" style={{ color: 'var(--text-muted)' }}>Services You&apos;re Interested In</label>
-                      <div className="flex flex-wrap gap-2">
-                        {SERVICES_LIST.map((s) => {
-                          const active = selectedServices.includes(s)
-                          return (
-                            <button
-                              key={s}
-                              type="button"
-                              onClick={() => toggleService(s)}
-                              className="font-outfit text-xs px-3 py-2 transition-all duration-200"
-                              style={{
-                                background: active ? 'var(--orange)' : 'var(--bg-secondary)',
-                                color: active ? '#06060A' : 'var(--text-muted)',
-                                border: `1px solid ${active ? 'var(--orange)' : 'var(--border-subtle)'}`,
-                              }}
-                            >
-                              {s}
-                            </button>
-                          )
-                        })}
-                      </div>
-                    </div>
+/* ───────── OFFICE + MAP + HOURS ───────── */
 
-                    <div>
-                      <label className="font-outfit text-[10px] uppercase tracking-widest block mb-2" style={{ color: 'var(--text-muted)' }}>Tell Us Your Biggest Challenge</label>
-                      <textarea
-                        rows={4}
-                        className="form-input resize-none"
-                        placeholder="What's the #1 growth problem you need solved right now?"
-                        value={formData.message}
-                        onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                      />
-                    </div>
+function OfficeSection() {
+  return (
+    <section className="container-x" style={{ padding: 'clamp(56px, 9vw, 88px) clamp(20px, 4vw, 40px)' }}>
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.2fr]" style={{ gap: 'clamp(32px, 5vw, 56px)', alignItems: 'stretch' }}>
+        <motion.div
+          initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.6, ease: easeOut }}
+        >
+          <span style={{ fontSize: 12, fontWeight: 800, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--orange)' }}>
+            Visit us
+          </span>
+          <h2
+            style={{
+              fontSize: 'clamp(28px, 4.5vw, 40px)', fontWeight: 800, letterSpacing: '-0.025em',
+              lineHeight: 1.08, margin: '12px 0 18px', color: 'var(--text-primary)',
+            }}
+          >
+            Jaipur HQ. Same time-zone as you, often.
+          </h2>
+          <ul className="flex flex-col" style={{ gap: 14, listStyle: 'none', padding: 0, marginBottom: 26 }}>
+            <li className="flex items-start" style={{ gap: 12 }}>
+              <span
+                className="inline-flex items-center justify-center flex-shrink-0"
+                style={{
+                  width: 36, height: 36, borderRadius: 10,
+                  background: 'rgba(255,107,53,0.10)', color: 'var(--orange)',
+                  border: '1px solid rgba(255,107,53,0.20)',
+                  marginTop: 2,
+                }}
+              >
+                <MapPin size={17} />
+              </span>
+              <div>
+                <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--text-primary)', marginBottom: 2 }}>Address</div>
+                <p style={{ fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.55, margin: 0 }}>
+                  264/103-104, Sector 26, Sanganer, Pratap Nagar<br />
+                  Jaipur, Rajasthan 302033
+                </p>
+              </div>
+            </li>
+            <li className="flex items-start" style={{ gap: 12 }}>
+              <span
+                className="inline-flex items-center justify-center flex-shrink-0"
+                style={{
+                  width: 36, height: 36, borderRadius: 10,
+                  background: 'rgba(108,99,255,0.10)', color: 'var(--violet)',
+                  border: '1px solid rgba(108,99,255,0.20)',
+                  marginTop: 2,
+                }}
+              >
+                <Clock size={17} />
+              </span>
+              <div>
+                <div style={{ fontSize: 14, fontWeight: 800, color: 'var(--text-primary)', marginBottom: 2 }}>Hours</div>
+                <p style={{ fontSize: 14, color: 'var(--text-secondary)', lineHeight: 1.55, margin: 0 }}>
+                  Mon–Sat · 10:00–19:00 IST. WhatsApp goes 24/7.
+                </p>
+              </div>
+            </li>
+          </ul>
 
-                    <MagneticButton
-                      className="w-full font-outfit font-semibold py-4 text-base transition-colors duration-300 mt-2"
-                      style={{ background: 'var(--orange)', color: '#06060A' } as React.CSSProperties}
-                    >
-                      Send It Over →
-                    </MagneticButton>
+          <a
+            href={CAL_LINK} target="_blank" rel="noopener noreferrer"
+            className="inline-flex items-center btn-cta"
+            style={{
+              gap: 9,
+              background: 'linear-gradient(135deg, var(--orange), var(--orange-light))',
+              color: '#fff', fontSize: 15, fontWeight: 800,
+              padding: '14px 26px', borderRadius: 12,
+              boxShadow: '0 8px 26px rgba(255,107,53,0.34)',
+              transition: 'transform .25s, box-shadow .25s',
+            }}
+          >
+            <Calendar size={16} />
+            Book a 30-min discovery call
+          </a>
+          <div style={{ marginTop: 12, fontSize: 12.5, color: 'var(--text-muted)' }}>
+            Picks a slot that works for you · Zoom or WhatsApp call
+          </div>
+        </motion.div>
 
-                    <p className="font-outfit text-xs text-center" style={{ color: 'var(--text-muted)', opacity: 0.6 }}>
-                      We respond within 4 hours Mon–Sat.
-                    </p>
-                  </form>
-                )}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.98 }} whileInView={{ opacity: 1, scale: 1 }}
+          viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.6, delay: 0.1, ease: easeOut }}
+          style={{
+            border: '1px solid var(--border-hair-2)', borderRadius: 22,
+            overflow: 'hidden', minHeight: 320,
+            boxShadow: '0 16px 40px rgba(17,18,26,0.07)',
+          }}
+        >
+          <iframe
+            title="Growth Escalators HQ — Jaipur"
+            src={MAP_EMBED}
+            width="100%" height="100%" style={{ minHeight: 320, border: 0, display: 'block' }}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            allowFullScreen
+          />
+        </motion.div>
+      </div>
+
+      <style jsx>{`
+        :global(.btn-cta:hover) { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(255,107,53,0.4); }
+      `}</style>
+    </section>
+  )
+}
+
+/* ───────── BOT HANDOFF ───────── */
+
+function BotHandoffSection() {
+  return (
+    <section className="container-x" style={{ padding: 'clamp(40px, 7vw, 64px) clamp(20px, 4vw, 40px) clamp(56px, 9vw, 88px)' }}>
+      <motion.div
+        initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.65, ease: easeOut }}
+        className="relative overflow-hidden"
+        style={{
+          background: 'linear-gradient(135deg, var(--bg-dark-elev), var(--bg-dark-elev2))',
+          borderRadius: 22, padding: 'clamp(24px, 4vw, 40px)',
+          color: '#fff',
+        }}
+      >
+        <div
+          aria-hidden
+          className="pointer-events-none"
+          style={{
+            position: 'absolute',
+            width: 340, height: 340, borderRadius: '50%',
+            filter: 'blur(110px)',
+            background: 'radial-gradient(circle, rgba(255,107,53,0.18), transparent 70%)',
+            top: -120, right: -80,
+          }}
+        />
+        <div className="flex items-center flex-wrap relative" style={{ gap: 22, justifyContent: 'space-between' }}>
+          <div className="flex items-center" style={{ gap: 16, flex: '1 1 320px', minWidth: 0 }}>
+            <span
+              className="inline-flex items-center justify-center flex-shrink-0"
+              style={{
+                width: 52, height: 52, borderRadius: 14,
+                background: 'linear-gradient(135deg, var(--orange), var(--orange-light))',
+                color: '#fff',
+                boxShadow: 'inset 0 1px 0 rgba(255,255,255,0.4), 0 8px 24px rgba(255,107,53,0.35)',
+              }}
+            >
+              <Sparkles size={22} />
+            </span>
+            <div>
+              <div style={{ fontSize: 18, fontWeight: 800, color: '#fff', marginBottom: 4 }}>
+                Prefer to chat with GrowthBot first?
+              </div>
+              <div style={{ fontSize: 13.5, color: 'var(--text-on-dark)', lineHeight: 1.5 }}>
+                Our AI growth consultant qualifies your goal in 30 seconds and routes you to the right person.
               </div>
             </div>
           </div>
-        </section>
+          <div className="flex items-center" style={{ gap: 10, flexWrap: 'wrap' }}>
+            <span
+              style={{
+                background: '#fff',
+                color: 'var(--bg-dark)',
+                fontSize: 13, fontWeight: 800,
+                padding: '10px 18px', borderRadius: 999,
+                whiteSpace: 'nowrap',
+              }}
+            >
+              Tap the chat in the corner ↘
+            </span>
+          </div>
+        </div>
+      </motion.div>
+    </section>
+  )
+}
+
+/* ───────── PAGE ───────── */
+
+export default function ContactPage() {
+  return (
+    <>
+      <TrustStrip />
+      <Navbar />
+      <main>
+        <HeroSection />
+        <ChannelsSection />
+        <FormSection />
+        <OfficeSection />
+        <BotHandoffSection />
       </main>
       <Footer />
     </>

@@ -23,7 +23,12 @@ export default function CursorGlow() {
     document.addEventListener('mousemove', onMove);
 
     const interactives = document.querySelectorAll(
-      'a, button, .filter-tab, .work-card, .service-card, .faq-question, .process-num-pill'
+      'a, button, [role="button"], ' +
+      // legacy /portfolio classes
+      '.filter-tab, .work-card, .service-card, .faq-question, .process-num-pill, ' +
+      // main-site classes added during the redesign
+      '.svc-card, .case-card, .channel-card, .lf-submit, .btn-cta, .btn-audit, ' +
+      '.btn-primary, .btn-outline, .results-cell, .gb-trigger'
     );
     interactives.forEach(el => {
       el.addEventListener('mouseenter', onEnter);
