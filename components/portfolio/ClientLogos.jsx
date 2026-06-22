@@ -3,35 +3,34 @@ import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import styles from './ClientLogos.module.css';
 
+/* Client brand list — self-hosted, no external favicon API.
+   Add `logo: '/brands/<file>.svg'` to any entry once a real logo file
+   lands in /public/brands/, otherwise the initial-circle renders. */
 const BRANDS = [
-  { name: 'Paraiso Comfortwears', domain: 'instagram.com'           },
-  { name: 'Odra Organics',        domain: 'instagram.com'           },
-  { name: 'Dr. Dheeraj Dubay',    domain: 'drdubay.in'              },
-  { name: 'Elixzor AI',           domain: 'elixzor.com'             },
-  { name: 'SN Herbals',           domain: 'snherbals.com'           },
-  { name: 'Samkri House',         domain: 'amazon.in'               },
-  { name: 'Gentle Panda',         domain: 'amazon.in'               },
-  { name: 'Cklakart',             domain: 'cklakart.com'            },
-  { name: 'Atatica Studios',      domain: 'ataticastudios.com'      },
-  { name: 'Credo World',          domain: 'credoworld.in'           },
-  { name: 'Yellow Diaries',       domain: 'yellowdiaries.in'        },
-  { name: 'Genosub',              domain: 'genosub.com'             },
-  { name: 'ExZept',               domain: 'exzept.com'              },
-  { name: 'Fashion Hub',          domain: 'fashionhub.in'           },
-  { name: 'Dr. Mukesh',           domain: 'practo.com'              },
-  { name: 'Dr. Shubham',          domain: 'practo.com'              },
-  { name: 'Criativcity',          domain: 'criativcity.com'         },
-  { name: 'Flight Ticket Fare',   domain: 'flightticketfare.com'    },
+  { name: 'Paraiso Comfortwears', initials: 'PA', gradient: 'linear-gradient(135deg, #a855f7, #6d28d9)' },
+  { name: 'Odra Organics',        initials: 'OO', gradient: 'linear-gradient(135deg, #00D4AA, #00b894)' },
+  { name: 'Dr. Dheeraj Dubay',    initials: 'DD', gradient: 'linear-gradient(135deg, #2563eb, #1a4bb5)' },
+  { name: 'Elixzor AI',           initials: 'EX', gradient: 'linear-gradient(135deg, #6d28d9, #3b0f72)' },
+  { name: 'SN Herbals',           initials: 'SN', gradient: 'linear-gradient(135deg, #00b894, #1f9d50)' },
+  { name: 'Samkri House',         initials: 'SH', gradient: 'linear-gradient(135deg, #FF9A5A, #FF6B35)' },
+  { name: 'Gentle Panda',         initials: 'GP', gradient: 'linear-gradient(135deg, #1a1a2e, #6C63FF)' },
+  { name: 'Cklakart',             initials: 'CK', gradient: 'linear-gradient(135deg, #FF6B35, #ff8c5a)' },
+  { name: 'Atatica Studios',      initials: 'AT', gradient: 'linear-gradient(135deg, #1a1a2e, #6d28d9)' },
+  { name: 'Credo World',          initials: 'CW', gradient: 'linear-gradient(135deg, #2d1500, #ff9554)' },
+  { name: 'Yellow Diaries',       initials: 'YD', gradient: 'linear-gradient(135deg, #f7e35b, #0b0a08)' },
+  { name: 'Genosub',              initials: 'GS', gradient: 'linear-gradient(135deg, #00D4AA, #6C63FF)' },
+  { name: 'ExZept',               initials: 'EZ', gradient: 'linear-gradient(135deg, #1a1a2e, #0f3460)' },
+  { name: 'Fashion Hub',          initials: 'FH', gradient: 'linear-gradient(135deg, #FF6B35, #6C63FF)' },
+  { name: 'Dr. Mukesh',           initials: 'DM', gradient: 'linear-gradient(135deg, #3a0f1a, #ff8aa6)' },
+  { name: 'Dr. Shubham',          initials: 'DS', gradient: 'linear-gradient(135deg, #0a2a6e, #2563eb)' },
+  { name: 'Criativcity',          initials: 'CR', gradient: 'linear-gradient(135deg, #6C63FF, #FF6B35)' },
+  { name: 'Flight Ticket Fare',   initials: 'FT', gradient: 'linear-gradient(135deg, #0d1330, #7ad7ff)' },
 ];
 
 // Three rows with different offsets for variety
 const ROW1 = [...BRANDS,              ...BRANDS             ];
 const ROW2 = [...BRANDS.slice(5),  ...BRANDS.slice(0, 5), ...BRANDS.slice(5),  ...BRANDS.slice(0, 5) ];
 const ROW3 = [...BRANDS.slice(10), ...BRANDS.slice(0,10), ...BRANDS.slice(10), ...BRANDS.slice(0,10) ];
-
-function faviconUrl(domain) {
-  return `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
-}
 
 const STATS = [
   { end: 187, suffix: '+', label: 'Brands Scaled'     },
@@ -81,18 +80,34 @@ function StatItem({ end, suffix, label, decimal, prefix, trigger, delay }) {
 }
 
 function BrandPill({ brand }) {
-  const [err, setErr] = useState(false);
   return (
     <span className={styles.pill}>
-      {!err && (
+      {brand.logo ? (
         <img
-          src={faviconUrl(brand.domain)}
+          src={brand.logo}
           alt=""
           className={styles.pillLogo}
           loading="lazy"
           aria-hidden="true"
-          onError={() => setErr(true)}
         />
+      ) : (
+        <span
+          className={styles.pillLogo}
+          aria-hidden="true"
+          style={{
+            background: brand.gradient,
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            color: '#fff',
+            fontWeight: 800,
+            fontSize: 10,
+            letterSpacing: '0.02em',
+            borderRadius: '50%',
+          }}
+        >
+          {brand.initials}
+        </span>
       )}
       <span className={styles.pillName}>{brand.name}</span>
     </span>
