@@ -111,7 +111,7 @@ export default function Navbar() {
               key={link.href}
               href={link.href}
               onClick={() => setMenuOpen(false)}
-              className="font-extrabold font-bold text-4xl transition-all duration-300"
+              className="font-extrabold font-bold text-2xl sm:text-3xl transition-all duration-300"
               style={{
                 color: pathname === link.href ? 'var(--orange)' : 'var(--text-primary)',
                 opacity: menuOpen ? 1 : 0,

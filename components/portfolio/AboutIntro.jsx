@@ -12,7 +12,7 @@ const STATS = [
 ];
 
 /* ── Headline split into words for stagger ── */
-const HEADLINE = "Jaipur's most results-obsessed performance marketing agency.";
+const HEADLINE = "India's most results-obsessed performance marketing agency.";
 const WORDS    = HEADLINE.split(' ');
 
 /* ── Counter hook ── */

@@ -35,58 +35,30 @@ function faviconUrl(domain) {
   return `https://www.google.com/s2/favicons?domain=${domain}&sz=64`;
 }
 
-/* ── Typewriter hook ── */
-function useTypewriter(words) {
-  const [display, setDisplay]   = useState(words[0]);
-  const [wordIdx, setWordIdx]   = useState(0);
-  const [charIdx, setCharIdx]   = useState(words[0].length);
-  const [deleting, setDeleting] = useState(false);
-  const [pausing, setPausing]   = useState(true); // start with full word shown
-
+/* ── Word cycler ──
+ * Cycles an index through the words array on a fixed interval.
+ * Pauses when the tab is hidden so we don't churn renders in the background.
+ */
+function useCyclingWord(words, intervalMs = 2400) {
+  const [idx, setIdx] = useState(0);
   useEffect(() => {
-    const TYPING_SPEED  = 80;
-    const DELETE_SPEED  = 50;
-    const PAUSE_AFTER   = 1800;
-    const PAUSE_BEFORE  = 300;
-
-    if (pausing) {
-      const t = setTimeout(() => {
-        setPausing(false);
-        setDeleting(true);
-      }, PAUSE_AFTER);
-      return () => clearTimeout(t);
-    }
-
-    if (deleting) {
-      if (charIdx === 0) {
-        setDeleting(false);
-        const next = (wordIdx + 1) % words.length;
-        setWordIdx(next);
-        setPausing(false);
-        return;
-      }
-      const t = setTimeout(() => {
-        const w = words[wordIdx];
-        setCharIdx(c => c - 1);
-        setDisplay(w.slice(0, charIdx - 1));
-      }, DELETE_SPEED);
-      return () => clearTimeout(t);
-    }
-
-    // typing
-    const w = words[wordIdx];
-    if (charIdx < w.length) {
-      const t = setTimeout(() => {
-        setCharIdx(c => c + 1);
-        setDisplay(w.slice(0, charIdx + 1));
-      }, TYPING_SPEED);
-      return () => clearTimeout(t);
-    }
-    // done typing → pause
-    setPausing(true);
-  }, [pausing, deleting, charIdx, wordIdx, words]);
-
-  return display;
+    let id;
+    const start = () => {
+      id = window.setInterval(
+        () => setIdx((i) => (i + 1) % words.length),
+        intervalMs,
+      );
+    };
+    const stop = () => { if (id) { clearInterval(id); id = null; } };
+    const onVis = () => (document.hidden ? stop() : start());
+    start();
+    document.addEventListener('visibilitychange', onVis);
+    return () => {
+      stop();
+      document.removeEventListener('visibilitychange', onVis);
+    };
+  }, [words, intervalMs]);
+  return idx;
 }
 
 /* ── Smooth scroll helper ── */
@@ -107,7 +79,7 @@ const fadeUp = (delay = 0) => ({
 export default function Hero() {
   const heroBtnRef  = useRef(null);
   const auditBtnRef = useRef(null);
-  const word        = useTypewriter(WORDS);
+  const activeIdx   = useCyclingWord(WORDS);
 
   const makeMagnetic = (ref) => ({
     onMouseMove: (e) => {
@@ -135,16 +107,23 @@ export default function Hero() {
       <div className={`${styles.content} container`}>
         {/* Badge */}
         <motion.div className={`${styles.badge} glass-pill`} {...fadeUp(0)}>
-          <span>🏆</span> Jaipur's #1 Performance Marketing Agency
+          <span>🏆</span> India's #1 Performance Marketing Agency
         </motion.div>
 
-        {/* H1 with typewriter */}
+        {/* H1 with cycling verb — only the active word lives in the DOM so
+            the slot sizes naturally to whichever word is showing (no big gap
+            for short words like "Scale"). The CSS animation re-fires every
+            time React remounts the span via the changing `key`. */}
         <motion.h1 className={styles.h1} {...fadeUp(0.1)}>
           We Don't Just Market.<br />
           We{' '}
-          <span className={`gradient-text ${styles.typeWord}`}>
-            {word}
-            <span className={styles.cursor} aria-hidden="true">|</span>
+          <span className={styles.wordSlot} aria-live="polite" aria-atomic="true">
+            <span
+              key={WORDS[activeIdx]}
+              className={`gradient-text ${styles.cycleWord}`}
+            >
+              {WORDS[activeIdx]}
+            </span>
           </span>{' '}
           Brands.
         </motion.h1>

@@ -68,25 +68,42 @@
   margin-bottom: 24px;
 }
 
-/* Typewriter word wrapper — keeps width stable */
-.typeWord {
+/* Cycling-word slot — only the active word is in the DOM, so the slot
+   sizes to that word's natural width. "Brands." sits next to it with normal
+   inline spacing; the line reflows once per word swap, which is masked by
+   the fade-in animation below. */
+.wordSlot {
   display: inline-block;
-  min-width: 3ch;
-  position: relative;
+  vertical-align: baseline;
+  /* Tiny breathing room so the blur filter doesn't clip the glyph edges. */
+  padding: 0 0.04em;
+}
+.cycleWord {
+  display: inline-block;
+  /* `both` keeps the final state after the animation finishes. The animation
+     re-fires whenever React remounts this element (key change), giving us a
+     fresh fade+slide+blur every word swap without needing JS transitions. */
+  animation: cycleWordIn 460ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  will-change: opacity, transform, filter;
+}
+@keyframes cycleWordIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 0.35em, 0);
+    filter: blur(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    filter: blur(0);
+  }
 }
 
-/* Blinking cursor */
-.cursor {
-  display: inline-block;
-  font-weight: 300;
-  margin-left: 2px;
-  animation: blink 0.9s step-end infinite;
-  color: var(--orange);
-  -webkit-text-fill-color: var(--orange);
-}
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50%       { opacity: 0; }
+/* Honor reduced-motion preference — instant swap, no animation. */
+@media (prefers-reduced-motion: reduce) {
+  .cycleWord {
+    animation: none;
+  }
 }
 
 /* Sub */

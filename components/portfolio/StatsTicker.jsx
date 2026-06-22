@@ -8,7 +8,7 @@ const ITEMS = [
   '2.5x Customer Lifetime Value',
   '98% Client Satisfaction',
   '30% More Returns on Same Investment',
-  "Jaipur's Most Results-Obsessed Agency",
+  "India's Most Results-Obsessed Agency",
 ];
 
 const DOUBLED = [...ITEMS, ...ITEMS];

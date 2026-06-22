@@ -31,7 +31,7 @@ const MapPinIcon = () => (
 
 const CONTACT_ITEMS = [
   { icon: <PhoneIcon />, label: 'Call / WhatsApp', value: '+91 77338 88883', href: 'tel:+917733888883' },
-  { icon: <MailIcon />,  label: 'Email',           value: 'hello@growthescalators.com', href: 'mailto:hello@growthescalators.com' },
+  { icon: <MailIcon />,  label: 'Email',           value: 'Info@growthescalators.com', href: 'mailto:Info@growthescalators.com' },
   { icon: <MapPinIcon />,label: 'Office',          value: 'Jaipur, Rajasthan, India',  href: 'https://maps.google.com/?q=Jaipur,Rajasthan' },
 ];
 
@@ -92,7 +92,9 @@ export default function CTABanner() {
           <div className={styles.buttons}>
             <a
               ref={callBtnRef}
-              href="tel:+917733888883"
+              href="https://cal.com/growth-escalators/discovery-call"
+              target="_blank"
+              rel="noopener noreferrer"
               className={`btn-primary ${styles.mainBtn}`}
               aria-label="Book free strategy call"
               {...makeMagnetic(callBtnRef)}
@@ -135,7 +137,7 @@ export default function CTABanner() {
 
           {/* Trust badges */}
           <div className={styles.trustBadges}>
-            {['187+ Brands Scaled', '98% Satisfaction', 'Free Consultation', 'Jaipur Based'].map(b => (
+            {['187+ Brands Scaled', '98% Satisfaction', 'Free Consultation', 'India Based'].map(b => (
               <span key={b} className={`${styles.badge} glass-pill`}>{b}</span>
             ))}
           </div>

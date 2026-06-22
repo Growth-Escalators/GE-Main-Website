@@ -61,9 +61,11 @@ export default function Work() {
 
         <div className="work-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {WORK_ITEMS.map((item) => (
-            <div
+            <Link
+              href="/work"
               key={item.id}
-              className="work-card relative overflow-hidden group cursor-pointer"
+              aria-label={`View ${item.name} case study`}
+              className="work-card relative overflow-hidden group cursor-pointer block focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--orange)]"
               style={{ minHeight: 300, background: item.gradient }}
             >
               <div className="absolute inset-0 p-8 flex flex-col justify-end z-10">
@@ -79,11 +81,14 @@ export default function Work() {
                 </span>
                 <h3 className="font-extrabold font-bold text-2xl mb-2" style={{ color: '#F0EDE8' }}>{item.name}</h3>
                 <p className="text-sm" style={{ color: 'rgba(240,237,232,0.6)' }}>{item.result}</p>
+                <span className="mt-4 text-xs tracking-widest uppercase md:hidden" style={{ color: 'var(--orange)' }}>
+                  View Case Study →
+                </span>
               </div>
 
-              {/* Hover overlay */}
+              {/* Hover overlay — desktop only (touch devices show the CTA above instead) */}
               <div
-                className="absolute inset-0 z-20 flex items-center justify-center"
+                className="absolute inset-0 z-20 hidden md:flex items-center justify-center"
                 style={{
                   background: 'var(--orange)',
                   clipPath: 'inset(100% 0 0 0)',
@@ -92,11 +97,11 @@ export default function Work() {
                 onMouseEnter={(e) => { (e.currentTarget as HTMLElement).style.clipPath = 'inset(0 0 0 0)' }}
                 onMouseLeave={(e) => { (e.currentTarget as HTMLElement).style.clipPath = 'inset(100% 0 0 0)' }}
               >
-                <Link href="/work" className="font-extrabold font-bold text-[#06060A] text-lg">
+                <span className="font-extrabold font-bold text-[#06060A] text-lg">
                   View Case Study →
-                </Link>
+                </span>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
