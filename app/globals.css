@@ -391,6 +391,109 @@ button {
   pointer-events: none;
 }
 
+/* ───────────────────── Motion utility library ─────────────────────
+   Reusable, performant animation primitives applied via class or
+   data-attribute. All respect prefers-reduced-motion. */
+
+/* CTA pulse glow — primary buttons get a slow attention-magnet pulse */
+@keyframes cta-pulse {
+  0%, 100% { box-shadow: 0 8px 26px rgba(255, 107, 53, 0.34); }
+  50%      { box-shadow: 0 12px 38px rgba(255, 107, 53, 0.55), 0 0 0 6px rgba(255, 107, 53, 0.08); }
+}
+.btn-cta {
+  animation: cta-pulse 3.4s ease-in-out infinite;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), filter 0.25s;
+}
+.btn-cta:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.06);
+  animation-duration: 1.6s;
+}
+
+/* Float-bob — gentle vertical drift for icons / decorative chips */
+@keyframes float-bob {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+.float-bob { animation: float-bob 4s ease-in-out infinite; }
+
+/* Shimmer sweep — diagonal highlight that crosses a card on hover.
+   Apply via class to a positioned (relative + overflow:hidden) ancestor;
+   the ::before pseudo handles the sweep. */
+.shimmer-host {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.shimmer-host::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  z-index: 1;
+  background: linear-gradient(115deg, transparent 30%, rgba(255, 255, 255, 0.10) 45%, transparent 60%);
+  transform: translateX(-100%);
+  transition: transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  pointer-events: none;
+}
+.shimmer-host:hover::before { transform: translateX(100%); }
+
+/* Tilt on hover — subtle 3D card tilt synced with cursor entry side.
+   Pair with a real card that has its own padding/background. */
+.tilt-hover {
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-style: preserve-3d;
+}
+.tilt-hover:hover {
+  transform: translateY(-4px) scale(1.012);
+  box-shadow: 0 24px 60px -16px rgba(255, 107, 53, 0.20),
+              0 0 0 1px rgba(255, 107, 53, 0.25) inset;
+}
+
+/* Drift orb keyframes (already used elsewhere — formalizing as utilities) */
+@keyframes orb-drift-1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(36px, -28px) scale(1.05); }
+}
+@keyframes orb-drift-2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(-44px, 32px) scale(1.07); }
+}
+@keyframes orb-drift-3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(28px, 36px) scale(0.96); }
+}
+
+/* Underline grow — subtle accent underline that expands left→right on hover */
+.underline-grow {
+  position: relative;
+  display: inline-block;
+}
+.underline-grow::after {
+  content: '';
+  position: absolute;
+  left: 0; bottom: -2px;
+  width: 100%;
+  height: 2px;
+  background: var(--orange);
+  border-radius: 2px;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.underline-grow:hover::after { transform: scaleX(1); }
+
+/* Service-icon hover — gentle scale + rotate */
+.svc-icon-anim { transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1); }
+.svc-card:hover .svc-icon-anim { transform: scale(1.12) rotate(-6deg); }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn-cta,
+  .float-bob,
+  .shimmer-host::before { animation: none !important; transition: none !important; }
+  .tilt-hover:hover { transform: none !important; }
+}
+
 /* GrowthBot — full-bleed chat sheet on phones so it doesn't crop content.
    Inline-style widths (380px / 560px) cover ~80% of viewport on small phones;
    below 640px we override to a bottom sheet that respects safe areas. */

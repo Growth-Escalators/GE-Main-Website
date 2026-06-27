@@ -50,14 +50,35 @@ function IconTrend() {
     </svg>
   )
 }
+function IconUsers() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+      <circle cx="8.5" cy="7" r="3.5" />
+      <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+      <path d="M16.5 3.5a3.5 3.5 0 0 1 0 6.9" />
+    </svg>
+  )
+}
 
-const SERVICES = [
+type Service = {
+  Icon: () => JSX.Element
+  title: string
+  body: string
+  stat: string
+  /** If set, the card renders as a link to this href + shows a "NEW" badge */
+  href?: string
+  isNew?: boolean
+}
+
+const SERVICES: Service[] = [
   { Icon: IconTarget,  title: 'Performance Marketing',   body: 'Meta, Google & YouTube ads engineered for ROAS. Every click tracked, every campaign tested.', stat: 'Avg. 120% ROAS lift' },
   { Icon: IconFunnel,  title: 'Funnels & Automation',    body: 'End-to-end lead funnels that turn cold traffic into paying customers — built and automated.', stat: '3× more qualified leads' },
   { Icon: IconMonitor, title: 'Web & Software',          body: 'Fast, conversion-built sites & custom software — Shopify, Next.js, full SaaS products.',     stat: '+40% conversion rate' },
   { Icon: IconPhone,   title: 'Social Media Marketing',  body: 'Content & community that builds brand equity and consistent, compounding engagement.',      stat: '2× engagement rate' },
   { Icon: IconStar,    title: 'Branding & Identity',     body: 'Logo, visual identity & brand systems that make you unmistakable and unforgettable.',       stat: 'Used by 100+ brands' },
   { Icon: IconTrend,   title: 'AI SEO & Growth',         body: 'AI-powered organic systems that compound — content, technical SEO, authority building.',   stat: 'First page in 90 days' },
+  { Icon: IconUsers,   title: 'Staffing & Talent',       body: 'AI-matched marketing, design & dev talent — full-time or contract, remote-ready, vetted before they reach your inbox.', stat: 'AI-matched talent pool', href: '/staffing', isNew: true },
 ]
 
 export default function Services() {
@@ -128,22 +149,24 @@ export default function Services() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3" style={{ gap: 20 }}>
           {SERVICES.map((svc, i) => {
             const { Icon } = svc
-            return (
-              <motion.div
-                key={svc.title}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-60px' }}
-                transition={{ duration: 0.55, delay: (i % 3) * 0.06, ease: [0.16, 1, 0.3, 1] }}
-                className="svc-card glass"
-                style={{
-                  padding: 30,
-                  borderRadius: 18,
-                  transition: 'transform .35s cubic-bezier(.25,.46,.45,.94), box-shadow .35s, border-color .35s',
-                }}
-              >
+            const inner = (
+              <>
+                {svc.isNew && (
+                  <span
+                    style={{
+                      position: 'absolute', top: 18, right: 18,
+                      padding: '4px 10px', borderRadius: 999,
+                      background: 'var(--orange)',
+                      color: '#fff', fontSize: 10, fontWeight: 900,
+                      letterSpacing: '0.14em', textTransform: 'uppercase',
+                      boxShadow: '0 4px 12px rgba(255,107,53,0.35)',
+                    }}
+                  >
+                    New
+                  </span>
+                )}
                 <div
-                  className="inline-flex items-center justify-center"
+                  className="inline-flex items-center justify-center svc-icon-anim"
                   style={{
                     width: 48, height: 48, borderRadius: 12,
                     background: 'rgba(255,107,53,0.10)',
@@ -159,6 +182,33 @@ export default function Services() {
                   {svc.body}
                 </p>
                 <span style={{ fontSize: 13, fontWeight: 700, color: 'var(--orange)' }}>{svc.stat}</span>
+              </>
+            )
+
+            const Wrapper: 'a' | 'div' = svc.href ? 'a' : 'div'
+            return (
+              <motion.div
+                key={svc.title}
+                initial={{ opacity: 0, y: 24 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: '-60px' }}
+                transition={{ duration: 0.55, delay: (i % 3) * 0.06, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <Wrapper
+                  {...(svc.href ? { href: svc.href } : {})}
+                  className="svc-card glass"
+                  style={{
+                    position: 'relative',
+                    display: 'block',
+                    padding: 30,
+                    borderRadius: 18,
+                    transition: 'transform .35s cubic-bezier(.25,.46,.45,.94), box-shadow .35s, border-color .35s',
+                    textDecoration: 'none',
+                    color: 'inherit',
+                  }}
+                >
+                  {inner}
+                </Wrapper>
               </motion.div>
             )
           })}

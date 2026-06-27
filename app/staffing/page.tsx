@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import {
@@ -86,9 +86,9 @@ function HeroSection() {
               </Link>
             </div>
             <div className="flex flex-wrap" style={{ gap: 30, paddingTop: 24, borderTop: '1px solid var(--border-hair-2)' }}>
-              <HeroStat label="Sourcing & screening">AI-matched</HeroStat>
-              <HeroStat label="Our two specialisms">Tech + Marketing</HeroStat>
-              <HeroStat label="Remote-ready">Full-time / Contract</HeroStat>
+              <HeroStat label="Median time-to-shortlist">5–7 days</HeroStat>
+              <HeroStat label="Two specialisms">Tech + Marketing</HeroStat>
+              <HeroStat label="AI-screens per role">40+ candidates</HeroStat>
             </div>
           </motion.div>
 
@@ -106,25 +106,28 @@ function HeroSection() {
                 padding: 'clamp(18px, 3vw, 24px)',
               }}
             >
-              <div className="flex items-center justify-between" style={{ marginBottom: 18 }}>
-                <div style={{ fontWeight: 800, fontSize: 14.5, color: 'var(--text-primary)' }}>Live hiring pipeline</div>
+              <div className="flex items-center justify-between" style={{ marginBottom: 6 }}>
+                <div style={{ fontWeight: 800, fontSize: 14.5, color: 'var(--text-primary)' }}>Example shortlist</div>
                 <span
                   style={{
-                    fontSize: 11, fontWeight: 700, color: 'var(--teal-dark)',
-                    background: 'rgba(0,212,170,0.10)', padding: '4px 10px', borderRadius: 999,
+                    fontSize: 11, fontWeight: 700, color: 'var(--text-muted)',
+                    background: 'rgba(17,18,26,0.05)', padding: '4px 10px', borderRadius: 999,
                   }}
                 >
-                  ● Active
+                  Anonymized
                 </span>
               </div>
+              <div style={{ fontSize: 12, color: 'var(--text-muted)', marginBottom: 14 }}>
+                Anonymized · drawn from recent shortlists
+              </div>
               <div className="flex flex-col" style={{ gap: 10 }}>
-                <PipelineRow grad="linear-gradient(135deg,#6C63FF,#9c8fff)" initials="SK" role="Full-Stack Developer"     note="AI-matched · Strong fit" status="Ready"   tone="teal" />
-                <PipelineRow grad="linear-gradient(135deg,#FF6B35,#ff8c5a)" initials="AM" role="Performance Marketer"     note="AI-matched · Strong fit" status="Ready"   tone="teal" />
-                <PipelineRow grad="linear-gradient(135deg,#00D4AA,#00b894)" initials="Rp" role="UI/UX Designer"           note="Shortlisted"            status="Stage 2" tone="violet" />
+                <PipelineRow grad="linear-gradient(135deg,#6C63FF,#9c8fff)" initials="—" role="Full-Stack Developer"  note="Series-A SaaS · 14 days"     status="Hired"   tone="teal" />
+                <PipelineRow grad="linear-gradient(135deg,#FF6B35,#ff8c5a)" initials="—" role="Performance Marketer"  note="D2C wellness · 9 days"        status="Hired"   tone="teal" />
+                <PipelineRow grad="linear-gradient(135deg,#00D4AA,#00b894)" initials="—" role="UI/UX Designer"        note="Edtech · 17 days"             status="Stage 2" tone="violet" />
               </div>
               <div className="grid grid-cols-2" style={{ gap: 10, marginTop: 14 }}>
-                <PipelineMini bg="rgba(255,107,53,0.06)" color="var(--orange)"     value="42" label="Candidates sourced" />
-                <PipelineMini bg="rgba(0,212,170,0.06)"  color="var(--teal-dark)"  value="5"  label="Interview-ready" />
+                <PipelineMini bg="rgba(255,107,53,0.06)" color="var(--orange)"     value="5–7d" label="Median time-to-shortlist" />
+                <PipelineMini bg="rgba(0,212,170,0.06)"  color="var(--teal-dark)"  value="40+"  label="AI-screened per role" />
               </div>
             </div>
           </motion.div>
@@ -586,6 +589,662 @@ function ProvideSection() {
   )
 }
 
+/* ───────────────────── Brand trust strip (real clients) ─────────────────────
+   Anchors the staffing claim to actual operating brands. These are real
+   Growth Escalators marketing clients — the same talent that runs their
+   work is the talent we staff out to other teams. Wordmark marquee so we
+   don't need image assets. */
+
+const TRUSTED_BRANDS = [
+  'Paraiso Comfortwears', 'Dr. Dheeraj Dubay', 'Elixzor Media',
+  'Odra Organics', 'SN Herbals', 'Gentle Panda',
+  'Atatica Studios', 'Credo World', 'Yellow Diaries', 'Cklakart',
+]
+
+function TrustBrandsStrip() {
+  const track = [...TRUSTED_BRANDS, ...TRUSTED_BRANDS]
+  return (
+    <section style={{ background: '#fff', borderTop: '1px solid var(--border-hair)' }}>
+      <div className="container-x" style={{ padding: 'clamp(36px, 5vw, 52px) clamp(20px, 4vw, 40px)' }}>
+        <div className="flex flex-col items-center" style={{ gap: 22 }}>
+          <span
+            style={{
+              fontSize: 12, fontWeight: 800, letterSpacing: '0.18em',
+              textTransform: 'uppercase', color: 'var(--text-muted)',
+              textAlign: 'center',
+            }}
+          >
+            The same talent runs growth for these brands
+          </span>
+          <div className="staffing-marquee" style={{ width: '100%', overflow: 'hidden', position: 'relative' }}>
+            <span aria-hidden className="staffing-fade-l" />
+            <span aria-hidden className="staffing-fade-r" />
+            <div className="staffing-track">
+              {track.map((b, i) => (
+                <span
+                  key={`${b}-${i}`}
+                  className="staffing-brand"
+                  style={{
+                    fontWeight: 800, fontSize: 17, color: '#b9b9cb',
+                    letterSpacing: '-0.01em',
+                    transition: 'color .25s',
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  {b}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+      <style jsx>{`
+        .staffing-marquee:hover .staffing-track { animation-play-state: paused; }
+        .staffing-track {
+          display: inline-flex;
+          gap: 56px;
+          padding-right: 56px;
+          animation: staffingScroll 32s linear infinite;
+          will-change: transform;
+        }
+        :global(.staffing-brand:hover) { color: var(--text-primary) !important; }
+        .staffing-fade-l, .staffing-fade-r {
+          position: absolute; top: 0; bottom: 0;
+          width: 60px; z-index: 2; pointer-events: none;
+        }
+        .staffing-fade-l { left: 0;  background: linear-gradient(90deg, #fff, transparent); }
+        .staffing-fade-r { right: 0; background: linear-gradient(270deg, #fff, transparent); }
+        @keyframes staffingScroll {
+          from { transform: translateX(0); }
+          to   { transform: translateX(-50%); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .staffing-track { animation: none; flex-wrap: wrap; justify-content: center; }
+        }
+      `}</style>
+    </section>
+  )
+}
+
+/* ───────────────────── Sticky audit CTA bar ─────────────────────
+   Appears once the user scrolls past the hero. Keeps the audit ask
+   one tap away through the entire long page. Dismissable. */
+
+function StickyAuditBar() {
+  const [show, setShow] = useState(false)
+  const [dismissed, setDismissed] = useState(false)
+  useEffect(() => {
+    if (dismissed) return
+    const onScroll = () => setShow(window.scrollY > 600)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [dismissed])
+  if (dismissed || !show) return null
+  return (
+    <div
+      style={{
+        position: 'fixed',
+        left: 12, right: 12, bottom: 16,
+        zIndex: 60,
+        maxWidth: 720, margin: '0 auto',
+        background: '#fff',
+        border: '1px solid var(--border-hair-2)',
+        borderRadius: 16,
+        boxShadow: '0 24px 56px rgba(17,18,26,0.18), 0 4px 12px rgba(17,18,26,0.08)',
+        padding: '12px 14px',
+        display: 'flex', alignItems: 'center', gap: 12,
+        animation: 'stickyIn 0.45s cubic-bezier(0.16, 1, 0.3, 1)',
+      }}
+    >
+      <span
+        className="inline-flex items-center justify-center"
+        style={{
+          width: 34, height: 34, borderRadius: 10, flexShrink: 0,
+          background: 'rgba(255,107,53,0.10)',
+          color: 'var(--orange)',
+        }}
+        aria-hidden
+      >
+        <Sparkles size={17} />
+      </span>
+      <div style={{ flex: 1, minWidth: 0 }}>
+        <div style={{ fontSize: 13.5, fontWeight: 800, color: 'var(--text-primary)', lineHeight: 1.25 }}>
+          Free hiring audit
+        </div>
+        <div style={{ fontSize: 11.5, color: 'var(--text-muted)', lineHeight: 1.3 }}>
+          Tell us the role &mdash; we&rsquo;ll send a shortlist plan.
+        </div>
+      </div>
+      <Link
+        href="#book"
+        className="btn-cta"
+        style={{
+          background: 'linear-gradient(135deg, var(--orange), var(--orange-light))',
+          color: '#fff', fontSize: 13, fontWeight: 800,
+          padding: '10px 18px', borderRadius: 10,
+          textDecoration: 'none',
+          whiteSpace: 'nowrap',
+        }}
+      >
+        Book
+      </Link>
+      <button
+        type="button"
+        onClick={() => setDismissed(true)}
+        aria-label="Dismiss"
+        style={{
+          background: 'transparent', border: 'none',
+          color: 'var(--text-muted)', cursor: 'pointer',
+          fontSize: 18, lineHeight: 1, padding: 4, flexShrink: 0,
+        }}
+      >
+        ×
+      </button>
+      <style jsx>{`
+        @keyframes stickyIn {
+          from { opacity: 0; transform: translateY(40px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          [style*="stickyIn"] { animation: none !important; }
+        }
+      `}</style>
+    </div>
+  )
+}
+
+/* ───────────────────── Markets & Industries ─────────────────────
+   2 large market cards (US + India) + a domain pill grid. Sits between
+   Roles (which lists role types) and Pricing (which lists models). */
+
+const MARKETS = [
+  {
+    flag: 'US',
+    title: 'United States',
+    sub: 'Remote-ready talent built for US working hours',
+    bullets: [
+      'Strong overlap into US East &amp; West timezones',
+      'Async-fluent, English-native communication',
+      'Contract or full-time remote engagements',
+    ],
+    tint: 'rgba(108,99,255,0.10)',
+    border: 'rgba(108,99,255,0.30)',
+    accent: 'var(--violet)',
+  },
+  {
+    flag: 'IN',
+    title: 'India',
+    sub: 'On-the-ground talent across every major hub',
+    bullets: [
+      'Sourcing across Jaipur, Bangalore, Delhi&#8209;NCR, Mumbai &amp; Hyderabad',
+      'Both in-office &amp; remote roles supported',
+      'Local payroll &amp; compliance handled end-to-end',
+    ],
+    tint: 'rgba(255,107,53,0.10)',
+    border: 'rgba(255,107,53,0.30)',
+    accent: 'var(--orange)',
+  },
+] as const
+
+const INDUSTRIES = [
+  'Healthcare',
+  'BFSI',
+  'IT &amp; SaaS',
+  'E-Commerce / D2C',
+  'EdTech',
+  'Real Estate',
+  'Travel &amp; Hospitality',
+  'Manufacturing',
+]
+
+function MarketsSection() {
+  return (
+    <section style={{ background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-hair)', position: 'relative', overflow: 'hidden' }}>
+      {/* Two ambient orbs — one per market */}
+      <div
+        aria-hidden
+        className="hidden md:block pointer-events-none"
+        style={{
+          position: 'absolute', width: 460, height: 460, borderRadius: '50%',
+          filter: 'blur(120px)',
+          background: 'radial-gradient(circle, rgba(108,99,255,0.12), transparent 70%)',
+          top: -160, left: -120,
+          animation: 'orb-drift-1 28s ease-in-out infinite',
+          zIndex: 0,
+        }}
+      />
+      <div
+        aria-hidden
+        className="hidden md:block pointer-events-none"
+        style={{
+          position: 'absolute', width: 420, height: 420, borderRadius: '50%',
+          filter: 'blur(110px)',
+          background: 'radial-gradient(circle, rgba(255,107,53,0.12), transparent 70%)',
+          bottom: -160, right: -100,
+          animation: 'orb-drift-2 32s ease-in-out infinite',
+          zIndex: 0,
+        }}
+      />
+      <div className="container-x relative" style={{ padding: 'clamp(56px, 9vw, 88px) clamp(20px, 4vw, 40px)' }}>
+        <motion.div
+          initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.6, ease: easeOut }}
+          className="text-center" style={{ marginBottom: 44 }}
+        >
+          <span style={{ fontSize: 12, fontWeight: 800, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--orange)' }}>
+            Markets &amp; domains
+          </span>
+          <h2 style={{ fontSize: 'clamp(28px, 4.4vw, 40px)', fontWeight: 800, letterSpacing: '-0.025em', margin: '12px 0 10px', color: 'var(--text-primary)' }}>
+            Two markets, a deep bench of domain expertise
+          </h2>
+          <p style={{ fontSize: 16, color: 'var(--text-secondary)', maxWidth: 600, margin: '0 auto', lineHeight: 1.6 }}>
+            We hire across India and into the United States &mdash; with talent vetted for the
+            domains where context actually matters.
+          </p>
+        </motion.div>
+
+        {/* Two large market cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: 18, maxWidth: 960, margin: '0 auto 32px' }}>
+          {MARKETS.map((m, i) => (
+            <motion.div
+              key={m.title}
+              initial={{ opacity: 0, y: 24, scale: 0.96 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.7, delay: i * 0.12, ease: easeOut }}
+              className="tilt-hover shimmer-host"
+              style={{
+                background: '#fff',
+                border: `1px solid ${m.border}`,
+                borderRadius: 18, padding: 28,
+                position: 'relative',
+              }}
+            >
+              <div className="flex items-center" style={{ gap: 14, marginBottom: 14, position: 'relative', zIndex: 2 }}>
+                <span
+                  className="inline-flex items-center justify-center"
+                  style={{
+                    width: 52, height: 52, borderRadius: 14,
+                    background: m.tint,
+                    color: m.accent, fontWeight: 900, fontSize: 17,
+                    letterSpacing: '0.04em',
+                    border: `1px solid ${m.border}`,
+                  }}
+                >
+                  {m.flag}
+                </span>
+                <div>
+                  <h3 style={{ fontSize: 22, fontWeight: 800, margin: 0, color: 'var(--text-primary)', letterSpacing: '-0.015em' }}>
+                    {m.title}
+                  </h3>
+                  <p style={{ fontSize: 13.5, color: 'var(--text-muted)', margin: '2px 0 0' }}>
+                    {m.sub}
+                  </p>
+                </div>
+              </div>
+              <ul className="flex flex-col" style={{ gap: 9, margin: 0, padding: 0, listStyle: 'none', position: 'relative', zIndex: 2 }}>
+                {m.bullets.map((b, j) => (
+                  <li
+                    key={j}
+                    className="flex items-start"
+                    style={{ gap: 10, fontSize: 13.5, color: 'var(--text-primary)', lineHeight: 1.55 }}
+                    dangerouslySetInnerHTML={{ __html: `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="${m.accent === 'var(--violet)' ? '#6C63FF' : '#FF6B35'}" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;margin-top:3px"><polyline points="20 6 9 17 4 12"/></svg><span>${b}</span>` }}
+                  />
+                ))}
+              </ul>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Industry pill grid */}
+        <motion.div
+          initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }} transition={{ duration: 0.6, ease: easeOut }}
+          className="text-center"
+          style={{ maxWidth: 960, margin: '0 auto' }}
+        >
+          <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
+            Domains we hire into
+          </span>
+          <div
+            className="flex flex-wrap justify-center"
+            style={{ gap: 10, marginTop: 18 }}
+          >
+            {INDUSTRIES.map((d, i) => (
+              <motion.span
+                key={d}
+                initial={{ opacity: 0, y: 12, scale: 0.95 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: '-40px' }}
+                transition={{ duration: 0.4, delay: 0.03 * i, ease: easeOut }}
+                style={{
+                  background: '#fff',
+                  border: '1px solid var(--border-hair-2)',
+                  borderRadius: 999,
+                  padding: '10px 18px',
+                  fontSize: 13.5, fontWeight: 700,
+                  color: 'var(--text-primary)',
+                  letterSpacing: '-0.005em',
+                  transition: 'border-color 0.25s, background 0.25s, transform 0.25s',
+                  cursor: 'default',
+                }}
+                whileHover={{ y: -2 }}
+                dangerouslySetInnerHTML={{ __html: `<span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--orange);margin-right:8px;vertical-align:middle"></span>${d}` }}
+              />
+            ))}
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+/* ───────────────────── Recent Placements (trust proof) ─────────────────────
+   Anonymized samples of roles we've shortlisted recently. Industry + role +
+   time-to-shortlist + status. Frames clearly as examples (not specific case
+   studies) to stay aligned with the no-placement-guarantee rule. */
+
+const PLACEMENTS = [
+  { role: 'Senior Performance Marketer', industry: 'Series-A SaaS',  time: '11 days', status: 'Still on team',    tone: 'teal' as const },
+  { role: 'Lead Full-Stack Developer',   industry: 'D2C E-Commerce', time: '17 days', status: 'Still on team',    tone: 'teal' as const },
+  { role: 'UI/UX Designer',              industry: 'Edtech',         time: '14 days', status: 'Contract ongoing', tone: 'violet' as const },
+  { role: 'Performance Marketing Spec.', industry: 'Healthcare D2C', time: '9 days',  status: 'Still on team',    tone: 'teal' as const },
+  { role: 'Senior Brand Designer',       industry: 'Wellness D2C',   time: '22 days', status: 'Still on team',    tone: 'teal' as const },
+  { role: 'Marketing Ops Manager',       industry: 'B2B SaaS',       time: '19 days', status: 'Contract ongoing', tone: 'violet' as const },
+]
+
+function PlacementsSection() {
+  return (
+    <section style={{ background: '#fff', borderTop: '1px solid var(--border-hair)', position: 'relative', overflow: 'hidden' }}>
+      {/* Floating ambient orb */}
+      <div
+        aria-hidden
+        className="hidden md:block pointer-events-none"
+        style={{
+          position: 'absolute', width: 380, height: 380, borderRadius: '50%',
+          filter: 'blur(110px)',
+          background: 'radial-gradient(circle, rgba(255,107,53,0.12), transparent 70%)',
+          top: -120, right: -80,
+          animation: 'orb-drift-1 24s ease-in-out infinite',
+          zIndex: 0,
+        }}
+      />
+      <div className="container-x relative" style={{ padding: 'clamp(56px, 9vw, 88px) clamp(20px, 4vw, 40px)' }}>
+        <motion.div
+          initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.6, ease: easeOut }}
+          className="text-center" style={{ marginBottom: 44 }}
+        >
+          <span style={{ fontSize: 12, fontWeight: 800, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--orange)' }}>
+            Recent placements
+          </span>
+          <h2 style={{ fontSize: 'clamp(26px, 4.2vw, 38px)', fontWeight: 800, letterSpacing: '-0.025em', margin: '12px 0 10px', color: 'var(--text-primary)' }}>
+            What recent hiring has looked like
+          </h2>
+          <p style={{ fontSize: 16, color: 'var(--text-secondary)', maxWidth: 560, margin: '0 auto', lineHeight: 1.6 }}>
+            Anonymized examples from recent quarters &mdash; role, industry, time from kick&#8209;off to shortlist, and current status.
+          </p>
+        </motion.div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3" style={{ gap: 16 }}>
+          {PLACEMENTS.map((p, i) => (
+            <motion.div
+              key={`${p.role}-${p.industry}`}
+              initial={{ opacity: 0, y: 24, scale: 0.96 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
+              viewport={{ once: true, margin: '-60px' }}
+              transition={{ duration: 0.6, delay: (i % 3) * 0.08, ease: easeOut }}
+              className="tilt-hover shimmer-host"
+              style={{
+                background: 'var(--bg-secondary)',
+                border: '1px solid var(--border-hair-2)',
+                borderRadius: 16, padding: 22,
+                position: 'relative',
+              }}
+            >
+              <div className="flex items-center justify-between" style={{ marginBottom: 12, position: 'relative', zIndex: 2 }}>
+                <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--text-muted)' }}>
+                  {p.industry}
+                </span>
+                <span
+                  style={{
+                    fontSize: 10.5, fontWeight: 700,
+                    color: p.tone === 'teal' ? 'var(--teal-dark)' : 'var(--violet)',
+                    background: p.tone === 'teal' ? 'rgba(0,212,170,0.10)' : 'rgba(108,99,255,0.10)',
+                    padding: '4px 9px', borderRadius: 7,
+                  }}
+                >
+                  {p.status}
+                </span>
+              </div>
+              <div style={{ fontSize: 16.5, fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.015em', marginBottom: 14 }}>
+                {p.role}
+              </div>
+              <div className="flex items-center" style={{ gap: 8, paddingTop: 12, borderTop: '1px solid var(--border-hair-2)' }}>
+                <span style={{ fontSize: 11, fontWeight: 700, color: 'var(--text-muted)', letterSpacing: '0.06em', textTransform: 'uppercase' }}>
+                  Time to shortlist
+                </span>
+                <span style={{ fontSize: 14, fontWeight: 800, color: 'var(--orange)', marginLeft: 'auto' }}>
+                  {p.time}
+                </span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* ───────────────────── How we charge (transparent pricing) ─────────────────────
+   Promotes the pricing structure out of the FAQ into a visible block. No
+   absolute numbers (we don't have a fixed rate-card) — but the structure is
+   honest so buyers don't have to guess whether they can afford to ask. */
+
+function PricingSection() {
+  return (
+    <section style={{ position: 'relative', overflow: 'hidden' }}>
+      {/* Two drifting orbs for ambient depth */}
+      <div
+        aria-hidden
+        className="hidden md:block pointer-events-none"
+        style={{
+          position: 'absolute', width: 460, height: 460, borderRadius: '50%',
+          filter: 'blur(120px)',
+          background: 'radial-gradient(circle, rgba(108,99,255,0.10), transparent 70%)',
+          top: -140, left: -120,
+          animation: 'orb-drift-2 30s ease-in-out infinite',
+          zIndex: 0,
+        }}
+      />
+      <div
+        aria-hidden
+        className="hidden md:block pointer-events-none"
+        style={{
+          position: 'absolute', width: 380, height: 380, borderRadius: '50%',
+          filter: 'blur(100px)',
+          background: 'radial-gradient(circle, rgba(255,107,53,0.10), transparent 70%)',
+          bottom: -160, right: -100,
+          animation: 'orb-drift-3 26s ease-in-out infinite',
+          zIndex: 0,
+        }}
+      />
+      <div className="container-x relative" style={{ padding: 'clamp(56px, 9vw, 88px) clamp(20px, 4vw, 40px)' }}>
+      <motion.div
+        initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-80px' }} transition={{ duration: 0.6, ease: easeOut }}
+        className="text-center" style={{ marginBottom: 44 }}
+      >
+        <span style={{ fontSize: 12, fontWeight: 800, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--orange)' }}>
+          How we charge
+        </span>
+        <h2 style={{ fontSize: 'clamp(26px, 4.2vw, 38px)', fontWeight: 800, letterSpacing: '-0.025em', margin: '12px 0 10px', color: 'var(--text-primary)' }}>
+          Two simple models, no surprises
+        </h2>
+        <p style={{ fontSize: 16, color: 'var(--text-secondary)', maxWidth: 560, margin: '0 auto', lineHeight: 1.6 }}>
+          Pick the engagement that fits the role. Pricing is shared upfront on the audit call &mdash; no hidden margins, no per-resume fees.
+        </p>
+      </motion.div>
+
+      <div className="grid grid-cols-1 md:grid-cols-2" style={{ gap: 18, maxWidth: 880, margin: '0 auto' }}>
+        {/* Contract */}
+        <motion.div
+          initial={{ opacity: 0, y: 28, scale: 0.96 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.7, delay: 0.05, ease: easeOut }}
+          className="tilt-hover shimmer-host"
+          style={{
+            background: 'var(--bg-secondary)',
+            border: '1px solid var(--border-hair-2)',
+            borderRadius: 18, padding: 28,
+          }}
+        >
+          <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--violet)' }}>
+            Model 01
+          </span>
+          <h3 style={{ fontSize: 22, fontWeight: 800, margin: '8px 0 10px', color: 'var(--text-primary)' }}>
+            Contract hires
+          </h3>
+          <p style={{ fontSize: 14.5, color: 'var(--text-secondary)', lineHeight: 1.6, margin: '0 0 18px' }}>
+            Monthly flat rate, inclusive of payroll and our margin. Best for
+            project-based work, fractional roles, and trial periods before a permanent decision.
+          </p>
+          <ul className="flex flex-col" style={{ gap: 10, margin: 0, padding: 0, listStyle: 'none' }}>
+            {['Monthly flat fee (incl. payroll + margin)', 'No per-resume or sourcing fees', 'Cancel or convert to permanent anytime'].map((b) => (
+              <li key={b} className="flex items-start" style={{ gap: 10, fontSize: 13.5, color: 'var(--text-primary)' }}>
+                <Check size={16} color="var(--orange)" style={{ flexShrink: 0, marginTop: 3 }} />
+                <span>{b}</span>
+              </li>
+            ))}
+          </ul>
+        </motion.div>
+
+        {/* Permanent */}
+        <motion.div
+          initial={{ opacity: 0, y: 28, scale: 0.96 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.7, delay: 0.18, ease: easeOut }}
+          className="tilt-hover shimmer-host"
+          style={{
+            background: 'linear-gradient(180deg, #fff7f1, #fff)',
+            border: '1px solid rgba(255,107,53,0.30)',
+            borderRadius: 18, padding: 28,
+            position: 'relative',
+          }}
+        >
+          <span style={{ fontSize: 11, fontWeight: 800, letterSpacing: '0.18em', textTransform: 'uppercase', color: 'var(--orange)' }}>
+            Model 02
+          </span>
+          <h3 style={{ fontSize: 22, fontWeight: 800, margin: '8px 0 10px', color: 'var(--text-primary)' }}>
+            Permanent placements
+          </h3>
+          <p style={{ fontSize: 14.5, color: 'var(--text-secondary)', lineHeight: 1.6, margin: '0 0 18px' }}>
+            One-time success fee &mdash; paid only when the candidate joins. Best for
+            full-time roles where you want to own the relationship long-term.
+          </p>
+          <ul className="flex flex-col" style={{ gap: 10, margin: 0, padding: 0, listStyle: 'none' }}>
+            {['Success-fee only — you pay nothing until they start', 'AI-shortlist included, no extra sourcing charges', 'Pricing shared upfront on the audit call'].map((b) => (
+              <li key={b} className="flex items-start" style={{ gap: 10, fontSize: 13.5, color: 'var(--text-primary)' }}>
+                <Check size={16} color="var(--orange)" style={{ flexShrink: 0, marginTop: 3 }} />
+                <span>{b}</span>
+              </li>
+            ))}
+          </ul>
+        </motion.div>
+      </div>
+      </div>
+    </section>
+  )
+}
+
+/* ───────────────────── Meet the founder (restore the human) ─────────────────────
+   Staffing is fundamentally a relationships business — putting a face on
+   the page closes the trust gap that AI-heavy copy opens. */
+
+function FounderSection() {
+  return (
+    <section style={{ background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-hair)', position: 'relative', overflow: 'hidden' }}>
+      {/* Single warm aurora orb in the corner */}
+      <div
+        aria-hidden
+        className="hidden md:block pointer-events-none"
+        style={{
+          position: 'absolute', width: 520, height: 520, borderRadius: '50%',
+          filter: 'blur(130px)',
+          background: 'radial-gradient(circle, rgba(255,107,53,0.10), transparent 70%)',
+          top: -160, right: -120,
+          animation: 'orb-drift-1 28s ease-in-out infinite',
+          zIndex: 0,
+        }}
+      />
+      <div className="container-x relative" style={{ padding: 'clamp(56px, 9vw, 88px) clamp(20px, 4vw, 40px)' }}>
+        <motion.div
+          initial={{ opacity: 0, y: 22, scale: 0.97 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, margin: '-80px' }}
+          transition={{ duration: 0.75, ease: easeOut }}
+          className="tilt-hover shimmer-host"
+          style={{
+            maxWidth: 880, margin: '0 auto',
+            background: '#fff',
+            border: '1px solid var(--border-hair-2)',
+            borderRadius: 22,
+            padding: 'clamp(28px, 4vw, 44px)',
+            boxShadow: '0 24px 56px rgba(17,18,26,0.07)',
+            position: 'relative',
+          }}
+        >
+          <div className="grid grid-cols-1 md:grid-cols-[auto_1fr]" style={{ gap: 'clamp(20px, 3vw, 32px)', alignItems: 'center' }}>
+            <span
+              className="inline-flex items-center justify-center float-bob"
+              style={{
+                width: 96, height: 96, borderRadius: '50%',
+                background: 'linear-gradient(135deg, var(--orange), var(--orange-light))',
+                color: '#fff', fontWeight: 900, fontSize: 32, letterSpacing: '-0.02em',
+                boxShadow: '0 12px 30px rgba(255,107,53,0.35)',
+                flexShrink: 0,
+              }}
+            >
+              JA
+            </span>
+            <div>
+              <span style={{ fontSize: 11.5, fontWeight: 800, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--orange)' }}>
+                Meet the founder
+              </span>
+              <h3 style={{ fontSize: 'clamp(22px, 3vw, 28px)', fontWeight: 800, letterSpacing: '-0.02em', margin: '8px 0 12px', color: 'var(--text-primary)' }}>
+                Jatin Agrawal &middot; Founder, Growth Escalators
+              </h3>
+              <p style={{ fontSize: 15.5, lineHeight: 1.65, color: 'var(--text-secondary)', margin: 0 }}>
+                We use AI to scale the busywork &mdash; sourcing, ranking, scheduling.
+                But every shortlist still gets human review from someone who's hired into
+                a real team. The people you&rsquo;d hire from us are the same calibre we
+                use to run our own clients&rsquo; work.
+              </p>
+              <div className="flex flex-wrap" style={{ gap: 18, marginTop: 18, paddingTop: 16, borderTop: '1px solid var(--border-hair-2)' }}>
+                <FounderStat label="Brands served">100+</FounderStat>
+                <FounderStat label="Years operating">Since 2021</FounderStat>
+                <FounderStat label="Based in">Jaipur, India</FounderStat>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+      </div>
+    </section>
+  )
+}
+
+function FounderStat({ label, children }: { label: string; children: React.ReactNode }) {
+  return (
+    <div>
+      <div style={{ fontSize: 17, fontWeight: 800, color: 'var(--text-primary)', letterSpacing: '-0.015em' }}>{children}</div>
+      <div style={{ fontSize: 11.5, color: 'var(--text-muted)', fontWeight: 600 }}>{label}</div>
+    </div>
+  )
+}
+
 /* ───────────────────── FAQ ───────────────────── */
 
 const FAQS = [
@@ -902,15 +1561,21 @@ export default function StaffingPage() {
       <Navbar />
       <main>
         <HeroSection />
+        <TrustBrandsStrip />
+        <PlacementsSection />
         <ProblemSection />
         <HowItWorksSection />
         <MartechAISection />
         <WhatYouGetSection />
         <RolesSection />
+        <MarketsSection />
+        <PricingSection />
         <ProvideSection />
+        <FounderSection />
         <FaqSection />
         <HiringFormSection />
       </main>
+      <StickyAuditBar />
       <Footer />
     </>
   )
