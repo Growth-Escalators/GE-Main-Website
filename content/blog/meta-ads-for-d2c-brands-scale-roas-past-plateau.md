@@ -35,6 +35,16 @@ The accounts we've taken from plateau to genuine scale all went through the same
 
 **CRO on the landing page**, run in parallel with the media-buying rebuild, not after it. If the page converts at 1.2% and you fix the account into sending it twice the traffic, you've scaled a leak, not a business.
 
+## The pacing math almost nobody actually follows
+
+"Disciplined budget pacing" isn't a vague principle — it has real numbers behind it that most accounts violate without realizing it.
+
+**Know your breakeven ROAS before you scale anything.** It's simply 1 ÷ gross margin. At a 60% margin, breakeven is 1.67x — anything above that is genuinely profitable, anything below it is losing money on every rupee of spend regardless of what the ad dashboard's headline ROAS says. Plenty of "plateaued" accounts are actually fine; they're just being judged against a round-number target (2x, 3x) that has no connection to their actual margin structure.
+
+**Budget increases above ~20% every 3-4 days risk destabilizing the account.** Jump by more than roughly 50% in a single move and Meta re-enters full learning phase — cost-per-result typically spikes 40-80% for 5-7 days while the algorithm re-learns from scratch. This is the single most common self-inflicted wound we see: an account finally hits a good week, gets a 2x budget increase to "capitalize on it," and the resulting learning-phase reset gets misread as "the plateau is back" when it's actually a wound the budget change caused.
+
+**Vertical scaling (more budget into what's already working) and horizontal scaling (new audiences, angles, or placements) are different tools for different problems.** Vertical is faster but carries the highest saturation risk — you're asking the same audience pool to convert harder. Horizontal is what actually breaks most structural plateaus, because it opens a genuinely new pool of buyers instead of squeezing the existing one. Most accounts that plateau have been scaling vertically for months and haven't touched horizontal expansion at all.
+
 ## What this looked like in practice
 
 We took on a fashion D2C account stuck at a **1.9x ROAS** with revenue completely flat — every scaling attempt was breaking the unit economics, textbook plateau symptoms. We ran exactly this four-part rebuild: tight ICP based on actual purchaser data, fresh creative testing across angles and hooks, disciplined pacing instead of spreading budget evenly, and CRO on the landing page in parallel.

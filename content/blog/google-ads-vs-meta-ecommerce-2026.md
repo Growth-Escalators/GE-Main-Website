@@ -23,6 +23,14 @@ Google's core strength is **capturing demand that already exists** — someone a
 
 This is why Google spend as a % of budget should scale *with* your brand awareness, not before it. A brand-new D2C label with zero organic search volume for its name is paying to capture demand that barely exists yet — that budget usually works harder on Meta, building the awareness that later shows up as branded search on Google.
 
+## The ROAS numbers, and the catch in comparing them directly
+
+Reported ROAS ranges make Google look like the clear winner on paper: Meta blended ROAS for D2C brands typically runs **2.5x-4.5x**, while Google Shopping runs **4x-8x** and branded Search can show **8x-20x+**. If you stopped there, you'd conclude Google is simply the better channel — but that comparison is misleading for one specific reason.
+
+**Both platforms use last-click-favorable attribution windows that overlap and double-count.** Google's default is a 30-day click window, Meta's is 7-day click / 1-day view — someone who saw your Meta ad, didn't click, then searched your brand name three days later and bought will get counted as a full conversion by *both* platforms. Sum the two dashboards without deduplication and you can overstate total conversions by 20-40%. Google's higher reported ROAS is partly real (high-intent search does convert better) and partly an artifact of claiming credit for demand Meta created upstream.
+
+This is why **MER (Marketing Efficiency Ratio — total revenue ÷ total marketing spend, blended across every channel)** matters more than comparing platform-reported ROAS side by side. A Meta campaign showing 2.5x in-platform can be driving branded searches converting at 10x+ on Google — the true combined efficiency of that spend is much higher than the Meta dashboard alone suggests.
+
 ## The sequencing that actually works
 
 For most D2C brands we work with, the practical split evolves in stages, not as a fixed ratio:
