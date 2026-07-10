@@ -407,4 +407,28 @@ export const CASE_STUDIES = [
     tags: ['LinkedIn Strategy', 'Google Ads', 'B2B Funnels'],
     gradient: 'linear-gradient(135deg, #1a0a00 0%, #2d1500 50%, #3d1f00 100%)',
   },
+  {
+    id: 7, slug: 'paraiso', name: 'Paraiso', industry: 'Fashion D2C',
+    challenge: 'Stuck at a ~1.9x ROAS with revenue flat — creative was fatigued, account structure was leaking spend, and every scaling attempt broke the unit economics.',
+    solution: 'Rebuilt the account from the ground up: tight ICP, fresh creative testing across angles and hooks, disciplined budget pacing, and CRO on the landing page.',
+    results: [
+      { metric: 'ROAS', from: '1.9x', to: '3.2x', icon: '↑' },
+      { metric: 'Revenue Growth', value: '6x in 60 days', icon: '↑' },
+      { metric: 'Status', value: 'Scaled profitably — still running today', icon: '★' },
+    ],
+    tags: ['Performance Marketing', 'Creative Strategy', 'Funnel Optimisation'],
+    gradient: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%)',
+  },
+  {
+    id: 8, slug: 'sable', name: 'Sable', industry: 'D2C · Seasonal',
+    challenge: "Valentine's is brutal — CPMs spike, every brand fights for the same window, and most accounts either overspend on cold traffic or pull back too early and miss the peak.",
+    solution: "Built a Valentine's-specific architecture: tight audience layering, angle-tested creative mapped to gifting intent, and aggressive pacing through the peak days so spend chased the conversions.",
+    results: [
+      { metric: 'ROAS in Peak Window', value: '6.57x', icon: '↑' },
+      { metric: 'vs. Category Average', from: '2.5x', to: '6.57x', icon: '↑' },
+      { metric: 'Outcome', value: "Sold through the season's inventory early", icon: '★' },
+    ],
+    tags: ['Performance Marketing', 'Creative Strategy'],
+    gradient: 'linear-gradient(135deg, #1a0a1a 0%, #2b0f2b 50%, #3a1533 100%)',
+  },
 ]
