@@ -1,21 +1,21 @@
 ---
-title: "DTC Marketing in 2026: Why iOS 17 Killed Your Old Playbook (and What's Replacing It)"
-description: "If you run a D2C brand and your CAC has been creeping up while your blended ROAS gets worse every quarter, the issue isn't your creative or your budget. It's that the entire 2019 DTC playbook stopped working two years ago — and most agencies are pretending it didn't."
+title: "D2C Marketing in 2026: Why iOS 17 Killed Your Old Playbook (and What's Replacing It)"
+description: "If you run a D2C brand and your CAC has been creeping up while your blended ROAS gets worse every quarter, the issue isn't your creative or your budget. It's that the entire 2019 D2C playbook stopped working two years ago — and most agencies are pretending it didn't."
 date: "2026-04-25"
 author: "Growth Escalators Team"
 tags: ["dtc", "ecommerce", "ios-17", "ai", "performance-marketing"]
 ctaHref: "/contact"
-ctaLabel: "Audit your DTC unit economics"
+ctaLabel: "Audit your D2C unit economics"
 gradient: "orange"
 ---
 
 If you run a direct-to-consumer brand in 2026, you've felt the squeeze. CAC creeps up every quarter. Reported ROAS keeps dropping. The Meta dashboard says ROAS is 1.8× while your bookkeeper's actual P&L says you're losing money. Your "performance marketing agency" tells you to "test more creative" — which never seems to fix anything.
 
-The diagnosis most DTC founders accept — "ads are getting more expensive, market is more competitive" — is half right. The deeper truth is that the entire 2019 DTC playbook (build pixel → buy traffic → optimize ROAS → reinvest) has been progressively breaking since iOS 14, accelerated by iOS 17 and now iOS 18. Most agencies haven't updated their playbook. The brands that have are the ones quietly winning.
+The diagnosis most D2C founders accept — "ads are getting more expensive, market is more competitive" — is half right. The deeper truth is that the entire 2019 D2C playbook (build pixel → buy traffic → optimize ROAS → reinvest) has been progressively breaking since iOS 14, accelerated by iOS 17 and now iOS 18. Most agencies haven't updated their playbook. The brands that have are the ones quietly winning.
 
 ## What actually broke (in plain language)
 
-The DTC playbook from 2019 worked because of three assumptions:
+The D2C playbook from 2019 worked because of three assumptions:
 
 1. **Cookies and pixels saw everything.** When someone clicked your ad and bought 12 days later, the pixel attributed it correctly. ROAS was real.
 2. **Look-alikes built from purchasers worked.** Meta's algorithm could find more people like your buyers because it had clean signal data.
@@ -29,7 +29,7 @@ The brands still using 2019 playbooks are flying blind and don't know it. The br
 
 ## What's replacing the old playbook
 
-Five operational shifts that are working in 2026 for DTC brands at any scale.
+Five operational shifts that are working in 2026 for D2C brands at any scale.
 
 ### 1. Server-side tracking + Conversions API as table-stakes
 
@@ -55,7 +55,7 @@ Top-down statistical attribution (MMM) used to be a Procter & Gamble thing — t
 
 These tools blend platform data, your e-commerce data, and self-reported survey data to model the *actual* incremental contribution of each channel. They tell you "TikTok looks small in your platform reports but it's driving ₹4 of incremental revenue per ₹1 spent — keep scaling it."
 
-This is the single biggest unlock for ad-spend allocation in 2026. Most DTC brands either don't know it exists or assume it's not for them. Both are wrong.
+This is the single biggest unlock for ad-spend allocation in 2026. Most D2C brands either don't know it exists or assume it's not for them. Both are wrong.
 
 ### 4. Creative is now 80% of performance — and AI is mostly how you produce it
 
@@ -85,7 +85,7 @@ Retention investment doesn't show up in your Meta dashboard. It shows up in your
 
 ## What this means for budget allocation in 2026
 
-A working budget breakdown for a DTC brand at the ₹2–8Cr revenue scale, mature stack:
+A working budget breakdown for a D2C brand at the ₹2–8Cr revenue scale, mature stack:
 
 | Category | % of total marketing spend |
 |---|---|
@@ -96,11 +96,11 @@ A working budget breakdown for a DTC brand at the ₹2–8Cr revenue scale, matu
 | Influencer / UGC seeding | 5–10% |
 | Brand / PR / content | 5–10% |
 
-A common pattern in struggling DTC brands: 90%+ of budget is in paid acquisition, with creative production starved (one designer doing everything), no measurement infrastructure, and almost zero retention investment. They're trying to grow on the broken half of the playbook.
+A common pattern in struggling D2C brands: 90%+ of budget is in paid acquisition, with creative production starved (one designer doing everything), no measurement infrastructure, and almost zero retention investment. They're trying to grow on the broken half of the playbook.
 
 ## A practical diagnostic
 
-Three quick questions you can answer in 15 minutes that will tell you whether your DTC operation is on the 2019 playbook or the 2026 one:
+Three quick questions you can answer in 15 minutes that will tell you whether your D2C operation is on the 2019 playbook or the 2026 one:
 
 **1. Do you have Meta Conversions API and Google Enhanced Conversions firing for at least 90% of your conversion events?** If "I don't know" or "no," you're operating on broken signal.
 
@@ -108,6 +108,6 @@ Three quick questions you can answer in 15 minutes that will tell you whether yo
 
 **3. Do you produce at least 20 net-new ad creative variants per month per active product?** If "no," you're getting out-tested by competitors with AI creative stacks.
 
-If you said "no" to two or more of these, you're in good company — most DTC brands are. The opportunity is also large; brands that fix all three usually see 30–60% lift in true ROAS within 90 days, with no change in budget.
+If you said "no" to two or more of these, you're in good company — most D2C brands are. The opportunity is also large; brands that fix all three usually see 30–60% lift in true ROAS within 90 days, with no change in budget.
 
 If you'd like an honest audit of where your specific stack stands, that's exactly what our free strategy calls cover.

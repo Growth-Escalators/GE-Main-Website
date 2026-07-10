@@ -114,4 +114,18 @@ export const D2C_CONTENT: LandingContent = {
     subhead: "Fill this in and we'll get back within 24 hours with a no-obligation account diagnostic.",
     tag: "LET'S TALK",
   },
+
+  relatedResources: {
+    tag: 'GO DEEPER',
+    headline: 'By category, and the playbooks behind the work',
+    subhead: 'Specialized pages and the frameworks we apply to every D2C account.',
+    links: [
+      { label: 'Meta ads for fashion & apparel brands', href: '/d2c/fashion', blurb: 'Return-adjusted ROAS, seasonal catalogs, and drop-cycle creative — performance marketing built for fashion.' },
+      { label: 'Scaling Meta ROAS past the plateau', href: '/blog/meta-ads-for-d2c-brands-scale-roas-past-plateau', blurb: 'The four-part account rebuild framework behind our results.' },
+      { label: 'CAC vs LTV: the only ad-spend math that matters', href: '/blog/cac-vs-ltv-ecommerce-ad-spend-math', blurb: 'The unit-economics ratio that decides if your spend works.' },
+      { label: 'The creative testing framework for D2C', href: '/blog/creative-testing-framework-d2c-performance-marketing', blurb: 'Angles, hooks, cadence, and kill criteria.' },
+      { label: 'Google Ads vs Meta for ecommerce in 2026', href: '/blog/google-ads-vs-meta-ecommerce-2026', blurb: 'What each channel is actually good at, and the sequencing that works.' },
+      { label: 'How much should a D2C brand spend on ads?', href: '/blog/how-much-should-d2c-brand-spend-on-ads-by-revenue-stage', blurb: 'Budget bands by revenue stage.' },
+    ],
+  },
 }
