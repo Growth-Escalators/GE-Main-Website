@@ -45,7 +45,11 @@ export const metadata: Metadata = {
     url: 'https://www.growthescalators.com',
     images: [
       {
-        url: 'https://growthescalators.com/wp-content/uploads/2023/10/growth-escalator-logo.png',
+        // Was a dead 2023 WordPress URL on the non-www host. Points at a
+        // same-host path now — but no real 1200x630 asset exists yet at
+        // public/og-image.jpg. MUST be added before this is fully fixed
+        // (see SEO audit notes) — a broken OG image degrades every social/AI share.
+        url: `${'https://www.growthescalators.com'}/og-image.jpg`,
         width: 1200,
         height: 630,
         alt: 'Growth Escalators — AI-first performance marketing agency',
@@ -64,14 +68,22 @@ export const metadata: Metadata = {
   },
 }
 
-/* JSON-LD Organization schema — emitted on every page so search engines
-   always see consistent business identity. Edit in one place. */
+/* JSON-LD entity graph — emitted on every page so search engines and AI
+   crawlers see one consistent, connected business identity (GE SEO Standard
+   v1, Layer 5: "connected @id graph, not isolated blocks").
+
+   TODO before this is fully complete (real values needed, not fabricated):
+   - JATIN_PERSON.sameAs: add Jatin's real personal LinkedIn profile URL.
+   - ORGANIZATION.hasMap / geo: add the verified Google Business Profile
+     maps URL + lat/long once GBP is claimed/confirmed (see SEO audit). */
+const SITE_ID = `${'https://www.growthescalators.com'}`
+
 const ORGANIZATION_SCHEMA = {
-  '@context': 'https://schema.org',
-  '@type': 'Organization',
+  '@type': ['Organization', 'ProfessionalService'],
+  '@id': `${SITE_ID}/#organization`,
   name: 'Growth Escalators',
-  url: 'https://www.growthescalators.com',
-  logo: 'https://growthescalators.com/wp-content/uploads/2023/10/growth-escalator-logo.png',
+  url: SITE_ID,
+  logo: `${SITE_ID}/og-image.jpg`,
   description: 'AI-first performance marketing agency. Specialists for doctors, roofing contractors, restaurants, and growing brands.',
   email: 'Info@growthescalators.com',
   telephone: '+91-77338-88883',
@@ -90,13 +102,54 @@ const ORGANIZATION_SCHEMA = {
   ],
 }
 
+const JATIN_PERSON_SCHEMA = {
+  '@type': 'Person',
+  '@id': `${SITE_ID}/#jatin-agrawal`,
+  name: 'Jatin Agrawal',
+  jobTitle: 'Founder',
+  worksFor: { '@id': `${SITE_ID}/#organization` },
+  // sameAs: [ 'ADD REAL LINKEDIN PROFILE URL HERE' ],
+}
+
+const SERVICE_SCHEMAS = [
+  {
+    '@type': 'Service',
+    '@id': `${SITE_ID}/#service-performance-marketing`,
+    name: 'Performance Marketing & Media Buying',
+    serviceType: 'Performance Marketing',
+    provider: { '@id': `${SITE_ID}/#organization` },
+    areaServed: 'IN',
+  },
+  {
+    '@type': 'Service',
+    '@id': `${SITE_ID}/#service-software-development`,
+    name: 'Software Development',
+    serviceType: 'Software Development',
+    provider: { '@id': `${SITE_ID}/#organization` },
+    areaServed: 'IN',
+  },
+  {
+    '@type': 'Service',
+    '@id': `${SITE_ID}/#service-ai-automation`,
+    name: 'AI Automation',
+    serviceType: 'AI Automation',
+    provider: { '@id': `${SITE_ID}/#organization` },
+    areaServed: 'IN',
+  },
+]
+
+const SCHEMA_GRAPH = {
+  '@context': 'https://schema.org',
+  '@graph': [ORGANIZATION_SCHEMA, JATIN_PERSON_SCHEMA, ...SERVICE_SCHEMAS],
+}
+
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(ORGANIZATION_SCHEMA) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA_GRAPH) }}
         />
       </head>
       <body className={jakarta.variable}>
