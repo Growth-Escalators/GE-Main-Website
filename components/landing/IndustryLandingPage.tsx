@@ -66,6 +66,15 @@ export type LandingContent = {
   }
   /** Used in the mailto subject + a tiny header chip if you want it. */
   industryLabel?: string
+  /** Optional topic-cluster links (pillar↔spoke + supporting posts) rendered as an
+     internal-linking section. Omit it and nothing renders — other industry pages
+     that don't set it are completely unaffected. */
+  relatedResources?: {
+    tag?: string
+    headline?: string
+    subhead?: string
+    links: { label: string; href: string; blurb?: string }[]
+  }
 }
 
 /* ── Cycling word hook ── */
@@ -435,6 +444,40 @@ export default function IndustryLandingPage({ content }: { content: LandingConte
           </div>
         </div>
       </section>
+
+      {/* ── RELATED RESOURCES (topic-cluster internal links) ───────────── */}
+      {content.relatedResources && content.relatedResources.links.length > 0 && (
+        <section className={styles.section} aria-label="Related resources">
+          <div className="container-x">
+            <div className={styles.sectionHeader}>
+              <span className="section-tag">{content.relatedResources.tag ?? 'GO DEEPER'}</span>
+              <h2 className={styles.sectionHeadline}>
+                {content.relatedResources.headline ?? 'Related reading & resources'}
+              </h2>
+              {content.relatedResources.subhead && (
+                <p className={styles.sectionSub}>{content.relatedResources.subhead}</p>
+              )}
+            </div>
+            <div className={styles.svcGrid}>
+              {content.relatedResources.links.map((l, i) => (
+                <motion.div
+                  key={l.href}
+                  className={styles.svcCard}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-50px' }}
+                  transition={{ duration: 0.5, delay: (i % 3) * 0.07 }}
+                >
+                  <Link href={l.href} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
+                    <h3 className={styles.svcTitle}>{l.label}</h3>
+                    {l.blurb && <p className={styles.svcBody}>{l.blurb}</p>}
+                  </Link>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ── FINAL CTA ──────────────────────────────────────────────────── */}
       <section className={styles.ctaBanner} aria-label="Final call to action">

@@ -47,7 +47,7 @@ The accounts we've taken from plateau to genuine scale all went through the same
 
 ## What this looked like in practice
 
-We took on a fashion D2C account stuck at a **1.9x ROAS** with revenue completely flat — every scaling attempt was breaking the unit economics, textbook plateau symptoms. We ran exactly this four-part rebuild: tight ICP based on actual purchaser data, fresh creative testing across angles and hooks, disciplined pacing instead of spreading budget evenly, and CRO on the landing page in parallel.
+We took on a [fashion D2C account](/d2c/fashion) stuck at a **1.9x ROAS** with revenue completely flat — every scaling attempt was breaking the unit economics, textbook plateau symptoms. We ran exactly this four-part rebuild: tight ICP based on actual purchaser data, fresh creative testing across angles and hooks, disciplined pacing instead of spreading budget evenly, and CRO on the landing page in parallel.
 
 Sixty days later: **ROAS at 3.2x, revenue up 6x**, and — the part that actually matters — it kept holding once we scaled spend further, because the fix was structural, not a temporary creative win. [See the full breakdown of the D2C landing page and more results like this →](/d2c)
 
