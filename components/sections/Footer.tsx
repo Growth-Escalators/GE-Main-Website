@@ -37,6 +37,7 @@ const COLS = [
   {
     heading: 'Industries',
     links: [
+      { label: 'D2C & eCommerce', href: '/d2c' },
       { label: 'Doctors',     href: '/doctors' },
       { label: 'Real Estate', href: '/real-estate' },
       { label: 'Staffing',    href: '/staffing' },
