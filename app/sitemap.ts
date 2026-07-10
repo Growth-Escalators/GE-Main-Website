@@ -21,6 +21,7 @@ const STATIC_ROUTES: { path: string; priority: number; changeFrequency: Metadata
   { path: '/contact',                priority: 0.8, changeFrequency: 'yearly',  lastModified: '2026-06-22T17:18:21+05:30' },
   { path: '/blog',                   priority: 0.9, changeFrequency: 'weekly',  lastModified: '2026-04-30T01:03:34+05:30' },
   // Industry landing pages — high priority, conversion-focused
+  { path: '/d2c',                    priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-10T13:20:47+05:30' },
   { path: '/doctors',                priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-04-30T00:23:16+05:30' },
   { path: '/roofing',                priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-04-30T00:23:16+05:30' },
   { path: '/restaurants',            priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-04-30T00:23:16+05:30' },

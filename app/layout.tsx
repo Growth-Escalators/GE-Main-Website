@@ -29,6 +29,8 @@ export const metadata: Metadata = {
   keywords: [
     'performance marketing agency',
     'AI marketing agency',
+    'D2C performance marketing agency',
+    'ecommerce Meta ads agency',
     'marketing for doctors',
     'roofing contractor marketing',
     'restaurant marketing',
