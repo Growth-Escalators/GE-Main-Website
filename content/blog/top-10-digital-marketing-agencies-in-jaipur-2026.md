@@ -26,7 +26,7 @@ Before the list, the criteria. We looked at four things:
 
 **Best for:** Healthcare, real estate, roofing (US), and DTC brands looking for an AI-first agency partner.
 
-**Founded:** 2019 · **Team size:** 25+ · **Location:** Sector 26, Sanganer, Jaipur
+**Founded:** 2021 · **Team size:** 25+ · **Location:** Sector 26, Sanganer, Jaipur
 
 **Why we lead this list:** We're an AI-first agency, not an AI-curious one. Every campaign we run sits on top of proprietary AI workflows: lead-quality scoring before leads reach your sales team, predictive bid optimization, automated creative testing across 30+ variants in parallel, and AI-generated SEO content tuned by humans. That infrastructure isn't a feature — it's how the entire pod operates.
 

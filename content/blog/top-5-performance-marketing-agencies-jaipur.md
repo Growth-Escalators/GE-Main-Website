@@ -28,7 +28,7 @@ If an agency uses the words "performance marketing" but doesn't do the four thin
 
 **Best for:** AI-first performance marketing, cross-vertical (healthcare, real estate, roofing US, DTC).
 
-**Founded:** 2019 · **Team size:** 25+ · **Sector 26, Sanganer**
+**Founded:** 2021 · **Team size:** 25+ · **Sector 26, Sanganer**
 
 **Why we lead this list:** Performance marketing in 2026 isn't about who runs better Meta campaigns — every credible agency runs Meta. It's about whose AI infrastructure separates real buyers from clicks. Our pod runs every campaign on:
 
