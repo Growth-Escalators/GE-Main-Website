@@ -1,6 +1,53 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+
+  async redirects() {
+    return [
+      // --- Core clean 1:1 page maps (legacy WordPress slugs) ---
+      { source: '/about-us', destination: '/about', permanent: true },
+      { source: '/contact-us', destination: '/contact', permanent: true },
+      { source: '/our-services', destination: '/services', permanent: true },
+      { source: '/our-work', destination: '/work', permanent: true },
+      { source: '/terms-conditions', destination: '/terms-and-conditions', permanent: true },
+      { source: '/page-blog', destination: '/blog', permanent: true },
+      { source: '/page-portfolio', destination: '/portfolio', permanent: true },
+      { source: '/best-marketing-agency-for-doctors', destination: '/doctors', permanent: true },
+      { source: '/consultation', destination: '/contact', permanent: true },
+
+      // --- Old per-service pages -> consolidated /services ---
+      { source: '/service', destination: '/services', permanent: true },
+      { source: '/service/branding', destination: '/services', permanent: true },
+      { source: '/service/growth-marketing', destination: '/services', permanent: true },
+      { source: '/service/performance-marketing', destination: '/services', permanent: true },
+      { source: '/service/personal-branding', destination: '/services', permanent: true },
+      { source: '/service/public-relations', destination: '/services', permanent: true },
+      { source: '/service/social-media', destination: '/services', permanent: true },
+      { source: '/service/website-development', destination: '/services', permanent: true },
+      { source: '/seo', destination: '/services', permanent: true },
+      { source: '/social-media-management', destination: '/services', permanent: true },
+      { source: '/content-creation', destination: '/services', permanent: true },
+      { source: '/graphic-design-and-video-editing', destination: '/services', permanent: true },
+      { source: '/web-development', destination: '/services', permanent: true },
+      { source: '/digital-marketing', destination: '/services', permanent: true },
+      { source: '/email-automation', destination: '/services', permanent: true },
+      { source: '/paid-ad-campaigns-facebookgoogle', destination: '/services', permanent: true },
+      { source: '/e-commerce', destination: '/d2c', permanent: true },
+
+      // --- Old portfolio variants -> /portfolio ---
+      { source: '/graphics-portfolio', destination: '/portfolio', permanent: true },
+      { source: '/graphic-design-portfolio-2', destination: '/portfolio', permanent: true },
+      { source: '/video-portfolio', destination: '/portfolio', permanent: true },
+      { source: '/portfolio-ecommerce', destination: '/portfolio', permanent: true },
+
+      // --- OPTIONAL / lower confidence (uncomment after review) ---
+      // { source: '/home-digital-marketing', destination: '/', permanent: true },
+      // { source: '/white-label-entry-offers', destination: '/staffing', permanent: true },
+      // { source: '/social-media-audit', destination: '/services', permanent: true },
+      // { source: '/digital-marketing-agency-pricing-guide', destination: '/services', permanent: true },
+      // { source: '/digital-marketing-agency-pricing-guide-2', destination: '/services', permanent: true },
+    ]
+  },
 }
 
 module.exports = nextConfig
