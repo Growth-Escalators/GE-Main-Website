@@ -23,6 +23,7 @@ const STATIC_ROUTES: { path: string; priority: number; changeFrequency: Metadata
   // Industry landing pages — high priority, conversion-focused
   { path: '/d2c',                    priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-10T14:05:00+05:30' },
   { path: '/d2c/fashion',            priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-10T14:05:00+05:30' },
+  { path: '/performance-marketing-agency-jaipur', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-12T11:40:00+05:30' },
   { path: '/doctors',                priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-04-30T00:23:16+05:30' },
   { path: '/roofing',                priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-04-30T00:23:16+05:30' },
   { path: '/restaurants',            priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-04-30T00:23:16+05:30' },
