@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'About Growth Escalators',
+  title: 'About Us — AI-First Performance Marketing Agency',
   description:
-    "We're an AI-first performance marketing agency built for doctors, roofers, restaurants, and growing brands. ₹10Cr+ in ad spend managed, 97% client retention, and a healthcare-, roofing-, and hospitality-trained team.",
+    'AI-first performance marketing agency based in Jaipur. ₹10Cr+ ad spend managed, 10,000+ campaigns, 4.9★ rating, 97% client retention. Meet the team.',
   alternates: { canonical: '/about' },
   openGraph: {
-    title: 'About Growth Escalators',
-    description: 'AI-first performance marketing agency. ₹10Cr+ in ad spend managed, 97% client retention.',
+    title: 'About Growth Escalators — AI-First Marketing Agency',
+    description: 'AI-first performance marketing agency in Jaipur. ₹10Cr+ ad spend, 10,000+ campaigns, 4.9★ rating, 97% client retention.',
     url: '/about',
     type: 'website',
   },

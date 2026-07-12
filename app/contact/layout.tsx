@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Contact — Book a Free Strategy Call',
+  title: 'Contact Us — Free 30-Min Marketing Strategy Call',
   description:
-    "Book a free, no-obligation 30-minute strategy call. We'll review your current marketing, identify the biggest leaks, and tell you the three things we'd fix first.",
+    "Book a free 30-minute strategy call. We'll audit your marketing, find the biggest leaks, and hand you the 3 fixes we'd make first — Jaipur-based team.",
   alternates: { canonical: '/contact' },
   openGraph: {
-    title: 'Contact Growth Escalators — Book a Free Strategy Call',
-    description: 'Free 30-minute strategy call. No obligation. Three highest-ROI fixes for your marketing.',
+    title: 'Contact Growth Escalators — Free Strategy Call',
+    description: "Free 30-minute strategy call. We'll audit your marketing and hand you the 3 highest-ROI fixes first. Jaipur-based team.",
     url: '/contact',
     type: 'website',
   },

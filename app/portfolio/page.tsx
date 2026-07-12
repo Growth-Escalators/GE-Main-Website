@@ -17,13 +17,13 @@ import FAQ from '@/components/portfolio/FAQ';
 import Footer from '@/components/portfolio/Footer';
 
 export const metadata = {
-  title: 'Portfolio — Growth Escalators',
+  title: 'Portfolio — 100+ Brands Scaled with Real Results',
   description:
-    "100+ brands scaled. ₹Crores in ad spend managed. India's #1 AI-first performance marketing agency.",
+    'Real campaign results — ROAS lifts, CPL drops and revenue growth across 100+ brands. ₹10Cr+ ad spend managed, 4.9★ rated. Explore the case studies.',
   alternates: { canonical: '/portfolio' },
   openGraph: {
     title: 'Portfolio — Growth Escalators',
-    description: "100+ brands scaled. ₹Crores in ad spend managed.",
+    description: 'Real campaign results across 100+ brands. ₹10Cr+ ad spend managed, 4.9★ rated. Explore the case studies.',
     url: '/portfolio',
     type: 'website',
   },
