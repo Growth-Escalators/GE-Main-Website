@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
+import { trackLead } from '@/lib/analytics'
 
 /* Per the design handoff: the homepage nav is Services / Staffing(new) /
    Industries / Work / Contact. Home is reached via the logo. */
@@ -112,6 +113,7 @@ export default function Navbar() {
           <div className="flex items-center" style={{ gap: 16 }}>
             <a
               href="tel:+917733888883"
+              onClick={() => trackLead('call')}
               className="hidden md:inline"
               style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-primary)' }}
             >
@@ -210,7 +212,7 @@ export default function Navbar() {
                 transition={{ delay: 0.06 + NAV.length * 0.05, duration: 0.35 }}
                 className="mt-6 flex flex-col gap-3"
               >
-                <a href="tel:+917733888883" style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-secondary)' }}>
+                <a href="tel:+917733888883" onClick={() => trackLead('call')} style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-secondary)' }}>
                   +91 77338 88883
                 </a>
                 <Link

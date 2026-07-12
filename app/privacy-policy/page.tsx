@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import Navbar from '@/components/sections/Navbar'
 import Footer from '@/components/sections/Footer'
+import TrackedLink from '@/components/analytics/TrackedLink'
 
 export const metadata: Metadata = {
   title: 'Privacy Policy',
@@ -41,7 +42,7 @@ export default function PrivacyPolicy() {
             </section>
             <section>
               <h2 className="font-syne font-bold text-xl text-[var(--text-primary)] mb-3">Contact Us</h2>
-              <p>If you have any questions, please contact us at: <a href="mailto:Info@growthescalators.com" className="text-[var(--orange)] hover:underline">Info@growthescalators.com</a></p>
+              <p>If you have any questions, please contact us at: <TrackedLink method="email" href="mailto:Info@growthescalators.com" className="text-[var(--orange)] hover:underline">Info@growthescalators.com</TrackedLink></p>
             </section>
           </div>
         </div>

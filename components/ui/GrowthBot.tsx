@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react'
 import { X, Send, Sparkles } from 'lucide-react'
 import gsap from 'gsap'
+import { trackLead } from '@/lib/analytics'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -788,6 +789,7 @@ export default function GrowthBot() {
               href="https://wa.me/917733888883?text=Hi%2C%20I%20found%20you%20on%20your%20website%20and%20would%20like%20to%20know%20more%20about%20your%20services"
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() => trackLead('whatsapp')}
               title="Chat on WhatsApp"
               style={{
                 width: '32px',
