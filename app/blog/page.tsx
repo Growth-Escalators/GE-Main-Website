@@ -5,13 +5,13 @@ import { getAllPosts, formatPostDate } from '@/lib/blog'
 import styles from './page.module.css'
 
 export const metadata: Metadata = {
-  title: 'Blog — Growth Escalators',
+  title: 'Marketing Blog — AI-First Playbooks & Field Notes',
   description:
-    "AI-first marketing playbooks for doctors, roofers, restaurants, and growing brands. Hard-won lessons, no fluff.",
+    'AI-first marketing playbooks for doctors, roofers, restaurants & growing brands — lessons from ₹10Cr+ in ad spend. No fluff, no theory.',
   alternates: { canonical: '/blog' },
   openGraph: {
-    title: 'Blog — Growth Escalators',
-    description: 'AI-first marketing playbooks for doctors, roofers, restaurants, and growing brands.',
+    title: 'Marketing Blog — Growth Escalators',
+    description: 'AI-first marketing playbooks for doctors, roofers, restaurants & growing brands. Lessons from ₹10Cr+ in ad spend.',
     url: '/blog',
     type: 'website',
   },

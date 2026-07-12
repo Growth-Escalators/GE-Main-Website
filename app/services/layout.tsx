@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Our Services',
+  title: 'Digital Marketing Services — Ads, Funnels & SEO',
   description:
-    "Performance marketing, AI-powered lead response, conversion-focused websites, personal branding, local SEO, and reputation management. Built for doctors, roofers, restaurants, and growing brands.",
+    'Performance marketing, funnels, websites, branding & SEO under one roof. 10,000+ campaigns, ₹10Cr+ ad spend, 97% retention. Book a free audit.',
   alternates: { canonical: '/services' },
   openGraph: {
-    title: 'Our Services — Growth Escalators',
-    description: 'Performance marketing, AI lead response, websites, personal branding, local SEO, and reputation management.',
+    title: 'Digital Marketing Services — Growth Escalators',
+    description: 'Performance marketing, funnels, websites, branding & SEO under one roof. 10,000+ campaigns, ₹10Cr+ ad spend, 97% retention.',
     url: '/services',
     type: 'website',
   },

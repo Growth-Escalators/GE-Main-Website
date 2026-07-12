@@ -1,14 +1,14 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'AI-Powered Marketing for Real Estate Developers',
+  title: 'Real Estate Marketing for Developers & Builders',
   description:
-    "More site visits with higher-quality buyers, faster bookings on premium projects, and lower cost per qualified lead. AI-first performance marketing built for real estate developers and builders selling residential, commercial, and luxury properties.",
+    'Real estate marketing for developers & builders: premium-buyer targeting, AI lead-scoring, lower cost per qualified site visit. Book a free audit.',
   alternates: { canonical: '/real-estate' },
   openGraph: {
-    title: 'AI-Powered Marketing for Real Estate Developers — Growth Escalators',
+    title: 'Real Estate Marketing — Growth Escalators',
     description:
-      'AI-first performance marketing for real estate developers. Premium-buyer targeting, AI lead-scoring, 6-month nurture funnels.',
+      'AI-first marketing for real estate developers & builders. Premium-buyer targeting, AI lead-scoring, lower cost per site visit.',
     url: '/real-estate',
     type: 'website',
   },

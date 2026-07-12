@@ -1,13 +1,13 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Our Work — Case Studies',
+  title: 'Case Studies — ROAS, Leads & Revenue Results',
   description:
-    "100+ brands scaled across healthcare, e-commerce, real estate, education, and hospitality. Real metrics, real revenue, real outcomes from our performance marketing campaigns.",
+    'Real case studies from 100+ brands — ROAS 1.8x → 5.2x, CPL down 75%, revenue up ₹8L in 90 days. ₹10Cr+ ad spend managed. See the results.',
   alternates: { canonical: '/work' },
   openGraph: {
-    title: 'Our Work — Case Studies — Growth Escalators',
-    description: '100+ brands scaled across healthcare, e-commerce, real estate, education, and hospitality.',
+    title: 'Case Studies — Growth Escalators',
+    description: 'Real case studies from 100+ brands — ROAS 1.8x → 5.2x, CPL down 75%, revenue up ₹8L in 90 days.',
     url: '/work',
     type: 'website',
   },
