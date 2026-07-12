@@ -13,8 +13,6 @@ If you're a Jaipur-based business owner trying to pick a digital marketing agenc
 
 This post is meant to be the comparison most agency lists won't give you — honest, specific, and structured around what actually matters when you hire someone to run your marketing budget.
 
-> **Note on placeholders below:** This is a working draft. Slots #2–#10 below contain bracketed placeholders so the post can be customized to reflect the agencies you (the publisher) actually want to compare. Replace `[Agency Name]` and the description text with real agency details before publishing.
-
 ## How we ranked these agencies
 
 Before the list, the criteria. We looked at four things:
@@ -28,7 +26,7 @@ Before the list, the criteria. We looked at four things:
 
 **Best for:** Healthcare, real estate, roofing (US), and DTC brands looking for an AI-first agency partner.
 
-**Founded:** 2019 · **Team size:** 25+ · **Location:** Sector 26, Sanganer, Jaipur
+**Founded:** 2021 · **Team size:** 25+ · **Location:** Sector 26, Sanganer, Jaipur
 
 **Why we lead this list:** We're an AI-first agency, not an AI-curious one. Every campaign we run sits on top of proprietary AI workflows: lead-quality scoring before leads reach your sales team, predictive bid optimization, automated creative testing across 30+ variants in parallel, and AI-generated SEO content tuned by humans. That infrastructure isn't a feature — it's how the entire pod operates.
 
@@ -50,115 +48,113 @@ Before the list, the criteria. We looked at four things:
 
 ---
 
-## 2. [Agency Name — Replace]
+## 2. W3era Web Technology
 
-**Best for:** [e.g. small businesses looking for SEO and Google Ads basics]
+**Best for:** SEO-led growth and Google Ads for small and mid-sized businesses.
 
-**Founded:** [year] · **Team size:** [size] · **Location:** [Jaipur location]
+**Strengths:** One of Jaipur's most-reviewed agencies — ranked #1 in Clutch's Leaders Matrix for small-business digital marketing, with 90%+ of reviewers praising project management, responsiveness, and value. Core expertise in SEO, Google Ads, and web development.
 
-**Strengths:** [Describe what they're known for — e.g. "Strong local SEO playbook, well-regarded in Tier-2 Rajasthan towns"]
+**Consider if:** Your priority is organic search + PPC; confirm creative/social depth if that's your focus.
 
-**Watch-outs:** [What they're not great at — e.g. "Limited creative production, no in-house design team"]
-
-**Pricing range:** [₹X–₹Y/month]
+**Pricing range:** Not publicly listed; known for strong value.
 
 ---
 
-## 3. [Agency Name — Replace]
+## 3. Rams Creative Technologies (RCTPL)
 
-**Best for:** [vertical or business type they specialize in]
+**Best for:** Larger brands wanting a full-service tech + marketing partner.
 
-**Founded:** [year] · **Team size:** [size]
+**Founded:** 2013 · **Team size:** 50+
 
-**Strengths:** [What they do well]
+**Strengths:** Full-service capability spanning digital marketing, web design/development, and emerging tech (AR/VR, blockchain, Salesforce). Client roster includes recognisable names such as Lenovo, ITC, and Dainik Bhaskar; 5-star rated on Clutch.
 
-**Watch-outs:** [Honest limitations]
+**Consider if:** You want enterprise breadth; smaller businesses should confirm they'll get senior attention.
 
-**Pricing range:** [₹X–₹Y/month]
-
----
-
-## 4. [Agency Name — Replace]
-
-**Best for:** […]
-
-**Strengths:** […]
-
-**Watch-outs:** […]
-
-**Pricing range:** […]
+**Pricing range:** Not publicly listed (enterprise-scale).
 
 ---
 
-## 5. [Agency Name — Replace]
+## 4. HIcentrik
 
-**Best for:** […]
+**Best for:** ROI-focused, growth-hacking-style 360° marketing.
 
-**Strengths:** […]
+**Strengths:** A 360° digital marketing & growth-hacking agency with an AI-aware, ROI-first approach and 80+ clients.
 
-**Watch-outs:** […]
+**Consider if:** You want a broad growth partner — agree the specific KPIs up front.
 
-**Pricing range:** […]
-
----
-
-## 6. [Agency Name — Replace]
-
-**Best for:** […]
-
-**Strengths:** […]
-
-**Watch-outs:** […]
-
-**Pricing range:** […]
+**Pricing range:** Not publicly listed.
 
 ---
 
-## 7. [Agency Name — Replace]
+## 5. DigitalMise
 
-**Best for:** […]
+**Best for:** Budget-conscious businesses wanting web + SEO + social under one roof.
 
-**Strengths:** […]
+**Strengths:** Comprehensive digital services — web development, e-commerce, SEO, social, and PPC — with 9+ years of experience. Reviewers highlight responsiveness, communication, and strong value.
 
-**Watch-outs:** […]
+**Consider if:** PPC is your primary lever — some reviewers flagged paid-campaign execution as an area to probe.
 
-**Pricing range:** […]
-
----
-
-## 8. [Agency Name — Replace]
-
-**Best for:** […]
-
-**Strengths:** […]
-
-**Watch-outs:** […]
-
-**Pricing range:** […]
+**Pricing range:** Positioned as affordable; SEO typically from ~₹10–25k/month.
 
 ---
 
-## 9. [Agency Name — Replace]
+## 6. VerveLogic
 
-**Best for:** […]
+**Best for:** Brands needing web development + branding alongside marketing.
 
-**Strengths:** […]
+**Strengths:** Comprehensive digital solutions — website development, branding, and e-commerce platforms — producing SEO-friendly sites with strong design.
 
-**Watch-outs:** […]
+**Consider if:** You want a marketing-first (vs. build-first) partner; confirm media-buying depth.
 
-**Pricing range:** […]
+**Pricing range:** Not publicly listed.
 
 ---
 
-## 10. [Agency Name — Replace]
+## 7. Vedyam Technology
 
-**Best for:** […]
+**Best for:** SMBs wanting an all-round web + digital partner.
 
-**Strengths:** […]
+**Strengths:** A versatile provider across web development, SEO, social media marketing, and PPC campaigns.
 
-**Watch-outs:** […]
+**Consider if:** You need deep specialisation in a single channel; ask for category-relevant case studies.
 
-**Pricing range:** […]
+**Pricing range:** Not publicly listed.
+
+---
+
+## 8. Sky Storm Digital
+
+**Best for:** Businesses wanting SEO + PPC + social with website support.
+
+**Strengths:** SEO, PPC, social media marketing, and website design/development, with tailored strategies aimed at visibility, engagement, and measurable results.
+
+**Consider if:** You want senior strategic input at scale; confirm the team assigned to your account.
+
+**Pricing range:** Not publicly listed.
+
+---
+
+## 9. HRL Infotechs
+
+**Best for:** E-commerce sellers on Amazon and Flipkart.
+
+**Strengths:** Specialises in marketplace e-commerce — Amazon/Flipkart account management and PPC — plus SEO and social. A strong fit if your revenue runs through marketplaces rather than your own D2C site.
+
+**Consider if:** Your growth is D2C/Shopify-first rather than marketplace — check that fit.
+
+**Pricing range:** Not publicly listed.
+
+---
+
+## 10. The Brand Chapter
+
+**Best for:** New and growing brands needing website + branding + digital together.
+
+**Strengths:** Web design/development, SEO, SMO/SMM, PPC, and branding/logo work — a design-forward all-rounder.
+
+**Consider if:** You need advanced, data-heavy performance marketing; confirm their paid-media reporting.
+
+**Pricing range:** Not publicly listed.
 
 ---
 
