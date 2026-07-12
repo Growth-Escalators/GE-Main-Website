@@ -7,11 +7,11 @@ import styles from './page.module.css'
 export const metadata: Metadata = {
   title: 'Marketing Blog — AI-First Playbooks & Field Notes',
   description:
-    'AI-first marketing playbooks for doctors, roofers, restaurants & growing brands — lessons from ₹10Cr+ in ad spend. No fluff, no theory.',
+    'AI-first marketing playbooks for doctors, roofers & growing brands — lessons from ₹10Cr+ in ad spend. No fluff, no theory.',
   alternates: { canonical: '/blog' },
   openGraph: {
     title: 'Marketing Blog — Growth Escalators',
-    description: 'AI-first marketing playbooks for doctors, roofers, restaurants & growing brands. Lessons from ₹10Cr+ in ad spend.',
+    description: 'AI-first marketing playbooks for doctors, roofers & growing brands. Lessons from ₹10Cr+ in ad spend.',
     url: '/blog',
     type: 'website',
   },
@@ -49,7 +49,7 @@ export default function BlogIndex() {
           <span className="section-tag">PLAYBOOKS &amp; FIELD NOTES</span>
           <h1 className={styles.heroTitle}>The Growth Escalators Blog</h1>
           <p className={styles.heroSub}>
-            AI-first marketing playbooks for doctors, roofers, restaurants, and growing brands. Hard-won
+            AI-first marketing playbooks for doctors, roofers, and growing brands. Hard-won
             lessons from running over ₹10Cr in ad spend, not regurgitated theory.
           </p>
         </div>

@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     template: '%s — Growth Escalators',
   },
   description:
-    "AI-first performance marketing agency. 10,000+ campaigns run, ₹10Cr+ in ad spend managed, 97% client retention. Specialists for doctors, roofing contractors, restaurants, and growing brands.",
+    "AI-first performance marketing agency. 10,000+ campaigns run, ₹10Cr+ in ad spend managed, 97% client retention. Specialists for doctors, roofing contractors and growing brands.",
   keywords: [
     'performance marketing agency',
     'AI marketing agency',
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     type: 'website',
     siteName: 'Growth Escalators',
     title: 'Growth Escalators — AI-First Performance Marketing Agency',
-    description: 'AI-first performance marketing for doctors, roofing contractors, restaurants, and growing brands.',
+    description: 'AI-first performance marketing for doctors, roofing contractors and growing brands.',
     url: 'https://www.growthescalators.com',
     images: [
       {
@@ -61,7 +61,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Growth Escalators — AI-First Performance Marketing Agency',
-    description: 'AI-first performance marketing for doctors, roofing contractors, restaurants, and growing brands.',
+    description: 'AI-first performance marketing for doctors, roofing contractors and growing brands.',
   },
   robots: {
     index: true,
@@ -86,7 +86,7 @@ const ORGANIZATION_SCHEMA = {
   name: 'Growth Escalators',
   url: SITE_ID,
   logo: `${SITE_ID}/og-image.jpg`,
-  description: 'AI-first performance marketing agency. Specialists for doctors, roofing contractors, restaurants, and growing brands.',
+  description: 'AI-first performance marketing agency. Specialists for doctors, roofing contractors and growing brands.',
   email: 'Info@growthescalators.com',
   telephone: '+91-77338-88883',
   address: {
