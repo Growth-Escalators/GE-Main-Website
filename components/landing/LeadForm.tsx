@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import styles from './LeadForm.module.css'
+import { trackLead } from '@/lib/analytics'
 
 type Props = {
   /** Email address used in the mailto fallback link if /api/lead errors. */
@@ -56,6 +57,7 @@ export default function LeadForm({
         throw new Error(body.error || `Server returned ${res.status}`)
       }
       setStatus('success')
+      trackLead('form', { source: subjectPrefix })
       form.reset()
     } catch (err) {
       setStatus('error')
@@ -106,7 +108,7 @@ export default function LeadForm({
               <p className={styles.successBody}>
                 We&rsquo;ll review your details and reply within 24 hours (weekdays). If you&rsquo;d
                 like to fast-track, you can also reach us at{' '}
-                <a href={`mailto:${recipient}`}>{recipient}</a> or on WhatsApp at +91 77338 88883.
+                <a href={`mailto:${recipient}`} onClick={() => trackLead('email')}>{recipient}</a> or on WhatsApp at +91 77338 88883.
               </p>
             </motion.div>
           ) : (
@@ -180,7 +182,7 @@ export default function LeadForm({
             {status === 'error' && (
               <p className={styles.errorPanel} role="alert">
                 Couldn&rsquo;t send your enquiry{errorMsg ? ` (${errorMsg})` : ''}.{' '}
-                <a href={buildMailtoFallback()}>Email us directly instead</a> and we&rsquo;ll
+                <a href={buildMailtoFallback()} onClick={() => trackLead('email')}>Email us directly instead</a> and we&rsquo;ll
                 reply right away.
               </p>
             )}

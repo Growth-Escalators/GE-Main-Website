@@ -9,6 +9,7 @@ import {
 import TrustStrip from '@/components/sections/TrustStrip'
 import Navbar from '@/components/sections/Navbar'
 import Footer from '@/components/sections/Footer'
+import { trackLead, type LeadMethod } from '@/lib/analytics'
 
 const easeOut = [0.16, 1, 0.3, 1] as const
 
@@ -102,19 +103,19 @@ function ChannelsSection() {
     {
       Icon: MessageCircle, label: 'Chat on WhatsApp',
       sub: 'Fastest path · usually replies in minutes',
-      href: WA_LINK, target: '_blank' as const,
+      href: WA_LINK, target: '_blank' as const, method: 'whatsapp' as LeadMethod,
       tone: { bg: 'rgba(37,211,102,0.10)', color: '#1f9d50', ring: 'rgba(37,211,102,0.28)' },
     },
     {
       Icon: Phone, label: '+91 77338 88883',
       sub: 'Mon–Sat · 10:00–19:00 IST',
-      href: TEL_LINK,
+      href: TEL_LINK, method: 'call' as LeadMethod,
       tone: { bg: 'rgba(255,107,53,0.10)', color: 'var(--orange)', ring: 'rgba(255,107,53,0.28)' },
     },
     {
       Icon: Mail, label: 'Info@growthescalators.com',
       sub: 'Reply within one business day',
-      href: MAIL_LINK,
+      href: MAIL_LINK, method: 'email' as LeadMethod,
       tone: { bg: 'rgba(108,99,255,0.10)', color: 'var(--violet)', ring: 'rgba(108,99,255,0.28)' },
     },
   ]
@@ -129,6 +130,7 @@ function ChannelsSection() {
               href={c.href}
               target={c.target}
               rel={c.target ? 'noopener noreferrer' : undefined}
+              onClick={() => trackLead(c.method)}
               className="channel-card flex items-center"
               initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-80px' }}
@@ -204,6 +206,7 @@ function FormSection() {
         throw new Error(body.error || `Server returned ${res.status}`)
       }
       setStatus('success')
+      trackLead('form', { source: 'Contact Page' })
       form.reset()
     } catch (err) {
       setStatus('error')
@@ -311,6 +314,7 @@ function FormSection() {
               </p>
               <a
                 href={WA_LINK} target="_blank" rel="noopener noreferrer"
+                onClick={() => trackLead('whatsapp')}
                 style={{
                   display: 'inline-block', background: 'var(--green-wa)',
                   color: '#fff', fontSize: 14, fontWeight: 800,
@@ -371,6 +375,7 @@ function FormSection() {
               </div>
               <a
                 href={WA_LINK} target="_blank" rel="noopener noreferrer"
+                onClick={() => trackLead('whatsapp')}
                 className="text-center"
                 style={{
                   background: 'var(--green-wa)', color: '#fff',
@@ -385,7 +390,7 @@ function FormSection() {
               {status === 'error' && (
                 <p role="alert" style={{ fontSize: 13, color: '#b91c1c', marginTop: 6 }}>
                   Couldn&rsquo;t send{errorMsg ? ` (${errorMsg})` : ''}.{' '}
-                  <a href={MAIL_LINK} className="underline">Email us directly →</a>
+                  <a href={MAIL_LINK} onClick={() => trackLead('email')} className="underline">Email us directly →</a>
                 </p>
               )}
               <p style={{ fontSize: 12, color: 'var(--text-muted)', marginTop: 2 }}>
@@ -510,6 +515,7 @@ function OfficeSection() {
 
           <a
             href={CAL_LINK} target="_blank" rel="noopener noreferrer"
+            onClick={() => trackLead('booking')}
             className="inline-flex items-center btn-cta"
             style={{
               gap: 9,

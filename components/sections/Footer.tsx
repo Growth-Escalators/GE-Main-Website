@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { MapPin, Phone, Mail } from 'lucide-react'
+import { trackLead } from '@/lib/analytics'
 
 function FooterLogo() {
   return (
@@ -78,11 +79,11 @@ export default function Footer() {
                 <MapPin size={14} style={{ marginTop: 3, flexShrink: 0, color: 'var(--orange)' }} />
                 Sector 26, Pratap Nagar, Jaipur 302033
               </span>
-              <a href="tel:+917733888883" className="flex items-center hover:text-white" style={{ gap: 8 }}>
+              <a href="tel:+917733888883" onClick={() => trackLead('call')} className="flex items-center hover:text-white" style={{ gap: 8 }}>
                 <Phone size={14} style={{ flexShrink: 0, color: 'var(--orange)' }} />
                 +91 77338 88883
               </a>
-              <a href="mailto:Info@growthescalators.com" className="flex items-center hover:text-white" style={{ gap: 8 }}>
+              <a href="mailto:Info@growthescalators.com" onClick={() => trackLead('email')} className="flex items-center hover:text-white" style={{ gap: 8 }}>
                 <Mail size={14} style={{ flexShrink: 0, color: 'var(--orange)' }} />
                 Info@growthescalators.com
               </a>

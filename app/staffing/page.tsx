@@ -10,6 +10,7 @@ import {
 import TrustStrip from '@/components/sections/TrustStrip'
 import Navbar from '@/components/sections/Navbar'
 import Footer from '@/components/sections/Footer'
+import { trackLead } from '@/lib/analytics'
 
 const easeOut = [0.16, 1, 0.3, 1] as const
 
@@ -1362,6 +1363,7 @@ function HiringFormSection() {
         throw new Error(body.error || `Server returned ${res.status}`)
       }
       setStatus('success')
+      trackLead('form', { source: 'Staffing Enquiry' })
       form.reset()
     } catch (err) {
       setStatus('error')
@@ -1492,7 +1494,7 @@ function HiringFormSection() {
               {status === 'error' && (
                 <p role="alert" style={{ fontSize: 13, color: '#b91c1c' }}>
                   Couldn&rsquo;t send{errorMsg ? ` (${errorMsg})` : ''}.{' '}
-                  <a href="mailto:Info@growthescalators.com" className="underline">Email us directly →</a>
+                  <a href="mailto:Info@growthescalators.com" onClick={() => trackLead('email')} className="underline">Email us directly →</a>
                 </p>
               )}
             </form>

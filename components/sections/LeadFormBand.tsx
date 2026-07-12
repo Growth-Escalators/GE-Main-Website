@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Star, Check } from 'lucide-react'
+import { trackLead } from '@/lib/analytics'
 
 const SERVICE_OPTIONS = [
   'Performance Ads',
@@ -50,6 +51,7 @@ export default function LeadFormBand() {
         throw new Error(body.error || `Server returned ${res.status}`)
       }
       setStatus('success')
+      trackLead('form', { source: 'Homepage Free Audit' })
       form.reset()
     } catch (error) {
       setStatus('error')
@@ -216,6 +218,7 @@ export default function LeadFormBand() {
                 href="https://wa.me/917733888883?text=Hi%20Growth%20Escalators%2C%20I%27d%20like%20to%20discuss%20a%20free%20audit."
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackLead('whatsapp')}
                 className="text-center wa-btn"
                 style={{
                   background: 'var(--green-wa)',
@@ -233,7 +236,7 @@ export default function LeadFormBand() {
               {status === 'error' && (
                 <p role="alert" style={{ fontSize: 13, color: '#b91c1c', marginTop: 6 }}>
                   Couldn&rsquo;t send{err ? ` (${err})` : ''}.{' '}
-                  <a href="mailto:Info@growthescalators.com" className="underline">
+                  <a href="mailto:Info@growthescalators.com" onClick={() => trackLead('email')} className="underline">
                     Email us directly →
                   </a>
                 </p>
