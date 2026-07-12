@@ -18,6 +18,11 @@ export default function robots(): MetadataRoute.Robots {
       { userAgent: 'ChatGPT-User', allow: '/' },
       { userAgent: 'PerplexityBot', allow: '/' },
       { userAgent: 'Google-Extended', allow: '/' },
+      // Bingbot powers Bing's index, which is what feeds ChatGPT's retrieval —
+      // Bing is mandatory, not optional (GE SEO Standard v1). Already covered by
+      // the `*` rule above, but listed explicitly to match the other retrieval
+      // crawlers and stay allowed even if a disallow is ever added to `*`.
+      { userAgent: 'Bingbot', allow: '/' },
     ],
     sitemap: `${SITE}/sitemap.xml`,
     // No `host` directive — it's a dead Yandex-only convention; Google ignores it
