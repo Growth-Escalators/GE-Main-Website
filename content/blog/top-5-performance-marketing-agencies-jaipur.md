@@ -13,8 +13,6 @@ There's a meaningful difference between a "digital marketing agency" and a "perf
 
 If you're a Jaipur business spending more than ₹1L/month on ads — or planning to soon — you need the second kind. Here are the 5 we'd talk to in 2026.
 
-> **Note on placeholders:** Slots #2–#5 contain bracketed placeholders that the publisher should replace with real Jaipur agency names and details before going live.
-
 ## What "performance marketing agency" actually means
 
 A real performance marketing agency:
@@ -56,55 +54,51 @@ If an agency uses the words "performance marketing" but doesn't do the four thin
 
 ---
 
-## 2. [Agency Name — Replace]
+## 2. G Digital India
 
-**Best for:** [e.g. e-commerce DTC brands, Shopify-heavy stack, Indian DTC]
+**Best for:** Businesses that want a dedicated paid-media (Google Ads + Meta) partner focused on ROI.
 
-**Founded:** [year] · **Team size:** [size]
+**What they do well:** Positions itself squarely as a *performance* marketing company — Google Ads, Facebook/Meta ads, and conversion-focused campaigns built around return on ad spend rather than vanity reach.
 
-**What they do well:** [Specific strength — be honest. e.g. "Deep Shopify expertise, strong creative production for fashion/beauty"]
+**Consider if:** Paid acquisition is your core need — confirm their depth in your specific vertical and their tracking/attribution setup before you scale spend.
 
-**Watch-outs:** [Honest limitation — e.g. "Limited B2B / lead-gen experience"]
-
-**Track record at scale:** [What's the biggest spend they've managed credibly?]
-
-**Pricing range:** [₹X–₹Y/month]
+**Pricing range:** Not publicly listed — typical Jaipur paid-media retainers run ₹25k–₹1L+/month plus ad spend.
 
 ---
 
-## 3. [Agency Name — Replace]
+## 3. DigiVeritaz
 
-**Best for:** […]
+**Best for:** Brands wanting a data-led SEO + PPC + social mix under one roof.
 
-**What they do well:** […]
+**What they do well:** A performance-driven agency built around measurable SEO, PPC, and social — creative execution paired with disciplined optimisation.
 
-**Watch-outs:** […]
+**Consider if:** You want blended digital (organic + paid) rather than a pure media-buying shop; ask for category-specific ROAS examples.
 
-**Pricing range:** […]
-
----
-
-## 4. [Agency Name — Replace]
-
-**Best for:** […]
-
-**What they do well:** […]
-
-**Watch-outs:** […]
-
-**Pricing range:** […]
+**Pricing range:** Not publicly listed — market range ₹25k–₹1L/month depending on scope, plus ad spend.
 
 ---
 
-## 5. [Agency Name — Replace]
+## 4. W3era Web Technology
 
-**Best for:** […]
+**Best for:** SEO-led growth with Google Ads support; a strong pick for small and mid-sized businesses.
 
-**What they do well:** […]
+**What they do well:** One of Jaipur's most-reviewed agencies — ranked #1 in Clutch's Leaders Matrix for small-business digital marketing, with 90%+ of reviewers praising project management, responsiveness, and value. Core strengths in SEO, Google Ads, and web development.
 
-**Watch-outs:** […]
+**Consider if:** Your priority is organic + search visibility; if you need aggressive, creative-heavy paid-social scaling, confirm that side of their team.
 
-**Pricing range:** […]
+**Pricing range:** Not publicly listed — known for strong value; SEO packages in Jaipur typically start ~₹10–25k/month.
+
+---
+
+## 5. HIcentrik
+
+**Best for:** Founders who want an ROI-focused, growth-hacking-style 360° partner.
+
+**What they do well:** Brands itself as a 360° digital marketing & growth-hacking agency with an AI-aware, ROI-first approach and 80+ clients — a fit for businesses that want strategy plus cross-channel execution.
+
+**Consider if:** You want a broad growth partner rather than a single-channel specialist; agree the specific KPIs you'll hold them to up front.
+
+**Pricing range:** Not publicly listed — full-service digital in Jaipur typically ₹25k–₹1L+/month.
 
 ---
 
