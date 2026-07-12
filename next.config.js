@@ -40,6 +40,11 @@ const nextConfig = {
       { source: '/video-portfolio', destination: '/portfolio', permanent: true },
       { source: '/portfolio-ecommerce', destination: '/portfolio', permanent: true },
 
+      // --- Impression-earning legacy URLs recovered from GSC 90-day scan (2026-07-12) ---
+      { source: '/testimonial-2', destination: '/work', permanent: true },        // 23 imp / pos 4.3
+      { source: '/social-media-audit', destination: '/contact', permanent: true }, // 16 imp (old lead-magnet)
+      { source: '/seo-auditgegv', destination: '/services', permanent: true },     // 8 imp (demo slug, still ranks)
+
       // --- OPTIONAL / lower confidence (uncomment after review) ---
       // { source: '/home-digital-marketing', destination: '/', permanent: true },
       // { source: '/white-label-entry-offers', destination: '/staffing', permanent: true },
