@@ -50,6 +50,8 @@ If an agency uses the words "performance marketing" but doesn't do the four thin
 
 **Where we're not the right fit:** If you're spending under ₹40k/month all-in or you specifically want a brand-awareness-first agency. Performance marketing is a wrong tool for those goals.
 
+**Go deeper:** see exactly how we run paid acquisition on our [performance marketing agency in Jaipur](/performance-marketing-agency-jaipur) page.
+
 [**→ Book a free strategy call**](/contact)
 
 ---
