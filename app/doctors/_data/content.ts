@@ -114,4 +114,16 @@ export const DOCTORS_CONTENT: LandingContent = {
     subhead: "Fill this in and we'll get back within 24 hours with a no-obligation strategy session.",
     tag: "LET'S TALK",
   },
+
+  relatedResources: {
+    tag: 'GO DEEPER',
+    headline: 'Healthcare marketing, by intent',
+    subhead: 'Whether you run a clinic, need more patients, or want to build your own authority.',
+    links: [
+      { label: 'Marketing Agency for Doctors in Jaipur', href: '/doctors-marketing-agency-jaipur', blurb: 'Local healthcare marketing for Jaipur clinics & hospitals — GBP, Maps & compliant ads.' },
+      { label: 'Patient Acquisition Agency', href: '/patient-acquisition-agency', blurb: 'Fill your calendar — appointment-booking funnels and lower no-shows.' },
+      { label: 'Personal Branding for Doctors', href: '/personal-branding-for-doctors', blurb: 'Build authority and inbound consults on LinkedIn, Instagram & YouTube.' },
+      { label: 'Case Studies', href: '/work', blurb: 'Real brands, real numbers, real growth.' },
+    ],
+  },
 }

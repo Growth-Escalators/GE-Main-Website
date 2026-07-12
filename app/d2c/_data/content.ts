@@ -121,6 +121,8 @@ export const D2C_CONTENT: LandingContent = {
     subhead: 'Specialized pages and the frameworks we apply to every D2C account.',
     links: [
       { label: 'Meta ads for fashion & apparel brands', href: '/d2c/fashion', blurb: 'Return-adjusted ROAS, seasonal catalogs, and drop-cycle creative — performance marketing built for fashion.' },
+      { label: 'Beauty & skincare brand marketing', href: '/d2c/beauty', blurb: 'UGC, sampling funnels, and compliant claims creative — performance marketing built for beauty D2C.' },
+      { label: 'Ecommerce advertising agency', href: '/ecommerce-advertising-agency', blurb: 'Full-funnel Meta + Google for D2C — blended ROAS and server-side tracking.' },
       { label: 'Scaling Meta ROAS past the plateau', href: '/blog/meta-ads-for-d2c-brands-scale-roas-past-plateau', blurb: 'The four-part account rebuild framework behind our results.' },
       { label: 'CAC vs LTV: the only ad-spend math that matters', href: '/blog/cac-vs-ltv-ecommerce-ad-spend-math', blurb: 'The unit-economics ratio that decides if your spend works.' },
       { label: 'The creative testing framework for D2C', href: '/blog/creative-testing-framework-d2c-performance-marketing', blurb: 'Angles, hooks, cadence, and kill criteria.' },
