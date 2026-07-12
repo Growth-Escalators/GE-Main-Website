@@ -4,6 +4,13 @@ const nextConfig = {
 
   async redirects() {
     return [
+      // --- Retired subdomains -> canonical www (host-scoped). These FIRE ONLY once
+      //     dtc./consulting.growthescalators.com are added to THIS Vercel project and
+      //     their DNS CNAMEs point here (they currently resolve to ludicrous.cloud /
+      //     Railway). ecom. is intentionally left alone (kept as a live funnel). ---
+      { source: '/:path*', has: [{ type: 'host', value: 'dtc.growthescalators.com' }], destination: 'https://www.growthescalators.com/:path*', permanent: true },
+      { source: '/:path*', has: [{ type: 'host', value: 'consulting.growthescalators.com' }], destination: 'https://www.growthescalators.com/:path*', permanent: true },
+
       // --- Core clean 1:1 page maps (legacy WordPress slugs) ---
       { source: '/about-us', destination: '/about', permanent: true },
       { source: '/contact-us', destination: '/contact', permanent: true },
