@@ -110,4 +110,4 @@ After 60 days of data, this rebalances toward whichever of the four buckets is p
 
 If you take one thing from this post: **stop budgeting by feel.** Work backward from your customer-acquisition goal × realistic CPA × 1.3 buffer. That number — plus a credible agency fee — is what you should plan against.
 
-If you'd like a custom budget calculation for your specific category and goal, that's the first 15 minutes of every strategy call we run. We'll model your numbers and tell you the realistic floor for the result you want — and whether your current spend is in the right zone or not.
+If you'd like a custom budget calculation for your specific category and goal, that's the first 15 minutes of every strategy call we run. We'll model your numbers and tell you the realistic floor for the result you want — and whether your current spend is in the right zone or not. (More on how we operate: our [performance marketing agency in Jaipur](/performance-marketing-agency-jaipur) page.)
