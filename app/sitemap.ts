@@ -26,7 +26,7 @@ const STATIC_ROUTES: { path: string; priority: number; changeFrequency: Metadata
   { path: '/performance-marketing-agency-jaipur', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-12T11:40:00+05:30' },
   { path: '/doctors',                priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-04-30T00:23:16+05:30' },
   { path: '/roofing',                priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-04-30T00:23:16+05:30' },
-  { path: '/restaurants',            priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-04-30T00:23:16+05:30' },
+  // /restaurants de-targeted 2026-07-12 (Jatin) — noindexed + out of sitemap; page kept for a possible revisit in ~2–3 months.
   { path: '/real-estate',            priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-04-30T01:18:57+05:30' },
   // Legal — keep crawlable but low priority
   { path: '/privacy-policy',         priority: 0.3, changeFrequency: 'yearly',  lastModified: '2026-05-28T18:14:21+05:30' },
