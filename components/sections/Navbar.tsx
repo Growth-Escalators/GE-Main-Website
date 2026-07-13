@@ -20,26 +20,9 @@ const NAV: NavItem[] = [
 
 function Logo() {
   return (
-    <Link href="/" aria-label="Growth Escalators — Home" className="inline-flex items-center gap-[11px]">
-      <svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-hidden>
-        <defs>
-          <linearGradient id="geNav" x1="3" y1="29" x2="29" y2="4" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#FF6B35" />
-            <stop offset="1" stopColor="#FF9A5A" />
-          </linearGradient>
-        </defs>
-        <rect x="3" y="19" width="6" height="10" rx="2" fill="url(#geNav)" opacity="0.45" />
-        <rect x="13" y="13" width="6" height="16" rx="2" fill="url(#geNav)" opacity="0.75" />
-        <rect x="23" y="6" width="6" height="23" rx="2" fill="url(#geNav)" />
-        <path d="M19.5 10.5 L27 4" stroke="#FF6B35" strokeWidth="2.2" strokeLinecap="round" />
-        <path d="M22.6 4 L27.2 4 L27.2 8.6" stroke="#FF6B35" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-      </svg>
-      <span
-        className="brand-wordmark"
-        style={{ fontWeight: 800, letterSpacing: '-0.025em', color: 'var(--text-primary)' }}
-      >
-        Growth Escalators
-      </span>
+    <Link href="/" aria-label="Growth Escalators — Home" className="inline-flex items-center">
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img src="/logo.webp" alt="Growth Escalators" style={{ height: 34, width: 'auto', display: 'block' }} />
     </Link>
   )
 }

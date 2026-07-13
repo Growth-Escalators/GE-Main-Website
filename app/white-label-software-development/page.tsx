@@ -1,7 +1,6 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import Link from 'next/link'
 import Footer from '@/components/sections/Footer'
 import { WHITE_LABEL_CONTENT as C } from './_data/content'
 
@@ -19,20 +18,21 @@ const reveal = {
 }
 
 const PROOF = [
-  { n: '6+', l: 'Live products shipped' },
-  { n: '2', l: 'Payment stacks in prod' },
-  { n: '15+', l: 'Integrations wired' },
-  { n: '270+', l: 'Automated tests' },
+  { n: '237+', l: 'Projects delivered' },
+  { n: '₹70Cr+', l: 'Payments processed' },
+  { n: '50+', l: 'Integrations shipped' },
+  { n: '1,000+', l: 'Automated tests' },
 ]
 
 const SERVICE_ICONS = ['💻', '📱', '🛒', '🤖', '🧩', '🔌']
 
+/* [name, simple-icons slug]. slug '' → clean text-only pill (no logo available). */
 const TECH: { label: string; items: [string, string][] }[] = [
-  { label: 'Frontend', items: [['React', 'react'], ['Next.js', 'nextdotjs'], ['TypeScript', 'typescript'], ['Tailwind', 'tailwindcss']] },
-  { label: 'Backend & data', items: [['Node.js', 'nodedotjs'], ['Express', 'express'], ['PostgreSQL', 'postgresql'], ['Supabase', 'supabase'], ['Prisma', 'prisma'], ['Redis', 'redis']] },
-  { label: 'Payments & messaging', items: [['Razorpay', 'razorpay'], ['WhatsApp', 'whatsapp'], ['Meta', 'meta'], ['Socket.io', 'socketdotio']] },
-  { label: 'AI', items: [['OpenAI', 'openai'], ['Anthropic', 'anthropic']] },
-  { label: 'Cloud & infra', items: [['Vercel', 'vercel'], ['Railway', 'railway']] },
+  { label: 'Frontend', items: [['React', 'react'], ['Next.js', 'nextdotjs'], ['TypeScript', 'typescript'], ['Tailwind', 'tailwindcss'], ['Vite', 'vite'], ['Framer Motion', 'framer'], ['shadcn/ui', 'shadcnui'], ['TanStack Query', 'reactquery']] },
+  { label: 'Backend & data', items: [['Node.js', 'nodedotjs'], ['Express', 'express'], ['PostgreSQL', 'postgresql'], ['Supabase', 'supabase'], ['Prisma', 'prisma'], ['Drizzle', ''], ['Redis', 'redis'], ['Socket.io', 'socketdotio'], ['Zod', '']] },
+  { label: 'Payments & messaging', items: [['Razorpay', 'razorpay'], ['Cashfree', ''], ['Stripe', 'stripe'], ['WhatsApp', 'whatsapp'], ['Meta', 'meta'], ['MSG91', ''], ['Resend', 'resend']] },
+  { label: 'AI', items: [['OpenAI (GPT-4)', 'openai'], ['Anthropic (Claude)', 'anthropic']] },
+  { label: 'Cloud & infra', items: [['AWS', 'amazonwebservices'], ['Cloudflare', 'cloudflare'], ['Docker', 'docker'], ['GitHub Actions', 'githubactions'], ['Sentry', 'sentry'], ['Vercel', 'vercel'], ['Railway', 'railway']] },
 ]
 
 const ENGAGEMENTS = [
@@ -40,6 +40,30 @@ const ENGAGEMENTS = [
   { ic: '👥', t: 'Dedicated team', d: 'A monthly retainer for an embedded engineering pod that ships continuously under your brand.' },
   { ic: '🧑‍💻', t: 'Staff augmentation', d: 'Our engineers slot into your existing team and process — scale capacity up or down per project.' },
 ]
+
+const INDUSTRIES = [
+  { ic: '🏠', t: 'Real estate' },
+  { ic: '🏥', t: 'Healthcare' },
+  { ic: '🛍️', t: 'D2C & e-commerce' },
+  { ic: '🧑‍💼', t: 'Staffing / HR-tech' },
+  { ic: '📈', t: 'Agencies & marketing' },
+]
+
+const COMPARE: [string, string, string, string][] = [
+  ['Time to start', 'Weeks of hiring', 'Slow, timezone lag', 'Days — we start now'],
+  ['Code quality', 'Depends on the hire', 'Hit or miss, rework', 'Production-grade, tested'],
+  ['Integrations', 'Built from scratch', 'Built from scratch', 'Reused from our library'],
+  ['India compliance', 'You figure it out', 'Usually missing', 'GST / TDS / RERA shipped'],
+  ['Cost', 'Salary + overhead', 'Cheap but risky', 'Scoped & predictable'],
+  ['Your brand', '—', 'Rarely', 'Fully white-label'],
+]
+
+const FOUNDER = {
+  quote:
+    'We built our own products — a multi-tenant CRM, a real-estate SaaS, a live clinic platform — before we ever offered to build yours. That’s the difference: you get a partner who has shipped and runs production software, not a shop learning on your client’s dime. Tell me what you need built, and I’ll tell you exactly how we’d do it.',
+  name: 'Jatin Agrawal',
+  role: 'Founder, Growth Escalators',
+}
 
 const CODE = `<span class="c">// multi-tenant API — shipped under your brand</span>
 <span class="k">export const</span> <span class="f">createTenant</span> = <span class="k">async</span> (input) =&gt; {
@@ -60,18 +84,7 @@ export default function WhiteLabelSoftwareDevelopmentPage() {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
 
-      {/* ── HEADER ── */}
-      <header className="wl-header">
-        <div className="wl-container wl-header-in">
-          <Link href="/" aria-label="Growth Escalators home">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src="/logo.webp" alt="Growth Escalators" loading="eager" />
-          </Link>
-          <a href={BOOK} {...ext} className="wl-btn">Book a Call</a>
-        </div>
-      </header>
-
-      {/* ── HERO ── */}
+      {/* ── HERO ── (header comes from the shared site <Navbar/> in layout.tsx) */}
       <section className="wl-hero wl-mesh">
         <div className="wl-container wl-hero-grid">
           <div>
@@ -151,14 +164,32 @@ export default function WhiteLabelSoftwareDevelopmentPage() {
               <div className="wl-tech-label">{g.label}</div>
               <div className="wl-tech-row">
                 {g.items.map(([name, slug]) => (
-                  <span className="wl-tech" key={slug}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={`/tech/${slug}.svg`} alt={name} loading="lazy" /> {name}
+                  <span className="wl-tech" key={name}>
+                    {slug && (
+                      <>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={`/tech/${slug}.svg`} alt={name} loading="lazy" />
+                      </>
+                    )}
+                    {name}
                   </span>
                 ))}
               </div>
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* ── INDUSTRIES ── */}
+      <section className="wl-section">
+        <div className="wl-container wl-center">
+          <span className="wl-eyebrow">Industries we build for</span>
+          <h2 className="wl-h2">Shipped across <span className="wl-grad">real verticals</span></h2>
+          <div className="wl-ind-row">
+            {INDUSTRIES.map((x) => (
+              <div className="wl-ind" key={x.t}><span className="wl-ind-ic">{x.ic}</span>{x.t}</div>
+            ))}
+          </div>
         </div>
       </section>
 
@@ -203,6 +234,29 @@ export default function WhiteLabelSoftwareDevelopmentPage() {
                 <h3>{w.title}</h3>
                 <p>{w.body}</p>
               </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── COMPARISON ── */}
+      <section className="wl-section wl-mesh">
+        <div className="wl-container">
+          <div className="wl-head wl-center">
+            <span className="wl-eyebrow">Why not the alternatives</span>
+            <h2 className="wl-h2">In-house vs. offshore vs. <span className="wl-grad">Growth Escalators</span></h2>
+          </div>
+          <div className="wl-cmp">
+            <div className="wl-cmp-row wl-cmp-h">
+              <div></div><div>In-house hire</div><div>Offshore shop</div><div className="wl-cmp-us">Growth Escalators</div>
+            </div>
+            {COMPARE.map((r) => (
+              <div className="wl-cmp-row" key={r[0]}>
+                <div className="wl-cmp-k">{r[0]}</div>
+                <div>{r[1]}</div>
+                <div>{r[2]}</div>
+                <div className="wl-cmp-us">{r[3]}</div>
+              </div>
             ))}
           </div>
         </div>
@@ -260,6 +314,20 @@ export default function WhiteLabelSoftwareDevelopmentPage() {
                 <p>{f.a}</p>
               </details>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── FOUNDER NOTE ── */}
+      <section className="wl-section">
+        <div className="wl-container">
+          <div className="wl-founder">
+            <div className="wl-avatar">J</div>
+            <div>
+              <p className="wl-founder-q">{FOUNDER.quote}</p>
+              <div className="wl-founder-n">{FOUNDER.name}</div>
+              <div className="wl-founder-r">{FOUNDER.role}</div>
+            </div>
           </div>
         </div>
       </section>
