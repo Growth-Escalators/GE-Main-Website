@@ -57,7 +57,7 @@ function ArticleJsonLd({ post }: { post: Post }) {
       name: 'Growth Escalators',
       logo: {
         '@type': 'ImageObject',
-        url: 'https://growthescalators.com/wp-content/uploads/2023/10/growth-escalator-logo.png',
+        url: 'https://www.growthescalators.com/logo.webp',
       },
     },
     mainEntityOfPage: {
@@ -88,7 +88,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
           <Link href="/" className={indexStyles.logo} aria-label="Growth Escalators home">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://growthescalators.com/wp-content/uploads/2023/10/growth-escalator-logo.png"
+              src="/logo.webp"
               alt="Growth Escalators"
               loading="eager"
             />

@@ -13,18 +13,20 @@ import type { LandingContent } from '@/components/landing/IndustryLandingPage'
 
 export const WHITE_LABEL_CONTENT: LandingContent = {
   industryLabel: 'White-Label',
+  bookingUrl: 'https://cal.com/growth-escalators/30min',
 
   hero: {
-    badge: 'WHITE-LABEL SOFTWARE & APP DEVELOPMENT',
+    variant: 'bold',
+    badge: 'WHITE-LABEL SOFTWARE & APP DEVELOPMENT · FOR AGENCIES',
     headlineLines: ['Ship production software.', 'Under your brand.'],
     cyclingWords: ['SaaS platforms.', 'Web & mobile apps.', 'AI automation.', 'E-commerce & checkout.'],
     subhead:
-      'We build multi-tenant SaaS, web & mobile apps, and AI automation as your silent engineering partner — production-grade, on your brand, shipped fast. You keep the client relationship; we write the code.',
-    primaryCta: { label: 'Book a Discovery Call', href: '#lead-form' },
+      'Your silent engineering partner. We build multi-tenant SaaS, web & mobile apps, and AI automation that agencies resell under their own brand — production-grade, shipped fast, fully white-label. You keep the client; we write the code.',
+    primaryCta: { label: 'Book a Discovery Call', href: 'https://cal.com/growth-escalators/30min' },
     secondaryCta: { label: 'See what we’ve built ↓', href: '#builds' },
     statPills: [
+      { emoji: '🏢', value: 'White-label', label: 'Built for agencies' },
       { emoji: '🚀', value: '6+', label: 'Live products shipped' },
-      { emoji: '💳', value: '2', label: 'Payment stacks in prod' },
       { emoji: '🔌', value: '15+', label: 'Integrations wired' },
     ],
   },
@@ -116,15 +118,15 @@ export const WHITE_LABEL_CONTENT: LandingContent = {
     { step: '04', title: 'Handover or scale', body: 'We hand off clean, documented code — or stay on as your dedicated team and scale with our in-house dev + staffing bench.' },
   ],
 
-  whyUsTag: 'WHY PARTNER WITH US',
-  whyUsHeadline: 'A silent engineering partner that actually ships',
+  whyUsTag: 'WHY AGENCIES PARTNER WITH US',
+  whyUsHeadline: 'Add an engineering arm to your agency — the upside',
   whyUs: [
-    { title: 'Real production engineering', body: 'Multi-tenancy done two ways (app-level + Postgres RLS), RBAC, JWT with session revocation, audit logging, and hundreds of automated tests. Real SaaS — not brochure sites.' },
-    { title: 'Live money paths', body: 'Two payment stacks already shipped in production — Cashfree and Razorpay — with GST invoicing and India-specific TDS compliance.' },
-    { title: 'A proven integration library', body: '“Connect WhatsApp / Meta / Razorpay / Shopify / SMS / email” is reuse for us, not a research project. You ship faster because we already solved it.' },
-    { title: 'True white-label discretion', body: 'We already deliver white-label for agencies in the UK, US, Australia, and Canada. Your client never sees us — the work ships under your brand.' },
-    { title: 'One roof: software + AI + growth', body: 'Design, build, integrations, and even a staffing bench to scale delivery on demand — from a single partner who owns the outcome.' },
-    { title: 'Velocity with a paper trail', body: 'An AI-assisted dev system lets a lean team ship production features fast — with documented decisions, tests, and clean handovers.' },
+    { title: 'Resell software without hiring', body: 'Offer SaaS, apps, and AI builds to your clients without recruiting, managing, or paying a full-time engineering team. We are your on-demand dev arm.' },
+    { title: 'Protect your margins', body: 'No offshore rework, blown deadlines, or spaghetti code eating your profit — production-grade delivery the first time, on a predictable, scoped engagement.' },
+    { title: 'Your brand, your client', body: 'Fully white-label: we work under your name, communicate through you, and never contact your client. The same discretion we already run for UK/US/AU/CA agencies.' },
+    { title: 'Scale delivery on demand', body: 'Ramp capacity up or down per project with our in-house dev + staffing bench — take on bigger builds without carrying the fixed headcount cost.' },
+    { title: 'One partner: software + AI + growth', body: 'Design, build, integrations, AI, and even performance marketing under one roof — one accountable vendor instead of stitching freelancers together.' },
+    { title: 'Ship faster, quote shorter', body: 'Our reusable component + integration library (payments, WhatsApp, Meta, Shopify) turns months of R&D into reuse — so you quote shorter timelines and win more deals.' },
   ],
 
   faqsTag: 'QUESTIONS, ANSWERED',
