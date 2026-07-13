@@ -158,7 +158,7 @@ export default function IndustryLandingPage({ content }: { content: LandingConte
           <Link href="/" className={styles.logo} aria-label="Growth Escalators home">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="https://growthescalators.com/wp-content/uploads/2023/10/growth-escalator-logo.png"
+              src="/logo.webp"
               alt="Growth Escalators"
               loading="eager"
             />

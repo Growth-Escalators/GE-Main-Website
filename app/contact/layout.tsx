@@ -21,7 +21,7 @@ const LOCAL_BUSINESS_SCHEMA = {
   '@type': 'LocalBusiness',
   '@id': 'https://www.growthescalators.com/#localbusiness',
   name: 'Growth Escalators',
-  image: 'https://growthescalators.com/wp-content/uploads/2023/10/growth-escalator-logo.png',
+  image: 'https://www.growthescalators.com/logo.webp',
   url: 'https://www.growthescalators.com',
   email: 'Info@growthescalators.com',
   telephone: '+91-77338-88883',
