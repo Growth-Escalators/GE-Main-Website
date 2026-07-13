@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import './white-label.css'
 
 export const metadata: Metadata = {
   title: 'White-Label Software & App Development',
@@ -15,5 +16,5 @@ export const metadata: Metadata = {
 }
 
 export default function WhiteLabelLayout({ children }: { children: React.ReactNode }) {
-  return <>{children}</>
+  return <div className="wl-root">{children}</div>
 }
