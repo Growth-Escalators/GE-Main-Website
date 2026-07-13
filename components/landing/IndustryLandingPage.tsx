@@ -34,6 +34,14 @@ export type LandingContent = {
   servicesTag?: string
   servicesHeadline?: string
   servicesSubhead?: string
+  /** Optional "products we've shipped" proof grid — real builds as cards. Omit it
+     and nothing renders; pages that don't set it are completely unaffected. */
+  builds?: {
+    tag?: string
+    headline?: string
+    subhead?: string
+    items: { name: string; what: string; stack: string; href?: string }[]
+  }
   resultHighlight: {
     label?: string
     name: string
@@ -323,6 +331,49 @@ export default function IndustryLandingPage({ content }: { content: LandingConte
           </div>
         </div>
       </section>
+
+      {/* ── BUILDS (proof grid) — optional "products we've shipped" ─────── */}
+      {content.builds && content.builds.items.length > 0 && (
+        <section className={styles.section} id="builds" aria-label="What we have built">
+          <div className="container-x">
+            <div className={styles.sectionHeader}>
+              <span className="section-tag">{content.builds.tag ?? 'WHAT WE’VE BUILT'}</span>
+              <h2 className={styles.sectionHeadline}>
+                {content.builds.headline ?? 'Real products we’ve shipped'}
+              </h2>
+              {content.builds.subhead && (
+                <p className={styles.sectionSub}>{content.builds.subhead}</p>
+              )}
+            </div>
+            <div className={styles.svcGrid}>
+              {content.builds.items.map((b, i) => (
+                <motion.div
+                  key={b.name}
+                  className={styles.svcCard}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-50px' }}
+                  transition={{ duration: 0.5, delay: (i % 3) * 0.07 }}
+                >
+                  <h3 className={styles.svcTitle}>
+                    {b.href ? (
+                      <a href={b.href} target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>
+                        {b.name} ↗
+                      </a>
+                    ) : (
+                      b.name
+                    )}
+                  </h3>
+                  <p className={styles.svcBody}>{b.what}</p>
+                  <p style={{ margin: '14px 0 0', fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace', fontSize: '12px', lineHeight: 1.6, color: 'var(--text-secondary)', opacity: 0.85 }}>
+                    {b.stack}
+                  </p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ── RESULT HIGHLIGHT ───────────────────────────────────────────── */}
       <section className={styles.section} id="results" aria-label="Featured result">
