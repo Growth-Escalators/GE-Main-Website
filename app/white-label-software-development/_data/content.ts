@@ -26,8 +26,8 @@ export const WHITE_LABEL_CONTENT: LandingContent = {
     secondaryCta: { label: 'See what we’ve built ↓', href: '#builds' },
     statPills: [
       { emoji: '🏢', value: 'White-label', label: 'Built for agencies' },
-      { emoji: '🚀', value: '6+', label: 'Live products shipped' },
-      { emoji: '🔌', value: '15+', label: 'Integrations wired' },
+      { emoji: '🚀', value: '237+', label: 'Projects delivered' },
+      { emoji: '🔌', value: '50+', label: 'Integrations' },
     ],
   },
 

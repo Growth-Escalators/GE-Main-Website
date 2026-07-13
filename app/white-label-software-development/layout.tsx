@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import Navbar from '@/components/sections/Navbar'
 import './white-label.css'
 
 export const metadata: Metadata = {
@@ -16,5 +17,10 @@ export const metadata: Metadata = {
 }
 
 export default function WhiteLabelLayout({ children }: { children: React.ReactNode }) {
-  return <div className="wl-root">{children}</div>
+  return (
+    <>
+      <Navbar />
+      <div className="wl-root">{children}</div>
+    </>
+  )
 }
