@@ -20,6 +20,8 @@ export type LandingContent = {
     primaryCta: { label: string; href: string }
     secondaryCta: { label: string; href: string }
     statPills: { emoji: string; value: string; label: string }[]
+    /** 'bold' opts this page into the heavier gradient hero. Omit = unchanged. */
+    variant?: 'default' | 'bold'
   }
   painPoints: { emoji: string; title: string; body: string }[]
   painPointsTag?: string
@@ -74,6 +76,9 @@ export type LandingContent = {
   }
   /** Used in the mailto subject + a tiny header chip if you want it. */
   industryLabel?: string
+  /** If set, every "book" CTA (header, hero primary, final) points here (external,
+     new tab) and the in-page LeadForm is hidden — e.g. a Cal.com scheduling link. */
+  bookingUrl?: string
   /** Optional topic-cluster links (pillar↔spoke + supporting posts) rendered as an
      internal-linking section. Omit it and nothing renders — other industry pages
      that don't set it are completely unaffected. */
@@ -139,6 +144,9 @@ function FaqPageJsonLd({ faqs }: { faqs: { q: string; a: string }[] }) {
 
 export default function IndustryLandingPage({ content }: { content: LandingContent }) {
   const cycle = useCyclingWord(content.hero.cyclingWords)
+  const extProps = (href: string) =>
+    href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' as const } : {}
+  const bookHref = content.bookingUrl ?? '#lead-form'
 
   return (
     <div className={styles.page}>
@@ -155,14 +163,14 @@ export default function IndustryLandingPage({ content }: { content: LandingConte
               loading="eager"
             />
           </Link>
-          <a href="#lead-form" className={`btn-primary ${styles.headerCta}`}>
+          <a href={bookHref} {...extProps(bookHref)} className={`btn-primary ${styles.headerCta}`}>
             Book a Free Call
           </a>
         </div>
       </header>
 
       {/* ── HERO ───────────────────────────────────────────────────────── */}
-      <section className={styles.hero} aria-label="Hero">
+      <section className={`${styles.hero} ${content.hero.variant === 'bold' ? styles.heroBold : ''}`} aria-label="Hero">
         <div className={styles.heroAurora} aria-hidden>
           <div className={styles.heroOrb1} />
           <div className={styles.heroOrb2} />
@@ -214,10 +222,10 @@ export default function IndustryLandingPage({ content }: { content: LandingConte
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.3 }}
           >
-            <a href={content.hero.primaryCta.href} className="btn-primary">
+            <a href={content.hero.primaryCta.href} {...extProps(content.hero.primaryCta.href)} className="btn-primary">
               {content.hero.primaryCta.label}
             </a>
-            <a href={content.hero.secondaryCta.href} className="btn-outline">
+            <a href={content.hero.secondaryCta.href} {...extProps(content.hero.secondaryCta.href)} className="btn-outline">
               {content.hero.secondaryCta.label}
             </a>
           </motion.div>
@@ -409,13 +417,15 @@ export default function IndustryLandingPage({ content }: { content: LandingConte
         </div>
       </section>
 
-      {/* ── VIDEO TESTIMONIALS ─────────────────────────────────────────── */}
-      <VideoTestimonialsShorts
-        videos={content.videoTestimonials}
-        tag={content.videoTestimonialsTag ?? 'HEAR FROM OUR CLIENTS'}
-        headline={content.videoTestimonialsHeadline ?? 'Real clients, real outcomes'}
-        subhead={content.videoTestimonialsSubhead}
-      />
+      {/* ── VIDEO TESTIMONIALS (only when there are videos) ─────────────── */}
+      {content.videoTestimonials.length > 0 && (
+        <VideoTestimonialsShorts
+          videos={content.videoTestimonials}
+          tag={content.videoTestimonialsTag ?? 'HEAR FROM OUR CLIENTS'}
+          headline={content.videoTestimonialsHeadline ?? 'Real clients, real outcomes'}
+          subhead={content.videoTestimonialsSubhead}
+        />
+      )}
 
       {/* ── PROCESS ────────────────────────────────────────────────────── */}
       <section className={styles.section} aria-label="Process">
@@ -472,14 +482,16 @@ export default function IndustryLandingPage({ content }: { content: LandingConte
         </div>
       </section>
 
-      {/* ── LEAD FORM ──────────────────────────────────────────────────── */}
-      <LeadForm
-        recipient={content.leadForm.recipient ?? 'Info@growthescalators.com'}
-        subjectPrefix={content.leadForm.subjectPrefix ?? `New ${content.industryLabel ?? 'Industry'} Lead`}
-        headline={content.leadForm.headline}
-        subhead={content.leadForm.subhead}
-        tag={content.leadForm.tag}
-      />
+      {/* ── LEAD FORM (hidden when a bookingUrl / external CTA is used) ──── */}
+      {!content.bookingUrl && (
+        <LeadForm
+          recipient={content.leadForm.recipient ?? 'Info@growthescalators.com'}
+          subjectPrefix={content.leadForm.subjectPrefix ?? `New ${content.industryLabel ?? 'Industry'} Lead`}
+          headline={content.leadForm.headline}
+          subhead={content.leadForm.subhead}
+          tag={content.leadForm.tag}
+        />
+      )}
 
       {/* ── FAQ ────────────────────────────────────────────────────────── */}
       <section className={styles.section} aria-label="FAQ">
@@ -535,7 +547,7 @@ export default function IndustryLandingPage({ content }: { content: LandingConte
         <div className="container-x">
           <h2 className={styles.ctaTitle}>{content.finalCta.title}</h2>
           <p className={styles.ctaSub}>{content.finalCta.subhead}</p>
-          <a href="#lead-form" className="btn-primary">
+          <a href={bookHref} {...extProps(bookHref)} className="btn-primary">
             {content.finalCta.ctaLabel}
           </a>
         </div>

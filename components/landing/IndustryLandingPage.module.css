@@ -121,6 +121,50 @@
 .heroPillEmoji { font-size: 20px; }
 .heroPillValue { color: var(--orange); }
 
+/* ── BOLD HERO VARIANT (opt-in via hero.variant='bold'; white-label page) ──── */
+.heroBold {
+  padding: 176px 0 132px;                 /* taller, top-heavy */
+  background: linear-gradient(180deg, var(--bg-warm) 0%, #ffffff 100%);
+}
+.heroBold::before {                        /* animated tri-color gradient mesh */
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(58% 55% at 14% 18%, rgba(255,107,53,0.22), transparent 60%),
+    radial-gradient(52% 55% at 86% 12%, rgba(108,99,255,0.22), transparent 60%),
+    radial-gradient(60% 60% at 50% 108%, rgba(0,212,170,0.18), transparent 60%),
+    linear-gradient(120deg, rgba(255,107,53,0.10), rgba(108,99,255,0.10), rgba(0,212,170,0.10), rgba(255,107,53,0.10));
+  background-size: 100% 100%, 100% 100%, 100% 100%, 300% 300%;
+  animation: heroBoldMesh 16s ease infinite;
+}
+@keyframes heroBoldMesh {
+  0%, 100% { background-position: 0 0, 0 0, 0 0, 0% 50%; }
+  50%      { background-position: 0 0, 0 0, 0 0, 100% 50%; }
+}
+.heroBold .heroOrb1 { width: 640px; height: 640px; background: radial-gradient(circle, rgba(255,107,53,0.30) 0%, transparent 70%); }
+.heroBold .heroOrb2 { width: 560px; height: 560px; background: radial-gradient(circle, rgba(108,99,255,0.26) 0%, transparent 70%); }
+.heroBold .heroOrb3 { width: 460px; height: 460px; background: radial-gradient(circle, rgba(0,212,170,0.22) 0%, transparent 70%); }
+.heroBold .heroBadge { border-left-color: var(--violet); color: var(--text-primary); }
+.heroBold .heroTitle {
+  font-size: clamp(56px, 9vw, 104px);
+  background: linear-gradient(100deg, var(--orange), var(--violet), var(--teal), var(--orange));
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  animation: heroBoldTitle 6s linear infinite;
+}
+@keyframes heroBoldTitle {
+  to { background-position: 200% center; }
+}
+@media (max-width: 640px) {
+  .heroBold { padding: 108px 0 84px; }
+}
+
 /* ── Generic section wrapper ──────────────────────────────────────────────── */
 .section {
   position: relative;
