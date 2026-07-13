@@ -1,0 +1,186 @@
+/* white-label.css — bespoke design system for /white-label-software-development.
+   EVERYTHING is scoped under .wl-root so it never affects the shared IndustryLandingPage
+   engine or the other 19 landing pages. GE-branded (orange/violet/teal) take on the
+   Dealos landing look: tri-color gradients, soft mesh backgrounds, light↔dark rhythm,
+   heavily-rounded glass cards, product/tech mockups. */
+
+.wl-root {
+  --wl-ink: #0f0f1a;
+  --wl-bg: #ffffff;
+  --wl-bg-soft: #fff7f3;
+  --wl-line: #eee7f1;
+  --wl-muted: #5c5670;
+  --wl-radius: 20px;
+  --wl-shadow: 0 12px 40px -20px rgba(108, 99, 255, 0.28), 0 4px 14px -8px rgba(0, 0, 0, 0.08);
+  color: var(--wl-ink);
+  background: var(--wl-bg);
+  overflow-x: clip;
+  font-family: var(--font-jakarta), -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+.wl-root *, .wl-root *::before, .wl-root *::after { box-sizing: border-box; }
+
+/* ── Layout primitives ─────────────────────────────────────────────────────── */
+.wl-root .wl-container { max-width: 1160px; margin: 0 auto; padding: 0 24px; }
+.wl-root .wl-section { position: relative; padding: 88px 0; overflow: clip; }
+.wl-root .wl-head { max-width: 720px; margin-bottom: 44px; }
+.wl-root .wl-head.wl-center { margin-inline: auto; text-align: center; }
+.wl-root .wl-eyebrow { display: inline-block; font-size: 12px; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--orange, #FF6B35); }
+.wl-root .wl-h2 { font-size: clamp(30px, 4.6vw, 50px); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; margin: 14px 0 12px; }
+.wl-root .wl-sub { font-size: 18px; line-height: 1.6; color: var(--wl-muted); margin: 0; }
+.wl-root .wl-center .wl-sub { margin-inline: auto; }
+
+/* ── Gradient text + buttons ───────────────────────────────────────────────── */
+.wl-root .wl-grad {
+  background: linear-gradient(120deg, var(--orange, #FF6B35), var(--violet, #6C63FF) 55%, var(--gold, #FFC83D));
+  -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent;
+}
+.wl-root .wl-btn {
+  display: inline-flex; align-items: center; gap: 8px; padding: 14px 26px; border-radius: 999px;
+  font-weight: 700; font-size: 15px; color: #fff; border: 0; cursor: pointer; text-decoration: none;
+  background: linear-gradient(135deg, var(--violet, #6C63FF), var(--orange, #FF6B35));
+  box-shadow: 0 14px 30px -12px rgba(255, 107, 53, 0.55);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+.wl-root .wl-btn:hover { transform: translateY(-2px); box-shadow: 0 20px 44px -12px rgba(255, 107, 53, 0.6); }
+.wl-root .wl-btn-ghost {
+  display: inline-flex; align-items: center; gap: 8px; padding: 13px 24px; border-radius: 999px;
+  font-weight: 700; font-size: 15px; color: var(--wl-ink); text-decoration: none;
+  background: #fff; border: 1px solid var(--wl-line); transition: border-color 0.18s, transform 0.18s;
+}
+.wl-root .wl-btn-ghost:hover { border-color: var(--violet, #6C63FF); transform: translateY(-2px); }
+.wl-root .wl-dark .wl-btn-ghost { background: rgba(255,255,255,0.06); color: #fff; border-color: rgba(255,255,255,0.18); }
+
+/* ── Mesh backgrounds (light + dark punch) ─────────────────────────────────── */
+.wl-root .wl-mesh {
+  background:
+    radial-gradient(48% 46% at 12% 14%, rgba(255, 107, 53, 0.16), transparent 60%),
+    radial-gradient(46% 46% at 88% 10%, rgba(108, 99, 255, 0.16), transparent 60%),
+    radial-gradient(52% 52% at 50% 108%, rgba(0, 212, 170, 0.10), transparent 60%),
+    linear-gradient(180deg, #ffffff, var(--wl-bg-soft));
+}
+.wl-root .wl-dark { color: #fff; background: var(--wl-ink); }
+.wl-root .wl-dark::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none; opacity: 0.55;
+  background:
+    radial-gradient(50% 50% at 15% 18%, rgba(255, 107, 53, 0.5), transparent 60%),
+    radial-gradient(48% 48% at 85% 16%, rgba(108, 99, 255, 0.45), transparent 60%),
+    radial-gradient(55% 55% at 50% 112%, rgba(0, 212, 170, 0.28), transparent 60%);
+}
+.wl-root .wl-dark > .wl-container { position: relative; z-index: 1; }
+.wl-root .wl-dark .wl-sub { color: rgba(255, 255, 255, 0.72); }
+
+/* ── Cards + feature grid ──────────────────────────────────────────────────── */
+.wl-root .wl-grid { display: grid; gap: 20px; }
+.wl-root .wl-grid-3 { grid-template-columns: repeat(3, 1fr); }
+.wl-root .wl-grid-2 { grid-template-columns: repeat(2, 1fr); }
+.wl-root .wl-card {
+  background: #fff; border: 1px solid var(--wl-line); border-radius: var(--wl-radius); padding: 26px;
+  box-shadow: var(--wl-shadow); transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+}
+.wl-root .wl-feature:hover { transform: translateY(-4px); border-color: rgba(108, 99, 255, 0.4); box-shadow: 0 24px 50px -22px rgba(108, 99, 255, 0.35); }
+.wl-root .wl-ico { width: 46px; height: 46px; border-radius: 13px; display: grid; place-items: center; font-size: 22px; margin-bottom: 14px; }
+.wl-root .wl-card h3 { font-size: 18px; font-weight: 700; margin: 0 0 8px; }
+.wl-root .wl-card p { font-size: 14.5px; line-height: 1.6; color: var(--wl-muted); margin: 0; }
+.wl-root .wl-t0 { background: rgba(255, 107, 53, 0.12); }
+.wl-root .wl-t1 { background: rgba(108, 99, 255, 0.12); }
+.wl-root .wl-t2 { background: rgba(0, 212, 170, 0.14); }
+.wl-root .wl-t3 { background: rgba(255, 200, 61, 0.18); }
+.wl-root .wl-t4 { background: rgba(236, 72, 153, 0.12); }
+.wl-root .wl-t5 { background: rgba(56, 189, 248, 0.14); }
+
+/* ── Hero ──────────────────────────────────────────────────────────────────── */
+.wl-root .wl-hero { padding: 132px 0 88px; }
+.wl-root .wl-hero-grid { display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 48px; align-items: center; }
+.wl-root .wl-hero h1 { font-size: clamp(38px, 5.4vw, 66px); font-weight: 800; line-height: 1.04; letter-spacing: -0.03em; margin: 18px 0 14px; }
+.wl-root .wl-hero .wl-sub { font-size: 19px; max-width: 560px; }
+.wl-root .wl-pill { display: inline-flex; align-items: center; gap: 9px; padding: 7px 15px; border-radius: 999px; font-size: 12.5px; font-weight: 700; background: #fff; border: 1px solid var(--wl-line); box-shadow: var(--wl-shadow); }
+.wl-root .wl-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--orange, #FF6B35); box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.18); }
+.wl-root .wl-hero-ctas { display: flex; gap: 14px; flex-wrap: wrap; margin: 28px 0 26px; }
+.wl-root .wl-stats { display: flex; gap: 28px; flex-wrap: wrap; }
+.wl-root .wl-stat .n { font-size: 24px; font-weight: 800; }
+.wl-root .wl-stat .l { font-size: 12.5px; color: var(--wl-muted); }
+
+/* ── Code / IDE mockup ─────────────────────────────────────────────────────── */
+.wl-root .wl-mock { position: relative; transform: perspective(1500px) rotateY(-9deg) rotateX(5deg); }
+.wl-root .wl-window { background: #0f1320; border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; box-shadow: 0 44px 90px -34px rgba(30, 15, 60, 0.6); overflow: hidden; }
+.wl-root .wl-bar { display: flex; align-items: center; gap: 8px; padding: 12px 14px; background: #171b2b; border-bottom: 1px solid rgba(255, 255, 255, 0.06); }
+.wl-root .wl-tl { width: 11px; height: 11px; border-radius: 50%; }
+.wl-root .wl-url { margin-left: 10px; font-size: 11px; color: #7c84a0; font-family: ui-monospace, monospace; }
+.wl-root .wl-code { padding: 18px 20px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px; line-height: 1.95; color: #cbd2e6; white-space: pre; overflow-x: auto; }
+.wl-root .wl-code .k { color: #ff8c5a; }
+.wl-root .wl-code .s { color: #6ee7b7; }
+.wl-root .wl-code .c { color: #6b7394; }
+.wl-root .wl-code .f { color: #8b9bff; }
+.wl-root .wl-code .n { color: #ffc83d; }
+.wl-root .wl-toast {
+  position: absolute; display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 12px;
+  background: #fff; border: 1px solid var(--wl-line); box-shadow: 0 18px 40px -16px rgba(30, 15, 60, 0.4); font-size: 12.5px; font-weight: 600;
+}
+.wl-root .wl-toast .tico { width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; font-size: 14px; }
+.wl-root .wl-toast-1 { top: -18px; right: -14px; animation: wl-bob 4s ease-in-out infinite; }
+.wl-root .wl-toast-2 { bottom: -14px; left: -20px; animation: wl-bob 4.6s ease-in-out infinite 0.6s; }
+@keyframes wl-bob { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+
+/* ── Proof strip ───────────────────────────────────────────────────────────── */
+.wl-root .wl-proof { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; }
+.wl-root .wl-proof .n { font-size: clamp(28px, 4vw, 42px); font-weight: 800; letter-spacing: -0.02em; }
+.wl-root .wl-proof .l { font-size: 13px; color: var(--wl-muted); margin-top: 2px; }
+
+/* ── Technologies grid ─────────────────────────────────────────────────────── */
+.wl-root .wl-tech-group { margin-top: 28px; }
+.wl-root .wl-tech-label { font-size: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: #8a8499; margin-bottom: 12px; }
+.wl-root .wl-tech-row { display: flex; flex-wrap: wrap; gap: 12px; }
+.wl-root .wl-tech {
+  display: inline-flex; align-items: center; gap: 10px; padding: 11px 18px; border-radius: 14px;
+  background: #fff; border: 1px solid var(--wl-line); box-shadow: var(--wl-shadow); font-weight: 600; font-size: 14px;
+  transition: transform 0.16s, border-color 0.16s;
+}
+.wl-root .wl-tech:hover { transform: translateY(-3px); border-color: rgba(108, 99, 255, 0.4); }
+.wl-root .wl-tech img { width: 22px; height: 22px; object-fit: contain; opacity: 0.82; }
+
+/* ── Builds (product mockup cards) ─────────────────────────────────────────── */
+.wl-root .wl-build { background: #fff; border: 1px solid var(--wl-line); border-radius: var(--wl-radius); overflow: hidden; box-shadow: var(--wl-shadow); transition: transform 0.18s, box-shadow 0.18s; }
+.wl-root .wl-build:hover { transform: translateY(-4px); box-shadow: 0 26px 54px -22px rgba(108, 99, 255, 0.32); }
+.wl-root .wl-build-top { display: flex; align-items: center; gap: 7px; padding: 11px 14px; background: linear-gradient(135deg, rgba(255,107,53,0.10), rgba(108,99,255,0.10)); border-bottom: 1px solid var(--wl-line); }
+.wl-root .wl-build-body { padding: 22px 24px 26px; }
+.wl-root .wl-build-body h3 { font-size: 19px; font-weight: 800; margin: 0 0 8px; }
+.wl-root .wl-build-body p { font-size: 14.5px; line-height: 1.6; color: var(--wl-muted); margin: 0 0 14px; }
+.wl-root .wl-stack { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 11.5px; line-height: 1.6; color: #7a7490; }
+.wl-root .wl-build a { color: var(--violet, #6C63FF); font-weight: 700; font-size: 13px; text-decoration: none; }
+
+/* ── Process steps ─────────────────────────────────────────────────────────── */
+.wl-root .wl-grid-4 { grid-template-columns: repeat(4, 1fr); }
+.wl-root .wl-step .num { font-size: 40px; font-weight: 800; line-height: 1; margin-bottom: 12px; }
+.wl-root .wl-step h3 { font-size: 17px; font-weight: 700; margin: 0 0 8px; }
+.wl-root .wl-step p { font-size: 14px; line-height: 1.6; color: var(--wl-muted); margin: 0; }
+
+/* ── FAQ ───────────────────────────────────────────────────────────────────── */
+.wl-root .wl-faq { max-width: 760px; margin: 0 auto; }
+.wl-root .wl-faq details { border: 1px solid var(--wl-line); border-radius: 14px; background: #fff; margin-bottom: 12px; overflow: hidden; }
+.wl-root .wl-faq summary { list-style: none; cursor: pointer; padding: 18px 20px; font-weight: 700; font-size: 16px; display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.wl-root .wl-faq summary::-webkit-details-marker { display: none; }
+.wl-root .wl-faq summary::after { content: '+'; color: var(--orange, #FF6B35); font-size: 22px; font-weight: 400; flex-shrink: 0; }
+.wl-root .wl-faq details[open] summary::after { content: '×'; }
+.wl-root .wl-faq p { padding: 0 20px 18px; color: var(--wl-muted); line-height: 1.65; margin: 0; }
+
+/* ── Header (bespoke, minimal) ─────────────────────────────────────────────── */
+.wl-root .wl-header { position: sticky; top: 0; z-index: 50; background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(16px) saturate(180%); -webkit-backdrop-filter: blur(16px) saturate(180%); border-bottom: 1px solid rgba(13, 13, 15, 0.06); }
+.wl-root .wl-header-in { display: flex; align-items: center; justify-content: space-between; padding: 13px 0; }
+.wl-root .wl-header img { height: 32px; width: auto; display: block; }
+
+/* ── Final CTA ─────────────────────────────────────────────────────────────── */
+.wl-root .wl-cta { text-align: center; }
+.wl-root .wl-cta h2 { font-size: clamp(30px, 4.6vw, 50px); font-weight: 800; letter-spacing: -0.02em; margin: 0 0 14px; }
+
+/* ── Responsive ────────────────────────────────────────────────────────────── */
+@media (max-width: 920px) {
+  .wl-root .wl-hero-grid { grid-template-columns: 1fr; }
+  .wl-root .wl-mock { transform: none; margin-top: 6px; }
+  .wl-root .wl-grid-3, .wl-root .wl-grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .wl-root .wl-proof { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 620px) {
+  .wl-root .wl-grid-2, .wl-root .wl-grid-3, .wl-root .wl-grid-4 { grid-template-columns: 1fr; }
+  .wl-root .wl-section { padding: 60px 0; }
+  .wl-root .wl-hero { padding: 104px 0 64px; }
+}
