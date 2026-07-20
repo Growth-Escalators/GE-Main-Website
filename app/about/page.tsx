@@ -175,7 +175,9 @@ export default function AboutPage() {
               The Pink City. Unexpected Origin. Unmatched Results.
             </h2>
             <p className="font-outfit font-light text-lg leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-              Building a world-class marketing agency in Jaipur wasn&apos;t the conventional choice — it was the smart one. Lower overheads mean we pass genuine value to our clients. A tight, loyal team means every brief is handled with full attention. And a hunger to prove that India-tier-2 cities can produce global-standard work drives everything we do. We&apos;re not from Mumbai or Delhi. We&apos;re from Jaipur. And we&apos;re coming for the top.
+              Building a world-class marketing agency in Jaipur wasn&apos;t the conventional choice — it was the smart one. Lower overheads mean we pass genuine value to our clients. A tight, loyal team means every brief is handled with full attention. And a hunger to prove that India-tier-2 cities can produce global-standard work drives everything we do. We&apos;re not from Mumbai or Delhi. We&apos;re from Jaipur. And we&apos;re coming for the top. From this same base we&apos;ve built more than an agency — our sister brand{' '}
+              <a href="https://www.wizmatchenterprises.com" style={{ color: 'var(--orange)', fontWeight: 500, textDecoration: 'underline', textUnderlineOffset: 2 }}>WizMatch</a>{' '}
+              brings the same structured approach to staffing and recruitment.
             </p>
           </div>
         </section>

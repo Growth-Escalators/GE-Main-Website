@@ -102,6 +102,17 @@ const ORGANIZATION_SCHEMA = {
     'https://www.instagram.com/growthescalators',
     'https://www.linkedin.com/company/growth-escalators',
   ],
+  founder: { '@id': `${SITE_ID}/#jatin-agrawal` },
+  /* Sister brand — WizMatch is Jatin's staffing/recruitment company (same
+     founder, disclosed relationship). Declared as a subOrganization so search
+     + AI engines treat the two brands as one connected entity family. Points
+     at WizMatch's canonical @id on wizmatchenterprises.com. */
+  subOrganization: {
+    '@type': 'Organization',
+    '@id': 'https://www.wizmatchenterprises.com/#organization',
+    name: 'WizMatch',
+    url: 'https://www.wizmatchenterprises.com',
+  },
 }
 
 const JATIN_PERSON_SCHEMA = {
@@ -110,7 +121,10 @@ const JATIN_PERSON_SCHEMA = {
   name: 'Jatin Agrawal',
   jobTitle: 'Founder',
   worksFor: { '@id': `${SITE_ID}/#organization` },
-  // sameAs: [ 'ADD REAL LINKEDIN PROFILE URL HERE' ],
+  /* Same individual also founded the sister brand WizMatch — link the two
+     Person nodes across domains so the entity resolves as one person.
+     TODO: add Jatin's real personal LinkedIn URL to this array once confirmed. */
+  sameAs: ['https://www.wizmatchenterprises.com/#jatin-agrawal'],
 }
 
 const SERVICE_SCHEMAS = [
