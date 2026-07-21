@@ -38,6 +38,10 @@ export const DOCTORS_JAIPUR_CONTENT: LandingContent = {
       { emoji: '📍', value: 'Jaipur', label: 'HQ · Sector 26, Pratap Nagar' },
       { emoji: '⭐', value: '4.9★', label: '187 Google reviews' },
     ],
+    image: {
+      src: '/industries/healthcare/4.jpg',
+      alt: 'Doctor at work in a Jaipur clinic',
+    },
   },
 
   painPointsTag: 'IF ANY OF THIS SOUNDS FAMILIAR',
@@ -49,6 +53,18 @@ export const DOCTORS_JAIPUR_CONTENT: LandingContent = {
     { emoji: '💸', title: 'Nobody tracks cost per new patient', body: "Most clinics know their monthly ad spend but not what a single booked, showed-up patient actually costs them — so budget decisions are guesses, not numbers." },
     { emoji: '🤝', title: "Referrals alone can't fill new capacity", body: "Jaipur's clinic clusters — Malviya Nagar, C-Scheme, Vaishali Nagar, Mansarovar — are competitive. Word-of-mouth reaches your existing network, not the patients actively searching online right now." },
   ],
+
+  showcase: {
+    tag: 'THE OPPORTUNITY',
+    headline: 'What a full Jaipur clinic calendar looks like',
+    subhead:
+      'Jaipur patients search Google Maps before they ask a neighbour — the clinics that rank first, with the strongest local profile, win the booking.',
+    images: [
+      { src: '/industries/healthcare/5.jpg', alt: 'Clinic interior in Jaipur', caption: 'A local presence patients trust before they call' },
+      { src: '/industries/healthcare/1.jpg', alt: 'Doctor consulting with a patient', caption: 'Bookings, not just Google Maps clicks' },
+      { src: '/industries/healthcare/2.jpg', alt: 'Physician reviewing patient records', caption: 'A calendar built for repeat, showed-up patients' },
+    ],
+  },
 
   aiAdvantage: {
     tag: 'POWERED BY AI',
@@ -104,6 +120,23 @@ export const DOCTORS_JAIPUR_CONTENT: LandingContent = {
     { title: 'Cost-per-booked-patient accountable', body: "We don't optimise for cheap leads or clicks; we optimise for patients who actually book and show up. That's the number we report every week." },
     { title: 'Real proof, not just promises', body: '₹10Cr+ in ad spend managed, 4.9★ rating across 187 Google reviews, and a 97% client retention rate — across 100+ brands, based in Jaipur since 2021.' },
   ],
+
+  leadMagnet: {
+    type: 'local-booking',
+    tag: 'FREE TOOL · 30 SECONDS',
+    headline: 'How many new patients can your budget bring in?',
+    subhead: 'Move the sliders to your numbers and see the patient volume your ad spend can realistically drive.',
+    source: 'Calculator — Doctors Jaipur',
+    unitPlural: 'patients',
+    budget: { label: 'Your monthly ad budget', default: 50000 },
+    value: { label: 'Average value of one patient (₹)', default: 5000 },
+    cplLow: 150,
+    cplHigh: 600,
+    closeRate: 0.35,
+    benchmark: 'Benchmark: well-run healthcare campaigns in Jaipur bring qualified patient enquiries at roughly ₹150–₹600 each, with a little over a third converting to a booked visit.',
+    formHeadline: 'See your full patient-volume breakdown',
+    formSubhead: 'Get your numbers, the Jaipur healthcare benchmark, and the Rohit Sharma playbook — free, straight to your inbox.',
+  },
 
   faqsTag: 'QUESTIONS, ANSWERED',
   faqsHeadline: 'Hiring a marketing agency for doctors in Jaipur',

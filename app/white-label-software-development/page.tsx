@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import Footer from '@/components/sections/Footer'
+import LeadMagnetCalculator from '@/components/landing/LeadMagnetCalculator'
 import { WHITE_LABEL_CONTENT as C } from './_data/content'
 
 /* Bespoke, fully-scoped redesign (styles in ./white-label.css under .wl-root).
@@ -331,6 +332,43 @@ export default function WhiteLabelSoftwareDevelopmentPage() {
           </div>
         </div>
       </section>
+
+      {/* ── SHOWCASE (image band) ── */}
+      {C.showcase && C.showcase.images.length > 0 && (
+        <section className="wl-section">
+          <div className="wl-container">
+            <div className="wl-head wl-center">
+              <span className="wl-eyebrow">{C.showcase.tag ?? 'What we ship'}</span>
+              <h2 className="wl-h2">{C.showcase.headline ?? 'Production software, on your brand'}</h2>
+              {C.showcase.subhead && <p className="wl-sub">{C.showcase.subhead}</p>}
+            </div>
+            <div className="wl-grid wl-grid-3">
+              {C.showcase.images.map((img) => (
+                <figure key={img.src} style={{ margin: 0 }}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={img.src}
+                    alt={img.alt}
+                    width={800}
+                    height={600}
+                    loading="lazy"
+                    decoding="async"
+                    style={{ width: '100%', height: 220, objectFit: 'cover', borderRadius: 16, display: 'block', border: '1px solid rgba(13,13,15,0.08)' }}
+                  />
+                  {img.caption && (
+                    <figcaption style={{ fontSize: 13.5, color: 'var(--text-secondary)', marginTop: 10, textAlign: 'center', lineHeight: 1.5 }}>
+                      {img.caption}
+                    </figcaption>
+                  )}
+                </figure>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* ── LEAD-MAGNET CALCULATOR ── */}
+      {C.leadMagnet && <LeadMagnetCalculator config={C.leadMagnet} />}
 
       {/* ── FINAL CTA (dark) ── */}
       <section className="wl-section wl-dark wl-cta">

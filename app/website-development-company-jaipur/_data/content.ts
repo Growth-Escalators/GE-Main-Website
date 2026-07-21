@@ -30,6 +30,22 @@ export const WEBSITE_JAIPUR_CONTENT: LandingContent = {
       { emoji: '📈', value: '67%', label: 'Faster load speed' },
       { emoji: '📍', value: 'Jaipur', label: 'Based in Sanganer' },
     ],
+    image: {
+      src: '/industries/webdev/hero.jpg',
+      alt: 'Laptop screen showing a website design layout',
+    },
+  },
+
+  showcase: {
+    tag: 'THE CRAFT',
+    headline: 'What a website built to convert looks like',
+    subhead:
+      'Fast, clean, and coded from scratch — the design and engineering that goes into every site we ship.',
+    images: [
+      { src: '/industries/webdev/1.jpg', alt: 'Website design layout on a screen', caption: 'Custom layouts, not recycled templates' },
+      { src: '/industries/webdev/2.jpg', alt: 'UI design elements displayed on a monitor', caption: 'Every screen designed before a line is coded' },
+      { src: '/industries/webdev/3.jpg', alt: 'A designer’s workspace with design tools and a laptop', caption: 'Built by a team that thinks like a marketer' },
+    ],
   },
 
   painPointsTag: 'SOUND FAMILIAR?',
@@ -130,6 +146,23 @@ export const WEBSITE_JAIPUR_CONTENT: LandingContent = {
     { title: 'One partner: site + ads + SEO', body: 'Your website plugs into your whole growth engine — one accountable team for the build and the traffic that fills it.' },
     { title: 'Local and accountable', body: 'Based in Sanganer, Jaipur — meet us in person and talk to the people actually building your site.' },
   ],
+
+  leadMagnet: {
+    type: 'local-booking',
+    tag: 'FREE TOOL · 30 SECONDS',
+    headline: 'How many project enquiries can your budget bring in?',
+    subhead: 'Move the sliders to your numbers and see the enquiries your marketing budget can realistically drive.',
+    source: 'Calculator — Website Dev Jaipur',
+    unitPlural: 'project enquiries',
+    budget: { label: 'Your monthly marketing budget', default: 50000 },
+    value: { label: 'Average project value (₹)', default: 60000 },
+    cplLow: 300,
+    cplHigh: 1200,
+    closeRate: 0.15,
+    benchmark: 'Benchmark: qualified website-project enquiries in Jaipur typically cost ₹300–₹1,200 each, with roughly 15% converting into a signed project.',
+    formHeadline: 'See your full pipeline breakdown',
+    formSubhead: 'Get your numbers, the Jaipur benchmark, and a look at our recent builds — free, straight to your inbox.',
+  },
 
   faqsTag: 'QUESTIONS, ANSWERED',
   faqsHeadline: 'Website development in Jaipur, answered',

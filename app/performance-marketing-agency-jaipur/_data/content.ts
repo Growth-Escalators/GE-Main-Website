@@ -28,6 +28,22 @@ export const JAIPUR_CONTENT: LandingContent = {
       { emoji: '🚀', value: '10,000+', label: 'Campaigns Run'    },
       { emoji: '⭐', value: '4.9★',    label: '187+ Reviews'     },
     ],
+    image: {
+      src: '/industries/mkt/hero.jpg',
+      alt: 'Marketing analytics dashboard showing performance metrics',
+    },
+  },
+
+  showcase: {
+    tag: 'THE OPPORTUNITY',
+    headline: 'What profitable ad spend actually looks like',
+    subhead:
+      'Every rupee tracked from click to conversion — the dashboards, the data, and the team behind the numbers.',
+    images: [
+      { src: '/industries/mkt/1.jpg', alt: 'Performance marketing charts and graphs showing campaign results', caption: 'ROAS and CAC tracked in real time' },
+      { src: '/industries/mkt/2.jpg', alt: 'Analytics dashboard displayed on a computer screen', caption: 'Every channel accountable to one number' },
+      { src: '/industries/mkt/3.jpg', alt: 'Marketing team collaborating around a laptop', caption: 'Senior operators, not interns, on your account' },
+    ],
   },
 
   painPointsHeadline: "Why your ad budget isn't turning into profit",
@@ -91,6 +107,23 @@ export const JAIPUR_CONTENT: LandingContent = {
     { title: '₹10Cr+ managed, 10,000+ campaigns', body: 'Senior operators who have spent real money at scale — not interns learning on your budget.' },
     { title: 'Profit-first, skin in the game',  body: 'We optimise return-adjusted ROAS and will structure performance-based deals around your CAC targets, not just a retainer.' },
   ],
+
+  leadMagnet: {
+    type: 'local-booking',
+    tag: 'FREE TOOL · 30 SECONDS',
+    headline: 'How many leads can your ad budget bring in?',
+    subhead: 'Move the sliders to your numbers and see the leads and revenue your budget can realistically drive.',
+    source: 'Calculator — Performance Marketing Jaipur',
+    unitPlural: 'leads',
+    budget: { label: 'Your monthly ad budget', default: 60000 },
+    value: { label: 'Average value of one customer (₹)', default: 5000 },
+    cplLow: 100,
+    cplHigh: 500,
+    closeRate: 0.25,
+    benchmark: 'Benchmark: well-run Meta and Google campaigns in Jaipur bring qualified leads at roughly ₹100–₹500 each, with about a quarter converting to a paying customer.',
+    formHeadline: 'See your full lead & ROAS breakdown',
+    formSubhead: 'Get your numbers, the Jaipur benchmark, and the Exzept case study — free, straight to your inbox.',
+  },
 
   faqsHeadline: 'Hiring a performance marketing agency in Jaipur',
   faqs: [

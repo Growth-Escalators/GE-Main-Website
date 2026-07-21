@@ -1556,6 +1556,47 @@ function SelectField({
 
 /* ───────────────────── Page ───────────────────── */
 
+function TeamShowcaseSection() {
+  const shots = [
+    { src: '/industries/staffing/1.jpg', alt: 'A hiring team interviewing a candidate', caption: 'Vetted before they ever reach your inbox' },
+    { src: '/industries/staffing/2.jpg', alt: 'Colleagues collaborating in a modern office', caption: 'Marketing, design & dev talent — remote-ready' },
+    { src: '/industries/staffing/3.jpg', alt: 'A team working together at a shared desk', caption: 'Full-time or contract, matched to your stack' },
+  ]
+  return (
+    <section style={{ background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-hair)' }}>
+      <div className="container-x" style={{ padding: 'clamp(56px, 9vw, 88px) clamp(20px, 4vw, 40px)' }}>
+        <div className="text-center" style={{ marginBottom: 40, maxWidth: 640, marginLeft: 'auto', marginRight: 'auto' }}>
+          <span style={{ fontSize: 12, fontWeight: 800, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--orange)' }}>
+            The talent you get
+          </span>
+          <h2 style={{ fontSize: 'clamp(28px, 4.5vw, 40px)', fontWeight: 800, letterSpacing: '-0.02em', margin: '12px 0 0', color: 'var(--text-primary)' }}>
+            People who slot straight into your team
+          </h2>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-3" style={{ gap: 18 }}>
+          {shots.map((s) => (
+            <figure key={s.src} style={{ margin: 0 }}>
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={s.src}
+                alt={s.alt}
+                width={800}
+                height={600}
+                loading="lazy"
+                decoding="async"
+                style={{ width: '100%', height: 240, objectFit: 'cover', borderRadius: 16, border: '1px solid var(--border-hair)', display: 'block' }}
+              />
+              <figcaption style={{ fontSize: 13.5, color: 'var(--text-secondary)', marginTop: 10, textAlign: 'center', lineHeight: 1.5 }}>
+                {s.caption}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
 export default function StaffingPage() {
   return (
     <>
@@ -1569,6 +1610,7 @@ export default function StaffingPage() {
         <HowItWorksSection />
         <MartechAISection />
         <WhatYouGetSection />
+        <TeamShowcaseSection />
         <RolesSection />
         <MarketsSection />
         <PricingSection />

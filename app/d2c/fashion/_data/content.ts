@@ -32,6 +32,22 @@ export const FASHION_CONTENT: LandingContent = {
       { emoji: '💰', value: '₹10Cr+', label: 'Ad Spend Managed' },
       { emoji: '🤝', value: '97%', label: 'Client Retention' },
     ],
+    image: {
+      src: '/industries/fashion/hero.jpg',
+      alt: 'Fashion and apparel product shoot for a D2C clothing brand',
+    },
+  },
+
+  showcase: {
+    tag: 'THE OPPORTUNITY',
+    headline: 'What a fashion brand built for return-adjusted ROAS looks like',
+    subhead:
+      'The fashion brands scaling profitably aren’t necessarily the best designers — they’re the ones whose catalog, creative, and returns math are all built for the same drop cycle.',
+    images: [
+      { src: '/industries/fashion/1.jpg', alt: 'Shopper browsing fashion products in an online store', caption: 'Catalog built for browsing, not just buying' },
+      { src: '/industries/fashion/2.jpg', alt: 'Apparel modelled for a fashion D2C ad campaign', caption: 'On-model creative that keeps pace with drops' },
+      { src: '/industries/fashion/3.jpg', alt: 'Clothing rack styled for a fashion brand photoshoot', caption: 'Seasonal collections mapped to real demand' },
+    ],
   },
 
   painPointsHeadline: 'Why fashion accounts plateau differently',
@@ -171,6 +187,20 @@ export const FASHION_CONTENT: LandingContent = {
       body: 'Most agencies launch accounts. We specialize in fashion accounts that already have spend, data, and a plateau — and know why apparel plateaus differently.',
     },
   ],
+
+  leadMagnet: {
+    type: 'd2c-roas',
+    tag: 'FREE TOOL · 30 SECONDS',
+    headline: 'What ad budget do you need to hit your revenue goal?',
+    subhead: 'Move the sliders to your numbers and see the monthly ad budget it takes to hit your fashion brand’s revenue goal.',
+    source: 'Calculator — D2C Fashion',
+    revenueGoal: { label: 'Monthly revenue goal', default: 1000000 },
+    aov: { label: 'Average order value (₹)', default: 2000 },
+    targetRoas: { label: 'Target ROAS', default: 3 },
+    benchmark: 'Benchmark: a well-run fashion D2C account typically settles into a 3×–4× ROAS once return-adjusted attribution, catalog, and creative are dialled in. Expect the ratio to run lower for the first 60–90 days while the account learns.',
+    formHeadline: 'See your full budget breakdown',
+    formSubhead: 'Get your numbers, a fashion D2C ROAS benchmark, and the Paraiso scaling playbook — free, straight to your inbox.',
+  },
 
   faqs: [
     {

@@ -34,6 +34,22 @@ export const JAIPUR_REAL_ESTATE_CONTENT: LandingContent = {
       { emoji: '📈', value: '+340%',   label: 'Bookings (Jaipur project)'    },
       { emoji: '🎯', value: '4.7×',    label: 'Buyer-Quality Score'          },
     ],
+    image: {
+      src: '/industries/realestate/4.jpg',
+      alt: 'Modern apartment building in Jaipur against a clear sky',
+    },
+  },
+
+  showcase: {
+    tag: 'THE OPPORTUNITY',
+    headline: 'What a sold-out Jaipur project actually looks like',
+    subhead:
+      'Jaipur buyers compare dozens of projects online before ever booking a site visit — the ones that win look sold-out before they are.',
+    images: [
+      { src: '/industries/realestate/2.jpg', alt: 'Bright, styled home interior', caption: 'Interiors buyers can picture themselves living in' },
+      { src: '/industries/realestate/3.jpg', alt: 'Property exterior with landscaped grounds', caption: 'Exteriors that signal a premium build' },
+      { src: '/industries/realestate/1.jpg', alt: 'Modern home exterior with clean architectural lines', caption: 'Listing photography that stops the scroll' },
+    ],
   },
 
   painPointsTag: 'IF ANY OF THIS SOUNDS FAMILIAR',
@@ -99,6 +115,23 @@ export const JAIPUR_REAL_ESTATE_CONTENT: LandingContent = {
     { title: 'Cost-per-booking accountable', body: 'We don’t optimise for cheap leads; we optimise for signed bookings. For qualified projects we can structure performance deals around CPL, cost-per-site-visit, or cost-per-booking.' },
     { title: 'You own everything', body: 'CRM data, ad accounts, landing pages, creative, audience seeds — all created in your name. Leave any time and you keep the entire infrastructure.' },
   ],
+
+  leadMagnet: {
+    type: 'local-booking',
+    tag: 'FREE TOOL · 30 SECONDS',
+    headline: 'How many site visits can your Jaipur ad budget bring in?',
+    subhead: 'Move the sliders to your numbers and see the qualified site visits your ad spend can realistically drive.',
+    source: 'Calculator — Real Estate Jaipur',
+    unitPlural: 'site visits',
+    budget: { label: 'Your monthly ad budget', default: 80000 },
+    value: { label: 'Average commission per sale (₹)', default: 200000 },
+    cplLow: 300,
+    cplHigh: 1200,
+    closeRate: 0.08,
+    benchmark: 'Benchmark: well-targeted real estate campaigns in Jaipur bring qualified leads at roughly ₹300–₹1,200 each, with around 8% converting to a booked site visit for premium inventory.',
+    formHeadline: 'See your full site-visit breakdown',
+    formSubhead: 'Get your numbers, the Jaipur real estate benchmark, and the Aspire Developers playbook — free, straight to your inbox.',
+  },
 
   faqsHeadline: 'Hiring a real estate marketing agency in Jaipur',
   faqs: [

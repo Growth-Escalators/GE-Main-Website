@@ -23,6 +23,22 @@ export const D2C_CONTENT: LandingContent = {
       { emoji: '💰', value: '₹10Cr+',  label: 'Ad Spend Managed' },
       { emoji: '🤝', value: '97%',     label: 'Client Retention' },
     ],
+    image: {
+      src: '/industries/d2c/hero.jpg',
+      alt: 'Shopper browsing a D2C ecommerce store on a laptop',
+    },
+  },
+
+  showcase: {
+    tag: 'THE OPPORTUNITY',
+    headline: 'What a profitably scaled D2C brand actually looks like',
+    subhead:
+      "Every plateaued account we've rebuilt had the same starting point — real demand, real orders, a system that wasn't built to scale past it.",
+    images: [
+      { src: '/industries/d2c/1.jpg', alt: 'Stacked shipping packages ready for dispatch from a D2C warehouse', caption: 'Order volume that keeps climbing, not plateauing' },
+      { src: '/industries/d2c/2.jpg', alt: 'Branded product boxes packed for direct-to-consumer delivery', caption: 'Fulfilment built to match rising demand' },
+      { src: '/industries/d2c/3.jpg', alt: 'A D2C product styled for an ecommerce listing', caption: 'Catalog and creative that convert, not just impress' },
+    ],
   },
 
   painPointsHeadline: "What's really stalling your growth",
@@ -83,6 +99,20 @@ export const D2C_CONTENT: LandingContent = {
     { title: 'Proof, not promises',           body: 'Real before/after numbers from real accounts — not vague case-study language.' },
     { title: 'Built for the plateau, specifically', body: "Most agencies are built to launch new accounts. We specialize in accounts that already have spend and data, and are stuck." },
   ],
+
+  leadMagnet: {
+    type: 'd2c-roas',
+    tag: 'FREE TOOL · 30 SECONDS',
+    headline: 'What ad budget do you need to hit your revenue goal?',
+    subhead: 'Move the sliders to your numbers and see the monthly ad budget it takes to hit your D2C revenue goal.',
+    source: 'Calculator — D2C',
+    revenueGoal: { label: 'Monthly revenue goal', default: 1000000 },
+    aov: { label: 'Average order value (₹)', default: 1500 },
+    targetRoas: { label: 'Target ROAS', default: 3 },
+    benchmark: 'Benchmark: a well-run D2C account typically settles into a 3×–4× ROAS once creative, catalog, and retargeting are dialled in. Expect the ratio to run lower for the first 60–90 days while the account learns.',
+    formHeadline: 'See your full budget breakdown',
+    formSubhead: 'Get your numbers, a D2C ROAS benchmark, and the Paraiso scaling playbook — free, straight to your inbox.',
+  },
 
   faqs: [
     { q: 'We’ve been burned by an agency before — why would this be different?', a: "Fair — that's the most common thing we hear. We don't ask you to take our word for it: real before/after numbers (like Paraiso's 1.9×→3.2× ROAS), a full-account-rebuild approach instead of just managing your existing ads, and a transparent reporting cadence so results are visible, not taken on faith." },

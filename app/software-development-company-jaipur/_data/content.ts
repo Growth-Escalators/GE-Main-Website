@@ -30,6 +30,22 @@ export const SOFTWARE_JAIPUR_CONTENT: LandingContent = {
       { emoji: '🔌', value: '50+', label: 'Integrations shipped' },
       { emoji: '📍', value: 'Jaipur', label: 'Based in Sanganer' },
     ],
+    image: {
+      src: '/industries/softwaredev/hero.jpg',
+      alt: 'Code displayed on a developer’s screen',
+    },
+  },
+
+  showcase: {
+    tag: 'THE CRAFT',
+    headline: 'What production-grade engineering looks like',
+    subhead:
+      'Clean code, real integrations, and a team that ships — the same engineering behind everything we build.',
+    images: [
+      { src: '/industries/softwaredev/1.jpg', alt: 'Colourful code on a screen', caption: 'Clean, documented, production-grade code' },
+      { src: '/industries/softwaredev/2.jpg', alt: 'Close-up of source code on a monitor', caption: 'Reusable integrations, not months of R&D' },
+      { src: '/industries/softwaredev/3.jpg', alt: 'Developer working on a laptop', caption: 'A Jaipur team that ships and stays accountable' },
+    ],
   },
 
   painPointsTag: 'SOUND FAMILIAR?',
@@ -129,6 +145,23 @@ export const SOFTWARE_JAIPUR_CONTENT: LandingContent = {
     { title: 'You own the code', body: 'Clean, documented handover of the full codebase and repositories. No lock-in, no hostage situations.' },
     { title: 'Local and accountable', body: 'Based in Sanganer, Jaipur — meet us in person, and talk to the people actually building your product.' },
   ],
+
+  leadMagnet: {
+    type: 'local-booking',
+    tag: 'FREE TOOL · 30 SECONDS',
+    headline: 'How many project enquiries can your budget bring in?',
+    subhead: 'Move the sliders to your numbers and see the enquiries your marketing budget can realistically drive.',
+    source: 'Calculator — Software Dev Jaipur',
+    unitPlural: 'project enquiries',
+    budget: { label: 'Your monthly marketing budget', default: 80000 },
+    value: { label: 'Average project value (₹)', default: 200000 },
+    cplLow: 500,
+    cplHigh: 2000,
+    closeRate: 0.1,
+    benchmark: 'Benchmark: qualified software-project enquiries in Jaipur typically cost ₹500–₹2,000 each, with roughly 1 in 10 converting into a signed project.',
+    formHeadline: 'See your full pipeline breakdown',
+    formSubhead: 'Get your numbers, the Jaipur benchmark, and a look at what we’ve shipped — free, straight to your inbox.',
+  },
 
   faqsTag: 'QUESTIONS, ANSWERED',
   faqsHeadline: 'Software development in Jaipur, answered',

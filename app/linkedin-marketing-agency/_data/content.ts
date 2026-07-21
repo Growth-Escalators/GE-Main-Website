@@ -42,6 +42,22 @@ export const LINKEDIN_MARKETING_CONTENT: LandingContent = {
       { emoji: '🔗', value: '+400%',    label: 'LinkedIn Growth in 4 Months'    },
       { emoji: '👥', value: '0→8,200',  label: 'LinkedIn Followers'             },
     ],
+    image: {
+      src: '/industries/mkt/5.jpg',
+      alt: 'Professionals in a meeting discussing a growth strategy',
+    },
+  },
+
+  showcase: {
+    tag: 'THE OPPORTUNITY',
+    headline: 'What a real LinkedIn growth engine looks like',
+    subhead:
+      'Most founders post occasionally and hope — the accounts that compound are run like a content system, not a hobby.',
+    images: [
+      { src: '/industries/mkt/1.jpg', alt: 'Growth charts trending upward on a screen', caption: 'Engagement and reach that compounds, not spikes' },
+      { src: '/industries/mkt/2.jpg', alt: 'Analytics dashboard showing content performance', caption: 'Tracking DMs and demo requests, not just likes' },
+      { src: '/industries/mkt/3.jpg', alt: 'Team collaborating around a laptop', caption: 'A content system built around your real expertise' },
+    ],
   },
 
   painPointsTag: 'IF ANY OF THIS SOUNDS FAMILIAR',
@@ -108,6 +124,23 @@ export const LINKEDIN_MARKETING_CONTENT: LandingContent = {
     { title: 'Real LinkedIn proof, not vague "engagement" promises', body: 'Credo World grew LinkedIn +400% in 4 months on the way to 15 qualified B2B leads a month. Dr. Mukesh Sharma went from 0 to 8,200 followers and now gets 12 inbound consultation requests a month.' },
     { title: 'Personal brand and company page, in sync', body: 'Founder content drives 5–10 inbound leads a week on its own for our Personal Branding clients — and we route that demand into your company page and pipeline, not just your personal follower count.' },
   ],
+
+  leadMagnet: {
+    type: 'local-booking',
+    tag: 'FREE TOOL · 30 SECONDS',
+    headline: 'How many qualified leads can your budget bring in?',
+    subhead: 'Move the sliders to your numbers and see the qualified leads your LinkedIn budget can realistically drive.',
+    source: 'Calculator — LinkedIn Marketing',
+    unitPlural: 'qualified leads',
+    budget: { label: 'Your monthly marketing budget', default: 60000 },
+    value: { label: 'Average deal value (₹)', default: 200000 },
+    cplLow: 500,
+    cplHigh: 2000,
+    closeRate: 0.15,
+    benchmark: 'Benchmark: well-targeted LinkedIn campaigns bring qualified leads at roughly ₹500–₹2,000 each, with about 15% converting to a sales-qualified opportunity.',
+    formHeadline: 'See your full lead breakdown',
+    formSubhead: 'Get your numbers, the LinkedIn lead-quality benchmark, and the Vikram Choudhary playbook — free, straight to your inbox.',
+  },
 
   faqsHeadline: 'Hiring a LinkedIn marketing agency',
   faqs: [
