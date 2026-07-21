@@ -121,6 +121,15 @@ const SERVICES = [
   },
 ]
 
+// Map services to their dedicated BOFU money pages (hub → spoke internal links so
+// the money pages actually earn crawl priority). Services without a dedicated page
+// fall back to the contact form.
+const SERVICE_HREF: Record<string, string> = {
+  'Performance Marketing': '/performance-marketing-agency-jaipur',
+  'Website Development': '/website-development-company-jaipur',
+}
+const serviceHref = (title: string) => SERVICE_HREF[title] ?? '/contact'
+
 const TICKER = ['PERFORMANCE MARKETING', 'FUNNEL AUTOMATION', 'WEB DEV', 'PERSONAL BRANDING', 'SOCIAL MEDIA', 'BRANDING', 'SEO']
 
 // Stacked area chart data — 7 layers, 12 months each (cumulative index 0–10)
@@ -485,7 +494,7 @@ function ServiceStrip({ svc, index, isOpen, onToggle }: {
               ))}
             </ul>
             <a
-              href="/contact"
+              href={serviceHref(svc.title)}
               className="font-outfit font-semibold text-sm"
               style={{
                 display: 'inline-flex', alignItems: 'center', gap: '8px',

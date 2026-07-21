@@ -60,6 +60,13 @@ function IconUsers() {
     </svg>
   )
 }
+function IconCode() {
+  return (
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--orange)" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d="M16 18l6-6-6-6M8 6l-6 6 6 6" />
+    </svg>
+  )
+}
 
 type Service = {
   Icon: () => JSX.Element
@@ -72,9 +79,10 @@ type Service = {
 }
 
 const SERVICES: Service[] = [
-  { Icon: IconTarget,  title: 'Performance Marketing',   body: 'Meta, Google & YouTube ads engineered for ROAS. Every click tracked, every campaign tested.', stat: 'Avg. 120% ROAS lift' },
+  { Icon: IconTarget,  title: 'Performance Marketing',   body: 'Meta, Google & YouTube ads engineered for ROAS. Every click tracked, every campaign tested.', stat: 'Avg. 120% ROAS lift', href: '/performance-marketing-agency-jaipur' },
   { Icon: IconFunnel,  title: 'Funnels & Automation',    body: 'End-to-end lead funnels that turn cold traffic into paying customers — built and automated.', stat: '3× more qualified leads' },
-  { Icon: IconMonitor, title: 'Web & Software',          body: 'Fast, conversion-built sites & custom software — Shopify, Next.js, full SaaS products.',     stat: '+40% conversion rate' },
+  { Icon: IconMonitor, title: 'Website Development',      body: 'Fast, conversion-built sites — Shopify, Next.js — that load in under 2s and rank on Google.', stat: '+40% conversion rate', href: '/website-development-company-jaipur' },
+  { Icon: IconCode,    title: 'Software Development',     body: 'Custom SaaS, web & mobile apps, and AI automation — production-grade, shipped fast.', stat: '237+ projects delivered', href: '/software-development-company-jaipur' },
   { Icon: IconPhone,   title: 'Social Media Marketing',  body: 'Content & community that builds brand equity and consistent, compounding engagement.',      stat: '2× engagement rate' },
   { Icon: IconStar,    title: 'Branding & Identity',     body: 'Logo, visual identity & brand systems that make you unmistakable and unforgettable.',       stat: 'Used by 100+ brands' },
   { Icon: IconTrend,   title: 'AI SEO & Growth',         body: 'AI-powered organic systems that compound — content, technical SEO, authority building.',   stat: 'First page in 90 days' },

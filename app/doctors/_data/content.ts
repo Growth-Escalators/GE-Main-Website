@@ -23,6 +23,10 @@ export const DOCTORS_CONTENT: LandingContent = {
       { emoji: '📅', value: '12k+', label: 'Appointments'    },
       { emoji: '📈', value: '4.2×', label: 'Avg. ROI'        },
     ],
+    image: {
+      src: '/industries/healthcare/hero.jpg',
+      alt: 'Doctor consulting a patient in a clinic',
+    },
   },
 
   painPointsHeadline: "What's really holding your practice back",
@@ -32,6 +36,18 @@ export const DOCTORS_CONTENT: LandingContent = {
     { emoji: '🌐', title: "A website that doesn't convert", body: 'Slow load times, no online booking, weak credibility cues. Visitors leave before reaching out.' },
     { emoji: '🤳', title: 'No time for content',        body: "You're treating patients all day. Building a personal brand on Instagram and YouTube feels impossible." },
   ],
+
+  showcase: {
+    tag: 'THE OPPORTUNITY',
+    headline: 'What a full appointment calendar looks like',
+    subhead:
+      'Patients now search "doctor near me" before they ask a friend — the practices that show up first, with the clearest online presence, win the appointment.',
+    images: [
+      { src: '/industries/healthcare/1.jpg', alt: 'Doctor consulting with a patient', caption: 'Trust built before the patient ever walks in' },
+      { src: '/industries/healthcare/2.jpg', alt: 'Physician reviewing patient records', caption: 'A calendar that fills itself, not one you chase' },
+      { src: '/industries/healthcare/3.jpg', alt: 'Medical team collaborating in a clinic', caption: 'A practice built to scale beyond one doctor' },
+    ],
+  },
 
   aiAdvantage: {
     tag: 'POWERED BY AI',
@@ -83,6 +99,23 @@ export const DOCTORS_CONTENT: LandingContent = {
     { title: 'In-house creative team',  body: 'No outsourced freelancers. Scripts, edits, designs — done by people who report directly to your account manager.' },
     { title: 'Performance contracts',   body: 'We can structure deals around CPL or CAC targets, not just retainers. Skin in the game.' },
   ],
+
+  leadMagnet: {
+    type: 'local-booking',
+    tag: 'FREE TOOL · 30 SECONDS',
+    headline: 'How many new patients can your budget bring in?',
+    subhead: 'Move the sliders to your numbers and see the patient volume your ad spend can realistically drive.',
+    source: 'Calculator — Doctors',
+    unitPlural: 'patients',
+    budget: { label: 'Your monthly ad budget', default: 50000 },
+    value: { label: 'Average value of one patient (₹)', default: 5000 },
+    cplLow: 150,
+    cplHigh: 600,
+    closeRate: 0.35,
+    benchmark: 'Benchmark: well-run healthcare campaigns bring qualified patient enquiries at roughly ₹150–₹600 each, with a little over a third converting to a booked visit.',
+    formHeadline: 'See your full patient-volume breakdown',
+    formSubhead: 'Get your numbers, the healthcare benchmark, and a real case study — free, straight to your inbox.',
+  },
 
   faqs: [
     { q: 'How long before I start seeing results?', a: 'Most of our doctor clients see qualified enquiries within the first 2–3 weeks. Consistent month-over-month results typically stabilize by month 2–3 once we have enough data to optimize.' },

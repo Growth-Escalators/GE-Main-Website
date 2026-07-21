@@ -52,6 +52,9 @@ const nextConfig = {
       { source: '/social-media-audit', destination: '/contact', permanent: true }, // 16 imp (old lead-magnet)
       { source: '/seo-auditgegv', destination: '/services', permanent: true },     // 8 imp (demo slug, still ranks)
 
+      // --- Retired /restaurants (was noindexed/de-targeted) -> new BOFU niche page (2026-07-21) ---
+      { source: '/restaurants', destination: '/restaurant-marketing-agency-jaipur', permanent: true },
+
       // --- OPTIONAL / lower confidence (uncomment after review) ---
       // { source: '/home-digital-marketing', destination: '/', permanent: true },
       // { source: '/white-label-entry-offers', destination: '/staffing', permanent: true },

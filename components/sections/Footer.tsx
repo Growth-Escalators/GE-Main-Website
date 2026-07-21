@@ -29,19 +29,41 @@ const COLS = [
   {
     heading: 'Services',
     links: [
-      { label: 'Performance Marketing', href: '/services' },
-      { label: 'Funnels & Automation',  href: '/services' },
-      { label: 'Web & Software',        href: '/services' },
-      { label: 'Branding',              href: '/services' },
+      { label: 'Performance Marketing', href: '/performance-marketing-agency-jaipur' },
+      { label: 'Website Development',    href: '/website-development-company-jaipur' },
+      { label: 'Software Development',   href: '/software-development-company-jaipur' },
+      { label: 'Lead Generation',        href: '/b2b-lead-generation-agency' },
     ],
   },
   {
     heading: 'Industries',
     links: [
       { label: 'D2C & eCommerce', href: '/d2c' },
-      { label: 'Doctors',     href: '/doctors' },
-      { label: 'Real Estate', href: '/real-estate' },
-      { label: 'Staffing',    href: '/staffing' },
+      { label: 'Doctors', href: '/doctors-marketing-agency-jaipur' },
+      { label: 'Dental Clinics', href: '/dental-clinic-marketing-agency-jaipur' },
+      { label: 'Real Estate', href: '/real-estate-marketing-agency-jaipur' },
+      { label: 'Restaurants & Cafés', href: '/restaurant-marketing-agency-jaipur' },
+      { label: 'Hotels & Resorts', href: '/hotel-resort-marketing-agency-jaipur' },
+    ],
+  },
+  {
+    heading: 'Niches We Grow',
+    links: [
+      { label: 'Jewellery', href: '/jewellery-marketing-agency-jaipur' },
+      { label: 'Salons & Spas', href: '/salon-spa-marketing-agency-jaipur' },
+      { label: 'Gyms & Fitness', href: '/gym-fitness-marketing-agency-jaipur' },
+      { label: 'Coaching Institutes', href: '/coaching-institute-marketing-agency-jaipur' },
+      { label: 'Interior Designers', href: '/interior-designer-marketing-agency-jaipur' },
+      { label: 'Travel Companies', href: '/travel-agency-marketing-jaipur' },
+    ],
+  },
+  {
+    heading: 'More Niches',
+    links: [
+      { label: 'Law & CA Firms', href: '/law-firm-marketing-agency-jaipur' },
+      { label: 'Wedding & Events', href: '/wedding-event-marketing-agency-jaipur' },
+      { label: 'Car Detailing', href: '/car-detailing-marketing-agency-jaipur' },
+      { label: 'Staffing', href: '/staffing' },
     ],
   },
   {
@@ -60,7 +82,7 @@ export default function Footer() {
     <footer style={{ background: 'var(--bg-dark)', color: '#fff' }}>
       <div className="container-x" style={{ padding: 'clamp(40px, 7vw, 60px) clamp(20px, 4vw, 40px) clamp(20px, 4vw, 30px)' }}>
         <div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr]"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr_1fr]"
           style={{
             gap: 'clamp(28px, 4vw, 40px)',
             paddingBottom: 'clamp(28px, 4vw, 44px)',

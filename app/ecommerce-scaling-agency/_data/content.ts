@@ -45,6 +45,22 @@ export const ECOMMERCE_SCALING_AGENCY_CONTENT: LandingContent = {
       { emoji: '🎯', value: '6.57×',  label: 'Peak-Window ROAS (Sable)'            },
       { emoji: '💰', value: '₹10Cr+', label: 'Ad Spend Managed'                    },
     ],
+    image: {
+      src: '/industries/d2c/5.jpg',
+      alt: 'Ecommerce brand scaling order fulfilment past a growth plateau',
+    },
+  },
+
+  showcase: {
+    tag: 'THE OPPORTUNITY',
+    headline: 'What scaling past the ceiling actually looks like',
+    subhead:
+      "Brands that break through a plateau don't just spend more — their fulfilment, catalog, and pacing all scale together.",
+    images: [
+      { src: '/industries/d2c/hero.jpg', alt: 'Person shopping online on a laptop for a D2C ecommerce brand', caption: 'Demand that keeps converting past the old ceiling' },
+      { src: '/industries/d2c/3.jpg', alt: 'A D2C product styled for an ecommerce listing', caption: 'Catalog built to scale with the ad account' },
+      { src: '/industries/d2c/4.jpg', alt: 'Ecommerce order being prepared for dispatch at scale', caption: 'Fulfilment that keeps pace with peak-window demand' },
+    ],
   },
 
   painPointsTag: 'THE SCALING CEILING',
@@ -188,6 +204,20 @@ export const ECOMMERCE_SCALING_AGENCY_CONTENT: LandingContent = {
       body: 'Ad accounts, creative library, audience architecture, and pacing playbooks — all built in your name. Leave any time and the entire scaling system goes with you.',
     },
   ],
+
+  leadMagnet: {
+    type: 'd2c-roas',
+    tag: 'FREE TOOL · 30 SECONDS',
+    headline: 'What ad budget do you need to hit your scaled revenue goal?',
+    subhead: 'Move the sliders to your numbers and see the monthly ad budget it takes to hit your next revenue milestone.',
+    source: 'Calculator — Ecommerce Scaling',
+    revenueGoal: { label: 'Monthly revenue goal', default: 3000000 },
+    aov: { label: 'Average order value (₹)', default: 2000 },
+    targetRoas: { label: 'Target ROAS', default: 4 },
+    benchmark: 'Benchmark: brands scaling profitably past a plateau typically hold a 3×–5× blended ROAS with margin-protected pacing — Paraiso scaled 6× in 60 days at a 3.2× ROAS. Expect the ratio to dip briefly during each controlled scaling step.',
+    formHeadline: 'See your full budget breakdown',
+    formSubhead: 'Get your numbers, a scaling-stage ROAS benchmark, and the Paraiso 6×-in-60-days playbook — free, straight to your inbox.',
+  },
 
   faqsHeadline: 'Hiring an ecommerce scaling agency',
   faqs: [

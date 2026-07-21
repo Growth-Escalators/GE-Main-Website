@@ -29,6 +29,22 @@ export const WHITE_LABEL_CONTENT: LandingContent = {
       { emoji: '🚀', value: '237+', label: 'Projects delivered' },
       { emoji: '🔌', value: '50+', label: 'Integrations' },
     ],
+    image: {
+      src: '/industries/softwaredev/4.jpg',
+      alt: 'Software development team working on code together',
+    },
+  },
+
+  showcase: {
+    tag: 'THE ENGINEERING BEHIND YOUR BRAND',
+    headline: 'What your agency gets to put its name on',
+    subhead:
+      'Production-grade code and a real delivery team — silent, discreet, and ready to work under your brand.',
+    images: [
+      { src: '/industries/softwaredev/2.jpg', alt: 'Close-up of source code on a monitor', caption: 'Production-grade code, fully documented' },
+      { src: '/industries/softwaredev/3.jpg', alt: 'Developer working on a laptop', caption: 'A dedicated bench you can scale up or down' },
+      { src: '/industries/softwaredev/1.jpg', alt: 'Colourful code on a screen', caption: 'Reusable integrations — shorter timelines, tighter quotes' },
+    ],
   },
 
   painPointsTag: 'SOUND FAMILIAR?',
@@ -128,6 +144,23 @@ export const WHITE_LABEL_CONTENT: LandingContent = {
     { title: 'One partner: software + AI + growth', body: 'Design, build, integrations, AI, and even performance marketing under one roof — one accountable vendor instead of stitching freelancers together.' },
     { title: 'Ship faster, quote shorter', body: 'Our reusable component + integration library (payments, WhatsApp, Meta, Shopify) turns months of R&D into reuse — so you quote shorter timelines and win more deals.' },
   ],
+
+  leadMagnet: {
+    type: 'local-booking',
+    tag: 'FREE TOOL · 30 SECONDS',
+    headline: 'How many projects can your budget bring in?',
+    subhead: 'Move the sliders to your numbers and see the project pipeline your budget can realistically drive.',
+    source: 'Calculator — White-Label Dev',
+    unitPlural: 'projects',
+    budget: { label: 'Your monthly project budget', default: 60000 },
+    value: { label: 'Average project value (₹)', default: 150000 },
+    cplLow: 500,
+    cplHigh: 2000,
+    closeRate: 0.12,
+    benchmark: 'Benchmark: qualified white-label project enquiries typically cost ₹500–₹2,000 each, with roughly 12% converting into a signed engagement.',
+    formHeadline: 'See your full pipeline breakdown',
+    formSubhead: 'Get your numbers, the benchmark, and a look at what we’ve shipped — free, straight to your inbox.',
+  },
 
   faqsTag: 'QUESTIONS, ANSWERED',
   faqsHeadline: 'White-label, answered',

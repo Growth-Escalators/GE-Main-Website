@@ -50,6 +50,10 @@ export const PERSONAL_BRANDING_DOCTORS_CONTENT: LandingContent = {
       { emoji: '📩', value: '12/mo', label: 'Inbound consults generated' },
       { emoji: '🎤', value: 'Weekly', label: 'Speaking invites (real doctor)' },
     ],
+    image: {
+      src: '/industries/healthcare/2.jpg',
+      alt: 'Confident physician in a clinical setting',
+    },
   },
 
   painPointsTag: 'IF ANY OF THIS SOUNDS FAMILIAR',
@@ -61,6 +65,18 @@ export const PERSONAL_BRANDING_DOCTORS_CONTENT: LandingContent = {
     { emoji: '🎤', title: "Nobody's building your speaking or media pipeline", body: "Conference invites, panel spots, and press mentions tend to go to the doctors with a visible platform, not necessarily the most skilled ones. Without a presence, that pipeline never opens." },
     { emoji: '✍️', title: 'Generic agencies write generic LinkedIn posts', body: "Most agencies either ghostwrite corporate-sounding fluff or strip out the clinical nuance entirely, so the content doesn't read like it came from a credible physician." },
   ],
+
+  showcase: {
+    tag: 'THE OPPORTUNITY',
+    headline: 'What a recognised physician voice looks like',
+    subhead:
+      'Patients and peers now judge a specialist\'s credibility online first — the doctors with a visible, consistent presence win the referral and the invite.',
+    images: [
+      { src: '/industries/healthcare/3.jpg', alt: 'Medical team discussing a case', caption: 'Clinical credibility, translated into content' },
+      { src: '/industries/healthcare/4.jpg', alt: 'Doctor reviewing notes before a consult', caption: 'A voice built on real cases, not templates' },
+      { src: '/industries/healthcare/5.jpg', alt: 'Clinic setting where a specialist practises', caption: 'Authority that follows you beyond one clinic' },
+    ],
+  },
 
   aiAdvantage: {
     tag: 'POWERED BY AI',
@@ -117,6 +133,23 @@ export const PERSONAL_BRANDING_DOCTORS_CONTENT: LandingContent = {
     { title: 'A proven service line, not a side offering', body: 'Personal branding clients average 400% follower growth in 6 months and 5-10 inbound leads per week from content alone, across 100+ brands we\'ve built since 2021.' },
     { title: 'You own the audience', body: 'Your LinkedIn profile, content calendar, and following remain entirely yours. Leave any time and you keep everything that was built.' },
   ],
+
+  leadMagnet: {
+    type: 'local-booking',
+    tag: 'FREE TOOL · 30 SECONDS',
+    headline: 'How many inbound consults can your content drive?',
+    subhead: 'Move the sliders to your numbers and see the inbound consult volume a personal-brand system can realistically drive.',
+    source: 'Calculator — Doctor Personal Branding',
+    unitPlural: 'consults',
+    budget: { label: 'Your monthly marketing budget', default: 40000 },
+    value: { label: 'Average value of one consult (₹)', default: 8000 },
+    cplLow: 200,
+    cplHigh: 800,
+    closeRate: 0.3,
+    benchmark: 'Benchmark: physician personal-branding content drives inbound consult enquiries at roughly ₹200–₹800 each, with about a third converting to a booked consult.',
+    formHeadline: 'See your full inbound-consult breakdown',
+    formSubhead: 'Get your numbers, the personal-branding benchmark, and the Dr. Mukesh Sharma case study — free, straight to your inbox.',
+  },
 
   faqsTag: 'QUESTIONS, ANSWERED',
   faqsHeadline: 'Personal branding for doctors',

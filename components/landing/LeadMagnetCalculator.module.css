@@ -1,0 +1,203 @@
+/* ── LeadMagnetCalculator — shared across every niche page ─────────────────── */
+
+.section {
+  position: relative;
+  padding: var(--section-py) 0;
+  overflow: clip;
+  background: linear-gradient(180deg, transparent 0%, rgba(255,107,53,0.04) 50%, transparent 100%);
+}
+.aurora { position: absolute; inset: 0; z-index: 0; pointer-events: none; }
+.orb1, .orb2 { position: absolute; border-radius: 50%; filter: blur(90px); }
+.orb1 {
+  width: 480px; height: 480px;
+  background: radial-gradient(circle, rgba(255,107,53,0.16) 0%, transparent 70%);
+  top: -80px; left: -120px;
+  animation: orb-drift-1 24s ease-in-out infinite;
+}
+.orb2 {
+  width: 420px; height: 420px;
+  background: radial-gradient(circle, rgba(108,99,255,0.14) 0%, transparent 70%);
+  bottom: -100px; right: -80px;
+  animation: orb-drift-2 28s ease-in-out infinite;
+}
+.inner { position: relative; z-index: 1; }
+
+.header { text-align: center; margin-bottom: 44px; }
+.headline {
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-black);
+  line-height: 1.15;
+  letter-spacing: var(--ls-tight);
+  margin: 16px 0 12px;
+}
+.subhead {
+  font-size: 18px;
+  color: var(--text-secondary);
+  max-width: 620px;
+  margin: 0 auto;
+  line-height: var(--lh-body);
+}
+
+/* ── Card: inputs (left) + result (right) ──────────────────────────────────── */
+.card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 40px;
+  border-radius: 28px;
+}
+
+.inputs { display: flex; flex-direction: column; gap: 26px; justify-content: center; }
+.field { display: flex; flex-direction: column; gap: 10px; }
+.fieldTop {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+}
+.fieldTop label {
+  font-size: 14px;
+  font-weight: var(--fw-bold);
+  color: var(--text-primary);
+}
+.fieldValue {
+  font-size: 18px;
+  font-weight: var(--fw-black);
+  color: var(--orange);
+  white-space: nowrap;
+}
+
+.range {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(255,107,53,0.18);
+  outline: none;
+  cursor: pointer;
+}
+.range::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--orange);
+  border: 3px solid #fff;
+  box-shadow: 0 2px 8px rgba(255,107,53,0.45);
+  cursor: pointer;
+}
+.range::-moz-range-thumb {
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--orange);
+  border: 3px solid #fff;
+  box-shadow: 0 2px 8px rgba(255,107,53,0.45);
+  cursor: pointer;
+}
+.numberInput {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(13,13,15,0.14);
+  background: rgba(255,255,255,0.9);
+  font-size: 16px;
+  font-family: inherit;
+  color: var(--text-primary);
+}
+.numberInput:focus { outline: 2px solid rgba(255,107,53,0.4); outline-offset: 1px; }
+
+/* ── Result column ─────────────────────────────────────────────────────────── */
+.result {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 28px;
+  border-radius: 20px;
+  background: rgba(13,13,15,0.02);
+  border: 1px solid rgba(13,13,15,0.06);
+}
+.teaser { text-align: center; }
+.teaserValue {
+  font-size: clamp(40px, 7vw, 60px);
+  font-weight: var(--fw-black);
+  line-height: 1;
+  letter-spacing: var(--ls-tight);
+  background: linear-gradient(135deg, var(--orange), #ff8c5a, var(--violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+}
+.teaserLabel {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-top: 8px;
+  line-height: 1.5;
+}
+
+.breakdownList { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.breakdownRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: rgba(255,255,255,0.7);
+  border: 1px solid rgba(13,13,15,0.06);
+}
+.breakdownHi {
+  background: rgba(255,107,53,0.08);
+  border-color: rgba(255,107,53,0.2);
+}
+.breakdownLabel { font-size: 13.5px; color: var(--text-secondary); line-height: 1.4; }
+.breakdownValue { font-size: 17px; font-weight: var(--fw-black); color: var(--text-primary); white-space: nowrap; }
+.breakdownHi .breakdownValue { color: var(--orange); }
+.benchmark {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.55;
+  margin: 4px 0 0;
+  padding-left: 12px;
+  border-left: 3px solid var(--orange);
+}
+.successNote {
+  font-size: 13.5px;
+  color: var(--text-primary);
+  line-height: 1.55;
+  margin: 0;
+  font-weight: var(--fw-medium);
+}
+
+/* ── Gated capture form ────────────────────────────────────────────────────── */
+.form { display: flex; flex-direction: column; gap: 12px; }
+.formHeadline { font-size: 18px; font-weight: var(--fw-bold); margin: 0; color: var(--text-primary); }
+.formSub { font-size: 14px; color: var(--text-secondary); margin: 0 0 4px; line-height: 1.5; }
+.formRow { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.form input {
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(13,13,15,0.14);
+  background: rgba(255,255,255,0.95);
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--text-primary);
+}
+.form input:focus { outline: 2px solid rgba(255,107,53,0.4); outline-offset: 1px; }
+.submit { width: 100%; justify-content: center; margin-top: 4px; }
+.error { font-size: 13px; color: #c0392b; margin: 0; line-height: 1.5; }
+.disclaimer { font-size: 12px; color: var(--text-secondary); opacity: 0.85; margin: 0; line-height: 1.5; }
+
+/* ── Responsive ────────────────────────────────────────────────────────────── */
+@media (max-width: 860px) {
+  .card { grid-template-columns: 1fr; gap: 28px; padding: 28px; }
+}
+@media (max-width: 480px) {
+  .card { padding: 22px; }
+  .formRow { grid-template-columns: 1fr; }
+  .result { padding: 22px; }
+}

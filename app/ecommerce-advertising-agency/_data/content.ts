@@ -40,6 +40,22 @@ export const ECOMMERCE_ADVERTISING_AGENCY_CONTENT: LandingContent = {
       { emoji: '💰', value: '₹10Cr+', label: 'Ad Spend Managed'          },
       { emoji: '🤝', value: '97%',    label: 'Client Retention'          },
     ],
+    image: {
+      src: '/industries/d2c/4.jpg',
+      alt: 'Ecommerce fulfilment operation for a full-funnel D2C brand',
+    },
+  },
+
+  showcase: {
+    tag: 'THE OPPORTUNITY',
+    headline: 'What a full-funnel ecommerce operation actually looks like',
+    subhead:
+      'Meta and Google both see part of the picture — the brands winning are the ones whose fulfilment, catalog, and attribution all point to the same number.',
+    images: [
+      { src: '/industries/d2c/5.jpg', alt: 'Ecommerce order being prepared for dispatch', caption: 'Orders reconciled back to the ad that drove them' },
+      { src: '/industries/d2c/1.jpg', alt: 'Stacked shipping packages ready for ecommerce dispatch', caption: 'Fulfilment that keeps pace with blended-ROAS growth' },
+      { src: '/industries/d2c/2.jpg', alt: 'Branded product boxes packed for direct-to-consumer delivery', caption: 'Every package tracked back to real order data' },
+    ],
   },
 
   painPointsTag: 'THE ECOMMERCE ADVERTISING TRAP',
@@ -183,6 +199,20 @@ export const ECOMMERCE_ADVERTISING_AGENCY_CONTENT: LandingContent = {
       body: 'Ad accounts, tracking setup, creative library, and reporting dashboards — all built in your name. Leave any time and take the entire system with you.',
     },
   ],
+
+  leadMagnet: {
+    type: 'd2c-roas',
+    tag: 'FREE TOOL · 30 SECONDS',
+    headline: 'What ad budget do you need to hit your revenue goal?',
+    subhead: 'Move the sliders to your numbers and see the monthly Meta + Google budget it takes to hit your revenue goal.',
+    source: 'Calculator — Ecommerce Ads',
+    revenueGoal: { label: 'Monthly revenue goal', default: 1500000 },
+    aov: { label: 'Average order value (₹)', default: 1800 },
+    targetRoas: { label: 'Target ROAS', default: 3 },
+    benchmark: 'Benchmark: a well-run full-funnel Meta + Google account typically settles into a 3×–5× blended ROAS once tracking, creative, and attribution are dialled in — Exzept reached 5.2×. Expect the ratio to run lower for the first 60–90 days while the account learns.',
+    formHeadline: 'See your full budget breakdown',
+    formSubhead: 'Get your numbers, a blended-ROAS benchmark, and the Exzept full-funnel playbook — free, straight to your inbox.',
+  },
 
   faqsHeadline: 'Hiring an ecommerce advertising agency',
   faqs: [

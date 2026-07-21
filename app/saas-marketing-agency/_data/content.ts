@@ -42,6 +42,22 @@ export const SAAS_MARKETING_CONTENT: LandingContent = {
       { emoji: '📈', value: '3×',        label: 'LTV Growth'             },
       { emoji: '🎯', value: '₹420→₹88',  label: 'EdTech CPL in 6 Weeks'  },
     ],
+    image: {
+      src: '/industries/mkt/4.jpg',
+      alt: 'A team reviewing growth metrics together',
+    },
+  },
+
+  showcase: {
+    tag: 'THE OPPORTUNITY',
+    headline: 'What a healthy CAC:LTV funnel looks like',
+    subhead:
+      'From signup to renewal, tracked the whole way — the meetings, the charts, and the dashboards behind a funnel that actually compounds.',
+    images: [
+      { src: '/industries/mkt/5.jpg', alt: 'Team in a business meeting discussing strategy', caption: 'Aligning on CAC:LTV targets before launch' },
+      { src: '/industries/mkt/1.jpg', alt: 'Growth charts showing upward trends', caption: 'Activation and retention, tracked past signup' },
+      { src: '/industries/mkt/2.jpg', alt: 'Analytics dashboard displayed on a screen', caption: 'PQL scoring and churn-risk flagged in real time' },
+    ],
   },
 
   painPointsTag: 'IF ANY OF THIS SOUNDS FAMILIAR',
@@ -108,6 +124,23 @@ export const SAAS_MARKETING_CONTENT: LandingContent = {
     { title: 'Real SaaS and EdTech proof', body: "“Our cost per lead was killing us at ₹420. GE rebuilt our funnel from scratch — new landing page, new ad copy, new audience strategy. CPL dropped to ₹88 in 6 weeks. Our sales team went from 2 calls a day to 20. Incredible.” — Kabir Malhotra, EdTech Startup Founder" },
     { title: '97% client retention — we live the metric we sell you', body: "We keep 97% of our own clients. Retention economics aren't theoretical for us — they're how we run our own business." },
   ],
+
+  leadMagnet: {
+    type: 'local-booking',
+    tag: 'FREE TOOL · 30 SECONDS',
+    headline: 'How many demos can your budget book?',
+    subhead: 'Move the sliders to your numbers and see the demo bookings and ACV your budget can realistically drive.',
+    source: 'Calculator — SaaS Marketing',
+    unitPlural: 'demos booked',
+    budget: { label: 'Your monthly marketing budget', default: 80000 },
+    value: { label: 'Average annual contract value (₹)', default: 60000 },
+    cplLow: 300,
+    cplHigh: 1500,
+    closeRate: 0.2,
+    benchmark: 'Benchmark: qualified SaaS demo-booking leads typically cost ₹300–₹1,500 each, with about 20% converting to a booked, shown demo.',
+    formHeadline: 'See your full CAC:LTV breakdown',
+    formSubhead: 'Get your numbers, the benchmark, and the Priya Mehta case study — free, straight to your inbox.',
+  },
 
   faqsHeadline: 'Hiring a SaaS marketing agency',
   faqs: [

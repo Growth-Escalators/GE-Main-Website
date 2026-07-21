@@ -31,7 +31,7 @@ export const PATIENT_ACQUISITION_CONTENT: LandingContent = {
       'Built for patient reactivation.',
     ],
     subhead:
-      "We don't just get clicks. We build the booking funnel, treatment-level ad targeting, and follow-up system that turns searches into a full appointment calendar. One dermatologist client went from word-of-mouth-only to fully booked 3 weeks in advance, and hired a second doctor to keep up with demand.",
+      "Growth Escalators builds the booking funnel, treatment-level ad targeting, and follow-up system that turns searches into a full appointment calendar — not just ad clicks. One dermatologist client went from word-of-mouth-only to fully booked 3 weeks in advance, and hired a second doctor to keep up with demand.",
     primaryCta: { label: 'Book a Free Patient-Acquisition Audit', href: '#lead-form' },
     secondaryCta: { label: 'See Real Results ↓', href: '#results' },
     statPills: [
@@ -39,6 +39,10 @@ export const PATIENT_ACQUISITION_CONTENT: LandingContent = {
       { emoji: '💰', value: '₹10Cr+', label: 'Ad spend managed' },
       { emoji: '⭐', value: '4.9★', label: '187 client reviews' },
     ],
+    image: {
+      src: '/industries/healthcare/5.jpg',
+      alt: 'Clinic reception area set up for patient bookings',
+    },
   },
 
   painPointsTag: 'IF ANY OF THIS SOUNDS FAMILIAR',
@@ -50,6 +54,18 @@ export const PATIENT_ACQUISITION_CONTENT: LandingContent = {
     { emoji: '🎯', title: "Treatment-level targeting nobody does", body: 'Generic "book an appointment" ads instead of campaigns built around the specific high-value treatments and procedures that actually drive your revenue.' },
     { emoji: '❓', title: "No idea what a new patient actually costs", body: "Ad spend divided by leads, not by patients who booked and showed up. Without real cost-per-patient tracking, budget decisions are guesses." },
   ],
+
+  showcase: {
+    tag: 'THE OPPORTUNITY',
+    headline: 'What a full appointment calendar looks like',
+    subhead:
+      'A booked slot only counts once the patient shows up — the clinics that win build the funnel and the follow-up, not just the ad.',
+    images: [
+      { src: '/industries/healthcare/hero.jpg', alt: 'Doctor consulting a patient about a booked appointment', caption: 'A funnel that turns searches into visits' },
+      { src: '/industries/healthcare/3.jpg', alt: 'Medical team coordinating patient care', caption: 'Capacity built to handle real demand' },
+      { src: '/industries/healthcare/4.jpg', alt: 'Physician preparing for a consultation', caption: 'Patients who show up, not just book' },
+    ],
+  },
 
   aiAdvantage: {
     tag: 'POWERED BY AI',
@@ -105,6 +121,23 @@ export const PATIENT_ACQUISITION_CONTENT: LandingContent = {
     { title: 'Real proof, not just promises', body: '₹10Cr+ in ad spend managed, 10,000+ campaigns delivered, and a 97% client retention rate, across 100+ brands.' },
     { title: 'You own the funnel and the data', body: 'Ad accounts, landing pages, booking funnel, and patient data are all set up in your name. Leave any time and you keep the entire infrastructure.' },
   ],
+
+  leadMagnet: {
+    type: 'local-booking',
+    tag: 'FREE TOOL · 30 SECONDS',
+    headline: 'How many new patients can your budget bring in?',
+    subhead: 'Move the sliders to your numbers and see the patient volume your ad spend can realistically drive.',
+    source: 'Calculator — Patient Acquisition',
+    unitPlural: 'patients',
+    budget: { label: 'Your monthly ad budget', default: 60000 },
+    value: { label: 'Average value of one patient (₹)', default: 6000 },
+    cplLow: 150,
+    cplHigh: 600,
+    closeRate: 0.35,
+    benchmark: 'Benchmark: well-run patient-acquisition campaigns bring qualified enquiries at roughly ₹150–₹600 each, with a little over a third converting to a booked, showed-up patient.',
+    formHeadline: 'See your full patient-acquisition breakdown',
+    formSubhead: 'Get your numbers, the patient-acquisition benchmark, and the Dr. Meera Nair case study — free, straight to your inbox.',
+  },
 
   faqsTag: 'QUESTIONS, ANSWERED',
   faqsHeadline: 'Hiring a patient-acquisition agency',

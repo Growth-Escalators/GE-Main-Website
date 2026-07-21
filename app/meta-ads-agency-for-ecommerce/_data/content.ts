@@ -41,6 +41,22 @@ export const META_ADS_ECOMMERCE_CONTENT: LandingContent = {
       { emoji: '🎬', value: 'UGC',   label: 'Creative Tested at Scale'       },
       { emoji: '⭐', value: '4.9★', label: '187 Reviews'                    },
     ],
+    image: {
+      src: '/industries/d2c/2.jpg',
+      alt: 'Branded product boxes for a Meta ads ecommerce brand',
+    },
+  },
+
+  showcase: {
+    tag: 'THE OPPORTUNITY',
+    headline: 'What a Meta account with the right creative and offer looks like',
+    subhead:
+      'Most stalled Meta accounts don’t need a new audience — they need creative and an offer worth stopping the scroll for.',
+    images: [
+      { src: '/industries/d2c/3.jpg', alt: 'A product styled for a Meta ads creative shoot', caption: 'UGC-ready product shots built for the feed' },
+      { src: '/industries/d2c/4.jpg', alt: 'Ecommerce order packed after a Meta ads sale', caption: 'Orders that prove the creative-and-offer fix worked' },
+      { src: '/industries/d2c/5.jpg', alt: 'Ecommerce fulfilment for a Meta ads-driven store', caption: 'Fulfilment keeping pace with a rebuilt ad account' },
+    ],
   },
 
   painPointsTag: 'IT’S PROBABLY NOT YOUR AUDIENCE',
@@ -184,6 +200,20 @@ export const META_ADS_ECOMMERCE_CONTENT: LandingContent = {
       body: 'Everything we build — creative library, offer tests, account structure — is yours. Leave any time and take it all with you.',
     },
   ],
+
+  leadMagnet: {
+    type: 'd2c-roas',
+    tag: 'FREE TOOL · 30 SECONDS',
+    headline: 'What ad budget do you need to hit your revenue goal?',
+    subhead: 'Move the sliders to your numbers and see the monthly Meta ad budget it takes to hit your revenue goal.',
+    source: 'Calculator — Meta Ads Ecommerce',
+    revenueGoal: { label: 'Monthly revenue goal', default: 1500000 },
+    aov: { label: 'Average order value (₹)', default: 1800 },
+    targetRoas: { label: 'Target ROAS', default: 3 },
+    benchmark: 'Benchmark: a well-run Meta-only ecommerce account typically settles into a 3×–6× ROAS once creative and offer are fixed — Sneha Kapoor reached 6.1×. Expect the ratio to run lower for the first 60–90 days while the account learns.',
+    formHeadline: 'See your full budget breakdown',
+    formSubhead: 'Get your numbers, a Meta ROAS benchmark, and the Sneha Kapoor 6.1× playbook — free, straight to your inbox.',
+  },
 
   faqsHeadline: 'Hiring a Meta ads agency for ecommerce',
   faqs: [

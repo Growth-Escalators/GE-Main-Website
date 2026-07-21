@@ -44,6 +44,22 @@ export const BEAUTY_CONTENT: LandingContent = {
       { emoji: '💰', value: '₹10Cr+', label: 'Ad Spend Managed' },
       { emoji: '✨', value: '+118%', label: 'AOV Lift (Skincare Client)' },
     ],
+    image: {
+      src: '/industries/beauty/hero.jpg',
+      alt: 'Skincare products arranged for a beauty D2C brand shoot',
+    },
+  },
+
+  showcase: {
+    tag: 'THE OPPORTUNITY',
+    headline: 'What a trust-built beauty brand actually looks like',
+    subhead:
+      'Beauty buys on trust, not just targeting — the brands winning online are the ones whose content looks and feels like proof, not a product catalog.',
+    images: [
+      { src: '/industries/beauty/1.jpg', alt: 'Cosmetics and makeup products styled for a beauty campaign', caption: 'Catalog content built to earn trust, not just clicks' },
+      { src: '/industries/beauty/2.jpg', alt: 'Beauty products displayed together for a D2C brand shoot', caption: 'Bundles and sets that lift AOV' },
+      { src: '/industries/beauty/3.jpg', alt: 'Skincare products arranged in a flatlay composition', caption: 'The routine-and-ritual content skincare buyers actually save' },
+    ],
   },
 
   painPointsTag: 'IF ANY OF THIS SOUNDS FAMILIAR',
@@ -186,6 +202,20 @@ export const BEAUTY_CONTENT: LandingContent = {
       body: 'Founded in 2021 and based in Jaipur — 10,000+ campaigns run, ₹10Cr+ in ad spend managed, 4.9★ from 187+ reviews. Beauty and skincare is one of the categories our AI-first system is built for.',
     },
   ],
+
+  leadMagnet: {
+    type: 'd2c-roas',
+    tag: 'FREE TOOL · 30 SECONDS',
+    headline: 'What ad budget do you need to hit your revenue goal?',
+    subhead: 'Move the sliders to your numbers and see the monthly ad budget it takes to hit your beauty brand’s revenue goal.',
+    source: 'Calculator — D2C Beauty',
+    revenueGoal: { label: 'Monthly revenue goal', default: 800000 },
+    aov: { label: 'Average order value (₹)', default: 1200 },
+    targetRoas: { label: 'Target ROAS', default: 3 },
+    benchmark: 'Benchmark: a well-run beauty D2C account typically settles into a 3×–4× ROAS once UGC, sampling funnels, and retargeting are dialled in. Expect the ratio to run lower for the first 60–90 days while the account learns.',
+    formHeadline: 'See your full budget breakdown',
+    formSubhead: 'Get your numbers, a beauty D2C ROAS benchmark, and the Neha Agarwal playbook — free, straight to your inbox.',
+  },
 
   faqsHeadline: 'Hiring a beauty & skincare marketing agency',
   faqs: [

@@ -121,6 +121,52 @@
 .heroPillEmoji { font-size: 20px; }
 .heroPillValue { color: var(--orange); }
 
+/* ── HERO IMAGE (optional; renders only when hero.image is set) ────────────── */
+.heroImageWrap {
+  position: relative;
+  z-index: 1;
+  margin: 56px auto 0;
+  max-width: 940px;
+}
+.heroImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 22px;
+  border: 1px solid rgba(13,13,15,0.08);
+  box-shadow: 0 30px 70px rgba(13,13,15,0.16);
+  object-fit: cover;
+}
+
+/* ── SHOWCASE image band (optional; renders only when showcase is set) ─────── */
+.showcaseGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+.showcaseItem { margin: 0; }
+.showcaseImg {
+  width: 100%;
+  height: 260px;
+  object-fit: cover;
+  display: block;
+  border-radius: 18px;
+  border: 1px solid rgba(13,13,15,0.06);
+  box-shadow: var(--glass-shadow);
+  transition: transform var(--t-base), box-shadow var(--t-base);
+}
+.showcaseImg:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--glass-shadow-hover);
+}
+.showcaseCaption {
+  font-size: 13.5px;
+  color: var(--text-secondary);
+  margin-top: 10px;
+  line-height: 1.5;
+  text-align: center;
+}
+
 /* ── BOLD HERO VARIANT (opt-in via hero.variant='bold'; white-label page) ──── */
 .heroBold {
   padding: 176px 0 132px;                 /* taller, top-heavy */

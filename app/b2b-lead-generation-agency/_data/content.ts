@@ -42,6 +42,22 @@ export const B2B_LEAD_GEN_CONTENT: LandingContent = {
       { emoji: '💰', value: '₹2.5L',   label: 'Avg Deal Size'      },
       { emoji: '🚀', value: '0→18/mo', label: 'Leads in <5 Months' },
     ],
+    image: {
+      src: '/industries/mkt/hero.jpg',
+      alt: 'Business analytics dashboard showing pipeline and growth metrics',
+    },
+  },
+
+  showcase: {
+    tag: 'THE OPPORTUNITY',
+    headline: 'What a full B2B pipeline actually looks like',
+    subhead:
+      'Buying committees research for months before a call gets booked — the vendors who win are the ones showing up with authority and proof at every stage.',
+    images: [
+      { src: '/industries/mkt/3.jpg', alt: 'Team collaborating around a laptop', caption: 'Content built to earn trust with a buying committee' },
+      { src: '/industries/mkt/4.jpg', alt: 'Business meeting in a modern office', caption: 'Sales conversations booked with the right ICP' },
+      { src: '/industries/mkt/5.jpg', alt: 'Professionals meeting to review a growth plan', caption: 'A pipeline reviewed together with your sales team' },
+    ],
   },
 
   painPointsTag: 'IF ANY OF THIS SOUNDS FAMILIAR',
@@ -108,6 +124,23 @@ export const B2B_LEAD_GEN_CONTENT: LandingContent = {
     { title: 'Real B2B proof', body: "“We were invisible digitally despite being one of the top consulting firms in our niche. GE built our LinkedIn authority, Google Ads, and content machine. We went from 0 inbound leads to 18 qualified ones per month in under 5 months.” — Vikram Choudhary, B2B Consulting Firm, Delhi" },
     { title: 'You own the pipeline infrastructure', body: 'CRM data, ad accounts, landing pages, content library, and audience seeds — all created in your name. Leave any time and the entire system stays with you.' },
   ],
+
+  leadMagnet: {
+    type: 'local-booking',
+    tag: 'FREE TOOL · 30 SECONDS',
+    headline: 'How many qualified leads can your budget bring in?',
+    subhead: 'Move the sliders to your numbers and see the qualified B2B leads your marketing budget can realistically drive.',
+    source: 'Calculator — B2B Lead Gen',
+    unitPlural: 'qualified leads',
+    budget: { label: 'Your monthly marketing budget', default: 80000 },
+    value: { label: 'Average deal value (₹)', default: 250000 },
+    cplLow: 500,
+    cplHigh: 2000,
+    closeRate: 0.15,
+    benchmark: 'Benchmark: well-targeted B2B campaigns bring qualified leads at roughly ₹500–₹2,000 each, with about 15% converting to a sales-qualified opportunity.',
+    formHeadline: 'See your full pipeline breakdown',
+    formSubhead: 'Get your numbers, the B2B lead-quality benchmark, and the Credo World playbook — free, straight to your inbox.',
+  },
 
   faqsHeadline: 'Hiring a B2B lead generation agency',
   faqs: [

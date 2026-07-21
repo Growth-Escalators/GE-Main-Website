@@ -8,6 +8,7 @@ import VideoTestimonialsShorts, {
   type VideoTestimonial,
 } from '@/components/landing/VideoTestimonialsShorts'
 import LeadForm from '@/components/landing/LeadForm'
+import LeadMagnetCalculator, { type CalculatorConfig } from '@/components/landing/LeadMagnetCalculator'
 import styles from './IndustryLandingPage.module.css'
 
 /* ── Typed content shape that every industry page must provide ───────────── */
@@ -22,10 +23,22 @@ export type LandingContent = {
     statPills: { emoji: string; value: string; label: string }[]
     /** 'bold' opts this page into the heavier gradient hero. Omit = unchanged. */
     variant?: 'default' | 'bold'
+    /** Optional supporting hero visual (framed image under the pills). Omit and
+       nothing renders — pages that don't set it are completely unaffected. */
+    image?: { src: string; alt: string }
   }
   painPoints: { emoji: string; title: string; body: string }[]
   painPointsTag?: string
   painPointsHeadline?: string
+  /** Optional image band ("what this niche looks like when it works"). Atmospheric
+     stock imagery only — never implied as real client work. Omit and nothing
+     renders; existing pages that don't set it are completely unaffected. */
+  showcase?: {
+    tag?: string
+    headline?: string
+    subhead?: string
+    images: { src: string; alt: string; caption?: string }[]
+  }
   aiAdvantage?: {
     tag: string
     headline: string
@@ -74,6 +87,9 @@ export type LandingContent = {
     subhead?: string
     tag?: string
   }
+  /** Optional interactive lead-magnet calculator. Omit and nothing renders —
+     pages that don't set it are completely unaffected. */
+  leadMagnet?: CalculatorConfig
   /** Used in the mailto subject + a tiny header chip if you want it. */
   industryLabel?: string
   /** If set, every "book" CTA (header, hero primary, final) points here (external,
@@ -244,6 +260,26 @@ export default function IndustryLandingPage({ content }: { content: LandingConte
               </span>
             ))}
           </motion.div>
+
+          {content.hero.image && (
+            <motion.div
+              className={styles.heroImageWrap}
+              initial={{ opacity: 0, y: 28 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, delay: 0.5 }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                className={styles.heroImage}
+                src={content.hero.image.src}
+                alt={content.hero.image.alt}
+                width={1200}
+                height={720}
+                loading="eager"
+                decoding="async"
+              />
+            </motion.div>
+          )}
         </div>
       </section>
 
@@ -274,6 +310,47 @@ export default function IndustryLandingPage({ content }: { content: LandingConte
           </div>
         </div>
       </section>
+
+      {/* ── SHOWCASE (optional image band) ─────────────────────────────── */}
+      {content.showcase && content.showcase.images.length > 0 && (
+        <section className={styles.section} aria-label="Showcase">
+          <div className="container-x">
+            <div className={styles.sectionHeader}>
+              <span className="section-tag">{content.showcase.tag ?? 'THE OPPORTUNITY'}</span>
+              <h2 className={styles.sectionHeadline}>
+                {content.showcase.headline ?? 'What growth looks like'}
+              </h2>
+              {content.showcase.subhead && (
+                <p className={styles.sectionSub}>{content.showcase.subhead}</p>
+              )}
+            </div>
+            <div className={styles.showcaseGrid}>
+              {content.showcase.images.map((img, i) => (
+                <motion.figure
+                  key={img.src}
+                  className={styles.showcaseItem}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-50px' }}
+                  transition={{ duration: 0.5, delay: (i % 3) * 0.08 }}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    className={styles.showcaseImg}
+                    src={img.src}
+                    alt={img.alt}
+                    width={800}
+                    height={600}
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  {img.caption && <figcaption className={styles.showcaseCaption}>{img.caption}</figcaption>}
+                </motion.figure>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* ── AI ADVANTAGE (optional) ───────────────────────────────────── */}
       {content.aiAdvantage && (
@@ -481,6 +558,9 @@ export default function IndustryLandingPage({ content }: { content: LandingConte
           </div>
         </div>
       </section>
+
+      {/* ── LEAD-MAGNET CALCULATOR (optional) ──────────────────────────── */}
+      {content.leadMagnet && <LeadMagnetCalculator config={content.leadMagnet} />}
 
       {/* ── LEAD FORM (hidden when a bookingUrl / external CTA is used) ──── */}
       {!content.bookingUrl && (

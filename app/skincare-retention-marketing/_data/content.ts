@@ -48,6 +48,22 @@ export const SKINCARE_RETENTION_CONTENT: LandingContent = {
       { emoji: '💰', value: '+130%', label: 'AOV Lift (Retention Client)' },
       { emoji: '📈', value: '6.8×', label: 'ROAS (from 2.1×)' },
     ],
+    image: {
+      src: '/industries/beauty/3.jpg',
+      alt: 'Flat-lay of skincare products styled for social media',
+    },
+  },
+
+  showcase: {
+    tag: 'THE OPPORTUNITY',
+    headline: 'What a real replenishment engine looks like',
+    subhead:
+      'Skincare and beauty are consumable categories — the brands that win keep customers coming back long after the first order, not just the first sale.',
+    images: [
+      { src: '/industries/beauty/2.jpg', alt: 'Beauty products arranged on a vanity', caption: 'Products built for repeat, replenishment purchases' },
+      { src: '/industries/beauty/1.jpg', alt: 'Cosmetics styled for a product shoot', caption: 'Catalog content that supports subscription upsells' },
+      { src: '/industries/beauty/hero.jpg', alt: 'Skincare products displayed together', caption: 'A routine customers reorder, not a one-time purchase' },
+    ],
   },
 
   painPointsTag: 'IF ANY OF THIS SOUNDS FAMILIAR',
@@ -190,6 +206,20 @@ export const SKINCARE_RETENTION_CONTENT: LandingContent = {
       body: '₹10Cr+ ad spend managed, 10,000+ campaigns run, and a 97% client retention rate — the same system, with retention as the compounding half of the equation.',
     },
   ],
+
+  leadMagnet: {
+    type: 'd2c-roas',
+    tag: 'FREE TOOL · 30 SECONDS',
+    headline: 'What ad budget do you need to hit your revenue goal?',
+    subhead: 'Move the sliders to your numbers and see the monthly ad budget it takes to hit your skincare revenue goal.',
+    source: 'Calculator — Skincare Retention',
+    revenueGoal: { label: 'Monthly revenue goal', default: 1000000 },
+    aov: { label: 'Average order value (₹)', default: 1500 },
+    targetRoas: { label: 'Target ROAS', default: 4 },
+    benchmark: 'Benchmark: skincare and beauty brands with a working replenishment and retention system typically sustain a 4×–7× blended ROAS once repeat customers are factored in — well above acquisition-only accounts.',
+    formHeadline: 'See your full budget breakdown',
+    formSubhead: 'Get your numbers, an honest skincare ROAS benchmark, and the Elixzor retention playbook — free, straight to your inbox.',
+  },
 
   faqsHeadline: 'Growing repeat purchases & LTV for skincare and beauty',
   faqs: [
