@@ -40,8 +40,18 @@ const COLS = [
     links: [
       { label: 'D2C & eCommerce', href: '/d2c' },
       { label: 'Doctors',     href: '/doctors-marketing-agency-jaipur' },
+      { label: 'Dental Clinics', href: '/dental-clinic-marketing-agency-jaipur' },
       { label: 'Real Estate', href: '/real-estate-marketing-agency-jaipur' },
       { label: 'Staffing',    href: '/staffing' },
+    ],
+  },
+  {
+    heading: 'Niches We Grow',
+    links: [
+      { label: 'Restaurants & Cafés', href: '/restaurant-marketing-agency-jaipur' },
+      { label: 'Travel Companies', href: '/travel-agency-marketing-jaipur' },
+      { label: 'Coaching Institutes', href: '/coaching-institute-marketing-agency-jaipur' },
+      { label: 'Gyms & Fitness', href: '/gym-fitness-marketing-agency-jaipur' },
     ],
   },
   {
@@ -60,7 +70,7 @@ export default function Footer() {
     <footer style={{ background: 'var(--bg-dark)', color: '#fff' }}>
       <div className="container-x" style={{ padding: 'clamp(40px, 7vw, 60px) clamp(20px, 4vw, 40px) clamp(20px, 4vw, 30px)' }}>
         <div
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.6fr_1fr_1fr_1fr]"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.5fr_1fr_1fr_1fr_1fr]"
           style={{
             gap: 'clamp(28px, 4vw, 40px)',
             paddingBottom: 'clamp(28px, 4vw, 44px)',
