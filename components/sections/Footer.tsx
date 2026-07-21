@@ -29,18 +29,18 @@ const COLS = [
   {
     heading: 'Services',
     links: [
-      { label: 'Performance Marketing', href: '/services' },
-      { label: 'Funnels & Automation',  href: '/services' },
-      { label: 'Web & Software',        href: '/services' },
-      { label: 'Branding',              href: '/services' },
+      { label: 'Performance Marketing', href: '/performance-marketing-agency-jaipur' },
+      { label: 'Website Development',    href: '/website-development-company-jaipur' },
+      { label: 'Software Development',   href: '/software-development-company-jaipur' },
+      { label: 'Lead Generation',        href: '/b2b-lead-generation-agency' },
     ],
   },
   {
     heading: 'Industries',
     links: [
       { label: 'D2C & eCommerce', href: '/d2c' },
-      { label: 'Doctors',     href: '/doctors' },
-      { label: 'Real Estate', href: '/real-estate' },
+      { label: 'Doctors',     href: '/doctors-marketing-agency-jaipur' },
+      { label: 'Real Estate', href: '/real-estate-marketing-agency-jaipur' },
       { label: 'Staffing',    href: '/staffing' },
     ],
   },

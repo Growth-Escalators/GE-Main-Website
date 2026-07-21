@@ -26,6 +26,9 @@ const STATIC_ROUTES: { path: string; priority: number; changeFrequency: Metadata
   { path: '/d2c/fashion',            priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-10T14:05:00+05:30' },
   { path: '/performance-marketing-agency-jaipur', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-12T18:30:00+05:30' },
   { path: '/real-estate-marketing-agency-jaipur', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-12T16:20:00+05:30' },
+  // Direct-client dev money pages (added 2026-07-21) — distinct from /white-label-software-development (agency intent).
+  { path: '/software-development-company-jaipur', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-21T12:00:00+05:30' },
+  { path: '/website-development-company-jaipur', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-21T12:00:00+05:30' },
   // Intent-differentiated BOFU cluster — one route per distinct buyer/search intent (added 2026-07-12).
   { path: '/doctors-marketing-agency-jaipur', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-12T18:30:00+05:30' },
   { path: '/patient-acquisition-agency',      priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-07-12T18:30:00+05:30' },
