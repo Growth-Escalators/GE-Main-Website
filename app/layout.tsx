@@ -7,6 +7,7 @@ import './globals.css'
 // loading it globally doesn't bleed styling into pages that don't use the wrapper.
 import './portfolio/portfolio.css'
 import dynamic from 'next/dynamic'
+import GoogleAnalytics from '@/components/analytics/GoogleAnalytics'
 
 const GrowthBot = dynamic(() => import('@/components/ui/GrowthBot'), { ssr: false })
 const CursorGlow = dynamic(() => import('@/components/portfolio/CursorGlow'), { ssr: false })
@@ -155,6 +156,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className={jakarta.variable}>
+        <GoogleAnalytics />
         <ScrollProgress />
         <CursorGlow />
         {children}
