@@ -1,8 +1,9 @@
 /**
  * Lightweight, SSR-safe GA4 lead-conversion tracking.
  *
- * GA4's tag (gtag.js) is injected OUTSIDE this codebase — via the Google tag /
- * Search Console site verification — so this helper is deliberately defensive:
+ * GA4's tag (gtag.js) is loaded by `components/analytics/GoogleAnalytics.tsx`,
+ * rendered site-wide from the root layout (app/layout.tsx) — so this helper
+ * is deliberately defensive:
  * it prefers `window.gtag` (GA4) and falls back to a GTM-style `dataLayer`
  * push, and no-ops entirely on the server or when neither global exists.
  *
