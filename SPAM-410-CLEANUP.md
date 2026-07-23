@@ -77,10 +77,15 @@ the crawl would stop Google seeing the 410 (GE SEO Standard: remove with status 
 7. **Dead `consulting.` subdomain** — either point its DNS at this project (a redirect rule is already
    staged, commented, in `next.config.js`) or remove the DNS record so it stops being crawled.
 
-## Follow-up not in this branch
+## Also in this branch
 
-- **`public/og-image.jpg` is missing** but referenced in 20 files (root `app/layout.tsx` OG + JSON-LD
-  `logo`, and 18 landing `layout.tsx`) → broken social/AI preview + broken schema logo on every page.
-  A ready-to-render 1200×630 brand card is at `/tmp/og-card.html` (render with any headless browser,
-  or content-creative in Canva) → drop the result at `public/og-image.jpg`. Pre-existing gap, not a
-  regression from this branch.
+- **`public/og-image.jpg` added (1200×630 JPEG).** It was missing but referenced in 20 files (root
+  `app/layout.tsx` OG + JSON-LD `logo`, and 18 landing `layout.tsx`) → previously a broken social/AI
+  preview + broken schema logo on every page. Rendered from the brand card (`/tmp/og-card-clean.html`)
+  via headless Chrome. **Deliberately ships with no stat claims** — an earlier variant had
+  "10,000+ campaigns / ₹10Cr+ ad spend / 97% retention" pills, but those numbers had no verified
+  source, so they were left off rather than published site-wide. To add real metrics back, give the
+  figures and re-render (`/tmp/og-card.html` holds the stat-pill layout).
+- Note on the JSON-LD `logo`: it now resolves (was 404), but a 1200×630 OG card is not an ideal
+  square logo. Optional refinement: point the schema `logo` at `/logo.webp` instead in
+  `app/layout.tsx`. Not done here to keep the branch scoped to the SEO-indexing fix.
