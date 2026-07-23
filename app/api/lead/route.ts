@@ -43,6 +43,15 @@ interface LeadPayload {
   engagement?: string     // Contract | Permanent | Either
   workMode?: string       // Remote | Hybrid | Onsite
   timeline?: string
+  // ── Attribution fields (populated by LeadForm hidden inputs / query params) ──
+  location?: string
+  service?: string
+  motion?: string
+  pagePath?: string
+  utmSource?: string
+  utmMedium?: string
+  utmCampaign?: string
+  referrer?: string
 }
 
 /* ── Hand-rolled validation. No Zod dep. ─────────────────────────────── */
@@ -79,6 +88,14 @@ function validate(body: unknown): { ok: true; data: LeadPayload } | { ok: false;
       engagement:     str(b.engagement),
       workMode:       str(b.workMode),
       timeline:       str(b.timeline),
+      location:       str(b.location),
+      service:        str(b.service),
+      motion:         str(b.motion),
+      pagePath:       str(b.pagePath),
+      utmSource:      str(b.utmSource),
+      utmMedium:      str(b.utmMedium),
+      utmCampaign:    str(b.utmCampaign),
+      referrer:       str(b.referrer),
     },
   }
 }
@@ -165,10 +182,14 @@ async function sendViaResend(lead: LeadPayload): Promise<{ ok: boolean; reason?:
 async function sendViaWebhook(lead: LeadPayload): Promise<{ ok: boolean; reason?: string }> {
   const url = process.env.LEAD_WEBHOOK_URL
   if (!url) return { ok: false, reason: 'no-url' }
+  const headers: Record<string, string> = { 'Content-Type': 'application/json' }
+  // Shared secret so the GE CRM's POST /api/leads/intake accepts this webhook.
+  const secret = process.env.LEAD_WEBHOOK_SECRET
+  if (secret) headers['x-internal-secret'] = secret
   try {
     const res = await fetch(url, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers,
       body: JSON.stringify({ ...lead, receivedAt: new Date().toISOString() }),
     })
     if (!res.ok) return { ok: false, reason: `webhook-${res.status}` }
@@ -282,6 +303,18 @@ export async function POST(req: Request) {
     body = await req.json()
   } catch {
     return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 })
+  }
+
+  // ── Honeypot: a hidden field real users never fill in. If it's non-empty,
+  // silently treat as spam — soft-success 200 with no delivery/logging as a
+  // real lead, so bots get no signal their submission was rejected.
+  if (body && typeof body === 'object') {
+    const b = body as Record<string, unknown>
+    const honeypot = b.company_website ?? b.website
+    if (typeof honeypot === 'string' && honeypot.trim() !== '') {
+      console.log('[lead] spam (honeypot filled), ip:', ip)
+      return NextResponse.json({ ok: true })
+    }
   }
 
   const v = validate(body)

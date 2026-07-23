@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { X, Send, Sparkles } from 'lucide-react'
 import gsap from 'gsap'
 import { trackLead } from '@/lib/analytics'
+import { BUSINESS } from '@/lib/business'
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -178,7 +179,7 @@ const getStateConfig = (
       }
     case 'contact_info':
       return {
-        text: "You can reach us at:\n\n📧 Info@growthescalators.com\n📞 +91 77338 88883\n💬 WhatsApp: wa.me/917733888883\n\nOr just book the free audit and we'll call you within 4 hours!",
+        text: `You can reach us at:\n\n📧 ${BUSINESS.email}\n📞 ${BUSINESS.phone.display}\n💬 WhatsApp: wa.me/${BUSINESS.whatsapp}\n\nOr just book the free audit and we'll call you within 4 hours!`,
         chips: ['Book the free audit', 'Ask something else'],
       }
     case 'location_info':
@@ -786,7 +787,7 @@ export default function GrowthBot() {
             </div>
             {/* WhatsApp */}
             <a
-              href="https://wa.me/917733888883?text=Hi%2C%20I%20found%20you%20on%20your%20website%20and%20would%20like%20to%20know%20more%20about%20your%20services"
+              href={`https://wa.me/${BUSINESS.whatsapp}?text=Hi%2C%20I%20found%20you%20on%20your%20website%20and%20would%20like%20to%20know%20more%20about%20your%20services`}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => trackLead('whatsapp')}

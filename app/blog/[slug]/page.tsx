@@ -24,20 +24,23 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   return {
     title: `${post.title} — Growth Escalators`,
     description: post.description,
-    alternates: { canonical: `/blog/${post.slug}` },
+    alternates: { canonical: post.canonical ?? `/blog/${post.slug}` },
     openGraph: {
       title: post.title,
       description: post.description,
-      url: `/blog/${post.slug}`,
+      url: post.canonical ?? `/blog/${post.slug}`,
       type: 'article',
       publishedTime: post.date,
+      modifiedTime: post.updated ?? post.date,
       authors: [post.author],
       tags: post.tags,
+      ...(post.ogImage ? { images: [{ url: post.ogImage }] } : {}),
     },
     twitter: {
       card: 'summary_large_image',
       title: post.title,
       description: post.description,
+      ...(post.ogImage ? { images: [post.ogImage] } : {}),
     },
   }
 }
@@ -50,7 +53,7 @@ function ArticleJsonLd({ post }: { post: Post }) {
     headline: post.title,
     description: post.description,
     datePublished: post.date,
-    dateModified: post.date,
+    dateModified: post.updated ?? post.date,
     author: { '@type': 'Organization', name: post.author },
     publisher: {
       '@type': 'Organization',
