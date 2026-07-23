@@ -16,7 +16,7 @@ There is **no test infrastructure** (no Jest, Vitest, Playwright). `npm run buil
 1. Kill any running `next dev` and `rm -rf .next` before `npm run build` — running build while dev is up corrupts the chunk cache and produces a misleading `Cannot find module './XYZ.js'` runtime error on the next dev start.
 2. Probe routes with `curl -so /dev/null -w "%{http_code}\n" http://localhost:3000/<path>` — silent 200 means SSR succeeded. The build also prerenders every static route, so a missing/erroring route in `npm run build` output is a real regression.
 
-Deploys are automatic from `main` via Vercel — there is no `vercel.json` or other deploy config in this repo.
+Deploys are automatic from `main` via Vercel. `vercel.json` exists only to declare the daily IndexNow cron job (see below) — there is no other deploy config in this repo.
 
 ## Architecture
 
@@ -95,6 +95,11 @@ All optional. Set in Vercel → Project → Settings → Environment Variables f
 | `LEAD_NOTIFY_EMAIL`  | `app/api/lead/route.ts` | Recipient (default `Info@growthescalators.com`) |
 | `LEAD_FROM_EMAIL`    | `app/api/lead/route.ts` | Sender (default `Growth Escalators <onboarding@resend.dev>`) |
 | `LEAD_WEBHOOK_URL`   | `app/api/lead/route.ts` | POST leads as JSON to any HTTPS URL |
+| `CRON_SECRET`        | `app/api/cron/indexnow/route.ts` | **Required, not optional.** Verifies the Vercel Cron caller (Vercel sends it automatically as `Authorization: Bearer $CRON_SECRET` once set — see [Vercel's cron security docs](https://vercel.com/docs/cron-jobs/manage-cron-jobs#securing-cron-jobs)). The route fails closed (401) if this isn't set, since it makes a real outbound call to a third-party API on every accepted hit. |
+
+### IndexNow automation
+
+`vercel.json` schedules a daily Vercel Cron hit to `/api/cron/indexnow`, which submits every URL in `app/sitemap.ts` (the same list that generates `sitemap.xml`) to IndexNow — so new blog posts and landing pages reach Bing (and therefore ChatGPT retrieval) within a day of deploy with no manual step. The submission logic lives in `lib/indexnow.ts`, shared with the on-demand CLI at `scripts/indexnow-ping.ts` (use the CLI for an immediate ping right after publishing, instead of waiting for the next cron run).
 
 ### Git / branching conventions observed
 

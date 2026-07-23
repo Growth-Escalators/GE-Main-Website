@@ -1,9 +1,11 @@
 /**
  * IndexNow on-demand submitter for growthescalators.com
  * ---------------------------------------------------------------------------
- * IndexNow is the instant-indexing protocol supported by Bing and Yandex. Bing's
- * index is what feeds ChatGPT's web retrieval, so pinging IndexNow on publish is
- * the fastest path to Bing (and therefore AI-search) visibility.
+ * Automated daily pings already run via the Vercel Cron job at
+ * app/api/cron/indexnow/route.ts (see vercel.json), which submits every URL in
+ * app/sitemap.ts — so new blog posts get picked up within a day of deploy with
+ * no manual step. Use THIS script when you want an immediate ping right after
+ * publishing, instead of waiting for the next cron run.
  *
  * Usage:
  *   npx tsx scripts/indexnow-ping.ts
@@ -21,22 +23,12 @@
  *   - Every submitted URL must be on HOST; IndexNow rejects mixed-host lists.
  */
 
-const HOST = 'www.growthescalators.com'
-const SITE = `https://${HOST}`
-
-// IndexNow ownership key. This MUST stay in sync with the key file served at
-// public/<key>.txt — i.e. public/85e4c1e4229d47f8bed45289e8820ac6.txt, whose
-// only contents is exactly this string. If you rotate the key, update BOTH.
-const KEY = '85e4c1e4229d47f8bed45289e8820ac6'
-const KEY_LOCATION = `${SITE}/${KEY}.txt`
-
-// Shared IndexNow endpoint — distributes the submission to all participating
-// engines (Bing, Yandex, Seznam, Naver) so we only ping once.
-const ENDPOINT = 'https://api.indexnow.org/indexnow'
+import { submitToIndexNow, INDEXNOW_SITE } from '../lib/indexnow'
 
 // Core URL set submitted when no args are given. Mirrors the static routes in
 // app/sitemap.ts (home + money pages + main nav). Keep the two in sync; blog
-// posts are dynamic, so submit those explicitly by passing them as args.
+// posts are dynamic, so submit those explicitly by passing them as args (or
+// just let the daily cron pick them up).
 const CORE_PATHS: string[] = [
   '/',
   '/services',
@@ -59,46 +51,23 @@ const CORE_PATHS: string[] = [
 
 async function main(): Promise<void> {
   const args = process.argv.slice(2)
-  const urlList = args.length > 0 ? args : CORE_PATHS.map((p) => `${SITE}${p}`)
+  const urlList = args.length > 0 ? args : CORE_PATHS.map((p) => `${INDEXNOW_SITE}${p}`)
 
-  // Guard: refuse anything not on HOST (or malformed) before we hit the API.
-  const bad = urlList.filter((u) => {
-    try {
-      return new URL(u).host !== HOST
-    } catch {
-      return true
-    }
-  })
-  if (bad.length > 0) {
-    console.error(`Refusing to submit — these URLs are not on ${HOST} (or are malformed):`)
-    for (const u of bad) console.error(`  ${u}`)
-    process.exit(1)
-  }
-
-  const payload = {
-    host: HOST,
-    key: KEY,
-    keyLocation: KEY_LOCATION,
-    urlList,
-  }
-
-  console.log(`Submitting ${urlList.length} URL(s) to IndexNow (${ENDPOINT}):`)
+  console.log(`Submitting ${urlList.length} URL(s) to IndexNow:`)
   for (const u of urlList) console.log(`  ${u}`)
 
-  const res = await fetch(ENDPOINT, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    body: JSON.stringify(payload),
-  })
+  const result = await submitToIndexNow(urlList)
 
-  const body = (await res.text()).trim()
-  console.log(`\nIndexNow responded: ${res.status} ${res.statusText}`)
-  if (body) console.log(body)
+  if (result.rejected.length > 0) {
+    console.error(`\nRefused (not on ${new URL(INDEXNOW_SITE).host} or malformed):`)
+    for (const u of result.rejected) console.error(`  ${u}`)
+  }
 
-  // 200 = accepted; 202 = accepted, key validation pending. Anything else is a
-  // real failure (403 = key not found/mismatch, 422 = URL/host mismatch, etc.).
-  if (res.status !== 200 && res.status !== 202) {
-    console.error(`\nSubmission was NOT accepted. Check the key file is live at: ${KEY_LOCATION}`)
+  console.log(`\nIndexNow responded: ${result.status} ${result.statusText}`)
+  if (result.body) console.log(result.body)
+
+  if (!result.ok) {
+    console.error(`\nSubmission was NOT accepted.`)
     process.exit(1)
   }
 
