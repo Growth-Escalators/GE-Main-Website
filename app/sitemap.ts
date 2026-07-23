@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next'
 import { getAllPosts } from '@/lib/blog'
+import { CASE_STUDIES } from '@/lib/constants'
 
 const SITE = 'https://www.growthescalators.com'
 
@@ -55,6 +56,13 @@ const STATIC_ROUTES: { path: string; priority: number; changeFrequency: Metadata
   { path: '/b2b-lead-generation-agency',      priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-12T18:30:00+05:30' },
   { path: '/linkedin-marketing-agency',       priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-07-12T18:30:00+05:30' },
   { path: '/saas-marketing-agency',           priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-07-12T18:30:00+05:30' },
+  // Net-new head-term money pages (added 2026-07-23) — fill gaps in the Jaipur cluster.
+  { path: '/digital-marketing-agency-jaipur',         priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-23T12:00:00+05:30' },
+  { path: '/best-digital-marketing-agency-in-jaipur', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-23T12:00:00+05:30' },
+  { path: '/social-media-marketing-agency-jaipur',    priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-23T12:00:00+05:30' },
+  { path: '/software-company-in-jaipur',              priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-23T12:00:00+05:30' },
+  { path: '/best-software-company-in-jaipur',         priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-23T12:00:00+05:30' },
+  { path: '/it-company-in-jaipur',                    priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-23T12:00:00+05:30' },
   { path: '/doctors',                priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-12T18:30:00+05:30' },
   { path: '/roofing',                priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-04-30T00:23:16+05:30' },
   // /restaurants de-targeted 2026-07-12 (Jatin) — noindexed + out of sitemap; page kept for a possible revisit in ~2–3 months.
@@ -72,6 +80,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: r.priority,
   }))
 
+  // Case-study detail pages — one per CASE_STUDIES entry (indexable proof).
+  const workEntries: MetadataRoute.Sitemap = CASE_STUDIES.map((c) => ({
+    url: `${SITE}/work/${c.slug}`,
+    changeFrequency: 'yearly',
+    priority: 0.6,
+  }))
+
   // Blog posts are picked up automatically — drop a new .md file in
   // content/blog/ and it appears here on the next build.
   const postEntries: MetadataRoute.Sitemap = getAllPosts().map((p) => ({
@@ -81,5 +96,5 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.7,
   }))
 
-  return [...staticEntries, ...postEntries]
+  return [...staticEntries, ...workEntries, ...postEntries]
 }

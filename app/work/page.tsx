@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from 'react'
+import Link from 'next/link'
 import { gsap } from '@/lib/gsap'
 import Navbar from '@/components/sections/Navbar'
 import Footer from '@/components/sections/Footer'
@@ -152,9 +153,13 @@ export default function WorkPage() {
                     ))}
                   </div>
 
-                  <div className="font-outfit text-sm transition-colors duration-300" style={{ color: 'var(--orange)' }}>
+                  <Link
+                    href={`/work/${cs.slug}`}
+                    className="font-outfit text-sm transition-colors duration-300 inline-block"
+                    style={{ color: 'var(--orange)' }}
+                  >
                     Read Full Case Study →
-                  </div>
+                  </Link>
                 </div>
               ))}
             </div>

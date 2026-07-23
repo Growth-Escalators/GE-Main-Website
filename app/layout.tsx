@@ -8,6 +8,7 @@ import './globals.css'
 import './portfolio/portfolio.css'
 import dynamic from 'next/dynamic'
 import GoogleAnalytics from '@/components/analytics/GoogleAnalytics'
+import { BUSINESS } from '@/lib/business'
 
 const GrowthBot = dynamic(() => import('@/components/ui/GrowthBot'), { ssr: false })
 const CursorGlow = dynamic(() => import('@/components/portfolio/CursorGlow'), { ssr: false })
@@ -79,30 +80,26 @@ export const metadata: Metadata = {
    - JATIN_PERSON.sameAs: add Jatin's real personal LinkedIn profile URL.
    - ORGANIZATION.hasMap / geo: add the verified Google Business Profile
      maps URL + lat/long once GBP is claimed/confirmed (see SEO audit). */
-const SITE_ID = `${'https://www.growthescalators.com'}`
+const SITE_ID = BUSINESS.url
 
 const ORGANIZATION_SCHEMA = {
   '@type': ['Organization', 'ProfessionalService'],
   '@id': `${SITE_ID}/#organization`,
-  name: 'Growth Escalators',
+  name: BUSINESS.name,
   url: SITE_ID,
-  logo: `${SITE_ID}/og-image.jpg`,
+  logo: BUSINESS.logo,
   description: 'AI-first performance marketing agency. Specialists for doctors, roofing contractors and growing brands.',
-  email: 'Info@growthescalators.com',
-  telephone: '+91-77338-88883',
+  email: BUSINESS.email,
+  telephone: BUSINESS.phone.schema,
   address: {
     '@type': 'PostalAddress',
-    streetAddress: '264/103-104, Sector 26, Sanganer, Pratap Nagar',
-    addressLocality: 'Jaipur',
-    addressRegion: 'Rajasthan',
-    postalCode: '302033',
-    addressCountry: 'IN',
+    streetAddress: BUSINESS.address.street,
+    addressLocality: BUSINESS.address.locality,
+    addressRegion: BUSINESS.address.region,
+    postalCode: BUSINESS.address.postalCode,
+    addressCountry: BUSINESS.address.country,
   },
-  sameAs: [
-    'https://www.facebook.com/growthescalators',
-    'https://www.instagram.com/growthescalators',
-    'https://www.linkedin.com/company/growth-escalators',
-  ],
+  sameAs: BUSINESS.sameAs,
   founder: { '@id': `${SITE_ID}/#jatin-agrawal` },
   /* Sister brand — WizMatch is Jatin's staffing/recruitment company (same
      founder, disclosed relationship). Declared as a subOrganization so search

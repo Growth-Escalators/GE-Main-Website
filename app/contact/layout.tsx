@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import { BUSINESS } from '@/lib/business'
 
 export const metadata: Metadata = {
   title: 'Contact Us — Free 30-Min Marketing Strategy Call',
@@ -19,39 +20,36 @@ export const metadata: Metadata = {
 const LOCAL_BUSINESS_SCHEMA = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
-  '@id': 'https://www.growthescalators.com/#localbusiness',
-  name: 'Growth Escalators',
+  '@id': `${BUSINESS.url}/#localbusiness`,
+  name: BUSINESS.name,
+  // Kept as its own literal — this is a different asset from the
+  // Organization schema's `logo` in app/layout.tsx (see lib/business.ts
+  // comments). Not centralized so this page's rendered JSON-LD doesn't change.
   image: 'https://www.growthescalators.com/logo.webp',
-  url: 'https://www.growthescalators.com',
-  email: 'Info@growthescalators.com',
-  telephone: '+91-77338-88883',
+  url: BUSINESS.url,
+  email: BUSINESS.email,
+  telephone: BUSINESS.phone.schema,
   priceRange: '₹₹',
   address: {
     '@type': 'PostalAddress',
-    streetAddress: '264/103-104, Sector 26, Sanganer, Pratap Nagar',
-    addressLocality: 'Jaipur',
-    addressRegion: 'Rajasthan',
-    postalCode: '302033',
-    addressCountry: 'IN',
+    streetAddress: BUSINESS.address.street,
+    addressLocality: BUSINESS.address.locality,
+    addressRegion: BUSINESS.address.region,
+    postalCode: BUSINESS.address.postalCode,
+    addressCountry: BUSINESS.address.country,
   },
   geo: {
     '@type': 'GeoCoordinates',
-    latitude: 26.8189,
-    longitude: 75.7950,
+    latitude: BUSINESS.geo.lat,
+    longitude: BUSINESS.geo.lng,
   },
-  openingHoursSpecification: [
-    {
-      '@type': 'OpeningHoursSpecification',
-      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
-      opens: '10:00',
-      closes: '19:00',
-    },
-  ],
-  sameAs: [
-    'https://www.facebook.com/growthescalators',
-    'https://www.instagram.com/growthescalators',
-    'https://www.linkedin.com/company/growth-escalators',
-  ],
+  openingHoursSpecification: BUSINESS.hours.map((h) => ({
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: h.days,
+    opens: h.opens,
+    closes: h.closes,
+  })),
+  sameAs: BUSINESS.sameAs,
 }
 
 export default function ContactLayout({ children }: { children: React.ReactNode }) {

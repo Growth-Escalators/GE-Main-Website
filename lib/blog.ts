@@ -30,6 +30,12 @@ export interface PostFrontmatter {
   ctaLabel?: string
   /** Hero gradient — "orange" | "violet" | "teal" | "mixed" */
   gradient?: 'orange' | 'violet' | 'teal' | 'mixed'
+  /** ISO date string for the last significant edit; falls back to `date` (dateModified in JSON-LD, no visible UI change) */
+  updated?: string
+  /** Absolute URL of a custom OG/social image; falls back to the default site OG image if unset */
+  ogImage?: string
+  /** Canonical path override (e.g. for content syndicated from elsewhere); defaults to /blog/<slug> */
+  canonical?: string
 }
 
 export interface PostMeta extends PostFrontmatter {

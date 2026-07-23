@@ -3,6 +3,7 @@
 import Link from 'next/link'
 import { MapPin, Phone, Mail } from 'lucide-react'
 import { trackLead } from '@/lib/analytics'
+import { BUSINESS } from '@/lib/business'
 
 function FooterLogo() {
   return (
@@ -99,15 +100,15 @@ export default function Footer() {
             <div className="flex flex-col" style={{ gap: 8, fontSize: 13.5, color: 'var(--text-on-dark-mute)', lineHeight: 1.6 }}>
               <span className="flex items-start" style={{ gap: 8 }}>
                 <MapPin size={14} style={{ marginTop: 3, flexShrink: 0, color: 'var(--orange)' }} />
-                Sector 26, Pratap Nagar, Jaipur 302033
+                {BUSINESS.address.shortDisplay}
               </span>
-              <a href="tel:+917733888883" onClick={() => trackLead('call')} className="flex items-center hover:text-white" style={{ gap: 8 }}>
+              <a href={BUSINESS.phone.tel} onClick={() => trackLead('call')} className="flex items-center hover:text-white" style={{ gap: 8 }}>
                 <Phone size={14} style={{ flexShrink: 0, color: 'var(--orange)' }} />
-                +91 77338 88883
+                {BUSINESS.phone.display}
               </a>
-              <a href="mailto:Info@growthescalators.com" onClick={() => trackLead('email')} className="flex items-center hover:text-white" style={{ gap: 8 }}>
+              <a href={`mailto:${BUSINESS.email}`} onClick={() => trackLead('email')} className="flex items-center hover:text-white" style={{ gap: 8 }}>
                 <Mail size={14} style={{ flexShrink: 0, color: 'var(--orange)' }} />
-                Info@growthescalators.com
+                {BUSINESS.email}
               </a>
             </div>
           </div>
