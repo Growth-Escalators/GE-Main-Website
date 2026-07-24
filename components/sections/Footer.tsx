@@ -6,21 +6,25 @@ import { trackLead } from '@/lib/analytics'
 
 function FooterLogo() {
   return (
-    <div className="flex items-center" style={{ gap: 11, marginBottom: 16 }}>
-      <svg width="30" height="30" viewBox="0 0 32 32" fill="none" aria-hidden>
-        <defs>
-          <linearGradient id="geFoot" x1="3" y1="29" x2="29" y2="4" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#FF6B35" />
-            <stop offset="1" stopColor="#FF9A5A" />
-          </linearGradient>
-        </defs>
-        <rect x="3" y="19" width="6" height="10" rx="2" fill="url(#geFoot)" opacity="0.45" />
-        <rect x="13" y="13" width="6" height="16" rx="2" fill="url(#geFoot)" opacity="0.75" />
-        <rect x="23" y="6" width="6" height="23" rx="2" fill="url(#geFoot)" />
-        <path d="M19.5 10.5 L27 4" stroke="#FF6B35" strokeWidth="2.2" strokeLinecap="round" />
-        <path d="M22.6 4 L27.2 4 L27.2 8.6" stroke="#FF6B35" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
-      </svg>
-      <span style={{ fontWeight: 800, fontSize: 19, color: '#fff' }}>Growth Escalators</span>
+    <div className="inline-flex items-center" style={{ marginBottom: 16, height: 52 }}>
+      {/* Source has a white background — wrap in a white pill so the
+          orange G + blue wordmark stay legible against the dark footer. */}
+      <span
+        className="inline-flex items-center justify-center"
+        style={{
+          background: '#fff',
+          borderRadius: 10,
+          padding: '8px 14px',
+          height: '100%',
+        }}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src="/logo.webp"
+          alt="Growth Escalators"
+          style={{ height: '100%', width: 'auto', display: 'block' }}
+        />
+      </span>
     </div>
   )
 }
