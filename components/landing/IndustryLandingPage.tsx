@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useId, useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Footer from '@/components/sections/Footer'
@@ -120,18 +120,22 @@ function useCyclingWord(words: string[], intervalMs = 2400) {
 /* ── FAQ accordion item ── */
 function FaqItem({ q, a, defaultOpen = false }: { q: string; a: string; defaultOpen?: boolean }) {
   const [open, setOpen] = useState(defaultOpen)
+  const panelId = useId()
   return (
     <div className={`${styles.faqItem} ${open ? styles.faqOpen : ''}`}>
       <button
         type="button"
         className={styles.faqHead}
         aria-expanded={open}
+        aria-controls={panelId}
         onClick={() => setOpen((o) => !o)}
       >
         <span>{q}</span>
         <span className={styles.faqIcon} aria-hidden>+</span>
       </button>
-      {open && <div className={styles.faqBody}>{a}</div>}
+      {/* Always in the DOM so crawlers (which don't click) can read every answer;
+         `hidden` keeps the collapsed visual state identical. */}
+      <div id={panelId} className={styles.faqBody} hidden={!open}>{a}</div>
     </div>
   )
 }

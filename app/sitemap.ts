@@ -22,43 +22,51 @@ const STATIC_ROUTES: { path: string; priority: number; changeFrequency: Metadata
   { path: '/contact',                priority: 0.8, changeFrequency: 'yearly',  lastModified: '2026-06-22T17:18:21+05:30' },
   { path: '/blog',                   priority: 0.9, changeFrequency: 'weekly',  lastModified: '2026-04-30T01:03:34+05:30' },
   // Industry landing pages — high priority, conversion-focused
-  { path: '/d2c',                    priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-12T18:30:00+05:30' },
-  { path: '/d2c/fashion',            priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-10T14:05:00+05:30' },
-  { path: '/performance-marketing-agency-jaipur', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-12T18:30:00+05:30' },
-  { path: '/real-estate-marketing-agency-jaipur', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-12T16:20:00+05:30' },
+  //
+  // 2026-07-25: FAQ answers on these 32 routes went from click-to-render (only the
+  // defaultOpen answer was in server HTML) to always-server-rendered (components/landing/
+  // IndustryLandingPage.tsx FaqItem — `hidden` attribute instead of conditional mount).
+  // That's a real content-visibility change for a crawler, so lastModified is bumped for
+  // every route below through /real-estate. /white-label-software-development (above) is
+  // NOT touched — its FAQs render via native <details>/<summary>, already server-rendered
+  // pre- and post-fix, so nothing about its crawlable content changed.
+  { path: '/d2c',                    priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
+  { path: '/d2c/fashion',            priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
+  { path: '/performance-marketing-agency-jaipur', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
+  { path: '/real-estate-marketing-agency-jaipur', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
   // Direct-client dev money pages (added 2026-07-21) — distinct from /white-label-software-development (agency intent).
-  { path: '/software-development-company-jaipur', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-21T12:00:00+05:30' },
-  { path: '/website-development-company-jaipur', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-21T12:00:00+05:30' },
+  { path: '/software-development-company-jaipur', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
+  { path: '/website-development-company-jaipur', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
   // Niche BOFU money pages — Wave 1 (added 2026-07-21). Detailed, image-rich, each with a lead-magnet calculator.
-  { path: '/restaurant-marketing-agency-jaipur',        priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-21T18:00:00+05:30' },
-  { path: '/travel-agency-marketing-jaipur',            priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-21T18:00:00+05:30' },
-  { path: '/dental-clinic-marketing-agency-jaipur',     priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-21T18:00:00+05:30' },
-  { path: '/coaching-institute-marketing-agency-jaipur', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-21T18:00:00+05:30' },
-  { path: '/gym-fitness-marketing-agency-jaipur',       priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-21T18:00:00+05:30' },
+  { path: '/restaurant-marketing-agency-jaipur',        priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
+  { path: '/travel-agency-marketing-jaipur',            priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
+  { path: '/dental-clinic-marketing-agency-jaipur',     priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
+  { path: '/coaching-institute-marketing-agency-jaipur', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
+  { path: '/gym-fitness-marketing-agency-jaipur',       priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
   // Niche BOFU money pages — Wave 2 & 3 (added 2026-07-21). Same engine, image-rich, lead-magnet calculators.
-  { path: '/jewellery-marketing-agency-jaipur',          priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-21T20:00:00+05:30' },
-  { path: '/salon-spa-marketing-agency-jaipur',          priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-21T20:00:00+05:30' },
-  { path: '/law-firm-marketing-agency-jaipur',           priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-07-21T20:00:00+05:30' },
-  { path: '/hotel-resort-marketing-agency-jaipur',       priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-21T20:00:00+05:30' },
-  { path: '/interior-designer-marketing-agency-jaipur',  priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-07-21T20:00:00+05:30' },
-  { path: '/wedding-event-marketing-agency-jaipur',      priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-07-21T20:00:00+05:30' },
-  { path: '/car-detailing-marketing-agency-jaipur',      priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-07-21T20:00:00+05:30' },
+  { path: '/jewellery-marketing-agency-jaipur',          priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
+  { path: '/salon-spa-marketing-agency-jaipur',          priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
+  { path: '/law-firm-marketing-agency-jaipur',           priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
+  { path: '/hotel-resort-marketing-agency-jaipur',       priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
+  { path: '/interior-designer-marketing-agency-jaipur',  priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
+  { path: '/wedding-event-marketing-agency-jaipur',      priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
+  { path: '/car-detailing-marketing-agency-jaipur',      priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
   // Intent-differentiated BOFU cluster — one route per distinct buyer/search intent (added 2026-07-12).
-  { path: '/doctors-marketing-agency-jaipur', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-12T18:30:00+05:30' },
-  { path: '/patient-acquisition-agency',      priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-07-12T18:30:00+05:30' },
-  { path: '/personal-branding-for-doctors',   priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-07-12T18:30:00+05:30' },
-  { path: '/ecommerce-advertising-agency',    priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-12T18:30:00+05:30' },
-  { path: '/meta-ads-agency-for-ecommerce',   priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-07-12T18:30:00+05:30' },
-  { path: '/ecommerce-scaling-agency',        priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-07-12T18:30:00+05:30' },
-  { path: '/d2c/beauty',                      priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-12T18:30:00+05:30' },
-  { path: '/skincare-retention-marketing',    priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-07-12T18:30:00+05:30' },
-  { path: '/b2b-lead-generation-agency',      priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-12T18:30:00+05:30' },
-  { path: '/linkedin-marketing-agency',       priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-07-12T18:30:00+05:30' },
-  { path: '/saas-marketing-agency',           priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-07-12T18:30:00+05:30' },
-  { path: '/doctors',                priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-12T18:30:00+05:30' },
-  { path: '/roofing',                priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-04-30T00:23:16+05:30' },
+  { path: '/doctors-marketing-agency-jaipur', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
+  { path: '/patient-acquisition-agency',      priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
+  { path: '/personal-branding-for-doctors',   priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
+  { path: '/ecommerce-advertising-agency',    priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
+  { path: '/meta-ads-agency-for-ecommerce',   priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
+  { path: '/ecommerce-scaling-agency',        priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
+  { path: '/d2c/beauty',                      priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
+  { path: '/skincare-retention-marketing',    priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
+  { path: '/b2b-lead-generation-agency',      priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
+  { path: '/linkedin-marketing-agency',       priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
+  { path: '/saas-marketing-agency',           priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
+  { path: '/doctors',                priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
+  { path: '/roofing',                priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
   // /restaurants de-targeted 2026-07-12 (Jatin) — noindexed + out of sitemap; page kept for a possible revisit in ~2–3 months.
-  { path: '/real-estate',            priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-04-30T01:18:57+05:30' },
+  { path: '/real-estate',            priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
   // Legal — keep crawlable but low priority
   { path: '/privacy-policy',         priority: 0.3, changeFrequency: 'yearly',  lastModified: '2026-05-28T18:14:21+05:30' },
   { path: '/terms-and-conditions',   priority: 0.3, changeFrequency: 'yearly',  lastModified: '2026-05-28T18:14:21+05:30' },
