@@ -20,7 +20,7 @@ export const JAIPUR_CONTENT: LandingContent = {
     headlineLines: ['Performance Marketing', 'Agency in Jaipur'],
     cyclingWords: ['Meta Ads that scale.', 'Google Ads that convert.', 'Funnels that compound.', 'ROAS you can bank.'],
     subhead:
-      "Growth Escalators is a Jaipur-based, AI-first performance marketing agency. We've managed ₹10Cr+ in ad spend across 10,000+ campaigns for 100+ brands — turning wasted budget into predictable, profitable growth on Meta and Google.",
+      "Growth Escalators is a performance marketing agency in Jaipur. Founded in 2021, we're AI-first: we've managed ₹10Cr+ in ad spend across 10,000+ campaigns for 100+ brands, turning wasted budget into predictable, profitable growth on Meta and Google Ads.",
     primaryCta: { label: 'Book a Free Strategy Call', href: '#lead-form' },
     secondaryCta: { label: 'See Real Results ↓', href: '#results' },
     statPills: [
@@ -100,7 +100,7 @@ export const JAIPUR_CONTENT: LandingContent = {
     { step: '04', title: 'Scale What Works',     body: 'Once CAC is stable and predictable, we double down on the winners — month over month.' },
   ],
 
-  whyUsHeadline: 'The Jaipur agency that reports profit, not vanity',
+  whyUsHeadline: 'Why choose Growth Escalators as your performance marketing agency in Jaipur',
   whyUs: [
     { title: 'Right here in Jaipur',            body: 'Based in Pratap Nagar, Jaipur — same time zone, real meetings, a local team that answers. Plus clients served across India.' },
     { title: '4.9★ from 187+ reviews',          body: 'A 97% client-retention rate and 187+ Google reviews at 4.9 stars. We keep clients because we keep delivering.' },
