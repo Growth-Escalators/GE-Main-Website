@@ -406,10 +406,10 @@ function ServiceStrip({ svc, index, isOpen, onToggle }: {
         >{svc.number}</span>
 
         {/* Title */}
-        <span
+        <h2
           className="font-syne font-bold"
           style={{ fontSize: 'clamp(17px,2.2vw,28px)', letterSpacing: '-0.02em', color: 'var(--text-primary)', lineHeight: 1.1 }}
-        >{svc.title}</span>
+        >{svc.title}</h2>
 
         {/* Tagline — desktop only */}
         <span
@@ -450,9 +450,9 @@ function ServiceStrip({ svc, index, isOpen, onToggle }: {
         >
           {/* COL 1 — Stats */}
           <div style={{ overflow: 'hidden' }}>
-            <p className="font-outfit text-[10px] tracking-[0.4em] uppercase" style={{ color: 'var(--orange)', marginBottom: '24px' }}>
+            <h3 className="font-outfit text-[10px] tracking-[0.4em] uppercase" style={{ color: 'var(--orange)', marginBottom: '24px' }}>
               By The Numbers
-            </p>
+            </h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
               {svc.stats.map((stat, j) => (
                 <div key={j}>
@@ -470,9 +470,9 @@ function ServiceStrip({ svc, index, isOpen, onToggle }: {
 
           {/* COL 2 — Description + deliverables */}
           <div>
-            <p className="font-outfit text-[10px] tracking-[0.4em] uppercase" style={{ color: 'var(--orange)', marginBottom: '24px' }}>
+            <h3 className="font-outfit text-[10px] tracking-[0.4em] uppercase" style={{ color: 'var(--orange)', marginBottom: '24px' }}>
               What We Do
-            </p>
+            </h3>
             <p className="font-outfit font-light leading-relaxed" style={{ fontSize: 'clamp(14px,1.2vw,17px)', color: 'var(--text-muted)', marginBottom: '20px' }}>
               {svc.copy}
             </p>
@@ -482,9 +482,9 @@ function ServiceStrip({ svc, index, isOpen, onToggle }: {
               </div>
               <p className="font-outfit font-light" style={{ fontSize: '13px', fontStyle: 'italic', color: 'var(--text-primary)', lineHeight: 1.6, margin: 0 }}>{svc.result}</p>
             </div>
-            <p className="font-outfit text-[10px] tracking-[0.4em] uppercase" style={{ color: 'var(--orange)', marginBottom: '12px' }}>
+            <h3 className="font-outfit text-[10px] tracking-[0.4em] uppercase" style={{ color: 'var(--orange)', marginBottom: '12px' }}>
               What&apos;s Included
-            </p>
+            </h3>
             <ul style={{ listStyle: 'none', margin: 0, padding: 0, display: 'flex', flexDirection: 'column', gap: '9px' }}>
               {svc.deliverables.map((d, j) => (
                 <li key={j} style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
@@ -511,9 +511,9 @@ function ServiceStrip({ svc, index, isOpen, onToggle }: {
 
           {/* COL 3 — Testimonial */}
           <div>
-            <p className="font-outfit text-[10px] tracking-[0.4em] uppercase" style={{ color: 'var(--orange)', marginBottom: '24px' }}>
+            <h3 className="font-outfit text-[10px] tracking-[0.4em] uppercase" style={{ color: 'var(--orange)', marginBottom: '24px' }}>
               Client Voice
-            </p>
+            </h3>
             <div style={{ background: '#111', borderRadius: '16px', padding: '28px', position: 'relative', overflow: 'hidden' }}>
               <div style={{ position: 'absolute', top: 0, left: 0, width: '3px', height: '100%', background: 'var(--orange)' }} />
               <div className="font-syne" style={{ fontSize: '30px', color: 'var(--orange)', lineHeight: 1, marginBottom: '12px' }}>&ldquo;</div>
@@ -550,15 +550,15 @@ function ServiceStrip({ svc, index, isOpen, onToggle }: {
           paddingTop: '24px', paddingBottom: '36px',
           position: 'relative', zIndex: 1,
         }}>
-          <p className="font-outfit text-[10px] tracking-[0.4em] uppercase" style={{ color: 'var(--orange)', marginBottom: '18px' }}>
+          <h3 className="font-outfit text-[10px] tracking-[0.4em] uppercase" style={{ color: 'var(--orange)', marginBottom: '18px' }}>
             How It Works
-          </p>
+          </h3>
           <div className="how-it-works-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '20px' }}>
             {svc.steps.map((step, j) => (
               <div key={j} style={{ display: 'flex', gap: '12px' }}>
                 <span className="font-outfit text-[11px] tracking-[0.04em]" style={{ color: 'var(--orange)', opacity: 0.5, flexShrink: 0, paddingTop: '2px' }}>{step.n}</span>
                 <div>
-                  <div className="font-syne font-bold text-[13px]" style={{ color: 'var(--text-primary)', marginBottom: '4px', lineHeight: 1.2 }}>{step.title}</div>
+                  <h4 className="font-syne font-bold text-[13px]" style={{ color: 'var(--text-primary)', marginBottom: '4px', lineHeight: 1.2 }}>{step.title}</h4>
                   <div className="font-outfit font-light text-[12px]" style={{ color: 'var(--text-muted)', lineHeight: 1.65 }}>{step.desc}</div>
                 </div>
               </div>
@@ -673,9 +673,12 @@ export default function ServicesPage() {
 
           {/* Hero h1 — same scale as homepage hero */}
           <h1 className="hero-item font-syne font-extrabold leading-none" style={{ fontSize: 'clamp(28px,4.5vw,64px)', color: 'var(--text-primary)', letterSpacing: '-0.02em', marginBottom: '28px' }}>
+            Digital marketing services from a Jaipur performance marketing agency
+          </h1>
+          <p className="hero-item font-syne font-extrabold leading-none" style={{ fontSize: 'clamp(28px,4.5vw,64px)', color: 'var(--text-primary)', letterSpacing: '-0.02em', marginBottom: '28px' }}>
             Seven Weapons.<br />
             <span style={{ color: 'var(--orange)' }}>One Mission.</span>
-          </h1>
+          </p>
 
           <div className="hero-item" style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'flex-start', gap: '24px', justifyContent: 'space-between' }}>
             <p className="font-outfit font-light leading-relaxed" style={{ fontSize: 'clamp(14px,1.2vw,17px)', color: 'var(--text-muted)', maxWidth: '480px' }}>
@@ -731,9 +734,9 @@ export default function ServicesPage() {
               What We Do
             </span>
             <div style={{ display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px' }}>
-              <h2 className="font-syne font-extrabold leading-none" style={{ fontSize: 'clamp(22px,3vw,40px)', letterSpacing: '-0.02em', color: 'var(--text-primary)', margin: 0 }}>
+              <div className="font-syne font-extrabold leading-none" style={{ fontSize: 'clamp(22px,3vw,40px)', letterSpacing: '-0.02em', color: 'var(--text-primary)', margin: 0 }}>
                 Click any service to explore
-              </h2>
+              </div>
               <p className="font-outfit font-light text-[12px]" style={{ color: 'var(--text-muted)', margin: 0 }}>
                 {openIndex !== null ? SERVICES[openIndex].title : '7 services · tap to expand'}
               </p>
