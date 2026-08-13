@@ -98,6 +98,8 @@ export type LeadFormProps = {
   leadSourceLabel: string
   supportEmail?: string
   id?: string
+  /** Submit-button label override. Defaults to "Request Relevant Profiles" (UK/UAE/Australia copy). */
+  submitLabel?: string
 }
 
 /**
@@ -113,7 +115,7 @@ export type LeadFormProps = {
  * / `form_submit_error`, and `primary_cta_click` (location: 'post_submit_calendar')
  * from the success panel's "book a call" link.
  */
-export default function LeadForm({ content, market, eventPrefix, leadSourceLabel, supportEmail = 'Info@growthescalators.com', id = 'lead-form' }: LeadFormProps) {
+export default function LeadForm({ content, market, eventPrefix, leadSourceLabel, supportEmail = 'Info@growthescalators.com', id = 'lead-form', submitLabel = 'Request Relevant Profiles' }: LeadFormProps) {
   const {
     tag, headline, subhead, skillSuggestions, resourceCountOptions,
     showStartDate = true, showEngagementDuration = true,
@@ -389,7 +391,7 @@ export default function LeadForm({ content, market, eventPrefix, leadSourceLabel
                 className="btn-primary"
                 style={{ marginTop: 6, opacity: submitting ? 0.7 : 1, cursor: submitting ? 'wait' : 'pointer' }}
               >
-                {submitting ? <><Loader2 size={16} className="animate-spin" /> Sending…</> : 'Request Relevant Profiles'}
+                {submitting ? <><Loader2 size={16} className="animate-spin" /> Sending…</> : submitLabel}
               </button>
 
               <p style={{ fontSize: 12, color: 'var(--text-muted)', lineHeight: 1.55, margin: 0 }}>

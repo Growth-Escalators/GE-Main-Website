@@ -79,7 +79,7 @@ export default function Header({ nav, ctaLabel, eventPrefix, ctaHref = '#lead-fo
             <button
               type="button"
               className="lg:hidden inline-flex items-center justify-center"
-              style={{ width: 40, height: 40 }}
+              style={{ width: 44, height: 44 }}
               onClick={() => setMenuOpen((v) => !v)}
               aria-label={menuOpen ? 'Close menu' : 'Open menu'}
               aria-expanded={menuOpen}
