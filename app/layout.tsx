@@ -153,6 +153,14 @@ const SERVICE_SCHEMAS = [
     provider: { '@id': `${SITE_ID}/#organization` },
     areaServed: 'IN',
   },
+  {
+    '@type': 'Service',
+    '@id': `${SITE_ID}/#service-offshore-tech-staffing`,
+    name: 'Offshore Technology Staffing',
+    serviceType: 'IT Staffing',
+    provider: { '@id': `${SITE_ID}/#organization` },
+    areaServed: 'GB',
+  },
 ]
 
 const SCHEMA_GRAPH = {

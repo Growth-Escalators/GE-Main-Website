@@ -19,6 +19,11 @@ import { NextResponse } from 'next/server'
  * Resend (set LEAD_FROM_EMAIL) — with the default onboarding@resend.dev Resend
  * only delivers to the account owner. Soft-fails, never blocks the submit.
  *
+ * JD attachment (used by /uk-offshore-tech-resources): the client reads the
+ * uploaded file as base64 and sends it inline in the JSON body. Validated
+ * server-side (PDF/DOC/DOCX, <=4MB decoded) before being attached to the
+ * Resend email — never trust the client-side check alone.
+ *
  * Rate limit: 5 requests per IP per minute (in-memory; resets on cold start).
  * Defensible against trivial form spam without adding a Redis dep.
  */
@@ -43,7 +48,27 @@ interface LeadPayload {
   engagement?: string     // Contract | Permanent | Either
   workMode?: string       // Remote | Hybrid | Onsite
   timeline?: string
+  // ── UK offshore tech-resources fields (only populated by /uk-offshore-tech-resources) ──
+  startDate?: string
+  engagementDuration?: string
+  ukOverlap?: string
+  utmSource?: string
+  utmMedium?: string
+  utmCampaign?: string
+  utmTerm?: string
+  utmContent?: string
+  /** JD upload, sent inline as base64 — validated below (PDF/DOC/DOCX, <=4MB). */
+  jdFileName?: string
+  jdFileType?: string
+  jdFileBase64?: string
 }
+
+const MAX_JD_BYTES = 4 * 1024 * 1024 // 4MB
+const ALLOWED_JD_TYPES = [
+  'application/pdf',
+  'application/msword',
+  'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+]
 
 /* ── Hand-rolled validation. No Zod dep. ─────────────────────────────── */
 function validate(body: unknown): { ok: true; data: LeadPayload } | { ok: false; error: string } {
@@ -53,14 +78,32 @@ function validate(body: unknown): { ok: true; data: LeadPayload } | { ok: false;
 
   const name = str(b.name)
   const email = str(b.email)
+  // Phone is required by most industry lead forms (client-side `required`) but
+  // NOT collected by /uk-offshore-tech-resources — kept optional here so one
+  // shared endpoint serves both without a fake required field on that page.
   const phone = str(b.phone)
 
   if (!name)  return { ok: false, error: 'Name is required' }
   if (!email) return { ok: false, error: 'Email is required' }
-  if (!phone) return { ok: false, error: 'Phone is required' }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return { ok: false, error: 'Email looks invalid' }
   if (name.length > 200 || email.length > 200 || phone.length > 50) {
     return { ok: false, error: 'Field too long' }
+  }
+
+  // JD attachment: re-validate server-side, never trust the client check alone.
+  const jdFileName = str(b.jdFileName)
+  const jdFileType = str(b.jdFileType)
+  const jdFileBase64Raw = str(b.jdFileBase64)
+  let jdFileBase64 = ''
+  if (jdFileBase64Raw) {
+    if (!ALLOWED_JD_TYPES.includes(jdFileType)) {
+      return { ok: false, error: 'JD attachment must be a PDF, DOC or DOCX file' }
+    }
+    const decodedBytes = Buffer.from(jdFileBase64Raw, 'base64').length
+    if (decodedBytes > MAX_JD_BYTES) {
+      return { ok: false, error: 'JD attachment is too large (4MB max)' }
+    }
+    jdFileBase64 = jdFileBase64Raw
   }
 
   return {
@@ -79,6 +122,17 @@ function validate(body: unknown): { ok: true; data: LeadPayload } | { ok: false;
       engagement:     str(b.engagement),
       workMode:       str(b.workMode),
       timeline:       str(b.timeline),
+      startDate:           str(b.startDate),
+      engagementDuration:  str(b.engagementDuration),
+      ukOverlap:           str(b.ukOverlap),
+      utmSource:           str(b.utmSource),
+      utmMedium:           str(b.utmMedium),
+      utmCampaign:         str(b.utmCampaign),
+      utmTerm:             str(b.utmTerm),
+      utmContent:          str(b.utmContent),
+      jdFileName:     jdFileBase64 ? jdFileName || 'jd-attachment' : '',
+      jdFileType:     jdFileBase64 ? jdFileType : '',
+      jdFileBase64,
     },
   }
 }
@@ -118,18 +172,24 @@ async function sendViaResend(lead: LeadPayload): Promise<{ ok: boolean; reason?:
   const subject = `New ${lead.source || 'website'} lead: ${lead.name}`
   const lines = [
     `Name: ${lead.name}`,
-    `Phone: ${lead.phone}`,
+    lead.phone          && `Phone: ${lead.phone}`,
     `Email: ${lead.email}`,
     lead.company        && `Company: ${lead.company}`,
     lead.clinic         && `Practice / Business: ${lead.clinic}`,
     lead.specialization && `Specialization / Type: ${lead.specialization}`,
     lead.city           && `City: ${lead.city}`,
     lead.budget         && `Monthly marketing spend: ${lead.budget}`,
-    lead.role           && `Role needed: ${lead.role}`,
-    lead.seats          && `Number of hires: ${lead.seats}`,
+    lead.role           && `Role / skill needed: ${lead.role}`,
+    lead.seats          && `Number of resources: ${lead.seats}`,
     lead.engagement     && `Engagement: ${lead.engagement}`,
     lead.workMode       && `Work mode: ${lead.workMode}`,
     lead.timeline       && `Timeline: ${lead.timeline}`,
+    lead.startDate          && `Preferred start date: ${lead.startDate}`,
+    lead.engagementDuration && `Engagement duration: ${lead.engagementDuration}`,
+    lead.ukOverlap          && `UK working-hour expectations: ${lead.ukOverlap}`,
+    lead.jdFileName         && `JD attached: ${lead.jdFileName}`,
+    (lead.utmSource || lead.utmMedium || lead.utmCampaign || lead.utmTerm || lead.utmContent)
+      && `UTM: source=${lead.utmSource || '-'} medium=${lead.utmMedium || '-'} campaign=${lead.utmCampaign || '-'} term=${lead.utmTerm || '-'} content=${lead.utmContent || '-'}`,
     `Source: ${lead.source}`,
     '',
     'Message:',
@@ -137,6 +197,10 @@ async function sendViaResend(lead: LeadPayload): Promise<{ ok: boolean; reason?:
   ].filter(Boolean) as string[]
 
   const html = lines.map((l) => `<p>${l.replace(/&/g, '&amp;').replace(/</g, '&lt;')}</p>`).join('')
+
+  const attachments = lead.jdFileBase64 && lead.jdFileName
+    ? [{ filename: lead.jdFileName, content: lead.jdFileBase64 }]
+    : undefined
 
   try {
     const res = await fetch('https://api.resend.com/emails', {
@@ -150,6 +214,7 @@ async function sendViaResend(lead: LeadPayload): Promise<{ ok: boolean; reason?:
         text: lines.join('\n'),
         html,
         reply_to: lead.email,
+        ...(attachments ? { attachments } : {}),
       }),
     })
     if (!res.ok) {
@@ -209,6 +274,11 @@ function resourceFor(source: string): { caseStudy: string; resourceLine: string 
     return { caseStudy: 'For premium creative brands we’ve built social engines with multiple million-view reels and steady inbound enquiries.', resourceLine: 'the booking-season campaign plan' }
   if (has('car', 'detailing', 'auto', 'garage'))
     return { caseStudy: 'For local service businesses we consistently push cost-per-lead below ₹100 with 4× funnel conversion.', resourceLine: 'the local-service lead playbook' }
+  // UK offshore tech-resources lead (source: "UK Offshore Tech Requirement") — this is a
+  // staffing requirement, not a marketing enquiry, so it gets process proof instead of an
+  // ad-spend case study that would be irrelevant (and confusing) to a hiring buyer.
+  if (has('offshore', 'uk offshore', 'tech requirement'))
+    return { caseStudy: 'Every requirement we receive is converted into a mandatory-skill scorecard before any profile is shared, so what lands in your inbox is already screened for the skills, experience and availability you asked for.', resourceLine: 'a shortlist matched specifically to the requirement you shared' }
   return { caseStudy: 'Across 187+ brands we’ve managed ₹10Cr+ in ad spend at a 97% client-retention rate.', resourceLine: 'a plan tailored to your goals' }
 }
 
@@ -295,13 +365,20 @@ export async function POST(req: Request) {
 
   // Always log the lead so it's recoverable from server logs even if all
   // delivery channels failed. Format kept stable on purpose so future log
-  // grepping stays predictable.
+  // grepping stays predictable. The (potentially large) base64 JD attachment
+  // is redacted to a byte count so one upload doesn't flood the log line.
+  const logSafeLead = {
+    ...v.data,
+    jdFileBase64: v.data.jdFileBase64
+      ? `[redacted, ${Buffer.from(v.data.jdFileBase64, 'base64').length} bytes]`
+      : undefined,
+  }
   console.log(
     '[lead]',
     JSON.stringify({
       receivedAt: new Date().toISOString(),
       ip,
-      lead: v.data,
+      lead: logSafeLead,
       resend: resendResult,
       webhook: webhookResult,
       autoResponder: autoResponderResult,
