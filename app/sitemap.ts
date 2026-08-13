@@ -10,12 +10,25 @@ const SITE = 'https://www.growthescalators.com'
    A fake `new Date()` per build teaches Google to distrust the sitemap's lastmod
    signal entirely (GE SEO Standard v1, Layer 2). Seeded 2026-07-10 from each
    route's `app/<route>/page.tsx` git history (`git log -1 --format=%cI -- <file>`).
-   Bump a route's date by hand only when that route's actual content changes. */
-const STATIC_ROUTES: { path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency']; lastModified: string }[] = [
+   Bump a route's date by hand only when that route's actual content changes.
+   `lastModified` is optional on this type for exactly one reason: a route with
+   no real content yet (see the three international-landing routes below) must
+   omit it rather than fabricate one — "real date or omit it" per the standard. */
+const STATIC_ROUTES: { path: string; priority: number; changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency']; lastModified?: string }[] = [
   { path: '/',                       priority: 1.0, changeFrequency: 'weekly',  lastModified: '2026-06-22T17:18:21+05:30' },
   { path: '/services',               priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-04-24T16:34:20+05:30' },
   { path: '/staffing',               priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-06-27T12:29:19+05:30' },
   { path: '/uk-offshore-tech-resources', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-08-13T12:00:00+05:30' },
+  // UAE/US/Australia siblings of /uk-offshore-tech-resources — international-landing
+  // Stage A (shared components + UK refactor) adds these route entries now per the
+  // project brief, so Stage B (page builders) never needs to touch this file. NO
+  // `lastModified` yet: the routes don't exist as content until Stage B ships them.
+  // DO NOT deploy/merge this branch to production until all three routes 200 — see
+  // the Stage A handoff report. Once each page ships, add its real `lastModified`
+  // (from that page.tsx's git history, same convention as every other row here).
+  { path: '/uae-offshore-tech-resources',        priority: 0.9, changeFrequency: 'monthly' },
+  { path: '/us-tech-staffing-fulfilment',        priority: 0.9, changeFrequency: 'monthly' },
+  { path: '/australia-offshore-tech-resources',  priority: 0.9, changeFrequency: 'monthly' },
   { path: '/white-label-software-development', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-13T13:30:00+05:30' },
   { path: '/work',                   priority: 0.9, changeFrequency: 'weekly',  lastModified: '2026-04-24T16:34:20+05:30' },
   { path: '/portfolio',              priority: 0.9, changeFrequency: 'weekly',  lastModified: '2026-05-21T11:11:56+05:30' },
@@ -76,7 +89,7 @@ const STATIC_ROUTES: { path: string; priority: number; changeFrequency: Metadata
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticEntries: MetadataRoute.Sitemap = STATIC_ROUTES.map((r) => ({
     url: `${SITE}${r.path}`,
-    lastModified: r.lastModified,
+    ...(r.lastModified ? { lastModified: r.lastModified } : {}),
     changeFrequency: r.changeFrequency,
     priority: r.priority,
   }))

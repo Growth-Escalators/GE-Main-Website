@@ -159,7 +159,12 @@ const SERVICE_SCHEMAS = [
     name: 'Offshore Technology Staffing',
     serviceType: 'IT Staffing',
     provider: { '@id': `${SITE_ID}/#organization` },
-    areaServed: 'GB',
+    // One Service node for the whole offshore-tech-staffing offer, not one per
+    // country landing page (see international-landing Stage A brief: "do not
+    // create separate structured-data business identities for each country").
+    // UK shipped first; areaServed is pre-generalized to the full 4-market set
+    // (UK/UAE/US/Australia) so this node needs no edit when those pages ship.
+    areaServed: ['GB', 'AE', 'US', 'AU'],
   },
 ]
 
