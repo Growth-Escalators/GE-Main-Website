@@ -56,3 +56,33 @@ export function trackLead(method: LeadMethod, extra?: Record<string, unknown>): 
 
   // If no analytics global is present, silently no-op.
 }
+
+/**
+ * Fire a market-scoped landing-page event: `${prefix}_lp_${suffix}`.
+ *
+ * Backs the international-landing-page component family
+ * (components/landing/international/*) shared across /uk-offshore-tech-resources
+ * and its UAE/US/Australia siblings, plus any page-local sections on those
+ * routes that fire an event a shared component doesn't own (e.g. a WhatsApp
+ * click or a "test a requirement" CTA). Same defensive gtag → dataLayer → no-op
+ * fallback chain as `trackLead`, kept separate because these events are named
+ * per-market-prefix rather than funneling into one canonical `generate_lead`.
+ *
+ * @param prefix  Market event prefix, e.g. 'uk' | 'uae' | 'us' | 'australia'.
+ * @param suffix  Event suffix, e.g. 'primary_cta_click' → fires 'uk_lp_primary_cta_click'.
+ * @param params  Optional extra params merged into the event (e.g. `{ location: 'hero' }`).
+ */
+export function trackLandingEvent(prefix: string, suffix: string, params?: Record<string, unknown>): void {
+  if (typeof window === 'undefined') return
+
+  const name = `${prefix}_lp_${suffix}`
+  const payload: Record<string, unknown> = { page_path: window.location?.pathname, ...params }
+
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', name, payload)
+    return
+  }
+  if (Array.isArray(window.dataLayer)) {
+    window.dataLayer.push({ event: name, ...payload })
+  }
+}
