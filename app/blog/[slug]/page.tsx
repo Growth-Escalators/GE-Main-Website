@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import type { Metadata } from 'next'
 import Footer from '@/components/sections/Footer'
+import BlogLeadCapture from '@/components/blog/BlogLeadCapture'
 import {
   getAllPostSlugs,
   getPost,
@@ -76,7 +77,10 @@ function ArticleJsonLd({ post }: { post: Post }) {
 export default function BlogPost({ params }: { params: { slug: string } }) {
   const post = getPost(params.slug)
   if (!post) notFound()
-  const related = getRelatedPosts(post, 2)
+  // 3 posts (was 2) — more cross-linking surface area per the blog
+  // structural-improvements pass; getRelatedPosts (lib/blog.ts) ranks by
+  // shared frontmatter tags, falling back to most-recent when overlap is 0.
+  const related = getRelatedPosts(post, 3)
 
   return (
     <div className={indexStyles.page}>
@@ -129,7 +133,15 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
             dangerouslySetInnerHTML={{ __html: post.bodyHtml }}
           />
 
-          {/* Inline CTA at end of post */}
+          {/* Low-friction, email-only capture — the soft ask, shown first */}
+          <BlogLeadCapture
+            postSlug={post.slug}
+            postTitle={post.title}
+            contactHref={post.ctaHref ?? '/contact'}
+          />
+
+          {/* Inline CTA at end of post — the higher-intent ask, for readers
+              who'd rather go straight to a call or a specific offer page */}
           <div className={styles.cta}>
             <h3 className={styles.ctaTitle}>Want help applying this to your business?</h3>
             <p className={styles.ctaSub}>
