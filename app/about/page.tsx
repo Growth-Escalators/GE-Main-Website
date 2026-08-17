@@ -7,6 +7,19 @@ import Footer from '@/components/sections/Footer'
 import CTA from '@/components/sections/CTA'
 import Team from '@/components/sections/Team'
 import Link from 'next/link'
+import { TEAM_MEMBERS } from '@/lib/constants'
+
+// The full-bio <Team/> section below is a scroll-driven carousel: it writes
+// one member's name/role/quote into the DOM at a time via a ref + textContent
+// (see components/sections/Team.tsx), so raw server HTML never contains more
+// than the first member. That's invisible to any crawler that doesn't execute
+// JS (GPTBot, ClaudeBot, PerplexityBot) and unreliable even for ones that do.
+// This block is plain server-rendered JSX so the three department leads are
+// always present in the raw HTML.
+const LEADERSHIP_NAMES = ['Jatin Agrawal', 'Kanishk Khandelwal', 'Sakcham Raj']
+const LEADERSHIP = LEADERSHIP_NAMES
+  .map((n) => TEAM_MEMBERS.find((m) => m.name === n))
+  .filter((m): m is (typeof TEAM_MEMBERS)[number] => Boolean(m))
 
 const TIMELINE = [
   { year: '2021', event: 'Founded in Jaipur with 2 clients and one mission: make every rupee work harder.' },
@@ -179,6 +192,31 @@ export default function AboutPage() {
               <a href="https://www.wizmatchenterprises.com" style={{ color: 'var(--orange)', fontWeight: 500, textDecoration: 'underline', textUnderlineOffset: 2 }}>WizMatch</a>{' '}
               brings the same structured approach to staffing and recruitment.
             </p>
+          </div>
+        </section>
+
+        {/* Leadership — server-rendered names/titles, see LEADERSHIP comment above */}
+        <section className="py-24 px-6 md:px-12 lg:px-24" style={{ background: 'var(--bg-primary)' }}>
+          <div className="max-w-7xl mx-auto">
+            <span className="font-outfit text-[10px] tracking-[0.4em] uppercase block mb-4" style={{ color: 'var(--orange)' }}>Leadership</span>
+            <h2 className="font-syne font-bold mb-14" style={{ fontSize: 'clamp(28px, 4.5vw, 60px)', color: 'var(--text-primary)' }}>
+              Who Runs Growth Escalators
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              {LEADERSHIP.map((m) => (
+                <div key={m.name} className="ge-card p-8">
+                  <div
+                    className="w-14 h-14 rounded-full flex items-center justify-center font-syne font-bold text-lg mb-5"
+                    style={{ background: 'linear-gradient(135deg,#FF6500,#FF3D00)', color: '#fff' }}
+                  >
+                    {m.initials}
+                  </div>
+                  <h3 className="font-syne font-bold text-xl mb-1" style={{ color: 'var(--text-primary)' }}>{m.name}</h3>
+                  <p className="font-outfit text-sm font-semibold mb-3" style={{ color: 'var(--orange)' }}>{m.role}</p>
+                  <p className="font-outfit font-light text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>{m.bio}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </section>
 

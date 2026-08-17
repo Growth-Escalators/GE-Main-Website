@@ -86,17 +86,24 @@ export const SOCIAL_PROOF_TICKER = [
 export const TEAM_MEMBERS = [
   {
     name: 'Jatin Agrawal',
-    role: 'Founder & Growth Consultant',
+    role: 'Founder & Head of Marketing',
     initials: 'JA',
     quote: 'We built Growth Escalators on one belief — your growth is our reputation. Every campaign we run, we run like it\'s our own money.',
     bio: 'Jatin founded Growth Escalators with a single conviction: that every brand, regardless of size, deserves world-class performance marketing.',
   },
   {
+    name: 'Kanishk Khandelwal',
+    role: 'Head of Technology',
+    initials: 'KK',
+    quote: 'Every workflow we don\'t automate is a workflow that eventually breaks under scale. I build the systems so the team never has to choose between speed and quality.',
+    bio: 'Kanishk leads technology, automation, and AI development at Growth Escalators.',
+  },
+  {
     name: 'Sakcham Raj',
-    role: 'Growth Consultant',
+    role: 'Head of Growth Operations',
     initials: 'SR',
     quote: 'Growth isn\'t a guessing game — it\'s a science. I don\'t just run campaigns, I engineer outcomes.',
-    bio: 'Sakcham brings a systems-first approach to everything he touches.',
+    bio: 'Sakcham brings a systems-first approach to everything he touches, across both marketing and technical execution.',
   },
   {
     name: 'Keshav',
