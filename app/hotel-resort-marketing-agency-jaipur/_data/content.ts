@@ -168,7 +168,6 @@ export const HOTEL_JAIPUR_CONTENT: LandingContent = {
     tag: 'GO DEEPER',
     headline: 'More for local & consumer brands',
     links: [
-      { label: 'Restaurant Marketing Agency in Jaipur', href: '/restaurant-marketing-agency-jaipur', blurb: 'For F&B brands driving footfall and direct orders.' },
       { label: 'Travel Agency Marketing in Jaipur', href: '/travel-agency-marketing-jaipur', blurb: 'For travel brands selling itineraries and bookings.' },
       { label: 'Performance Marketing Agency in Jaipur', href: '/performance-marketing-agency-jaipur', blurb: 'Our core Jaipur growth service — ads engineered for ROAS.' },
       { label: 'Case Studies', href: '/work', blurb: 'Real brands, real numbers, real growth.' },

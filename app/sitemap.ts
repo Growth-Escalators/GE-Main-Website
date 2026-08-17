@@ -49,7 +49,6 @@ const STATIC_ROUTES: { path: string; priority: number; changeFrequency: Metadata
   { path: '/software-development-company-jaipur', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
   { path: '/website-development-company-jaipur', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
   // Niche BOFU money pages — Wave 1 (added 2026-07-21). Detailed, image-rich, each with a lead-magnet calculator.
-  { path: '/restaurant-marketing-agency-jaipur',        priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
   { path: '/travel-agency-marketing-jaipur',            priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
   { path: '/dental-clinic-marketing-agency-jaipur',     priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
   { path: '/coaching-institute-marketing-agency-jaipur', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
@@ -57,10 +56,8 @@ const STATIC_ROUTES: { path: string; priority: number; changeFrequency: Metadata
   // Niche BOFU money pages — Wave 2 & 3 (added 2026-07-21). Same engine, image-rich, lead-magnet calculators.
   { path: '/jewellery-marketing-agency-jaipur',          priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
   { path: '/salon-spa-marketing-agency-jaipur',          priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
-  { path: '/law-firm-marketing-agency-jaipur',           priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
   { path: '/hotel-resort-marketing-agency-jaipur',       priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
   { path: '/interior-designer-marketing-agency-jaipur',  priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
-  { path: '/wedding-event-marketing-agency-jaipur',      priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
   { path: '/car-detailing-marketing-agency-jaipur',      priority: 0.8, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },
   // Intent-differentiated BOFU cluster — one route per distinct buyer/search intent (added 2026-07-12).
   { path: '/doctors-marketing-agency-jaipur', priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-07-25T18:00:00+05:30' },

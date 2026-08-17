@@ -52,8 +52,18 @@ const nextConfig = {
       { source: '/social-media-audit', destination: '/contact', permanent: true }, // 16 imp (old lead-magnet)
       { source: '/seo-auditgegv', destination: '/services', permanent: true },     // 8 imp (demo slug, still ranks)
 
-      // --- Retired /restaurants (was noindexed/de-targeted) -> new BOFU niche page (2026-07-21) ---
-      { source: '/restaurants', destination: '/restaurant-marketing-agency-jaipur', permanent: true },
+      // --- Retired /restaurants (was noindexed/de-targeted) -> homepage. Used to point at
+      //     /restaurant-marketing-agency-jaipur, but that BOFU page is retired too (2026-08-17,
+      //     see below) -- pointed straight at the final destination to avoid a redirect chain. ---
+      { source: '/restaurants', destination: '/', permanent: true },
+
+      // --- Retired thin industry-vertical pages (2026-08-17): near-zero SEO traffic in the
+      //     28-day GSC window (wedding 2 clicks/49 impr, law-firm 1/30, restaurant 1/70) and not
+      //     worth further investment. No topically equivalent live page to point at, so these
+      //     redirect to the homepage (nav + #industries section) rather than a mismatched page. ---
+      { source: '/wedding-event-marketing-agency-jaipur', destination: '/', permanent: true },
+      { source: '/law-firm-marketing-agency-jaipur', destination: '/', permanent: true },
+      { source: '/restaurant-marketing-agency-jaipur', destination: '/', permanent: true },
 
       // --- OPTIONAL / lower confidence (uncomment after review) ---
       // { source: '/home-digital-marketing', destination: '/', permanent: true },
