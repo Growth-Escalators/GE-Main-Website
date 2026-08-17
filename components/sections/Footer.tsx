@@ -46,7 +46,6 @@ const COLS = [
       { label: 'Doctors', href: '/doctors-marketing-agency-jaipur' },
       { label: 'Dental Clinics', href: '/dental-clinic-marketing-agency-jaipur' },
       { label: 'Real Estate', href: '/real-estate-marketing-agency-jaipur' },
-      { label: 'Restaurants & Cafés', href: '/restaurant-marketing-agency-jaipur' },
       { label: 'Hotels & Resorts', href: '/hotel-resort-marketing-agency-jaipur' },
     ],
   },
@@ -64,8 +63,6 @@ const COLS = [
   {
     heading: 'More Niches',
     links: [
-      { label: 'Law & CA Firms', href: '/law-firm-marketing-agency-jaipur' },
-      { label: 'Wedding & Events', href: '/wedding-event-marketing-agency-jaipur' },
       { label: 'Car Detailing', href: '/car-detailing-marketing-agency-jaipur' },
       { label: 'Staffing', href: '/staffing' },
     ],
