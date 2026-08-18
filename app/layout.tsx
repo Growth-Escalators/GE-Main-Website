@@ -4,7 +4,6 @@ import './globals.css'
 import './refinement.css'
 import dynamic from 'next/dynamic'
 import GoogleAnalytics from '@/components/analytics/GoogleAnalytics'
-import ContactIdentityGuard from '@/components/ui/ContactIdentityGuard'
 
 const GrowthBot = dynamic(() => import('@/components/ui/GrowthBot'), { ssr: false })
 
@@ -147,7 +146,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={jakarta.variable}>
         <GoogleAnalytics />
-        <ContactIdentityGuard />
         {children}
         <GrowthBot />
       </body>
