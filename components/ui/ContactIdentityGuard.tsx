@@ -2,6 +2,9 @@
 
 import { useEffect } from 'react'
 
+// Public Growth Escalators contact identity. This guard exists so legacy and
+// dynamically mounted UI cannot surface a stale address while page families
+// are migrated to the new design system.
 const CANONICAL_EMAIL = 'jatin@growthescalators.com'
 const CANONICAL_PHONE = '+91-7733888883'
 const PHONE_HREF = 'tel:+917733888883'
