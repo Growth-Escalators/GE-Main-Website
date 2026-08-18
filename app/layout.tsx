@@ -2,10 +2,8 @@ import type { Metadata } from 'next'
 import { Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
 import './refinement.css'
-import dynamic from 'next/dynamic'
 import GoogleAnalytics from '@/components/analytics/GoogleAnalytics'
-
-const GrowthBot = dynamic(() => import('@/components/ui/GrowthBot'), { ssr: false })
+import GrowthBot from '@/components/ui/GrowthBot'
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
