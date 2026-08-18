@@ -1,21 +1,18 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Contact Us — Free 30-Min Marketing Strategy Call',
+  title: 'Contact Growth Escalators — Free Growth Audit',
   description:
-    "Book a free 30-minute strategy call. We'll audit your marketing, find the biggest leaks, and hand you the 3 fixes we'd make first — Jaipur-based team.",
+    'Contact Growth Escalators in Jaipur for performance marketing, websites, software, AI automation or technology staffing. Start with a free growth audit.',
   alternates: { canonical: '/contact' },
   openGraph: {
-    title: 'Contact Growth Escalators — Free Strategy Call',
-    description: "Free 30-minute strategy call. We'll audit your marketing and hand you the 3 highest-ROI fixes first. Jaipur-based team.",
+    title: 'Contact Growth Escalators — Free Growth Audit',
+    description: 'Talk to the Jaipur-based Growth Escalators team about marketing, technology or staffing. Start with a free growth audit.',
     url: '/contact',
     type: 'website',
   },
 }
 
-/* JSON-LD LocalBusiness — emitted on /contact since it's the page that
-   surfaces the office address, phone, and hours. Earns eligibility for
-   the Knowledge Panel and Maps results when search intent is local. */
 const LOCAL_BUSINESS_SCHEMA = {
   '@context': 'https://schema.org',
   '@type': 'LocalBusiness',
@@ -23,8 +20,8 @@ const LOCAL_BUSINESS_SCHEMA = {
   name: 'Growth Escalators',
   image: 'https://www.growthescalators.com/logo.webp',
   url: 'https://www.growthescalators.com',
-  email: 'Info@growthescalators.com',
-  telephone: '+91-77338-88883',
+  email: 'jatin@growthescalators.com',
+  telephone: '+91-7733888883',
   priceRange: '₹₹',
   address: {
     '@type': 'PostalAddress',
@@ -55,13 +52,8 @@ const LOCAL_BUSINESS_SCHEMA = {
 }
 
 export default function ContactLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(LOCAL_BUSINESS_SCHEMA) }}
-      />
-      {children}
-    </>
-  )
+  return <>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(LOCAL_BUSINESS_SCHEMA) }} />
+    {children}
+  </>
 }
