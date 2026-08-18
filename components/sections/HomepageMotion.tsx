@@ -189,8 +189,7 @@ export default function HomepageMotion() {
         }
       })
 
-      const techBenefits = gsap.utils.toArray<HTMLElement>('#growthbot span')
-        .filter((element) => element.parentElement && element.parentElement.childElementCount === 4)
+      const techBenefits = gsap.utils.toArray<HTMLElement>('#growthbot [data-reveal] > span')
       if (techBenefits.length) {
         gsap.fromTo(
           techBenefits,
