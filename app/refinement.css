@@ -36,6 +36,20 @@ main :where(section[id], div[id]) {
   outline-offset: 3px;
 }
 
+/* Keep the sticky navigation's physical footprint constant. The previous
+   scroll state changed its height and shifted every page's <main>, creating
+   the same CLS penalty across every template. Background/shadow changes can
+   still communicate the scrolled state without moving content. */
+.ge-nav.is-scrolled {
+  --nav-h: 94px !important;
+}
+.ge-mega.is-scrolled {
+  top: 94px !important;
+}
+.ge-backdrop.is-scrolled {
+  top: 94px !important;
+}
+
 /* Long emails, URLs and generated labels should never widen a mobile layout. */
 :where(.ge-footer-contact-links, .ge-footer-bottom, main) a {
   overflow-wrap: anywhere;
@@ -44,6 +58,13 @@ main :where(section[id], div[id]) {
 @media (max-width: 980px) {
   :root {
     --ge-sticky-offset: 86px;
+  }
+
+  .ge-nav.is-scrolled {
+    --nav-h: 76px !important;
+  }
+  .ge-mobile-menu.is-scrolled {
+    top: 76px !important;
   }
 }
 
