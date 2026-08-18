@@ -48,6 +48,19 @@ const FOOTER_GROUPS = [
     ],
   },
   {
+    heading: 'Local Niches',
+    links: [
+      { label: 'Doctors in Jaipur', href: '/doctors-marketing-agency-jaipur' },
+      { label: 'Dental Clinics', href: '/dental-clinic-marketing-agency-jaipur' },
+      { label: 'Real Estate Jaipur', href: '/real-estate-marketing-agency-jaipur' },
+      { label: 'Salons & Spas', href: '/salon-spa-marketing-agency-jaipur' },
+      { label: 'Gyms & Fitness', href: '/gym-fitness-marketing-agency-jaipur' },
+      { label: 'Interior Designers', href: '/interior-designer-marketing-agency-jaipur' },
+      { label: 'Travel Companies', href: '/travel-agency-marketing-jaipur' },
+      { label: 'Car Detailing', href: '/car-detailing-marketing-agency-jaipur' },
+    ],
+  },
+  {
     heading: 'Company',
     links: [
       { label: 'Work', href: '/work' },
