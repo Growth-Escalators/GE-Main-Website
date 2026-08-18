@@ -79,6 +79,7 @@ jobs:
           node - <<'NODE'
           const fs = require('fs')
           const names = ['home', 'services', 'commercial', 'staffing', 'blog']
+          const detailedIds = ['color-contrast','aria-hidden-focus','aria-prohibited-attr','heading-order','font-size']
           for (const name of names) {
             const report = JSON.parse(fs.readFileSync(`/tmp/lh-${name}.json`, 'utf8'))
             const c = report.categories
@@ -90,25 +91,32 @@ jobs:
             const shifts = a['layout-shifts']?.details?.items || []
             if (shifts.length) {
               console.log('layout shifts:')
-              for (const item of shifts.slice(0, 8)) {
-                console.log(JSON.stringify({ score: item.score, node: item.node?.snippet, selector: item.node?.selector, causes: item.subItems?.items?.map((x) => x.cause) }, null, 2))
-              }
+              for (const item of shifts.slice(0, 8)) console.log(JSON.stringify(item, null, 2))
             }
 
             const lcp = a['largest-contentful-paint-element']?.details?.items || []
             if (lcp.length) console.log('LCP element:', JSON.stringify(lcp[0], null, 2))
 
-            const failed = []
-            for (const [id, audit] of Object.entries(a)) {
-              if ((audit.scoreDisplayMode === 'binary' || audit.scoreDisplayMode === 'numeric') && typeof audit.score === 'number' && audit.score < 1) {
-                const inA11y = c.accessibility?.auditRefs?.some((r) => r.id === id)
-                const inBP = c['best-practices']?.auditRefs?.some((r) => r.id === id)
-                if (inA11y || inBP) failed.push({ id, score: audit.score, title: audit.title, displayValue: audit.displayValue })
+            for (const id of detailedIds) {
+              const audit = a[id]
+              if (!audit || audit.score === 1 || audit.scoreDisplayMode === 'notApplicable') continue
+              console.log(`AUDIT ${id}: ${audit.title} (${audit.displayValue || audit.score})`)
+              const items = audit.details?.items || []
+              for (const item of items.slice(0, 12)) {
+                console.log(JSON.stringify({
+                  node: item.node?.snippet,
+                  selector: item.node?.selector,
+                  explanation: item.node?.explanation,
+                  contrastRatio: item.contrastRatio,
+                  expectedContrastRatio: item.expectedContrastRatio,
+                  fontSize: item.fontSize,
+                  source: item.source,
+                  subItems: item.subItems,
+                }, null, 2))
               }
             }
-            if (failed.length) console.log('failed a11y/best-practice audits:', JSON.stringify(failed, null, 2))
 
-            for (const id of ['render-blocking-resources','unused-javascript','unused-css-rules','mainthread-work-breakdown','bootup-time','network-requests']) {
+            for (const id of ['render-blocking-resources','unused-javascript','unused-css-rules','mainthread-work-breakdown','bootup-time']) {
               const audit = a[id]
               if (audit?.displayValue) console.log(`${id}: ${audit.displayValue}`)
             }
