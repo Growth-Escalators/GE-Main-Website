@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
+import './refinement.css'
 import dynamic from 'next/dynamic'
 import GoogleAnalytics from '@/components/analytics/GoogleAnalytics'
 import ContactIdentityGuard from '@/components/ui/ContactIdentityGuard'
@@ -20,32 +21,33 @@ export const metadata: Metadata = {
     template: '%s — Growth Escalators',
   },
   description:
-    'AI-first performance marketing agency. 10,000+ campaigns run, ₹10Cr+ in ad spend managed, 97% client retention. Specialists for doctors, roofing contractors and growing brands.',
+    'Jaipur-based growth partner for performance marketing, ecommerce, websites, software, AI automation and India-based technology staffing. ₹10Cr+ ad spend managed with 97% client retention.',
   keywords: [
     'performance marketing agency',
-    'AI marketing agency',
-    'D2C performance marketing agency',
-    'ecommerce Meta ads agency',
-    'marketing for doctors',
-    'roofing contractor marketing',
-    'restaurant marketing',
+    'performance marketing agency Jaipur',
+    'D2C growth agency',
+    'ecommerce advertising agency',
     'Meta ads agency',
     'Google ads agency',
-    'India marketing agency',
+    'website development company Jaipur',
+    'software development company Jaipur',
+    'AI automation agency',
+    'India technology staffing',
+    'offshore tech staffing',
   ],
   alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
     siteName: 'Growth Escalators',
     title: 'Growth Escalators — AI-First Performance Marketing Agency',
-    description: 'AI-first performance marketing for doctors, roofing contractors and growing brands.',
+    description: 'Performance marketing, ecommerce, web, software, AI automation and technology staffing connected around measurable growth.',
     url: 'https://www.growthescalators.com',
     images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Growth Escalators — Growth, Engineered' }],
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Growth Escalators — AI-First Performance Marketing Agency',
-    description: 'AI-first performance marketing for doctors, roofing contractors and growing brands.',
+    description: 'Performance marketing, ecommerce, web, software, AI automation and technology staffing connected around measurable growth.',
     images: ['/opengraph-image'],
   },
   robots: {
@@ -63,7 +65,7 @@ const ORGANIZATION_SCHEMA = {
   name: 'Growth Escalators',
   url: SITE_ID,
   logo: `${SITE_ID}/logo.webp`,
-  description: 'AI-first performance marketing agency. Specialists for doctors, roofing contractors and growing brands.',
+  description: 'Jaipur-based growth partner for performance marketing, ecommerce, websites, software, AI automation and India-based technology staffing.',
   email: 'jatin@growthescalators.com',
   telephone: '+91-7733888883',
   address: {
