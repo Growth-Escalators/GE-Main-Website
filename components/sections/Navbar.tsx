@@ -127,7 +127,7 @@ export default function Navbar() {
           </div>
 
           <div className="ge-nav-actions">
-            <a href="tel:+917733888883" className="ge-phone" onClick={() => trackLead('call')}>+91 77338 88883</a>
+            <a href="tel:+917733888883" className="ge-phone" onClick={() => trackLead('call')}>+91-7733888883</a>
             <Link href="/#book" className="ge-audit">Get Free Audit <span aria-hidden>↗</span></Link>
             <button
               type="button"
@@ -206,50 +206,50 @@ export default function Navbar() {
       )}
 
       <style jsx>{`
-        :global(.ge-nav) { --font-display:'Arial Narrow'; --nav-h:82px; position:sticky; top:0; z-index:70; height:var(--nav-h); background:rgba(255,255,255,.96); border-bottom:1px solid rgba(23,6,83,.1); backdrop-filter:blur(18px); transition:height .34s cubic-bezier(.22,1,.36,1),box-shadow .25s ease,background .25s ease; }
-        :global(.ge-nav.is-scrolled) { --nav-h:70px; background:rgba(255,255,255,.985); box-shadow:0 12px 36px rgba(7,27,59,.08); }
-        :global(.ge-nav-inner) { width:min(100%,1440px); height:100%; margin:0 auto; padding:0 clamp(24px,5vw,76px); display:flex; align-items:center; justify-content:space-between; gap:25px; }
-        :global(.ge-logo img) { width:auto; height:32px; display:block; transition:transform .3s ease; }
+        :global(.ge-nav) { --font-display:'Arial Narrow'; --nav-h:94px; position:sticky; top:0; z-index:70; height:var(--nav-h); background:rgba(255,255,255,.96); border-bottom:1px solid rgba(23,6,83,.1); backdrop-filter:blur(18px); transition:height .34s cubic-bezier(.22,1,.36,1),box-shadow .25s ease,background .25s ease; }
+        :global(.ge-nav.is-scrolled) { --nav-h:78px; background:rgba(255,255,255,.985); box-shadow:0 12px 36px rgba(7,27,59,.08); }
+        :global(.ge-nav-inner) { width:min(100%,1440px); height:100%; margin:0 auto; padding:0 clamp(24px,5vw,76px); display:flex; align-items:center; justify-content:space-between; gap:30px; }
+        :global(.ge-logo img) { width:auto; height:39px; display:block; transition:transform .3s ease; }
         :global(.ge-logo:hover img) { transform:translateY(-1px); }
-        :global(.ge-desktop-nav) { display:flex; align-items:center; gap:clamp(14px,1.5vw,25px); margin-left:auto; }
-        :global(.ge-nav-trigger),:global(.ge-nav-direct) { position:relative; min-height:44px; display:inline-flex; align-items:center; gap:7px; font-size:11px; font-weight:800; color:#170653; white-space:nowrap; }
+        :global(.ge-desktop-nav) { display:flex; align-items:center; gap:clamp(17px,1.65vw,28px); margin-left:auto; }
+        :global(.ge-nav-trigger),:global(.ge-nav-direct) { position:relative; min-height:48px; display:inline-flex; align-items:center; gap:7px; font-size:13px; font-weight:800; color:#170653; white-space:nowrap; }
         :global(.ge-nav-trigger::after),:global(.ge-nav-direct::after) { content:''; position:absolute; left:0; right:100%; bottom:7px; height:2px; background:#5c24f5; transition:right .25s cubic-bezier(.22,1,.36,1); }
         :global(.ge-nav-trigger:hover::after),:global(.ge-nav-trigger.is-active::after),:global(.ge-nav-direct:hover::after) { right:0; }
-        :global(.ge-nav-trigger > span) { font-size:16px; font-weight:500; transition:transform .25s ease; }
+        :global(.ge-nav-trigger > span) { font-size:17px; font-weight:500; transition:transform .25s ease; }
         :global(.ge-nav-trigger.is-active > span) { transform:rotate(45deg); }
-        :global(.ge-nav-actions) { display:flex; align-items:center; gap:14px; }
-        :global(.ge-phone) { font-size:10px; font-weight:800; white-space:nowrap; color:#170653; }
-        :global(.ge-audit),:global(.ge-mobile-audit) { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:44px; border-radius:999px; background:#170653; color:#fff; padding:0 18px; font-size:10px; font-weight:900; text-transform:uppercase; letter-spacing:.05em; transition:transform .22s ease,background .22s ease; }
+        :global(.ge-nav-actions) { display:flex; align-items:center; gap:15px; }
+        :global(.ge-phone) { font-size:12px; font-weight:800; white-space:nowrap; color:#170653; }
+        :global(.ge-audit),:global(.ge-mobile-audit) { display:inline-flex; align-items:center; justify-content:center; gap:8px; min-height:48px; border-radius:999px; background:#170653; color:#fff; padding:0 22px; font-size:11.5px; font-weight:900; text-transform:uppercase; letter-spacing:.05em; transition:transform .22s ease,background .22s ease; }
         :global(.ge-audit:hover) { transform:translateY(-2px); background:#5c24f5; }
-        :global(.ge-menu-button) { display:none; width:44px; height:44px; align-items:center; justify-content:center; flex-direction:column; gap:7px; }
+        :global(.ge-menu-button) { display:none; width:48px; height:48px; align-items:center; justify-content:center; flex-direction:column; gap:7px; }
         :global(.ge-menu-button span) { width:22px; height:2px; background:#170653; transition:transform .28s ease; }
         :global(.ge-menu-button.is-open span:first-child) { transform:translateY(4.5px) rotate(45deg); }
         :global(.ge-menu-button.is-open span:last-child) { transform:translateY(-4.5px) rotate(-45deg); }
-        :global(.ge-mega) { position:fixed; z-index:65; top:82px; left:0; width:100%; background:#fff; border-bottom:1px solid rgba(23,6,83,.12); animation:megaIn .34s cubic-bezier(.22,1,.36,1) both; transform-origin:top; }
-        :global(.ge-mega.is-scrolled) { top:70px; }
-        @keyframes megaIn { from{opacity:0;transform:translateY(-12px);clip-path:inset(0 0 100% 0)} to{opacity:1;transform:none;clip-path:inset(0)} }
-        :global(.ge-mega-inner) { width:min(100%,1440px); margin:0 auto; padding:48px clamp(24px,5vw,76px) 54px; display:grid; grid-template-columns:.4fr 1.18fr .62fr; gap:54px; }
-        :global(.ge-mega-label > span),:global(.ge-mega-feature > span),:global(.ge-mobile-kicker) { display:block; font-size:9px; font-weight:900; letter-spacing:.15em; text-transform:uppercase; color:#5c24f5; }
-        :global(.ge-mega-label strong) { display:block; margin-top:12px; font-family:var(--font-display),var(--font-jakarta),sans-serif; font-size:49px; line-height:.86; letter-spacing:-.025em; text-transform:uppercase; color:#170653; }
-        :global(.ge-mega-label p) { max-width:215px; margin:17px 0 0; font-size:11px; line-height:1.5; color:#727486; }
+        :global(.ge-mega) { position:fixed; z-index:65; top:94px; left:0; width:100%; background:#fff; border-bottom:1px solid rgba(23,6,83,.12); animation:megaIn .38s cubic-bezier(.22,1,.36,1) both; transform-origin:top; }
+        :global(.ge-mega.is-scrolled) { top:78px; }
+        @keyframes megaIn { from{opacity:0;transform:translateY(-14px);clip-path:inset(0 0 100% 0)} to{opacity:1;transform:none;clip-path:inset(0)} }
+        :global(.ge-mega-inner) { width:min(100%,1440px); margin:0 auto; padding:54px clamp(24px,5vw,76px) 60px; display:grid; grid-template-columns:.4fr 1.18fr .62fr; gap:54px; }
+        :global(.ge-mega-label > span),:global(.ge-mega-feature > span),:global(.ge-mobile-kicker) { display:block; font-size:10px; font-weight:900; letter-spacing:.15em; text-transform:uppercase; color:#5c24f5; }
+        :global(.ge-mega-label strong) { display:block; margin-top:12px; font-family:var(--font-display),var(--font-jakarta),sans-serif; font-size:54px; line-height:.86; letter-spacing:-.025em; text-transform:uppercase; color:#170653; }
+        :global(.ge-mega-label p) { max-width:225px; margin:18px 0 0; font-size:12px; line-height:1.55; color:#727486; }
         :global(.ge-mega-links) { display:grid; grid-template-columns:repeat(2,1fr); gap:0 34px; }
-        :global(.ge-mega-links a) { position:relative; display:grid; grid-template-columns:26px 1fr 24px; align-content:center; min-height:104px; padding:14px 0; border-bottom:1px solid rgba(23,6,83,.12); animation:megaLinkIn .4s ease both; }
-        @keyframes megaLinkIn { from{opacity:0;transform:translateY(12px)} to{opacity:1;transform:none} }
-        :global(.ge-mega-index) { grid-row:1 / span 2; font-size:9px; font-weight:900; color:#8d8aa0; padding-top:3px; }
-        :global(.ge-mega-links strong) { font-family:var(--font-display),sans-serif; font-size:24px; line-height:.95; text-transform:uppercase; color:#170653; }
-        :global(.ge-mega-links a > span:not(.ge-mega-index)) { margin-top:6px; font-size:10px; line-height:1.4; color:#76778a; }
-        :global(.ge-mega-links a > b) { grid-column:3; grid-row:1 / span 2; align-self:center; width:26px; height:26px; display:grid; place-items:center; border:1px solid rgba(23,6,83,.18); border-radius:50%; font-size:11px; transition:background .2s ease,color .2s ease,transform .2s ease; }
+        :global(.ge-mega-links a) { position:relative; display:grid; grid-template-columns:28px 1fr 28px; align-content:center; min-height:112px; padding:16px 0; border-bottom:1px solid rgba(23,6,83,.12); animation:megaLinkIn .42s ease both; }
+        @keyframes megaLinkIn { from{opacity:0;transform:translateY(14px)} to{opacity:1;transform:none} }
+        :global(.ge-mega-index) { grid-row:1 / span 2; font-size:10px; font-weight:900; color:#8d8aa0; padding-top:3px; }
+        :global(.ge-mega-links strong) { font-family:var(--font-display),sans-serif; font-size:27px; line-height:.95; text-transform:uppercase; color:#170653; }
+        :global(.ge-mega-links a > span:not(.ge-mega-index)) { margin-top:7px; font-size:11px; line-height:1.45; color:#76778a; }
+        :global(.ge-mega-links a > b) { grid-column:3; grid-row:1 / span 2; align-self:center; width:29px; height:29px; display:grid; place-items:center; border:1px solid rgba(23,6,83,.18); border-radius:50%; font-size:12px; transition:background .2s ease,color .2s ease,transform .2s ease; }
         :global(.ge-mega-links a:hover > b) { background:#170653; color:#fff; transform:rotate(8deg); }
-        :global(.ge-mega-feature) { position:relative; overflow:hidden; min-height:232px; display:flex; flex-direction:column; padding:28px; border-radius:24px; background:linear-gradient(145deg,#5c24f5,#25047f); color:#fff; }
-        :global(.ge-mega-feature::after) { content:''; position:absolute; width:150px; height:150px; right:-35px; bottom:-45px; border:1px solid rgba(123,240,196,.8); border-radius:50%; box-shadow:0 0 0 26px rgba(123,240,194,.08),0 0 0 54px rgba(123,240,194,.05); }
+        :global(.ge-mega-feature) { position:relative; overflow:hidden; min-height:250px; display:flex; flex-direction:column; padding:30px; border-radius:25px; background:linear-gradient(145deg,#5c24f5,#25047f); color:#fff; }
+        :global(.ge-mega-feature::after) { content:''; position:absolute; width:160px; height:160px; right:-35px; bottom:-45px; border:1px solid rgba(123,240,196,.8); border-radius:50%; box-shadow:0 0 0 28px rgba(123,240,194,.08),0 0 0 58px rgba(123,240,194,.05); }
         :global(.ge-mega-feature > span) { color:#7bf0c4; }
-        :global(.ge-mega-feature strong) { margin:32px 0 0; font-family:var(--font-display),sans-serif; font-size:35px; line-height:.83; text-transform:uppercase; }
-        :global(.ge-mega-feature p) { max-width:230px; margin:13px 0 auto; font-size:10px; line-height:1.5; color:rgba(255,255,255,.7); }
-        :global(.ge-mega-feature b) { position:relative; z-index:2; margin-top:25px; font-size:10px; text-transform:uppercase; letter-spacing:.08em; }
-        :global(.ge-backdrop) { position:fixed; inset:82px 0 0; z-index:60; width:100%; background:rgba(13,5,57,.34); cursor:default; animation:fadeBackdrop .25s ease both; backdrop-filter:blur(3px); }
-        :global(.ge-backdrop.is-scrolled) { top:70px; }
+        :global(.ge-mega-feature strong) { margin:34px 0 0; font-family:var(--font-display),sans-serif; font-size:38px; line-height:.83; text-transform:uppercase; }
+        :global(.ge-mega-feature p) { max-width:240px; margin:14px 0 auto; font-size:11px; line-height:1.5; color:rgba(255,255,255,.74); }
+        :global(.ge-mega-feature b) { position:relative; z-index:2; margin-top:27px; font-size:11px; text-transform:uppercase; letter-spacing:.08em; }
+        :global(.ge-backdrop) { position:fixed; inset:94px 0 0; z-index:60; width:100%; background:rgba(13,5,57,.34); cursor:default; animation:fadeBackdrop .25s ease both; backdrop-filter:blur(3px); }
+        :global(.ge-backdrop.is-scrolled) { top:78px; }
         @keyframes fadeBackdrop { from{opacity:0} to{opacity:1} }
-        :global(.ge-mobile-menu) { display:none; position:fixed; z-index:66; inset:82px 0 0; background:#f6f4ef; overflow:auto; animation:mobileIn .35s cubic-bezier(.22,1,.36,1) both; }
+        :global(.ge-mobile-menu) { display:none; position:fixed; z-index:66; inset:76px 0 0; background:#f6f4ef; overflow:auto; animation:mobileIn .35s cubic-bezier(.22,1,.36,1) both; }
         :global(.ge-mobile-menu.is-scrolled) { top:70px; }
         @keyframes mobileIn { from{opacity:0;transform:translateY(-8px)} to{opacity:1;transform:none} }
         :global(.ge-mobile-inner) { padding:28px 20px 52px; }
@@ -265,8 +265,8 @@ export default function Navbar() {
         :global(.ge-mobile-link > small) { margin-top:6px; font-size:10px; color:#747485; }
         :global(.ge-mobile-link > b) { grid-column:3; grid-row:1 / span 2; align-self:center; font-size:13px; }
         :global(.ge-mobile-audit) { margin-top:30px; min-height:54px; }
-        @media (max-width:1180px) { :global(.ge-phone){display:none} :global(.ge-desktop-nav){gap:13px} :global(.ge-mega-inner){grid-template-columns:.35fr 1.25fr .62fr;gap:36px} }
-        @media (max-width:980px) { :global(.ge-desktop-nav),:global(.ge-audit){display:none} :global(.ge-menu-button),:global(.ge-mobile-menu){display:flex} :global(.ge-mobile-menu){display:block;top:82px} :global(.ge-mobile-menu.is-scrolled){top:70px} }
+        @media (max-width:1240px) { :global(.ge-phone){display:none} :global(.ge-desktop-nav){gap:14px} :global(.ge-nav-trigger),:global(.ge-nav-direct){font-size:12px} :global(.ge-mega-inner){grid-template-columns:.35fr 1.25fr .62fr;gap:36px} }
+        @media (max-width:980px) { :global(.ge-nav){--nav-h:76px} :global(.ge-nav.is-scrolled){--nav-h:70px} :global(.ge-logo img){height:35px} :global(.ge-desktop-nav),:global(.ge-audit){display:none} :global(.ge-menu-button),:global(.ge-mobile-menu){display:flex} :global(.ge-mobile-menu){display:block;top:76px} :global(.ge-mobile-menu.is-scrolled){top:70px} }
         @media (prefers-reduced-motion:reduce) { :global(.ge-nav),:global(.ge-logo img),:global(.ge-nav-trigger::after),:global(.ge-nav-direct::after),:global(.ge-nav-trigger > span),:global(.ge-audit),:global(.ge-menu-button span),:global(.ge-mega-links a > b){transition:none} :global(.ge-mega),:global(.ge-mega-links a),:global(.ge-backdrop),:global(.ge-mobile-menu),:global(.ge-mobile-panel){animation:none} }
       `}</style>
     </>
