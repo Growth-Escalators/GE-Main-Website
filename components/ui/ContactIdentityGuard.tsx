@@ -9,7 +9,9 @@ const PHONE_HREF = 'tel:+917733888883'
 const EMAIL_PATTERN = /info@growthescalators\.com/gi
 const PHONE_PATTERN = /\+91[\s-]*77338[\s-]*88883/g
 
-function normalizeContactIdentity(root: ParentNode) {
+type ContactRoot = Node & ParentNode
+
+function normalizeContactIdentity(root: ContactRoot) {
   root.querySelectorAll<HTMLAnchorElement>('a[href^="mailto:"]').forEach((anchor) => {
     if (EMAIL_PATTERN.test(anchor.href)) anchor.href = `mailto:${CANONICAL_EMAIL}`
     EMAIL_PATTERN.lastIndex = 0
