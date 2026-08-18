@@ -28,6 +28,7 @@ type LeadPayload = {
   specialization?: string
   city?: string
   budget?: string
+  service?: string
   message?: string
   source?: string
   company?: string
@@ -113,6 +114,7 @@ function validate(body: unknown): { ok: true; data: LeadPayload } | { ok: false;
       specialization: clean(raw.specialization),
       city: clean(raw.city),
       budget: clean(raw.budget),
+      service: clean(raw.service),
       message: clean(raw.message).slice(0, 4000),
       source: clean(raw.source) || 'unknown',
       company,
@@ -177,6 +179,7 @@ function textLines(lead: LeadPayload) {
     lead.specialization && `Specialization / Type: ${lead.specialization}`,
     lead.city && `City: ${lead.city}`,
     lead.budget && `Budget: ${lead.budget}`,
+    lead.service && `Service / capability: ${lead.service}`,
     lead.goal && `Goal: ${lead.goal}`,
     lead.role && `Role / skill needed: ${lead.role}`,
     lead.seats && `Number of resources: ${lead.seats}`,
@@ -266,7 +269,7 @@ function approvedResource(lead: LeadPayload): Resource {
       resource: 'a patient-acquisition diagnosis for your clinic',
     }
   }
-  if (/d2c|ecommerce|e-commerce|meta|fashion|beauty|skincare|jewellery|apparel/i.test(lead.source || '')) {
+  if (/d2c|ecommerce|e-commerce|meta|fashion|beauty|skincare|jewellery|apparel/i.test(`${lead.source || ''} ${lead.service || ''} ${lead.goal || ''}`)) {
     return {
       proof: 'Paraiso moved from 1.9× to 3.2× ROAS while revenue grew 6× in 60 days after the growth system was rebuilt around stronger acquisition and conversion.',
       resource: 'a D2C growth-constraint diagnosis for your store',
