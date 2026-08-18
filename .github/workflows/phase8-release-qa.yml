@@ -1,0 +1,50 @@
+name: Phase 8 Release QA
+
+on:
+  push:
+    branches:
+      - feat/phase-8-refinement-release
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  release-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Production build
+        run: npm run build
+
+      - name: Start production server
+        run: |
+          npm run start -- -H 127.0.0.1 -p 3000 > /tmp/ge-next.log 2>&1 &
+          echo $! > /tmp/ge-next.pid
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:3000/ >/dev/null; then
+              exit 0
+            fi
+            sleep 1
+          done
+          cat /tmp/ge-next.log
+          exit 1
+
+      - name: Sitemap, canonical and internal-link crawl
+        run: node scripts/release-qa.mjs http://127.0.0.1:3000
+
+      - name: Server log tail
+        if: always()
+        run: tail -n 120 /tmp/ge-next.log || true
