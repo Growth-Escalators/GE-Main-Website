@@ -1,231 +1,53 @@
-'use client'
-
-import { useEffect, useRef } from 'react'
-import { gsap, ScrollTrigger } from '@/lib/gsap'
+import Image from 'next/image'
+import Link from 'next/link'
 import Navbar from '@/components/sections/Navbar'
 import Footer from '@/components/sections/Footer'
-import CTA from '@/components/sections/CTA'
-import Team from '@/components/sections/Team'
-import Link from 'next/link'
-import { TEAM_MEMBERS } from '@/lib/constants'
+import BackToTop from '@/components/ui/BackToTop'
+import Phase2Motion from '@/components/phase2/Phase2Motion'
+import styles from '@/components/phase2/Phase2Core.module.css'
 
-// The full-bio <Team/> section below is a scroll-driven carousel: it writes
-// one member's name/role/quote into the DOM at a time via a ref + textContent
-// (see components/sections/Team.tsx), so raw server HTML never contains more
-// than the first member. That's invisible to any crawler that doesn't execute
-// JS (GPTBot, ClaudeBot, PerplexityBot) and unreliable even for ones that do.
-// This block is plain server-rendered JSX so the three department leads are
-// always present in the raw HTML.
-const LEADERSHIP_NAMES = ['Jatin Agrawal', 'Kanishk Khandelwal', 'Sakcham Raj']
-const LEADERSHIP = LEADERSHIP_NAMES
-  .map((n) => TEAM_MEMBERS.find((m) => m.name === n))
-  .filter((m): m is (typeof TEAM_MEMBERS)[number] => Boolean(m))
+const VALUES=[
+  ['01','Commercial clarity over channel theatre'],
+  ['02','Human judgement, amplified by technology'],
+  ['03','Ownership close to the work'],
+  ['04','Proof before promises'],
+] as const
 
-const TIMELINE = [
-  { year: '2021', event: 'Founded in Jaipur with 2 clients and one mission: make every rupee work harder.' },
-  { year: '2022', event: 'First ₹1Cr in ad spend managed. Proof that the system works.' },
-  { year: '2023', event: '50+ brands served. First enterprise client. Team grows to 5.' },
-  { year: '2024', event: '100+ brands. ₹10Cr+ in ad spend. Team of 8. India\'s fastest-growing growth agency.' },
-  { year: '2025', event: 'Expanding beyond Rajasthan. Becoming India\'s go-to growth partner.' },
-]
-
-const VALUES = [
-  { title: 'Results First', desc: 'We don\'t celebrate effort. We celebrate outcomes. Every strategy is measured against one question: did it grow the business?' },
-  { title: 'Radical Transparency', desc: 'You\'ll always know exactly what we\'re doing and why. No black boxes. No guessing. Full visibility, always.' },
-  { title: 'Growth is a System', desc: 'We don\'t run one-off campaigns. We build growth machines that compound over time and work while you sleep.' },
-  { title: 'Your Brand is Our Brand', desc: 'We treat your business like it\'s ours. Your wins are our wins. Your losses are lessons we fix immediately.' },
-]
-
-export default function AboutPage() {
-  const heroRef = useRef<HTMLDivElement>(null)
-  const timelineRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (!heroRef.current) return
-    const ctx = gsap.context(() => {
-      gsap.fromTo('.about-hero-content > *', { y: 30, opacity: 0 }, {
-        y: 0, opacity: 1, duration: 0.7, stagger: 0.12, ease: 'power3.out', delay: 0.2,
-      })
-    }, heroRef.current)
-    return () => ctx.revert()
-  }, [])
-
-  useEffect(() => {
-    if (!timelineRef.current) return
-    const ctx = gsap.context(() => {
-      gsap.fromTo('.timeline-item', { x: -30, opacity: 0 }, {
-        x: 0, opacity: 1, duration: 0.6, stagger: 0.12, ease: 'power3.out',
-        scrollTrigger: { trigger: timelineRef.current, start: 'top 80%' },
-      })
-      gsap.fromTo('.value-card', { y: 36, opacity: 0 }, {
-        y: 0, opacity: 1, duration: 0.7, stagger: 0.1, ease: 'power3.out',
-        scrollTrigger: { trigger: '.values-grid', start: 'top 80%' },
-      })
-      gsap.fromTo('.about-line', { scaleX: 0 }, {
-        scaleX: 1, duration: 0.9, ease: 'power3.out',
-        scrollTrigger: { trigger: '.about-line', start: 'top 85%' },
-      })
-    }, timelineRef.current)
-    return () => ctx.revert()
-  }, [])
-
-  return (
-    <>
-      <Navbar />
-      <main>
-        {/* Hero — split layout */}
-        <section ref={heroRef} className="pt-36 pb-24 px-6 md:px-12 lg:px-24 overflow-hidden" style={{ background: 'var(--bg-primary)' }}>
-          <div className="max-w-7xl mx-auto">
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-              {/* Left */}
-              <div className="about-hero-content">
-                <span className="font-outfit text-[10px] tracking-[0.4em] uppercase block mb-5" style={{ color: 'var(--orange)' }}>
-                  Our Story
-                </span>
-                <h1 className="font-syne font-extrabold leading-none mb-6" style={{ fontSize: 'clamp(40px, 6.5vw, 82px)', color: 'var(--text-primary)' }}>
-                  We Started With<br />One Belief.
-                </h1>
-                <p className="font-outfit font-light text-xl mb-8" style={{ color: 'var(--text-muted)', lineHeight: 1.75 }}>
-                  That every brand — no matter how small — deserves world-class marketing. Not someday. Right now.
-                </p>
-                <Link href="/contact" className="inline-block font-outfit font-semibold px-8 py-4 transition-colors duration-300" style={{ background: 'var(--orange)', color: '#06060A' }}>
-                  Work With Us →
-                </Link>
-              </div>
-
-              {/* Right: animated geometric visual */}
-              <div className="relative h-80 lg:h-[480px] flex items-center justify-center">
-                {/* Rotating rings */}
-                {[1, 0.7, 0.45].map((scale, i) => (
-                  <div
-                    key={i}
-                    className="absolute border rounded-full"
-                    style={{
-                      width: 320 * scale, height: 320 * scale,
-                      borderColor: `rgba(255,101,0,${0.08 + i * 0.1})`,
-                      animation: `blob${i + 1} ${8 + i * 2}s ease-in-out infinite`,
-                    }}
-                  />
-                ))}
-                {/* Orange dot grid */}
-                {Array.from({ length: 16 }).map((_, i) => (
-                  <div
-                    key={i}
-                    className="absolute w-1.5 h-1.5 rounded-full"
-                    style={{
-                      background: 'var(--orange)',
-                      opacity: 0.15 + (i % 4) * 0.1,
-                      left: `${20 + (i % 4) * 20}%`,
-                      top: `${20 + Math.floor(i / 4) * 20}%`,
-                    }}
-                  />
-                ))}
-                {/* Center piece */}
-                <div className="w-20 h-20 flex items-center justify-center font-syne font-extrabold text-2xl" style={{ background: 'var(--orange)', color: '#06060A' }}>
-                  GE
-                </div>
-              </div>
-            </div>
+export default function AboutPage(){
+  return <>
+    <Navbar />
+    <main className={styles.page}>
+      <Phase2Motion />
+      <section className={styles.hero}>
+        <div className={styles.shell}>
+          <div className={styles.heroGrid}>
+            <div><p className={styles.eyebrow} data-p2-hero>About Growth Escalators</p><h1 data-p2-hero>Human-led.<br/>Built to move.</h1></div>
+            <div className={styles.heroAside} data-p2-hero><p>Growth Escalators is a Jaipur-based growth company connecting performance marketing, creative, technology and execution capacity around measurable commercial outcomes.</p><div className={styles.heroActions}><Link href="/work" className={styles.pill}>See our work ↗</Link><Link href="/contact" className={styles.pillLine}>Talk to us</Link></div></div>
           </div>
-        </section>
+          <div className={styles.heroRule}>{[['187+','brands scaled'],['97%','client retention'],['₹10Cr+','ad spend managed'],['Jaipur','India']].map(([v,l])=><div className={styles.heroStat} key={l} data-p2-hero><strong>{v}</strong><span>{l}</span></div>)}</div>
+        </div>
+      </section>
 
-        {/* Timeline */}
-        <section ref={timelineRef} className="py-24 px-6 md:px-12 lg:px-24" style={{ background: 'var(--bg-secondary)' }}>
-          <div className="max-w-5xl mx-auto">
-            <span className="font-outfit text-[10px] tracking-[0.4em] uppercase block mb-4" style={{ color: 'var(--orange)' }}>Our Journey</span>
-            <h2 className="font-syne font-bold mb-14" style={{ fontSize: 'clamp(28px, 4vw, 52px)', color: 'var(--text-primary)' }}>
-              From 2 Clients to 100+ Brands
-            </h2>
-
-            <div className="relative">
-              {/* Vertical line */}
-              <div className="absolute left-[68px] top-0 bottom-0 w-px hidden md:block" style={{ background: 'var(--border)' }} />
-
-              <div className="space-y-10">
-                {TIMELINE.map((item, i) => (
-                  <div key={item.year} className="timeline-item flex gap-6 md:gap-10 items-start">
-                    <div className="shrink-0 w-16 md:w-[68px] text-right">
-                      <span className="font-bebas text-2xl" style={{ color: 'var(--orange)' }}>{item.year}</span>
-                    </div>
-                    <div className="relative flex-1 ge-card p-5">
-                      {/* Dot on line */}
-                      <div className="absolute -left-[42px] top-5 w-3 h-3 rounded-full border-2 hidden md:block" style={{ background: 'var(--bg-primary)', borderColor: 'var(--orange)' }} />
-                      <p className="font-outfit text-base" style={{ color: 'var(--text-muted)', lineHeight: 1.7 }}>{item.event}</p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
+      <section className={`${styles.section} ${styles.white}`}>
+        <div className={styles.shell}>
+          <div className={styles.peopleGrid}>
+            <div className={styles.peopleCopy}><p className={styles.eyebrow} data-p2-reveal>The company</p><h2 data-p2-reveal>Close to the<br/>work. Close to<br/>the outcome.</h2><p data-p2-reveal>Growth Escalators was built around a simple operating idea: strategy should not disappear into a presentation and execution should not disappear into separate queues. The people making the media, creative, website and technology decisions should understand the same business objective.</p><div className={styles.valueList}>{VALUES.map(([n,t])=><div className={styles.value} key={n} data-p2-card><span>{n}</span><strong>{t}</strong></div>)}</div></div>
+            <div className={styles.peopleMedia} data-p2-media><div className={styles.peopleMain}><Image src="/photos/photo-1.png" alt="Growth Escalators team in Jaipur" fill sizes="(max-width:900px) 100vw,58vw" /></div><div className={styles.peopleInset}><Image src="/photos/photo-2.jpeg" alt="Growth Escalators team at work" fill sizes="(max-width:900px) 40vw,20vw" /></div></div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Values */}
-        <section className="py-24 px-6 md:px-12 lg:px-24" style={{ background: 'var(--bg-primary)' }}>
-          <div className="max-w-7xl mx-auto">
-            <span className="font-outfit text-[10px] tracking-[0.4em] uppercase block mb-4" style={{ color: 'var(--orange)' }}>Our Values</span>
-            <h2 className="font-syne font-bold mb-14" style={{ fontSize: 'clamp(28px, 4.5vw, 60px)', color: 'var(--text-primary)' }}>
-              What We Stand For
-            </h2>
-            <div className="about-line w-16 h-0.5 mb-14 origin-left" style={{ background: 'var(--orange)' }} />
+      <section className={`${styles.section} ${styles.lavender}`}>
+        <div className={styles.shell}>
+          <div className={styles.sectionHead}><div><p className={styles.eyebrow} data-p2-reveal>Leadership</p><h2 data-p2-reveal>Founder-led.<br/>Operator-minded.</h2></div><p data-p2-reveal>Jatin Agrawal leads Growth Escalators from Jaipur. The wider team spans performance, design, content, SEO, technology and delivery — with specialist ownership close to the work instead of a layer-heavy agency model.</p></div>
+          <div className={styles.proofBand} data-p2-reveal><strong>Jatin Agrawal<br/>Founder</strong><div><p>Growth Escalators also has a disclosed sister-brand relationship with WizMatch, the technology staffing business founded by Jatin. The brands serve different buyer needs while sharing an operator-led approach to delivery.</p><div className={styles.heroActions}><Link href="/staffing" className={styles.pillLine}>Explore technology staffing</Link><Link href="/contact" className={styles.pill}>Talk to the team ↗</Link></div></div></div>
+        </div>
+      </section>
 
-            <div className="values-grid grid grid-cols-1 md:grid-cols-2 gap-5">
-              {VALUES.map((v, i) => (
-                <div key={i} className="value-card ge-card p-8 hover:-translate-y-1 transition-transform duration-300">
-                  <div className="font-bebas text-5xl mb-4 leading-none" style={{ color: 'rgba(255,101,0,0.12)' }}>0{i + 1}</div>
-                  <h3 className="font-syne font-bold text-xl mb-3" style={{ color: 'var(--text-primary)' }}>{v.title}</h3>
-                  <p className="font-outfit font-light text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>{v.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Why Jaipur */}
-        <section className="py-20 px-6 md:px-12 lg:px-24" style={{ background: 'var(--bg-secondary)' }}>
-          <div className="max-w-4xl mx-auto text-center">
-            <span className="font-outfit text-[10px] tracking-[0.4em] uppercase block mb-4" style={{ color: 'var(--orange)' }}>Why Jaipur</span>
-            <h2 className="font-syne font-bold mb-6" style={{ fontSize: 'clamp(24px, 3.5vw, 44px)', color: 'var(--text-primary)' }}>
-              The Pink City. Unexpected Origin. Unmatched Results.
-            </h2>
-            <p className="font-outfit font-light text-lg leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-              Building a world-class marketing agency in Jaipur wasn&apos;t the conventional choice — it was the smart one. Lower overheads mean we pass genuine value to our clients. A tight, loyal team means every brief is handled with full attention. And a hunger to prove that India-tier-2 cities can produce global-standard work drives everything we do. We&apos;re not from Mumbai or Delhi. We&apos;re from Jaipur. And we&apos;re coming for the top. From this same base we&apos;ve built more than an agency — our sister brand{' '}
-              <a href="https://www.wizmatchenterprises.com" style={{ color: 'var(--orange)', fontWeight: 500, textDecoration: 'underline', textUnderlineOffset: 2 }}>WizMatch</a>{' '}
-              brings the same structured approach to staffing and recruitment.
-            </p>
-          </div>
-        </section>
-
-        {/* Leadership — server-rendered names/titles, see LEADERSHIP comment above */}
-        <section className="py-24 px-6 md:px-12 lg:px-24" style={{ background: 'var(--bg-primary)' }}>
-          <div className="max-w-7xl mx-auto">
-            <span className="font-outfit text-[10px] tracking-[0.4em] uppercase block mb-4" style={{ color: 'var(--orange)' }}>Leadership</span>
-            <h2 className="font-syne font-bold mb-14" style={{ fontSize: 'clamp(28px, 4.5vw, 60px)', color: 'var(--text-primary)' }}>
-              Who Runs Growth Escalators
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              {LEADERSHIP.map((m) => (
-                <div key={m.name} className="ge-card p-8">
-                  <div
-                    className="w-14 h-14 rounded-full flex items-center justify-center font-syne font-bold text-lg mb-5"
-                    style={{ background: 'linear-gradient(135deg,#FF6500,#FF3D00)', color: '#fff' }}
-                  >
-                    {m.initials}
-                  </div>
-                  <h3 className="font-syne font-bold text-xl mb-1" style={{ color: 'var(--text-primary)' }}>{m.name}</h3>
-                  <p className="font-outfit text-sm font-semibold mb-3" style={{ color: 'var(--orange)' }}>{m.role}</p>
-                  <p className="font-outfit font-light text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>{m.bio}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Team — full bios */}
-        <Team />
-
-        <CTA />
-      </main>
-      <Footer />
-    </>
-  )
+      <section className={`${styles.section} ${styles.dark}`}>
+        <div className={`${styles.shell} ${styles.finalCta}`} data-p2-reveal><p className={styles.eyebrow}>The work is the culture test.</p><h2>See what accountability looks like in-market.</h2><p>Explore selected client outcomes, or bring us the constraint you are trying to solve.</p><div className={styles.heroActions}><Link href="/work" className={styles.pillLight}>See the work ↗</Link><Link href="/#book" className={styles.pillLight}>Get Free Audit</Link></div></div>
+      </section>
+    </main>
+    <Footer /><BackToTop />
+  </>
 }
