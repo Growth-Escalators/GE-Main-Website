@@ -1,6 +1,6 @@
-import IndustryLandingPage from '@/components/landing/IndustryLandingPage'
+import CommercialLandingPage from '@/components/commercial/CommercialLandingPage'
 import { REAL_ESTATE_CONTENT } from './_data/content'
 
 export default function RealEstatePage() {
-  return <IndustryLandingPage content={REAL_ESTATE_CONTENT} />
+  return <CommercialLandingPage content={REAL_ESTATE_CONTENT} />
 }
