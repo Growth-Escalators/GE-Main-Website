@@ -1,6 +1,6 @@
-import IndustryLandingPage from '@/components/landing/IndustryLandingPage'
+import CommercialLandingPage from '@/components/commercial/CommercialLandingPage'
 import { DOCTORS_JAIPUR_CONTENT } from './_data/content'
 
 export default function DoctorsMarketingAgencyJaipurPage() {
-  return <IndustryLandingPage content={DOCTORS_JAIPUR_CONTENT} />
+  return <CommercialLandingPage content={DOCTORS_JAIPUR_CONTENT} />
 }
