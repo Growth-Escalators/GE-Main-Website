@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - feat/phase-8-next15-security
+  pull_request:
+    branches:
+      - feat/phase-8-refinement-release
   workflow_dispatch:
 
 permissions:
