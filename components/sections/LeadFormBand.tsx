@@ -97,7 +97,7 @@ export default function LeadFormBand({ submitLabel = 'Book My Free Call →' }: 
               {[0, 1, 2, 3, 4].map((s) => <Star key={s} size={15} fill="currentColor" stroke="none" />)}
             </span>
             <strong>4.9/5</strong>
-            <small>187+ Google reviews</small>
+            <small>Google rating</small>
           </div>
         </motion.div>
 
