@@ -1,13 +1,14 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import Navbar from '@/components/sections/Navbar'
 import Footer from '@/components/sections/Footer'
+import BackToTop from '@/components/ui/BackToTop'
 import { getAllPosts, formatPostDate } from '@/lib/blog'
 import styles from './page.module.css'
 
 export const metadata: Metadata = {
   title: 'Marketing Blog — AI-First Playbooks & Field Notes',
-  description:
-    'AI-first marketing playbooks for doctors, roofers & growing brands — lessons from ₹10Cr+ in ad spend. No fluff, no theory.',
+  description: 'AI-first marketing playbooks for doctors, roofers & growing brands — lessons from ₹10Cr+ in ad spend. No fluff, no theory.',
   alternates: { canonical: '/blog' },
   openGraph: {
     title: 'Marketing Blog — Growth Escalators',
@@ -17,80 +18,88 @@ export const metadata: Metadata = {
   },
 }
 
+const START_HERE = [
+  { label: 'D2C & Ecommerce', href: '/d2c', copy: 'Paid media, creative, CRO, retention and ecommerce economics.' },
+  { label: 'Healthcare', href: '/doctors', copy: 'Patient acquisition, local search, trust and booking journeys.' },
+  { label: 'B2B Pipeline', href: '/b2b-lead-generation-agency', copy: 'ICP, qualified pipeline, long-cycle nurture and sales handoff.' },
+  { label: 'Jaipur Growth', href: '/performance-marketing-agency-jaipur', copy: 'Performance marketing and local commercial search intent.' },
+]
+
 export default function BlogIndex() {
   const posts = getAllPosts()
+  const featured = posts[0]
+  const rest = posts.slice(1)
 
   return (
-    <div className={styles.page}>
-      {/* ── HEADER ─────────────────────────────────────────────────────── */}
-      <header className={styles.header}>
-        <div className={`${styles.headerInner} container-x`}>
-          <Link href="/" className={styles.logo} aria-label="Growth Escalators home">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/logo.webp"
-              alt="Growth Escalators"
-              loading="eager"
-            />
-          </Link>
-          <Link href="/contact" className={`btn-primary ${styles.headerCta}`}>
-            Book a Free Call
-          </Link>
-        </div>
-      </header>
-
-      {/* ── HERO ───────────────────────────────────────────────────────── */}
-      <section className={styles.hero}>
-        <div className={styles.heroAurora} aria-hidden>
-          <div className={styles.heroOrb1} />
-          <div className={styles.heroOrb2} />
-        </div>
-        <div className={`${styles.heroInner} container-x`}>
-          <span className="section-tag">PLAYBOOKS &amp; FIELD NOTES</span>
-          <h1 className={styles.heroTitle}>The Growth Escalators Blog</h1>
-          <p className={styles.heroSub}>
-            AI-first marketing playbooks for doctors, roofers, and growing brands. Hard-won
-            lessons from running over ₹10Cr in ad spend, not regurgitated theory.
-          </p>
-        </div>
-      </section>
-
-      {/* ── POST GRID ──────────────────────────────────────────────────── */}
-      <section className={styles.section}>
-        <div className="container-x">
-          {posts.length === 0 ? (
-            <p className={styles.emptyState}>
-              No posts yet — the first ones are being written. Check back soon.
-            </p>
-          ) : (
-            <div className={styles.grid}>
-              {posts.map((p) => (
-                <Link key={p.slug} href={`/blog/${p.slug}`} className={styles.card}>
-                  <div className={`${styles.thumb} ${styles[`grad_${p.gradient ?? 'mixed'}`]}`}>
-                    <span className={styles.thumbTitle}>{p.title}</span>
-                  </div>
-                  <div className={styles.meta}>
-                    <div className={styles.metaTags}>
-                      {p.tags.slice(0, 2).map((t) => (
-                        <span key={t} className={styles.tag}>{t}</span>
-                      ))}
-                    </div>
-                    <h2 className={styles.cardTitle}>{p.title}</h2>
-                    <p className={styles.cardDesc}>{p.description}</p>
-                    <div className={styles.metaBottom}>
-                      <span>{formatPostDate(p.date)}</span>
-                      <span aria-hidden>·</span>
-                      <span>{p.readingTimeMins} min read</span>
-                    </div>
-                  </div>
-                </Link>
-              ))}
+    <>
+      <Navbar />
+      <main className={styles.page}>
+        <section className={styles.hero}>
+          <div className={styles.shell}>
+            <span className={styles.kicker}>PLAYBOOKS · FIELD NOTES · COMMERCIAL THINKING</span>
+            <h1>INSIGHTS FOR<br />GROWTH OPERATORS.</h1>
+            <div className={styles.heroBottom}>
+              <p>Practical writing on performance marketing, D2C economics, healthcare growth, B2B pipeline and the systems behind websites and AI-enabled delivery.</p>
+              <div><strong>{posts.length}</strong><span>published field notes</span></div>
             </div>
-          )}
-        </div>
-      </section>
+          </div>
+        </section>
 
+        {featured && (
+          <section className={styles.featured}>
+            <div className={styles.shell}>
+              <Link href={`/blog/${featured.slug}`} className={styles.featuredGrid}>
+                <div className={`${styles.featuredVisual} ${styles[`grad_${featured.gradient ?? 'mixed'}`]}`}>
+                  <span>FEATURED NOTE</span>
+                  <strong>{featured.title}</strong>
+                  <small>{featured.tags.slice(0, 3).join(' · ')}</small>
+                </div>
+                <div className={styles.featuredCopy}>
+                  <span className={styles.kicker}>LATEST / SELECTED</span>
+                  <h2>{featured.title}</h2>
+                  <p>{featured.description}</p>
+                  <div className={styles.metaLine}><span>{formatPostDate(featured.date)}</span><span>{featured.readingTimeMins} min read</span></div>
+                  <b>Read the field note ↗</b>
+                </div>
+              </Link>
+            </div>
+          </section>
+        )}
+
+        <section className={styles.startHere}>
+          <div className={styles.shell}>
+            <div className={styles.sectionHead}><span className={styles.kicker}>START BY PROBLEM</span><h2>Go deeper where the commercial question is.</h2></div>
+            <div className={styles.startGrid}>{START_HERE.map((item, index) => <Link href={item.href} key={item.href}><span>0{index + 1}</span><strong>{item.label}</strong><p>{item.copy}</p><b>Explore ↗</b></Link>)}</div>
+          </div>
+        </section>
+
+        <section className={styles.library}>
+          <div className={styles.shell}>
+            <div className={styles.sectionHead}><span className={styles.kicker}>THE LIBRARY</span><h2>Ideas that should survive contact with the numbers.</h2></div>
+            {rest.length === 0 ? <p>No additional posts yet.</p> : (
+              <div className={styles.grid}>
+                {rest.map((post, index) => (
+                  <Link key={post.slug} href={`/blog/${post.slug}`} className={styles.card}>
+                    <div className={`${styles.thumb} ${styles[`grad_${post.gradient ?? 'mixed'}`]}`}><span>0{String(index + 2).padStart(2, '0')}</span><strong>{post.title}</strong></div>
+                    <div className={styles.cardCopy}>
+                      <div className={styles.tags}>{post.tags.slice(0, 2).map((tag) => <span key={tag}>{tag}</span>)}</div>
+                      <h3>{post.title}</h3>
+                      <p>{post.description}</p>
+                      <div className={styles.metaLine}><span>{formatPostDate(post.date)}</span><span>{post.readingTimeMins} min</span></div>
+                    </div>
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
+        </section>
+
+        <section className={styles.close}>
+          <div className={styles.shell}><span className={styles.kicker}>FROM READING TO ACTION</span><h2>Know the theory already?<br />Let’s diagnose the business.</h2><Link href="/contact">Get a free audit ↗</Link></div>
+        </section>
+      </main>
       <Footer />
-    </div>
+      <BackToTop />
+    </>
   )
 }
