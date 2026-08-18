@@ -82,9 +82,36 @@ jobs:
           for (const name of names) {
             const report = JSON.parse(fs.readFileSync(`/tmp/lh-${name}.json`, 'utf8'))
             const c = report.categories
-            const metrics = report.audits
+            const a = report.audits
             const pct = (value) => Math.round((value || 0) * 100)
-            console.log(`${name}: performance=${pct(c.performance.score)} accessibility=${pct(c.accessibility.score)} best-practices=${pct(c['best-practices'].score)} seo=${pct(c.seo.score)} LCP=${metrics['largest-contentful-paint']?.displayValue || '-'} CLS=${metrics['cumulative-layout-shift']?.displayValue || '-'} TBT=${metrics['total-blocking-time']?.displayValue || '-'}`)
+            console.log(`\n=== ${name.toUpperCase()} ===`)
+            console.log(`performance=${pct(c.performance.score)} accessibility=${pct(c.accessibility.score)} best-practices=${pct(c['best-practices'].score)} seo=${pct(c.seo.score)} LCP=${a['largest-contentful-paint']?.displayValue || '-'} CLS=${a['cumulative-layout-shift']?.displayValue || '-'} TBT=${a['total-blocking-time']?.displayValue || '-'}`)
+
+            const shifts = a['layout-shifts']?.details?.items || []
+            if (shifts.length) {
+              console.log('layout shifts:')
+              for (const item of shifts.slice(0, 8)) {
+                console.log(JSON.stringify({ score: item.score, node: item.node?.snippet, selector: item.node?.selector, causes: item.subItems?.items?.map((x) => x.cause) }, null, 2))
+              }
+            }
+
+            const lcp = a['largest-contentful-paint-element']?.details?.items || []
+            if (lcp.length) console.log('LCP element:', JSON.stringify(lcp[0], null, 2))
+
+            const failed = []
+            for (const [id, audit] of Object.entries(a)) {
+              if ((audit.scoreDisplayMode === 'binary' || audit.scoreDisplayMode === 'numeric') && typeof audit.score === 'number' && audit.score < 1) {
+                const inA11y = c.accessibility?.auditRefs?.some((r) => r.id === id)
+                const inBP = c['best-practices']?.auditRefs?.some((r) => r.id === id)
+                if (inA11y || inBP) failed.push({ id, score: audit.score, title: audit.title, displayValue: audit.displayValue })
+              }
+            }
+            if (failed.length) console.log('failed a11y/best-practice audits:', JSON.stringify(failed, null, 2))
+
+            for (const id of ['render-blocking-resources','unused-javascript','unused-css-rules','mainthread-work-breakdown','bootup-time','network-requests']) {
+              const audit = a[id]
+              if (audit?.displayValue) console.log(`${id}: ${audit.displayValue}`)
+            }
           }
           NODE
 
