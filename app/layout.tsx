@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 import { Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
-import './portfolio/portfolio.css'
 import dynamic from 'next/dynamic'
 import GoogleAnalytics from '@/components/analytics/GoogleAnalytics'
 import ContactIdentityGuard from '@/components/ui/ContactIdentityGuard'
