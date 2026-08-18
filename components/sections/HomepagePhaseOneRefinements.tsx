@@ -1,9 +1,16 @@
 'use client'
 
+/**
+ * Phase 1 responsive correction layer.
+ *
+ * Kept separate from the main reference module so the Tinuiti-reference
+ * geometry can continue to evolve without burying viewport-specific fixes in
+ * the art-direction stylesheet. Once the wider site adopts this system in
+ * later phases, these values can graduate into shared design tokens.
+ */
 export default function HomepagePhaseOneRefinements() {
   return (
     <style jsx global>{`
-      /* Phase 1 refinement layer: responsive geometry + spacing only. */
       @media (min-width: 981px) {
         .ge-nav { --nav-h: 94px !important; }
         .ge-nav.is-scrolled { --nav-h: 78px !important; }
@@ -84,10 +91,7 @@ export default function HomepagePhaseOneRefinements() {
           font-size: 15px !important;
           line-height: 1.55 !important;
         }
-        #home-hero-heading + div > div {
-          margin-top: 24px !important;
-          gap: 12px !important;
-        }
+        #home-hero-heading + div > div { margin-top: 24px !important; gap: 12px !important; }
         section[aria-labelledby='home-hero-heading'] > div:nth-child(2) > div:nth-child(2) {
           min-height: clamp(365px, 103vw, 425px) !important;
           height: clamp(365px, 103vw, 425px) !important;
@@ -129,10 +133,7 @@ export default function HomepagePhaseOneRefinements() {
           padding: 16px 12px !important;
         }
         section[aria-labelledby='home-hero-heading'] > div:last-child > div strong { font-size: 38px !important; }
-        section[aria-labelledby='trusted-brands-heading'] {
-          padding-top: 42px !important;
-          padding-bottom: 48px !important;
-        }
+        section[aria-labelledby='trusted-brands-heading'] { padding-top: 42px !important; padding-bottom: 48px !important; }
         #services,
         #industries,
         #growthbot,
@@ -146,9 +147,7 @@ export default function HomepagePhaseOneRefinements() {
         #services > div:first-child > div:first-child,
         section[aria-labelledby='work-heading'] > div:first-child > div:first-child,
         #growthbot > div:first-child > div:first-child,
-        section[aria-labelledby='insights-heading'] > div:first-child > div:first-child {
-          margin-bottom: 48px !important;
-        }
+        section[aria-labelledby='insights-heading'] > div:first-child > div:first-child { margin-bottom: 48px !important; }
         #services h2,
         #industries h2,
         section[aria-labelledby='work-heading'] h2,
