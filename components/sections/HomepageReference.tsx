@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { formatPostDate, getAllPosts } from '@/lib/blog'
+import HomepageMotion from './HomepageMotion'
 import styles from './HomepageReference.module.css'
 
 const PROOF = [
@@ -17,146 +18,148 @@ const BRANDS = [
   'SN Herbals',
   'Credo World',
   'Yellow Diaries',
+  'Odra Organics',
 ]
 
-const CAPABILITIES = [
+const SERVICES = [
   {
-    number: '01',
-    kicker: 'Performance Marketing',
-    title: 'Demand that is accountable to revenue.',
-    copy:
-      'Media buying, funnel strategy and conversion work operate as one system — so spend is judged by business outcomes, not platform vanity metrics.',
-    links: ['Meta Ads', 'Google Ads', 'YouTube', 'CRO & Funnels'],
+    title: 'Performance',
+    copy: 'Meta, Google and full-funnel media engineered around revenue — not vanity metrics.',
     href: '/services',
+    cta: 'Discover performance',
     visual: 'performance',
   },
   {
-    number: '02',
-    kicker: 'Web & Commerce',
-    title: 'The experience after the click matters just as much.',
-    copy:
-      'Shopify, Next.js and landing experiences engineered for speed, clarity and conversion — built to make paid acquisition work harder.',
-    links: ['Shopify', 'Next.js', 'Landing Pages', 'Conversion UX'],
+    title: 'Web & Commerce',
+    copy: 'Shopify, Next.js and conversion experiences that make every click work harder.',
     href: '/portfolio',
+    cta: 'Discover commerce',
     visual: 'commerce',
   },
   {
-    number: '03',
-    kicker: 'Creative & Organic',
-    title: 'Turn customer insight into compounding demand.',
-    copy:
-      'Creative systems, social content and search-led authority that keep the brand recognizable while giving performance channels more to work with.',
-    links: ['Creative Systems', 'Social', 'SEO', 'Content'],
+    title: 'Creative & Social',
+    copy: 'Creative systems and social execution built to turn customer insight into demand.',
     href: '/services',
+    cta: 'Discover creative',
     visual: 'creative',
   },
   {
-    number: '04',
-    kicker: 'Technology & Talent',
-    title: 'Build the tools — and the team — behind the growth.',
-    copy:
-      'AI automation, software delivery and India-based technology staffing connect execution capacity directly to the growth roadmap.',
-    links: ['AI & Automation', 'Software', 'GrowthBot', 'Technology Staffing'],
-    href: '/staffing',
-    visual: 'technology',
+    title: 'Search & Organic',
+    copy: 'Search-led authority for the questions, categories and moments your buyers already care about.',
+    href: '/services',
+    cta: 'Discover search',
+    visual: 'search',
+  },
+  {
+    title: 'AI & Automation',
+    copy: 'Practical AI workflows, software and GrowthBot experiences connected directly to growth.',
+    href: '/services',
+    cta: 'Discover AI',
+    visual: 'ai',
+  },
+  {
+    eyebrow: 'For ambitious growth teams',
+    title: 'Growth Foundation',
+    copy: 'Strategy, acquisition, conversion, creative and technology connected into one operating system.',
+    href: '/#book',
+    cta: 'Build your foundation',
+    visual: 'foundation',
+    featured: true,
   },
 ] as const
 
 const CASES = [
   {
     client: 'Paraiso Comfortwears',
-    category: 'D2C · Performance Marketing',
-    metric: '1.9× → 3.2×',
-    metricLabel: 'ROAS',
-    result: '6× revenue in 60 days',
-    description:
-      'A connected paid-media and conversion programme focused on profitable acquisition, not isolated campaign activity.',
-    className: styles.caseParaiso,
-    mediaLabel: 'Paraiso campaign media',
+    category: 'D2C · Performance',
+    title: 'Scaling Paraiso to 6× revenue in 60 days.',
+    visual: 'paraiso',
+    metrics: [
+      ['3.2×', 'ROAS'],
+      ['6×', 'revenue growth'],
+      ['60', 'days'],
+    ],
   },
   {
     client: 'Elixzor',
     category: 'Performance · Full Funnel',
-    metric: '10×',
-    metricLabel: 'ROAS',
-    result: '₹3.2Cr+ revenue',
-    description:
-      'Full-funnel acquisition built around a clear offer, stronger lead quality and disciplined media scaling.',
-    className: styles.caseElixzor,
-    mediaLabel: 'Elixzor performance media',
+    title: 'Building a profitable acquisition engine around full-funnel performance.',
+    visual: 'elixzor',
+    metrics: [
+      ['10×', 'ROAS'],
+      ['₹3.2Cr+', 'revenue'],
+      ['Full funnel', 'growth system'],
+    ],
   },
   {
     client: 'Dr. Dheeraj Dubay',
     category: 'Healthcare · Lead Generation',
-    metric: '35,000+',
-    metricLabel: 'leads',
-    result: 'Patient acquisition at scale',
-    description:
-      'Healthcare growth combining demand generation, reputation and a conversion path built around patient intent.',
-    className: styles.caseDubay,
-    mediaLabel: 'Dr. Dheeraj Dubay campaign media',
+    title: 'Turning paid media into patient acquisition at meaningful scale.',
+    visual: 'dheeraj',
+    metrics: [
+      ['35K+', 'leads'],
+      ['Healthcare', 'growth'],
+      ['High intent', 'lead journey'],
+    ],
   },
-]
+] as const
 
 function Arrow() {
   return <span aria-hidden>↗</span>
 }
 
 export default function HomepageReference() {
-  const posts = getAllPosts().slice(0, 4)
+  const posts = getAllPosts().slice(0, 5)
   const featuredPost = posts[0]
   const supportingPosts = posts.slice(1)
 
   return (
     <div className={styles.homepage}>
+      <HomepageMotion />
+
       <section className={styles.hero} aria-labelledby="home-hero-heading">
-        <div className={styles.heroGrid}>
+        <div className={styles.heroBackdrop} aria-hidden />
+        <div className={styles.heroShell}>
           <div className={styles.heroCopy}>
-            <p className={styles.eyebrow}>Growth × Technology × Talent</p>
+            <p className={styles.eyebrow} data-hero-reveal>Performance marketing · Technology · Talent</p>
             <h1 id="home-hero-heading" className={styles.heroTitle}>
-              <span>GROWTH,</span>
-              <span className={styles.heroAccent}>ENGINEERED.</span>
+              <span className={styles.heroLine}><i data-hero-line>GROWTH,</i></span>
+              <span className={styles.heroLine}><i data-hero-line>ENGINEERED.</i></span>
             </h1>
-            <p className={styles.heroLead}>
-              We plan the media, build the technology behind it, and staff the people to run it —
-              one connected team accountable to the growth you can measure.
-            </p>
-            <div className={styles.heroActions}>
-              <Link href="/#book" className={styles.primaryCta}>
-                Get Free Audit <Arrow />
-              </Link>
-              <Link href="/work" className={styles.textLink}>
-                See the work <Arrow />
-              </Link>
+            <div className={styles.heroBottom} data-hero-reveal>
+              <p className={styles.heroLead}>
+                One connected team plans the media, builds the technology and brings the execution
+                capacity needed to turn growth into something measurable.
+              </p>
+              <div className={styles.heroActions}>
+                <Link href="/#book" className={styles.primaryCta}>Get Free Audit <Arrow /></Link>
+                <Link href="/work" className={styles.textLink}>See client results <Arrow /></Link>
+              </div>
             </div>
           </div>
 
-          <div className={styles.heroVisual} aria-label="Growth Escalators work and capability montage">
-            <div className={styles.heroImage}>
-              <Image
-                src="/portfolio/hero.png"
-                alt="Growth Escalators portfolio work"
-                fill
-                priority
-                sizes="(max-width: 900px) 100vw, 48vw"
-              />
+          <div className={styles.heroStage} data-hero-reveal>
+            <div className={styles.heroStageRail} aria-hidden>
+              <span>01 / ACQUISITION</span><span>02 / EXPERIENCE</span><span>03 / TECHNOLOGY</span>
             </div>
-            <div className={styles.heroVisualCopy}>
-              <span>One connected growth system</span>
-              <strong>Media / Commerce / AI / Talent</strong>
+            <div className={styles.heroMedia} data-parallax="3">
+              <Image src="/portfolio/hero.png" alt="Growth Escalators work montage" fill priority sizes="(max-width: 900px) 92vw, 46vw" />
             </div>
-            <div className={styles.heroSignal} aria-hidden>
-              <span />
-              <span />
-              <span />
-              <span />
+            <div className={styles.heroTeam} data-parallax="5">
+              <Image src="/photos/photo-1.png" alt="Growth Escalators team" fill sizes="(max-width: 900px) 45vw, 20vw" />
             </div>
+            <div className={styles.heroMetric}>
+              <span>PROOF / 01</span>
+              <strong>3.2×</strong>
+              <small>Paraiso ROAS</small>
+            </div>
+            <div className={styles.heroTag}>GROWTH × TECH</div>
           </div>
         </div>
 
         <div className={styles.proofRail} aria-label="Growth Escalators proof points">
           {PROOF.map((item) => (
-            <div className={styles.proofItem} key={item.label}>
+            <div className={styles.proofItem} key={item.label} data-hero-reveal>
               <strong>{item.value}</strong>
               <span>{item.label}</span>
             </div>
@@ -166,8 +169,8 @@ export default function HomepageReference() {
 
       <section className={styles.brands} aria-labelledby="trusted-brands-heading">
         <div className={styles.sectionShell}>
-          <div className={styles.brandHeading}>
-            <p className={styles.eyebrow} id="trusted-brands-heading">Trusted by growing brands</p>
+          <div className={styles.brandHeading} data-reveal>
+            <p className={styles.eyebrow} id="trusted-brands-heading">Trusted by 187+ growing brands</p>
             <span>Across D2C, healthcare, services and technology</span>
           </div>
         </div>
@@ -178,39 +181,34 @@ export default function HomepageReference() {
             ))}
           </div>
         </div>
-        <div className={styles.missingLogos}>
-          <span>CLIENT LOGO REQUIRED — Odra Organics</span>
-          <span>CLIENT LOGO REQUIRED — Cklakart</span>
-        </div>
       </section>
 
-      <section id="industries" className={styles.capabilities} aria-labelledby="capabilities-heading">
+      <section id="industries" className={styles.services} aria-labelledby="services-heading">
         <div className={styles.sectionShell}>
-          <div className={styles.chapterIntro}>
-            <p className={styles.eyebrow}>Connected capabilities</p>
-            <h2 id="capabilities-heading">One growth system. Multiple levers.</h2>
-            <p>
-              Strategy does not stop at the ad account. We move across acquisition, experience,
-              technology and execution capacity depending on what is constraining growth.
+          <div className={styles.servicesIntro}>
+            <p className={styles.eyebrow} data-reveal>Our connected capabilities</p>
+            <h2 id="services-heading" data-reveal="headline">Every growth lever.<br />One connected system.</h2>
+            <p data-reveal>
+              Acquisition, experience, creative, search and technology work better when they share
+              one commercial goal. We connect the pieces so growth compounds instead of fragmenting.
             </p>
+            <Link href="/services" className={styles.pillCta} data-reveal>Discover our services</Link>
           </div>
 
-          <div className={styles.capabilityList}>
-            {CAPABILITIES.map((capability) => (
-              <article className={styles.capability} key={capability.number}>
-                <div className={styles.capabilityIndex}>{capability.number}</div>
-                <div className={styles.capabilityCopy}>
-                  <p className={styles.capabilityKicker}>{capability.kicker}</p>
-                  <h3>{capability.title}</h3>
-                  <p>{capability.copy}</p>
-                  <ul aria-label={`${capability.kicker} capabilities`}>
-                    {capability.links.map((link) => <li key={link}>{link}</li>)}
-                  </ul>
-                  <Link href={capability.href} className={styles.textLink}>
-                    Explore capability <Arrow />
-                  </Link>
+          <div className={styles.serviceGrid}>
+            {SERVICES.map((service) => (
+              <article
+                className={`${styles.serviceCard} ${'featured' in service && service.featured ? styles.serviceFeatured : ''}`}
+                key={service.title}
+                data-card-reveal
+              >
+                <div className={styles.serviceContent}>
+                  {'eyebrow' in service && service.eyebrow ? <p className={styles.serviceEyebrow}>{service.eyebrow}</p> : null}
+                  <h3>{service.title}</h3>
+                  <p>{service.copy}</p>
+                  <Link href={service.href} className={styles.cardCta}>{service.cta}</Link>
                 </div>
-                <CapabilityVisual type={capability.visual} />
+                <ServiceVisual type={service.visual} />
               </article>
             ))}
           </div>
@@ -219,77 +217,99 @@ export default function HomepageReference() {
 
       <section className={styles.work} aria-labelledby="work-heading">
         <div className={styles.sectionShell}>
-          <div className={styles.workHeading}>
+          <div className={styles.workIntro}>
             <div>
-              <p className={styles.eyebrow}>Featured work</p>
-              <h2 id="work-heading">Proof should be impossible to miss.</h2>
+              <p className={styles.eyebrow} data-reveal>Our work</p>
+              <h2 id="work-heading" data-reveal="headline">Growth you can see.<br />Proof you can measure.</h2>
             </div>
-            <Link href="/work" className={styles.lightLink}>
-              View all work <Arrow />
-            </Link>
+            <div className={styles.workIntroSide} data-reveal>
+              <p>Real business outcomes, surfaced before the process deck.</p>
+              <Link href="/work" className={styles.lightPill}>See all work</Link>
+            </div>
           </div>
 
           <div className={styles.caseList}>
-            {CASES.map((item, index) => (
-              <article className={`${styles.caseStudy} ${item.className}`} key={item.client}>
-                <div className={styles.caseTopline}>
-                  <span>{String(index + 1).padStart(2, '0')}</span>
-                  <span>{item.category}</span>
-                </div>
-                <div className={styles.caseGrid}>
-                  <div className={styles.caseCopy}>
-                    <p className={styles.caseClient}>{item.client}</p>
-                    <div className={styles.caseMetric}>
-                      <strong>{item.metric}</strong>
-                      <span>{item.metricLabel}</span>
-                    </div>
-                    <p className={styles.caseResult}>{item.result}</p>
-                    <p className={styles.caseDescription}>{item.description}</p>
-                    <Link href="/work" className={styles.caseLink}>
-                      Read the work <Arrow />
-                    </Link>
+            {CASES.map((item) => (
+              <article className={styles.caseCard} key={item.client} data-card-reveal>
+                <div className={styles.caseMedia} data-media-reveal>
+                  <div data-media-inner className={styles.caseMediaInner}>
+                    <CaseVisual type={item.visual} client={item.client} />
                   </div>
-                  <div className={styles.caseMedia} aria-label={`${item.client}: ${item.mediaLabel}`}>
-                    <div className={styles.caseMediaFrame}>
-                      <span>REAL CASE-STUDY MEDIA SLOT</span>
-                      <strong>{item.mediaLabel}</strong>
-                      <small>Reserved for verified GE project asset</small>
-                    </div>
+                </div>
+                <div className={styles.caseBody}>
+                  <div className={styles.caseCategory}>{item.category}</div>
+                  <h3>{item.title}</h3>
+                  <Link href="/work" className={styles.caseCta}>Learn more</Link>
+                  <div className={styles.caseMetrics}>
+                    {item.metrics.map(([value, label]) => (
+                      <div className={styles.caseMetric} key={`${item.client}-${value}`}>
+                        <span aria-hidden>↗</span>
+                        <strong>{value}</strong>
+                        <small>{label}</small>
+                      </div>
+                    ))}
                   </div>
                 </div>
               </article>
             ))}
+
+            <article className={`${styles.caseCard} ${styles.caseCardFeature}`} data-card-reveal>
+              <div className={styles.caseMedia} data-media-reveal>
+                <div className={`${styles.caseMediaInner} ${styles.moreWorkMedia}`} data-media-inner>
+                  <Image src="/portfolio/hero.png" alt="Growth Escalators selected work" fill sizes="(max-width: 900px) 100vw, 46vw" />
+                  <span>GROWTH ESCALATORS / SELECTED WORK</span>
+                </div>
+              </div>
+              <div className={styles.caseBody}>
+                <div className={styles.caseCategory}>More proof · More categories</div>
+                <h3>See how growth, technology and creative connect across the wider portfolio.</h3>
+                <Link href="/work" className={styles.caseCtaAlt}>Explore all case studies</Link>
+                <div className={styles.caseFeatureFooter}>
+                  <span>D2C</span><span>Healthcare</span><span>Commerce</span><span>Technology</span>
+                </div>
+              </div>
+            </article>
           </div>
         </div>
       </section>
 
       <section className={styles.technology} aria-labelledby="technology-heading">
         <div className={styles.sectionShell}>
-          <div className={styles.technologyGrid}>
-            <div className={styles.technologyCopy}>
-              <p className={styles.eyebrow}>Technology · GrowthBot</p>
-              <h2 id="technology-heading">Technology that keeps working after the click.</h2>
-              <p>
-                GrowthBot is the clearest example of how we connect technology to acquisition:
-                understand intent, recommend the right service, qualify the opportunity and hand a
-                cleaner lead to the team.
+          <div className={styles.techTop}>
+            <div className={styles.techCopy}>
+              <p className={styles.eyebrow} data-reveal>Built by Growth Escalators</p>
+              <h2 id="technology-heading" data-reveal="headline">Meet your AI growth advantage.</h2>
+              <p data-reveal>
+                GrowthBot turns website intent into a cleaner commercial conversation — guiding the
+                visitor, recommending the right service, qualifying the opportunity and handing it to the team.
               </p>
-              <Link href="/services" className={styles.lightLink}>
-                Explore technology <Arrow />
-              </Link>
+              <Link href="/services" className={styles.darkPill} data-reveal>Explore technology</Link>
             </div>
-            <div className={styles.workflow} aria-label="GrowthBot qualification workflow">
-              {['Visitor intent', 'Service recommendation', 'Budget & timeline', 'Lead handoff'].map((step, index) => (
-                <div className={styles.workflowStep} key={step}>
-                  <span>{String(index + 1).padStart(2, '0')}</span>
-                  <strong>{step}</strong>
-                </div>
-              ))}
-              <div className={styles.workflowStatus}>
-                <span className={styles.statusDot} />
-                GrowthBot · Always on
+            <div className={styles.techBenefits} data-reveal>
+              <span>Understand visitor intent</span>
+              <span>Recommend relevant services</span>
+              <span>Qualify budget & timeline</span>
+              <span>Hand off a cleaner lead</span>
+            </div>
+          </div>
+
+          <div className={styles.botStage} data-media-reveal>
+            <div className={styles.botGlow} aria-hidden />
+            <div className={styles.botWindow} data-media-inner>
+              <div className={styles.botHeader}>
+                <div><b>GrowthBot</b><span>AI Growth Consultant</span></div>
+                <span className={styles.online}><i /> Online</span>
               </div>
+              <div className={styles.botConversation}>
+                <div className={styles.botBubble}>Hey 👋 I&apos;m GrowthBot. Are you looking to grow your brand, or just exploring?</div>
+                <div className={styles.botChips}><span>I want to grow my brand 🚀</span><span>Just browsing 👀</span></div>
+                <div className={styles.botBubble}>Great. What would make the biggest difference right now?</div>
+                <div className={styles.botChips}><span>Better ROAS</span><span>More qualified leads</span><span>A better website</span></div>
+              </div>
+              <div className={styles.botInput}>Ask GrowthBot anything <b>↗</b></div>
             </div>
+            <div className={styles.botSignalCard} data-parallax="5"><span>QUALIFICATION</span><strong>Intent → fit → handoff</strong></div>
+            <div className={styles.botResultCard} data-parallax="3"><span>ALWAYS ON</span><strong>24 / 7</strong><small>website qualification</small></div>
           </div>
         </div>
       </section>
@@ -298,32 +318,22 @@ export default function HomepageReference() {
         <div className={styles.sectionShell}>
           <div className={styles.peopleGrid}>
             <div className={styles.peopleCopy}>
-              <p className={styles.eyebrow}>The people behind the system</p>
-              <h2 id="people-heading">Human-led. AI-enabled. Accountable to outcomes.</h2>
-              <p>
-                Every account stays close to real operators. Strategy, creative, performance and
-                technology work together around the same commercial goal instead of disappearing
-                into separate queues.
+              <p className={styles.eyebrow} data-reveal>The people behind the system</p>
+              <h2 id="people-heading" data-reveal="headline">Human-led.<br />AI-enabled.<br />Accountable.</h2>
+              <p data-reveal>
+                Strategy stays close to the people doing the work. Performance, creative and technology
+                operators share the same outcomes instead of disappearing into separate queues.
               </p>
-              <div className={styles.peoplePrinciples}>
-                <span>Direct strategist access</span>
-                <span>Transparent reporting</span>
-                <span>Cross-functional execution</span>
-              </div>
-              <Link href="/about" className={styles.textLink}>
-                Meet Growth Escalators <Arrow />
-              </Link>
+              <Link href="/about" className={styles.pillOutline} data-reveal>Meet the team</Link>
             </div>
-            <div className={styles.photoCollage} aria-label="Growth Escalators team">
-              <div className={`${styles.photo} ${styles.photoA}`}>
-                <Image src="/photos/photo-1.png" alt="Growth Escalators team" fill sizes="(max-width: 900px) 55vw, 28vw" />
+            <div className={styles.peopleMedia} data-media-reveal>
+              <div className={styles.peopleMain} data-media-inner>
+                <Image src="/photos/photo-1.png" alt="Growth Escalators team" fill sizes="(max-width: 900px) 100vw, 52vw" />
               </div>
-              <div className={`${styles.photo} ${styles.photoB}`}>
-                <Image src="/photos/photo-2.jpeg" alt="Growth Escalators team at work" fill sizes="(max-width: 900px) 45vw, 22vw" />
+              <div className={styles.peopleInset} data-parallax="4">
+                <Image src="/photos/photo-2.jpeg" alt="Growth Escalators team at work" fill sizes="(max-width: 900px) 45vw, 20vw" />
               </div>
-              <div className={`${styles.photo} ${styles.photoC}`}>
-                <Image src="/photos/photo-3.jpeg" alt="Growth Escalators people" fill sizes="(max-width: 900px) 45vw, 22vw" />
-              </div>
+              <div className={styles.peopleLabel}>JAIPUR / INDIA<br />GROWTH × TECHNOLOGY</div>
             </div>
           </div>
         </div>
@@ -334,33 +344,29 @@ export default function HomepageReference() {
           <div className={styles.sectionShell}>
             <div className={styles.insightsHeading}>
               <div>
-                <p className={styles.eyebrow}>Insights & intelligence</p>
-                <h2 id="insights-heading">What we are learning from the work.</h2>
+                <p className={styles.eyebrow} data-reveal>Insights & intelligence</p>
+                <h2 id="insights-heading" data-reveal="headline">Thinking built<br />to move the work.</h2>
               </div>
-              <Link href="/blog" className={styles.textLink}>
-                All insights <Arrow />
-              </Link>
+              <Link href="/blog" className={styles.pillOutline} data-reveal>View all insights</Link>
             </div>
 
             <div className={styles.insightsGrid}>
-              <Link href={`/blog/${featuredPost.slug}`} className={styles.featuredInsight}>
-                <div className={styles.insightMeta}>
-                  <span>{featuredPost.tags[0] ?? 'Growth'}</span>
-                  <span>{formatPostDate(featuredPost.date)}</span>
-                </div>
+              <Link href={`/blog/${featuredPost.slug}`} className={styles.featuredInsight} data-card-reveal>
+                <div className={styles.insightNumber}>01</div>
+                <div className={styles.insightMeta}><span>{featuredPost.tags[0] ?? 'Growth'}</span><span>{formatPostDate(featuredPost.date)}</span></div>
                 <h3>{featuredPost.title}</h3>
                 <p>{featuredPost.description}</p>
                 <span className={styles.insightRead}>Read article <Arrow /></span>
               </Link>
               <div className={styles.supportingInsights}>
-                {supportingPosts.map((post) => (
-                  <Link href={`/blog/${post.slug}`} className={styles.supportingInsight} key={post.slug}>
-                    <div className={styles.insightMeta}>
-                      <span>{post.tags[0] ?? 'Growth'}</span>
-                      <span>{formatPostDate(post.date)}</span>
+                {supportingPosts.map((post, index) => (
+                  <Link href={`/blog/${post.slug}`} className={styles.supportingInsight} key={post.slug} data-card-reveal>
+                    <span className={styles.supportingNumber}>{String(index + 2).padStart(2, '0')}</span>
+                    <div>
+                      <div className={styles.insightMeta}><span>{post.tags[0] ?? 'Growth'}</span><span>{formatPostDate(post.date)}</span></div>
+                      <h3>{post.title}</h3>
                     </div>
-                    <h3>{post.title}</h3>
-                    <span className={styles.insightRead}>Read <Arrow /></span>
+                    <span className={styles.articleArrow}>↗</span>
                   </Link>
                 ))}
               </div>
@@ -368,76 +374,109 @@ export default function HomepageReference() {
           </div>
         </section>
       )}
-
-      <section className={styles.auditLeadIn} aria-label="Free growth audit">
-        <div className={styles.sectionShell}>
-          <p className={styles.eyebrow}>Your next move</p>
-          <h2>Find the constraint. Fix what matters. Scale from there.</h2>
-          <p>
-            The free audit is the fastest way to see where acquisition, conversion or execution is
-            leaking growth before you spend more.
-          </p>
-          <Link href="/#book" className={styles.primaryCta}>
-            Get Free Audit <Arrow />
-          </Link>
-        </div>
-      </section>
     </div>
   )
 }
 
-function CapabilityVisual({ type }: { type: (typeof CAPABILITIES)[number]['visual'] }) {
+function ServiceVisual({ type }: { type: typeof SERVICES[number]['visual'] }) {
   if (type === 'performance') {
     return (
-      <div className={`${styles.capabilityVisual} ${styles.performanceVisual}`} aria-label="Paraiso performance outcome">
-        <span className={styles.visualLabel}>Verified outcome · Paraiso</span>
-        <strong>3.2×</strong>
-        <p>ROAS · up from 1.9×</p>
-        <div className={styles.performanceBars} aria-hidden>
-          <span /><span /><span /><span /><span />
-        </div>
+      <div className={`${styles.serviceVisual} ${styles.performanceVisual}`} aria-hidden>
+        <div className={styles.visualRing} />
+        <div className={styles.performanceCard}><span>ROAS</span><strong>3.2×</strong><i>↗</i></div>
+        <div className={styles.performanceBars}><i /><i /><i /><i /><i /></div>
+        <div className={styles.visualCursor}>↗</div>
+        <div className={styles.visualWord}>MEDIA</div>
       </div>
     )
   }
 
   if (type === 'commerce') {
     return (
-      <div className={`${styles.capabilityVisual} ${styles.commerceVisual}`}>
-        <Image
-          src="/portfolio/hero.png"
-          alt="Growth Escalators web and commerce portfolio"
-          fill
-          sizes="(max-width: 900px) 100vw, 42vw"
-        />
-        <div className={styles.visualCaption}>Web / Commerce / Conversion</div>
+      <div className={`${styles.serviceVisual} ${styles.commerceVisual}`} aria-hidden>
+        <div className={styles.browserMini}>
+          <div className={styles.browserDots}><i /><i /><i /></div>
+          <div className={styles.browserImage}><Image src="/portfolio/hero.png" alt="" fill sizes="260px" /></div>
+        </div>
+        <div className={styles.phoneMini}><span>SHOP</span><strong>→</strong></div>
+        <div className={styles.commerceTag}>CRO + COMMERCE</div>
       </div>
     )
   }
 
   if (type === 'creative') {
     return (
-      <div className={`${styles.capabilityVisual} ${styles.creativeVisual}`} aria-label="Creative demand system">
-        <span>INSIGHT</span>
-        <span>→</span>
-        <span>CREATIVE</span>
-        <span>→</span>
-        <span>DEMAND</span>
-        <p>One message system across paid, social and search.</p>
+      <div className={`${styles.serviceVisual} ${styles.creativeVisual}`} aria-hidden>
+        <div className={styles.creativePoster}><span>STOP</span><strong>THE<br />SCROLL.</strong></div>
+        <div className={styles.creativeTile}>AD<br />01</div>
+        <div className={styles.creativeTileAlt}>SOCIAL</div>
+        <div className={styles.visualCursor}>↗</div>
+      </div>
+    )
+  }
+
+  if (type === 'search') {
+    return (
+      <div className={`${styles.serviceVisual} ${styles.searchVisual}`} aria-hidden>
+        <div className={styles.searchBox}><span>growth that compounds</span><b>⌕</b></div>
+        <div className={styles.searchResult}><i /><span><b>Growth Escalators</b><small>Performance · Commerce · AI</small></span></div>
+        <div className={styles.searchResult}><i /><span><b>High-intent discovery</b><small>Search + content + authority</small></span></div>
+        <div className={styles.searchPulse}>SEO</div>
+      </div>
+    )
+  }
+
+  if (type === 'ai') {
+    return (
+      <div className={`${styles.serviceVisual} ${styles.aiVisual}`} aria-hidden>
+        <div className={styles.aiWindow}>
+          <span>GrowthBot</span>
+          <div className={styles.aiMessage}>What are you trying to grow?</div>
+          <div className={styles.aiChips}><i>ROAS</i><i>Leads</i><i>Website</i></div>
+        </div>
+        <div className={styles.aiNode}>AI</div>
+        <div className={styles.aiLine} />
       </div>
     )
   }
 
   return (
-    <div className={`${styles.capabilityVisual} ${styles.techVisual}`} aria-label="Technology and staffing system">
-      <div>
-        <span>BUILD</span>
-        <strong>AI + SOFTWARE</strong>
-      </div>
-      <div>
-        <span>STAFF</span>
-        <strong>VETTED TECH TALENT</strong>
-      </div>
-      <div className={styles.techConnector} aria-hidden />
+    <div className={`${styles.serviceVisual} ${styles.foundationVisual}`} aria-hidden>
+      <div className={styles.foundationOrbit}><i /><i /><i /></div>
+      <div className={styles.foundationPerson}>GE</div>
+      <div className={`${styles.foundationBubble} ${styles.foundationBubbleA}`}>Acquisition</div>
+      <div className={`${styles.foundationBubble} ${styles.foundationBubbleB}`}>Technology</div>
+      <div className={styles.foundationSpark}>✦</div>
+    </div>
+  )
+}
+
+function CaseVisual({ type, client }: { type: typeof CASES[number]['visual']; client: string }) {
+  return (
+    <div className={`${styles.caseArtwork} ${styles[`caseArtwork_${type}`]}`}>
+      <div className={styles.caseArtworkGrid} aria-hidden />
+      <span className={styles.caseArtworkLabel}>{client}</span>
+      {type === 'paraiso' && (
+        <>
+          <div className={styles.artPhone}><span>PA</span><strong>3.2×</strong><small>ROAS</small></div>
+          <div className={styles.artChart}><i /><i /><i /><i /><i /></div>
+          <div className={styles.artBadge}>6× REVENUE</div>
+        </>
+      )}
+      {type === 'elixzor' && (
+        <>
+          <div className={styles.artMetricHuge}>10×</div>
+          <div className={styles.artRibbon}>FULL FUNNEL / PERFORMANCE</div>
+          <div className={styles.artDotMatrix}>{Array.from({ length: 18 }).map((_, i) => <i key={i} />)}</div>
+        </>
+      )}
+      {type === 'dheeraj' && (
+        <>
+          <div className={styles.artMedicalRing}><span>35K+</span><small>LEADS</small></div>
+          <div className={styles.artJourney}><i /><b /><i /><b /><i /></div>
+          <div className={styles.artHealthcare}>PATIENT<br />INTENT</div>
+        </>
+      )}
     </div>
   )
 }
