@@ -15,7 +15,7 @@ permissions:
 jobs:
   release-qa:
     runs-on: ubuntu-latest
-    timeout-minutes: 25
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -28,6 +28,19 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Production dependency audit
+        run: |
+          npm audit --omit=dev --json > /tmp/npm-audit.json || true
+          node - <<'NODE'
+          const fs = require('fs')
+          const audit = JSON.parse(fs.readFileSync('/tmp/npm-audit.json', 'utf8'))
+          console.log('Production vulnerability counts:', audit.metadata?.vulnerabilities || {})
+          const entries = Object.entries(audit.vulnerabilities || {})
+            .filter(([, value]) => value.severity === 'high' || value.severity === 'critical')
+            .map(([name, value]) => ({ name, severity: value.severity, direct: value.isDirect, via: value.via, fixAvailable: value.fixAvailable }))
+          console.log(JSON.stringify(entries, null, 2))
+          NODE
 
       - name: Production build
         run: npm run build
@@ -47,6 +60,33 @@ jobs:
 
       - name: Sitemap, canonical and internal-link crawl
         run: node scripts/release-qa.mjs http://127.0.0.1:3000
+
+      - name: Lighthouse representative mobile templates
+        run: |
+          CHROME=$(which google-chrome || which chromium || which chromium-browser)
+          echo "Using Chrome: $CHROME"
+          export CHROME_PATH="$CHROME"
+          for item in "home:/" "services:/services" "commercial:/d2c" "staffing:/staffing" "blog:/blog"; do
+            name="${item%%:*}"
+            path="${item#*:}"
+            npx --yes lighthouse "http://127.0.0.1:3000${path}" \
+              --quiet \
+              --chrome-flags="--headless --no-sandbox --disable-dev-shm-usage" \
+              --only-categories=performance,accessibility,best-practices,seo \
+              --output=json \
+              --output-path="/tmp/lh-${name}.json"
+          done
+          node - <<'NODE'
+          const fs = require('fs')
+          const names = ['home', 'services', 'commercial', 'staffing', 'blog']
+          for (const name of names) {
+            const report = JSON.parse(fs.readFileSync(`/tmp/lh-${name}.json`, 'utf8'))
+            const c = report.categories
+            const metrics = report.audits
+            const pct = (value) => Math.round((value || 0) * 100)
+            console.log(`${name}: performance=${pct(c.performance.score)} accessibility=${pct(c.accessibility.score)} best-practices=${pct(c['best-practices'].score)} seo=${pct(c.seo.score)} LCP=${metrics['largest-contentful-paint']?.displayValue || '-'} CLS=${metrics['cumulative-layout-shift']?.displayValue || '-'} TBT=${metrics['total-blocking-time']?.displayValue || '-'}`)
+          }
+          NODE
 
       - name: Server log tail
         if: always()
