@@ -25,7 +25,7 @@ export default function Image() {
           <div style={{ marginTop: 32, fontSize: 27, color: 'rgba(255,255,255,.78)' }}>Performance marketing × websites × AI × technology talent</div>
         </div>
         <div style={{ display: 'flex', gap: 24, fontSize: 18, color: 'rgba(255,255,255,.72)' }}>
-          <span>187+ brands scaled</span><span>·</span><span>97% client retention</span><span>·</span><span>₹10Cr+ ad spend managed</span>
+          <span>187+ brands scaled</span><span>·</span><span>97% client retention</span><span>·</span><span>INR 10Cr+ ad spend managed</span>
         </div>
       </div>
     ),
