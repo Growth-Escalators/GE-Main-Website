@@ -46,8 +46,26 @@ function canonicalFrom(html) {
   return match?.[1] || ''
 }
 
+function metaDescription(html) {
+  const match = html.match(/<meta[^>]+name=["']description["'][^>]+content=["']([^"']+)["']/i)
+    || html.match(/<meta[^>]+content=["']([^"']+)["'][^>]+name=["']description["']/i)
+  return match?.[1] || ''
+}
+
+function pageTitle(html) {
+  return html.match(/<title>(.*?)<\/title>/i)?.[1]?.trim() || ''
+}
+
 function h1Count(html) {
   return (html.match(/<h1(?:\s|>)/gi) || []).length
+}
+
+async function postLead(payload) {
+  return get('/api/lead', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload),
+  })
 }
 
 async function main() {
@@ -63,6 +81,7 @@ async function main() {
   const sitemapText = await sitemap.text()
   const paths = sitemapPaths(sitemapText)
   if (paths.length < 40) fail(`Sitemap unexpectedly small: ${paths.length} routes`)
+  if (new Set(paths).size !== paths.length) fail('Sitemap contains duplicate URLs')
   if (paths.includes('/restaurants')) fail('Retired /restaurants route reappeared in sitemap')
 
   const discoveredLinks = new Set()
@@ -83,6 +102,8 @@ async function main() {
     const html = await response.text()
     const h1s = h1Count(html)
     if (h1s !== 1) fail(`${path} has ${h1s} H1 elements (expected exactly 1)`)
+    if (!pageTitle(html)) fail(`${path} is missing a document title`)
+    if (!metaDescription(html)) fail(`${path} is missing a meta description`)
 
     const canonical = canonicalFrom(html)
     const expectedCanonical = `${PROD}${path === '/' ? '/' : path}`
@@ -95,6 +116,7 @@ async function main() {
 
     if (/info@growthescalators\.com/i.test(html)) fail(`${path} contains the retired Info@ email`)
     if (/Meta\s*&\s*Google Ads certified/i.test(html)) fail(`${path} contains the unverified certification claim`)
+    if (/187\+\s*Google reviews/i.test(html)) fail(`${path} incorrectly labels the 187+ brands proof as Google reviews`)
 
     for (const link of localLinks(html)) discoveredLinks.add(link)
   }
@@ -134,6 +156,41 @@ async function main() {
     if (!pattern.test(html)) fail(`${path} lost its core buyer-intent language`)
   }
 
+  const standardLead = await postLead({
+    name: 'Release QA',
+    email: 'qa@example.com',
+    phone: '+910000000000',
+    company: 'QA',
+    service: 'Performance Ads',
+    budget: 'QA',
+    source: 'Release QA — local only',
+  })
+  if (!standardLead.ok) fail(`Standard /api/lead contract returned ${standardLead.status}`)
+
+  const invalidUsLead = await postLead({
+    name: 'Release QA',
+    email: 'qa@example.com',
+    company: 'QA',
+    role: 'Java Developer',
+    seats: '1',
+    market: 'US',
+    source: 'Release QA — local only',
+  })
+  if (invalidUsLead.status !== 400) fail(`US market validation accepted a lead without companyType/timezone (${invalidUsLead.status})`)
+
+  const validUsLead = await postLead({
+    name: 'Release QA',
+    email: 'qa@example.com',
+    company: 'QA',
+    role: 'Java Developer',
+    seats: '1',
+    market: 'US',
+    companyType: 'Staffing company',
+    usTimeZone: 'ET',
+    source: 'Release QA — local only',
+  })
+  if (!validUsLead.ok) fail(`Valid US /api/lead contract returned ${validUsLead.status}`)
+
   if (warnings.length) {
     console.log('\nWarnings:')
     for (const item of warnings) console.log(`- ${item}`)
@@ -145,7 +202,7 @@ async function main() {
     process.exit(1)
   }
 
-  console.log(`\nPASS — ${paths.length} sitemap routes and ${discoveredLinks.size} internal destinations checked.`)
+  console.log(`\nPASS — ${paths.length} sitemap routes, ${discoveredLinks.size} internal destinations and lead contracts checked.`)
 }
 
 main().catch((error) => {
