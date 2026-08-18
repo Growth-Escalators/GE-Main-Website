@@ -13,12 +13,19 @@ type ContactRoot = Node & ParentNode
 
 function normalizeContactIdentity(root: ContactRoot) {
   root.querySelectorAll<HTMLAnchorElement>('a[href^="mailto:"]').forEach((anchor) => {
-    if (EMAIL_PATTERN.test(anchor.href)) anchor.href = `mailto:${CANONICAL_EMAIL}`
+    if (EMAIL_PATTERN.test(anchor.href) && anchor.getAttribute('href') !== `mailto:${CANONICAL_EMAIL}`) {
+      anchor.setAttribute('href', `mailto:${CANONICAL_EMAIL}`)
+    }
     EMAIL_PATTERN.lastIndex = 0
   })
 
   root.querySelectorAll<HTMLAnchorElement>('a[href^="tel:"]').forEach((anchor) => {
-    if (anchor.href.replace(/\D/g, '').endsWith('917733888883')) anchor.href = PHONE_HREF
+    if (
+      anchor.href.replace(/\D/g, '').endsWith('917733888883') &&
+      anchor.getAttribute('href') !== PHONE_HREF
+    ) {
+      anchor.setAttribute('href', PHONE_HREF)
+    }
   })
 
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT)
