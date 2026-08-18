@@ -3,11 +3,11 @@ import type { Metadata } from 'next'
 export const metadata: Metadata = {
   title: 'Case Studies — ROAS, Leads & Revenue Results',
   description:
-    'Real case studies from 100+ brands — ROAS 1.8x → 5.2x, CPL down 75%, revenue up ₹8L in 90 days. ₹10Cr+ ad spend managed. See the results.',
+    'Growth Escalators case studies across D2C, ecommerce and healthcare: Paraiso reached 3.2× ROAS with 6× revenue growth, Elixzor reached 10× ROAS and ₹3.2Cr+ revenue, and Dr. Dheeraj Dubay generated 35,000+ leads.',
   alternates: { canonical: '/work' },
   openGraph: {
     title: 'Case Studies — Growth Escalators',
-    description: 'Real case studies from 100+ brands — ROAS 1.8x → 5.2x, CPL down 75%, revenue up ₹8L in 90 days.',
+    description: 'Verified outcome-led work across D2C, ecommerce and healthcare from Growth Escalators.',
     url: '/work',
     type: 'website',
   },
