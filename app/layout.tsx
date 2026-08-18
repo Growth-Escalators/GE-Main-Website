@@ -88,8 +88,8 @@ const ORGANIZATION_SCHEMA = {
   url: SITE_ID,
   logo: `${SITE_ID}/og-image.jpg`,
   description: 'AI-first performance marketing agency. Specialists for doctors, roofing contractors and growing brands.',
-  email: 'Info@growthescalators.com',
-  telephone: '+91-77338-88883',
+  email: 'jatin@growthescalators.com',
+  telephone: '+91-7733888883',
   address: {
     '@type': 'PostalAddress',
     streetAddress: '264/103-104, Sector 26, Sanganer, Pratap Nagar',
