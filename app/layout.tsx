@@ -7,8 +7,6 @@ import GoogleAnalytics from '@/components/analytics/GoogleAnalytics'
 import ContactIdentityGuard from '@/components/ui/ContactIdentityGuard'
 
 const GrowthBot = dynamic(() => import('@/components/ui/GrowthBot'), { ssr: false })
-const CursorGlow = dynamic(() => import('@/components/portfolio/CursorGlow'), { ssr: false })
-const ScrollProgress = dynamic(() => import('@/components/portfolio/ScrollProgress'), { ssr: false })
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -149,8 +147,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body className={jakarta.variable}>
         <GoogleAnalytics />
         <ContactIdentityGuard />
-        <ScrollProgress />
-        <CursorGlow />
         {children}
         <GrowthBot />
       </body>
