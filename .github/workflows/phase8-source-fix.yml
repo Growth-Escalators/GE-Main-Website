@@ -1,0 +1,42 @@
+name: Phase 8 Source Cleanup
+
+on:
+  push:
+    branches:
+      - feat/phase-8-refinement-release
+
+permissions:
+  contents: write
+
+jobs:
+  cleanup:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: feat/phase-8-refinement-release
+      - name: Remove retired homepage certification copy
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          p = Path('components/sections/HomepageReference.tsx')
+          s = p.read_text()
+          old = 'Meta & Google Ads certified · 10,000+ campaigns · Jaipur, India · Serving brands globally'
+          new = '₹10Cr+ ad spend managed · 97% client retention · 10,000+ campaigns · Jaipur, India · Serving brands globally'
+          if old not in s:
+              print('Retired certification copy already absent')
+          else:
+              p.write_text(s.replace(old, new))
+          PY
+      - name: Commit cleanup if needed
+        run: |
+          if git diff --quiet; then
+            echo 'No cleanup needed'
+            exit 0
+          fi
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add components/sections/HomepageReference.tsx
+          git commit -m 'phase8: remove retired homepage certification copy'
+          git push origin HEAD:feat/phase-8-refinement-release
