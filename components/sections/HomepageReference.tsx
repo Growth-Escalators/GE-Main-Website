@@ -178,7 +178,7 @@ export default function HomepageReference() {
         <div className={styles.sectionShell}>
           <div className={styles.brandHeading} data-reveal>
             <p className={styles.eyebrow} id="trusted-brands-heading">Trusted by 187+ growing brands</p>
-            <span>Meta & Google Ads certified · 10,000+ campaigns · Jaipur, India · Serving brands globally</span>
+            <span>₹10Cr+ ad spend managed · 97% client retention · 10,000+ campaigns · Jaipur, India · Serving brands globally</span>
           </div>
         </div>
         <div className={styles.brandMarquee} aria-label={BRANDS.join(', ')}>
