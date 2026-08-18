@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { formatPostDate, getAllPosts } from '@/lib/blog'
+import HomepageIndustryGateway from './HomepageIndustryGateway'
 import HomepageMotion from './HomepageMotion'
 import styles from './HomepageReference.module.css'
 
@@ -24,37 +25,37 @@ const BRANDS = [
 const SERVICES = [
   {
     title: 'Performance',
-    copy: 'Meta, Google and full-funnel media engineered around revenue — not vanity metrics.',
-    href: '/services',
-    cta: 'Discover performance',
+    copy: 'Meta Ads, Google Ads and full-funnel performance marketing engineered around revenue — not vanity metrics.',
+    href: '/performance-marketing-agency-jaipur',
+    cta: 'Explore performance',
     visual: 'performance',
   },
   {
     title: 'Web & Commerce',
-    copy: 'Shopify, Next.js and conversion experiences that make every click work harder.',
-    href: '/portfolio',
-    cta: 'Discover commerce',
+    copy: 'Shopify, Next.js and conversion-focused websites that make every click, product page and checkout work harder.',
+    href: '/website-development-company-jaipur',
+    cta: 'Explore web & commerce',
     visual: 'commerce',
   },
   {
     title: 'Creative & Social',
-    copy: 'Creative systems and social execution built to turn customer insight into demand.',
+    copy: 'Creative systems, content and social execution built to turn customer insight into measurable demand.',
     href: '/services',
-    cta: 'Discover creative',
+    cta: 'Explore creative',
     visual: 'creative',
   },
   {
     title: 'Search & Organic',
-    copy: 'Search-led authority for the questions, categories and moments your buyers already care about.',
+    copy: 'SEO, content and search-led authority for the questions, categories and moments your buyers already care about.',
     href: '/services',
-    cta: 'Discover search',
+    cta: 'Explore search',
     visual: 'search',
   },
   {
     title: 'AI & Automation',
-    copy: 'Practical AI workflows, software and GrowthBot experiences connected directly to growth.',
-    href: '/services',
-    cta: 'Discover AI',
+    copy: 'AI automation, software workflows and GrowthBot experiences connected directly to acquisition and conversion.',
+    href: '/software-development-company-jaipur',
+    cta: 'Explore AI & software',
     visual: 'ai',
   },
   {
@@ -71,9 +72,11 @@ const SERVICES = [
 const CASES = [
   {
     client: 'Paraiso Comfortwears',
-    category: 'D2C · Performance',
+    category: 'D2C Performance Marketing · Ecommerce Growth',
     title: 'Scaling Paraiso to 6× revenue in 60 days.',
     visual: 'paraiso',
+    href: '/d2c',
+    cta: 'Explore D2C growth',
     metrics: [
       ['3.2×', 'ROAS'],
       ['6×', 'revenue growth'],
@@ -82,9 +85,11 @@ const CASES = [
   },
   {
     client: 'Elixzor',
-    category: 'Performance · Full Funnel',
+    category: 'Ecommerce Advertising · Full-Funnel Performance',
     title: 'Building a profitable acquisition engine around full-funnel performance.',
     visual: 'elixzor',
+    href: '/ecommerce-advertising-agency',
+    cta: 'Explore ecommerce ads',
     metrics: [
       ['10×', 'ROAS'],
       ['₹3.2Cr+', 'revenue'],
@@ -93,9 +98,11 @@ const CASES = [
   },
   {
     client: 'Dr. Dheeraj Dubay',
-    category: 'Healthcare · Lead Generation',
+    category: 'Healthcare Performance Marketing · Patient Acquisition',
     title: 'Turning paid media into patient acquisition at meaningful scale.',
     visual: 'dheeraj',
+    href: '/doctors',
+    cta: 'Explore healthcare growth',
     metrics: [
       ['35K+', 'leads'],
       ['Healthcare', 'growth'],
@@ -121,15 +128,15 @@ export default function HomepageReference() {
         <div className={styles.heroBackdrop} aria-hidden />
         <div className={styles.heroShell}>
           <div className={styles.heroCopy}>
-            <p className={styles.eyebrow} data-hero-reveal>Performance marketing · Technology · Talent</p>
+            <p className={styles.eyebrow} data-hero-reveal>Performance Marketing · Web & Commerce · AI Automation · Talent</p>
             <h1 id="home-hero-heading" className={styles.heroTitle}>
               <span className={styles.heroLine}><i data-hero-line>GROWTH,</i></span>
               <span className={styles.heroLine}><i data-hero-line>ENGINEERED.</i></span>
             </h1>
             <div className={styles.heroBottom} data-hero-reveal>
               <p className={styles.heroLead}>
-                One connected team plans the media, builds the technology and brings the execution
-                capacity needed to turn growth into something measurable.
+                Growth Escalators is a Jaipur-based performance marketing and growth technology team connecting
+                Meta Ads, Google Ads, websites, AI automation and execution capacity around measurable outcomes.
               </p>
               <div className={styles.heroActions}>
                 <Link href="/#book" className={styles.primaryCta}>Get Free Audit <Arrow /></Link>
@@ -146,7 +153,7 @@ export default function HomepageReference() {
               <Image src="/portfolio/hero.png" alt="Growth Escalators work montage" fill priority sizes="(max-width: 900px) 92vw, 46vw" />
             </div>
             <div className={styles.heroTeam} data-parallax="5">
-              <Image src="/photos/photo-1.png" alt="Growth Escalators team" fill sizes="(max-width: 900px) 45vw, 20vw" />
+              <Image src="/photos/photo-1.png" alt="Growth Escalators team in Jaipur" fill sizes="(max-width: 900px) 45vw, 20vw" />
             </div>
             <div className={styles.heroMetric}>
               <span>PROOF / 01</span>
@@ -171,7 +178,7 @@ export default function HomepageReference() {
         <div className={styles.sectionShell}>
           <div className={styles.brandHeading} data-reveal>
             <p className={styles.eyebrow} id="trusted-brands-heading">Trusted by 187+ growing brands</p>
-            <span>Across D2C, healthcare, services and technology</span>
+            <span>Meta & Google Ads certified · 10,000+ campaigns · Jaipur, India · Serving brands globally</span>
           </div>
         </div>
         <div className={styles.brandMarquee} aria-label={BRANDS.join(', ')}>
@@ -183,14 +190,14 @@ export default function HomepageReference() {
         </div>
       </section>
 
-      <section id="industries" className={styles.services} aria-labelledby="services-heading">
+      <section id="services" className={styles.services} aria-labelledby="services-heading">
         <div className={styles.sectionShell}>
           <div className={styles.servicesIntro}>
             <p className={styles.eyebrow} data-reveal>Our connected capabilities</p>
             <h2 id="services-heading" data-reveal="headline">Every growth lever.<br />One connected system.</h2>
             <p data-reveal>
-              Acquisition, experience, creative, search and technology work better when they share
-              one commercial goal. We connect the pieces so growth compounds instead of fragmenting.
+              Performance marketing, conversion experiences, creative, SEO and technology work better when they
+              share one commercial goal. We connect the pieces so growth compounds instead of fragmenting.
             </p>
             <Link href="/services" className={styles.pillCta} data-reveal>Discover our services</Link>
           </div>
@@ -214,6 +221,8 @@ export default function HomepageReference() {
           </div>
         </div>
       </section>
+
+      <HomepageIndustryGateway />
 
       <section className={styles.work} aria-labelledby="work-heading">
         <div className={styles.sectionShell}>
@@ -239,7 +248,7 @@ export default function HomepageReference() {
                 <div className={styles.caseBody}>
                   <div className={styles.caseCategory}>{item.category}</div>
                   <h3>{item.title}</h3>
-                  <Link href="/work" className={styles.caseCta}>Learn more</Link>
+                  <Link href={item.href} className={styles.caseCta}>{item.cta}</Link>
                   <div className={styles.caseMetrics}>
                     {item.metrics.map(([value, label]) => (
                       <div className={styles.caseMetric} key={`${item.client}-${value}`}>
@@ -273,17 +282,17 @@ export default function HomepageReference() {
         </div>
       </section>
 
-      <section className={styles.technology} aria-labelledby="technology-heading">
+      <section id="growthbot" className={styles.technology} aria-labelledby="technology-heading">
         <div className={styles.sectionShell}>
           <div className={styles.techTop}>
             <div className={styles.techCopy}>
               <p className={styles.eyebrow} data-reveal>Built by Growth Escalators</p>
               <h2 id="technology-heading" data-reveal="headline">Meet your AI growth advantage.</h2>
               <p data-reveal>
-                GrowthBot turns website intent into a cleaner commercial conversation — guiding the
-                visitor, recommending the right service, qualifying the opportunity and handing it to the team.
+                GrowthBot combines AI automation, conversational lead qualification and website conversion —
+                understanding visitor intent, recommending the right service and handing a cleaner lead to the team.
               </p>
-              <Link href="/services" className={styles.darkPill} data-reveal>Explore technology</Link>
+              <Link href="/software-development-company-jaipur" className={styles.darkPill} data-reveal>Explore AI & software</Link>
             </div>
             <div className={styles.techBenefits} data-reveal>
               <span>Understand visitor intent</span>
