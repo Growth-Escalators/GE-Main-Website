@@ -1,232 +1,236 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { motion, AnimatePresence } from 'framer-motion'
 import { trackLead } from '@/lib/analytics'
 
-/* Per the design handoff: the homepage nav is Services / Staffing(new) /
-   Industries / Work / Contact. Home is reached via the logo. */
-type NavItem = { label: string; href: string; badge?: 'new' }
-const NAV: NavItem[] = [
-  { label: 'Services', href: '/services' },
-  { label: 'Staffing', href: '/staffing', badge: 'new' },
-  { label: 'Industries', href: '/#industries' },
-  { label: 'Work', href: '/work' },
-  { label: 'Portfolio', href: '/portfolio' },
-  { label: 'Contact', href: '/contact' },
-]
+type MenuKey = 'services' | 'industries' | 'technology'
+type MenuItem = { label: string; href: string; description: string }
 
-function Logo() {
-  return (
-    <Link href="/" aria-label="Growth Escalators — Home" className="inline-flex items-center">
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src="/logo.webp" alt="Growth Escalators" style={{ height: 34, width: 'auto', display: 'block' }} />
-    </Link>
-  )
+const MENUS: Record<MenuKey, { label: string; items: MenuItem[] }> = {
+  services: {
+    label: 'Services',
+    items: [
+      { label: 'Performance Marketing', href: '/services', description: 'Paid media, funnels and conversion.' },
+      { label: 'D2C Growth', href: '/d2c', description: 'Commerce acquisition and retention.' },
+      { label: 'Creative & Social', href: '/services', description: 'Creative systems built for demand.' },
+      { label: 'SEO & Organic', href: '/services', description: 'Search-led authority and discovery.' },
+    ],
+  },
+  industries: {
+    label: 'Industries',
+    items: [
+      { label: 'D2C & Ecommerce', href: '/d2c', description: 'Growth for product-led brands.' },
+      { label: 'Healthcare', href: '/doctors-marketing-agency-jaipur', description: 'Patient acquisition and reputation.' },
+      { label: 'B2B', href: '/b2b-lead-generation-agency', description: 'Pipeline creation for complex sales.' },
+      { label: 'Explore Industries', href: '/#industries', description: 'See how capabilities connect by market.' },
+    ],
+  },
+  technology: {
+    label: 'Technology',
+    items: [
+      { label: 'Web & Commerce', href: '/portfolio', description: 'Shopify, Next.js and conversion UX.' },
+      { label: 'AI & Automation', href: '/services', description: 'Practical automation tied to growth.' },
+      { label: 'GrowthBot', href: '/#book', description: 'Intent, qualification and lead handoff.' },
+      { label: 'Technology Staffing', href: '/staffing', description: 'India-based screened technology talent.' },
+    ],
+  },
 }
 
+const DIRECT = [
+  { label: 'Work', href: '/work' },
+  { label: 'Insights', href: '/blog' },
+  { label: 'About', href: '/about' },
+]
+
 export default function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false)
   const pathname = usePathname()
+  const [open, setOpen] = useState<MenuKey | null>(null)
+  const [mobileOpen, setMobileOpen] = useState(false)
+  const [mobilePanel, setMobilePanel] = useState<MenuKey | null>(null)
+  const [scrolled, setScrolled] = useState(false)
+  const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
 
-  // Close mobile menu on route change.
-  useEffect(() => { setMenuOpen(false) }, [pathname])
+  const cancelClose = () => {
+    if (closeTimer.current) clearTimeout(closeTimer.current)
+    closeTimer.current = null
+  }
+  const scheduleClose = () => {
+    cancelClose()
+    closeTimer.current = setTimeout(() => setOpen(null), 160)
+  }
 
-  // Lock body scroll when mobile menu is open.
   useEffect(() => {
-    if (!menuOpen) return
-    const prev = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    return () => { document.body.style.overflow = prev }
-  }, [menuOpen])
+    setOpen(null)
+    setMobileOpen(false)
+    setMobilePanel(null)
+  }, [pathname])
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 12)
+    onScroll()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
+  useEffect(() => {
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setOpen(null)
+        setMobileOpen(false)
+        setMobilePanel(null)
+      }
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
+
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [mobileOpen])
 
   return (
     <>
-      <motion.nav
-        initial={{ y: -16, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
-        className="sticky top-0 z-50"
-        style={{
-          background: 'var(--nav-bg)',
-          backdropFilter: 'blur(18px) saturate(160%)',
-          WebkitBackdropFilter: 'blur(18px) saturate(160%)',
-          borderBottom: '1px solid var(--border-hair)',
-        }}
-      >
-        <div className="container-x flex items-center justify-between" style={{ padding: 'clamp(12px, 2vw, 16px) clamp(16px, 4vw, 40px)' }}>
-          <Logo />
+      <nav className={`ge-nav ${scrolled ? 'is-scrolled' : ''}`} aria-label="Primary navigation">
+        <div className="ge-nav-inner">
+          <Link href="/" className="ge-logo" aria-label="Growth Escalators home">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src="/logo.webp" alt="Growth Escalators" />
+          </Link>
 
-          {/* Center links — desktop */}
-          <div className="hidden lg:flex items-center" style={{ gap: 30, fontSize: 14.5, fontWeight: 600, color: 'var(--text-secondary)' }}>
-            {NAV.map((link) => {
-              const isStaffing = link.badge === 'new'
-              const isActive = pathname === link.href || (link.href === '/#industries' && pathname === '/')
-              return (
-                <Link
-                  key={link.href}
-                  href={link.href}
-                  className="nav-link inline-flex items-center"
-                  style={{
-                    gap: 6,
-                    color: isStaffing ? 'var(--orange)' : (isActive ? 'var(--orange)' : 'var(--text-secondary)'),
-                    transition: 'color 0.25s',
-                  }}
-                >
-                  {link.label}
-                  {link.badge === 'new' && (
-                    <span
-                      style={{
-                        fontSize: 9, fontWeight: 800, letterSpacing: '0.06em', textTransform: 'uppercase',
-                        background: 'var(--orange)', color: '#fff',
-                        padding: '2px 6px', borderRadius: 5,
-                      }}
-                    >
-                      New
-                    </span>
-                  )}
-                </Link>
-              )
-            })}
+          <div className="ge-desktop-nav">
+            {(Object.keys(MENUS) as MenuKey[]).map((key) => (
+              <button
+                key={key}
+                type="button"
+                className="ge-nav-trigger"
+                aria-expanded={open === key}
+                onMouseEnter={() => { cancelClose(); setOpen(key) }}
+                onMouseLeave={scheduleClose}
+                onFocus={() => { cancelClose(); setOpen(key) }}
+                onClick={() => setOpen(open === key ? null : key)}
+              >
+                {MENUS[key].label} <span aria-hidden>⌄</span>
+              </button>
+            ))}
+            {DIRECT.map((item) => (
+              <Link key={item.href} href={item.href} className="ge-nav-direct">{item.label}</Link>
+            ))}
           </div>
 
-          {/* Right cluster */}
-          <div className="flex items-center" style={{ gap: 16 }}>
-            <a
-              href="tel:+917733888883"
-              onClick={() => trackLead('call')}
-              className="hidden md:inline"
-              style={{ fontSize: 14, fontWeight: 700, color: 'var(--text-primary)' }}
-            >
-              +91 77338 88883
-            </a>
-            <Link
-              href="/#book"
-              className="hidden md:inline-flex items-center justify-center btn-audit"
-              style={{
-                background: 'linear-gradient(135deg, var(--orange), var(--orange-light))',
-                color: '#fff',
-                fontSize: 14, fontWeight: 800,
-                padding: '11px 22px',
-                borderRadius: 10,
-                boxShadow: '0 4px 16px rgba(255, 107, 53, 0.30)',
-                transition: 'transform .25s, box-shadow .25s',
-              }}
-            >
-              Get Free Audit
-            </Link>
-
+          <div className="ge-nav-actions">
+            <a href="tel:+917733888883" className="ge-phone" onClick={() => trackLead('call')}>+91 77338 88883</a>
+            <Link href="/#book" className="ge-audit">Get Free Audit</Link>
             <button
-              className="lg:hidden flex flex-col items-center justify-center gap-[5px] w-10 h-10"
-              onClick={() => setMenuOpen((v) => !v)}
-              aria-label={menuOpen ? 'Close menu' : 'Open menu'}
-              aria-expanded={menuOpen}
+              type="button"
+              className="ge-menu-button"
+              aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
+              aria-expanded={mobileOpen}
+              onClick={() => { setMobileOpen((value) => !value); setMobilePanel(null) }}
             >
-              {[0, 1, 2].map((i) => (
-                <span
-                  key={i}
-                  className="block w-5 h-[2px] transition-all duration-300 rounded-full"
-                  style={{
-                    background: 'var(--text-primary)',
-                    opacity: i === 1 && menuOpen ? 0 : 1,
-                    transform:
-                      i === 0 && menuOpen ? 'rotate(45deg) translateY(7px)'
-                      : i === 2 && menuOpen ? 'rotate(-45deg) translateY(-7px)' : 'none',
-                  }}
-                />
-              ))}
+              <span /><span />
             </button>
           </div>
         </div>
-      </motion.nav>
+      </nav>
 
-      {/* Mobile menu overlay */}
-      <AnimatePresence>
-        {menuOpen && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
-            className="fixed inset-0 z-40 lg:hidden"
-            style={{ background: 'var(--bg-primary)', paddingTop: 80 }}
-          >
-            <div className="container-x flex flex-col" style={{ gap: 4, padding: '16px 24px' }}>
-              {NAV.map((link, i) => (
-                <motion.div
-                  key={link.href}
-                  initial={{ opacity: 0, y: 12 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.06 + i * 0.05, duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
-                >
-                  <Link
-                    href={link.href}
-                    onClick={() => setMenuOpen(false)}
-                    className="flex items-center justify-between py-4"
-                    style={{
-                      fontSize: 22, fontWeight: 800, letterSpacing: '-0.01em',
-                      color: link.badge === 'new' ? 'var(--orange)' : 'var(--text-primary)',
-                      borderBottom: '1px solid var(--border-hair)',
-                    }}
-                  >
-                    <span className="inline-flex items-center gap-2">
-                      {link.label}
-                      {link.badge === 'new' && (
-                        <span
-                          style={{
-                            fontSize: 10, fontWeight: 800, letterSpacing: '0.06em', textTransform: 'uppercase',
-                            background: 'var(--orange)', color: '#fff',
-                            padding: '2px 7px', borderRadius: 5,
-                          }}
-                        >
-                          New
-                        </span>
-                      )}
-                    </span>
-                    <span style={{ color: 'var(--text-muted)', fontSize: 16 }}>→</span>
+      {open && (
+        <>
+          <div className="ge-mega" onMouseEnter={cancelClose} onMouseLeave={scheduleClose}>
+            <div className="ge-mega-inner">
+              <div className="ge-mega-label">
+                <span>Explore</span>
+                <strong>{MENUS[open].label}</strong>
+              </div>
+              <div className="ge-mega-links">
+                {MENUS[open].items.map((item) => (
+                  <Link key={`${open}-${item.label}`} href={item.href} onClick={() => setOpen(null)}>
+                    <strong>{item.label}</strong>
+                    <span>{item.description}</span>
                   </Link>
-                </motion.div>
-              ))}
-              <motion.div
-                initial={{ opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.06 + NAV.length * 0.05, duration: 0.35 }}
-                className="mt-6 flex flex-col gap-3"
-              >
-                <a href="tel:+917733888883" onClick={() => trackLead('call')} style={{ fontSize: 16, fontWeight: 700, color: 'var(--text-secondary)' }}>
-                  +91 77338 88883
-                </a>
-                <Link
-                  href="/#book"
-                  onClick={() => setMenuOpen(false)}
-                  className="inline-flex items-center justify-center"
-                  style={{
-                    background: 'linear-gradient(135deg, var(--orange), var(--orange-light))',
-                    color: '#fff', fontSize: 16, fontWeight: 800,
-                    padding: '14px 22px', borderRadius: 12,
-                    boxShadow: '0 8px 26px rgba(255, 107, 53, 0.34)',
-                  }}
-                >
-                  Get Free Audit →
-                </Link>
-              </motion.div>
+                ))}
+              </div>
+              <Link href="/work" className="ge-mega-feature" onClick={() => setOpen(null)}>
+                <span>Featured work</span>
+                <strong>See how connected execution turns into measurable outcomes.</strong>
+                <b>Explore case studies ↗</b>
+              </Link>
             </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+          </div>
+          <button className="ge-backdrop" aria-label="Close navigation menu" onClick={() => setOpen(null)} />
+        </>
+      )}
+
+      {mobileOpen && (
+        <div className="ge-mobile-menu">
+          <div className="ge-mobile-inner">
+            {mobilePanel ? (
+              <>
+                <button className="ge-mobile-back" type="button" onClick={() => setMobilePanel(null)}>← Back</button>
+                <p className="ge-mobile-title">{MENUS[mobilePanel].label}</p>
+                {MENUS[mobilePanel].items.map((item) => (
+                  <Link key={item.label} href={item.href} className="ge-mobile-link">
+                    <strong>{item.label}</strong><span>{item.description}</span>
+                  </Link>
+                ))}
+              </>
+            ) : (
+              <>
+                {(Object.keys(MENUS) as MenuKey[]).map((key) => (
+                  <button key={key} type="button" className="ge-mobile-root" onClick={() => setMobilePanel(key)}>
+                    {MENUS[key].label}<span>→</span>
+                  </button>
+                ))}
+                {DIRECT.map((item) => <Link key={item.href} href={item.href} className="ge-mobile-root">{item.label}<span>↗</span></Link>)}
+                <Link href="/contact" className="ge-mobile-root">Contact<span>↗</span></Link>
+                <Link href="/#book" className="ge-mobile-audit">Get Free Audit ↗</Link>
+              </>
+            )}
+          </div>
+        </div>
+      )}
 
       <style jsx>{`
-        :global(.nav-link):hover { color: var(--orange) !important; }
-        :global(.btn-audit):hover { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(255,107,53,.4); }
-        :global(.brand-wordmark) { font-size: 17px; }
-        @media (min-width: 480px) { :global(.brand-wordmark) { font-size: 19px; } }
-        /* Hide the very small wordmark on extra-tight screens (<360px) so the
-           logo + hamburger + button never collide. */
-        @media (max-width: 359px) {
-          :global(.brand-wordmark) { display: none; }
-        }
+        :global(.ge-nav) { position: sticky; top: 0; z-index: 70; height: 78px; background: #fff; border-bottom: 1px solid rgba(10,19,36,.1); transition: box-shadow .2s ease; }
+        :global(.ge-nav.is-scrolled) { box-shadow: 0 10px 30px rgba(7,27,59,.08); }
+        :global(.ge-nav-inner) { width: min(100%,1440px); height: 100%; margin: 0 auto; padding: 0 clamp(24px,5vw,76px); display: flex; align-items: center; justify-content: space-between; gap: 28px; }
+        :global(.ge-logo img) { width: auto; height: 34px; display: block; }
+        :global(.ge-desktop-nav) { display: flex; align-items: center; gap: clamp(18px,2vw,31px); margin-left: auto; }
+        :global(.ge-nav-trigger), :global(.ge-nav-direct) { min-height: 44px; display: inline-flex; align-items: center; gap: 5px; font-size: 13px; font-weight: 700; color: #0a1324; }
+        :global(.ge-nav-trigger:hover), :global(.ge-nav-direct:hover) { color: #f36b36; }
+        :global(.ge-nav-actions) { display: flex; align-items: center; gap: 15px; }
+        :global(.ge-phone) { font-size: 12px; font-weight: 700; white-space: nowrap; }
+        :global(.ge-audit), :global(.ge-mobile-audit) { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; background: #f36b36; color: white; padding: 0 18px; font-size: 13px; font-weight: 800; }
+        :global(.ge-menu-button) { display: none; width: 44px; height: 44px; align-items: center; justify-content: center; flex-direction: column; gap: 7px; }
+        :global(.ge-menu-button span) { display: block; width: 22px; height: 2px; background: #0a1324; }
+        :global(.ge-mega) { position: fixed; z-index: 65; top: 78px; left: 0; width: 100%; background: #fff; border-bottom: 1px solid rgba(10,19,36,.12); }
+        :global(.ge-mega-inner) { width: min(100%,1440px); margin: 0 auto; padding: 44px clamp(24px,5vw,76px) 48px; display: grid; grid-template-columns: .42fr 1.18fr .7fr; gap: 52px; }
+        :global(.ge-mega-label span), :global(.ge-mega-feature > span) { display: block; font-size: 10px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: #f36b36; }
+        :global(.ge-mega-label strong) { display: block; margin-top: 10px; font-size: 29px; letter-spacing: -.03em; }
+        :global(.ge-mega-links) { display: grid; grid-template-columns: repeat(2,1fr); gap: 0 34px; }
+        :global(.ge-mega-links a) { padding: 14px 0 18px; border-bottom: 1px solid rgba(10,19,36,.12); }
+        :global(.ge-mega-links strong), :global(.ge-mega-links span) { display: block; }
+        :global(.ge-mega-links strong) { font-size: 17px; }
+        :global(.ge-mega-links span) { margin-top: 5px; font-size: 12px; line-height: 1.45; color: #647083; }
+        :global(.ge-mega-feature) { background: #071b3b; color: #fff; padding: 26px; min-height: 176px; display: flex; flex-direction: column; }
+        :global(.ge-mega-feature strong) { margin: 20px 0 auto; font-size: 18px; line-height: 1.3; }
+        :global(.ge-mega-feature b) { margin-top: 20px; font-size: 12px; }
+        :global(.ge-backdrop) { position: fixed; inset: 78px 0 0; z-index: 60; width: 100%; background: rgba(7,27,59,.22); cursor: default; }
+        :global(.ge-mobile-menu) { display: none; position: fixed; z-index: 66; inset: 78px 0 0; background: #f8f5ed; overflow: auto; }
+        :global(.ge-mobile-inner) { padding: 26px 20px 52px; }
+        :global(.ge-mobile-root) { width: 100%; min-height: 60px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(10,19,36,.14); font-size: 22px; font-weight: 800; color: #0a1324; text-align: left; }
+        :global(.ge-mobile-back) { min-height: 44px; font-size: 14px; font-weight: 800; color: #f36b36; }
+        :global(.ge-mobile-title) { font-size: 34px; font-weight: 800; letter-spacing: -.04em; margin: 20px 0 12px; }
+        :global(.ge-mobile-link) { display: block; min-height: 74px; padding: 15px 0; border-bottom: 1px solid rgba(10,19,36,.14); }
+        :global(.ge-mobile-link strong), :global(.ge-mobile-link span) { display: block; }
+        :global(.ge-mobile-link strong) { font-size: 18px; }
+        :global(.ge-mobile-link span) { margin-top: 5px; color: #657083; font-size: 12px; }
+        :global(.ge-mobile-audit) { margin-top: 28px; min-height: 52px; }
+        @media (max-width: 1120px) { :global(.ge-phone) { display:none; } :global(.ge-desktop-nav) { gap: 16px; } }
+        @media (max-width: 900px) { :global(.ge-desktop-nav), :global(.ge-audit) { display:none; } :global(.ge-menu-button), :global(.ge-mobile-menu) { display:flex; } :global(.ge-mobile-menu) { display:block; } }
+        @media (prefers-reduced-motion: reduce) { :global(.ge-nav) { transition:none; } }
       `}</style>
     </>
   )

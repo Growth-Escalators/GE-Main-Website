@@ -22,8 +22,9 @@ const BUDGET_OPTIONS = [
 ]
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
+type LeadFormBandProps = { submitLabel?: string }
 
-export default function LeadFormBand() {
+export default function LeadFormBand({ submitLabel = 'Book My Free Call →' }: LeadFormBandProps) {
   const [status, setStatus] = useState<Status>('idle')
   const [err, setErr] = useState<string | null>(null)
 
@@ -91,7 +92,6 @@ export default function LeadFormBand() {
         className="container-x grid grid-cols-1 lg:grid-cols-2 items-center relative"
         style={{ padding: 'clamp(56px, 9vw, 88px) clamp(20px, 4vw, 40px)', gap: 'clamp(32px, 5vw, 56px)' }}
       >
-        {/* Left intro */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -124,10 +124,7 @@ export default function LeadFormBand() {
               <li key={line} className="flex items-center" style={{ gap: 11, fontSize: 15, color: '#2a2a3a' }}>
                 <span
                   className="inline-flex items-center justify-center flex-shrink-0"
-                  style={{
-                    width: 24, height: 24, borderRadius: '50%',
-                    background: 'rgba(0,212,170,0.14)', color: 'var(--teal-dark)',
-                  }}
+                  style={{ width: 24, height: 24, borderRadius: '50%', background: 'rgba(0,212,170,0.14)', color: 'var(--teal-dark)' }}
                 >
                   <Check size={14} strokeWidth={3} />
                 </span>
@@ -145,27 +142,19 @@ export default function LeadFormBand() {
           </div>
         </motion.div>
 
-        {/* Right form card */}
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-60px' }}
           transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
           className="glass relative"
-          style={{
-            borderRadius: 22,
-            padding: 'clamp(20px, 4vw, 32px)',
-          }}
+          style={{ borderRadius: 22, padding: 'clamp(20px, 4vw, 32px)' }}
         >
           {status === 'success' ? (
             <div className="text-center" style={{ padding: '40px 0' }}>
               <div
                 className="inline-flex items-center justify-center"
-                style={{
-                  width: 56, height: 56, borderRadius: '50%',
-                  background: 'rgba(0,212,170,0.16)', color: 'var(--teal-dark)',
-                  marginBottom: 16,
-                }}
+                style={{ width: 56, height: 56, borderRadius: '50%', background: 'rgba(0,212,170,0.16)', color: 'var(--teal-dark)', marginBottom: 16 }}
               >
                 <Check size={28} strokeWidth={3} />
               </div>
@@ -179,33 +168,28 @@ export default function LeadFormBand() {
           ) : (
             <form onSubmit={handleSubmit} className="flex flex-col" style={{ gap: 14 }}>
               <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 14 }}>
-                <Field name="name"  label="Full name"          placeholder="Jane Doe"     required />
-                <Field name="phone" label="WhatsApp / Phone"   placeholder="+1 / +91 …"   required type="tel" />
+                <Field name="name" label="Full name" placeholder="Jane Doe" required />
+                <Field name="phone" label="WhatsApp / Phone" placeholder="+1 / +91 …" required type="tel" />
               </div>
-              <Field name="email"   label="Work email"         placeholder="jane@company.com" required type="email" />
+              <Field name="email" label="Work email" placeholder="jane@company.com" required type="email" />
               <Field name="company" label="Business / website" placeholder="company.com" />
               <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 14 }}>
                 <SelectField name="service" label="I need help with" options={SERVICE_OPTIONS} />
-                <SelectField name="budget"  label="Monthly budget"    options={BUDGET_OPTIONS} />
+                <SelectField name="budget" label="Monthly budget" options={BUDGET_OPTIONS} />
               </div>
               <button
                 type="submit"
                 className="lf-submit"
                 disabled={status === 'submitting'}
                 style={{
-                  textAlign: 'center',
-                  background: 'linear-gradient(135deg, var(--orange), var(--orange-light))',
-                  color: '#fff',
-                  fontSize: 16, fontWeight: 800,
-                  padding: 16, borderRadius: 12,
-                  boxShadow: '0 8px 26px rgba(255,107,53,0.34)',
-                  marginTop: 8,
-                  transition: 'transform .25s, box-shadow .25s, opacity .25s',
-                  opacity: status === 'submitting' ? 0.65 : 1,
+                  textAlign: 'center', background: 'linear-gradient(135deg, var(--orange), var(--orange-light))', color: '#fff',
+                  fontSize: 16, fontWeight: 800, padding: 16, borderRadius: 12,
+                  boxShadow: '0 8px 26px rgba(255,107,53,0.34)', marginTop: 8,
+                  transition: 'transform .25s, box-shadow .25s, opacity .25s', opacity: status === 'submitting' ? 0.65 : 1,
                   cursor: status === 'submitting' ? 'wait' : 'pointer',
                 }}
               >
-                {status === 'submitting' ? 'Sending…' : 'Book My Free Call →'}
+                {status === 'submitting' ? 'Sending…' : submitLabel}
               </button>
 
               <div className="flex items-center" style={{ gap: 10, marginTop: 6 }}>
@@ -221,13 +205,8 @@ export default function LeadFormBand() {
                 onClick={() => trackLead('whatsapp')}
                 className="text-center wa-btn"
                 style={{
-                  background: 'var(--green-wa)',
-                  color: '#fff',
-                  fontSize: 15, fontWeight: 800,
-                  padding: 14, borderRadius: 12,
-                  marginTop: 4,
-                  display: 'block',
-                  transition: 'transform .25s, opacity .25s',
+                  background: 'var(--green-wa)', color: '#fff', fontSize: 15, fontWeight: 800,
+                  padding: 14, borderRadius: 12, marginTop: 4, display: 'block', transition: 'transform .25s, opacity .25s',
                 }}
               >
                 Chat on WhatsApp
@@ -269,14 +248,8 @@ function Field({
         placeholder={placeholder}
         autoComplete={type === 'email' ? 'email' : type === 'tel' ? 'tel' : undefined}
         style={{
-          width: '100%',
-          padding: '13px 15px',
-          border: '1px solid rgba(17,18,26,0.14)',
-          borderRadius: 11,
-          fontSize: 14,
-          color: 'var(--text-primary)',
-          boxSizing: 'border-box',
-          background: '#fff',
+          width: '100%', padding: '13px 15px', border: '1px solid rgba(17,18,26,0.14)', borderRadius: 11,
+          fontSize: 14, color: 'var(--text-primary)', boxSizing: 'border-box', background: '#fff',
         }}
       />
     </label>
@@ -293,15 +266,8 @@ function SelectField({ name, label, options }: { name: string; label: string; op
         name={name}
         defaultValue=""
         style={{
-          width: '100%',
-          padding: '13px 15px',
-          border: '1px solid rgba(17,18,26,0.14)',
-          borderRadius: 11,
-          fontSize: 14,
-          color: 'var(--text-primary)',
-          boxSizing: 'border-box',
-          background: '#fff',
-          appearance: 'none',
+          width: '100%', padding: '13px 15px', border: '1px solid rgba(17,18,26,0.14)', borderRadius: 11,
+          fontSize: 14, color: 'var(--text-primary)', boxSizing: 'border-box', background: '#fff', appearance: 'none',
         }}
       >
         <option value="" disabled>Select…</option>
