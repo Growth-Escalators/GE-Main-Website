@@ -1,6 +1,7 @@
 import type { VideoTestimonial } from '@/components/landing/VideoTestimonialsShorts'
 import type { CalculatorConfig } from '@/components/landing/LeadMagnetCalculator'
 import PersuasiveCommercialLandingPage from '@/components/commercial/PersuasiveCommercialLandingPage'
+import { safeCommercialContent } from '@/components/commercial/safeCommercialContent'
 
 /**
  * Shared content contract for all commercial and industry landing pages.
@@ -89,5 +90,5 @@ export type LandingContent = {
 }
 
 export default function IndustryLandingPage({ content }: { content: LandingContent }) {
-  return <PersuasiveCommercialLandingPage content={content} />
+  return <PersuasiveCommercialLandingPage content={safeCommercialContent(content)} />
 }
