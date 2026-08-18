@@ -124,7 +124,7 @@ export default function HomepageReference() {
     <div className={styles.homepage}>
       <HomepageMotion />
 
-      <section className={styles.hero} aria-labelledby="home-hero-heading">
+      <section className={styles.hero} aria-labelledby="home-hero-heading" data-motion-section="hero">
         <div className={styles.heroBackdrop} aria-hidden />
         <div className={styles.heroShell}>
           <div className={styles.heroCopy}>
@@ -145,7 +145,7 @@ export default function HomepageReference() {
             </div>
           </div>
 
-          <div className={styles.heroStage} data-hero-reveal>
+          <div className={styles.heroStage} data-hero-reveal data-motion-stage="hero-media">
             <div className={styles.heroStageRail} aria-hidden>
               <span>01 / ACQUISITION</span><span>02 / EXPERIENCE</span><span>03 / TECHNOLOGY</span>
             </div>
@@ -190,7 +190,7 @@ export default function HomepageReference() {
         </div>
       </section>
 
-      <section id="services" className={styles.services} aria-labelledby="services-heading">
+      <section id="services" className={styles.services} aria-labelledby="services-heading" data-motion-section="services">
         <div className={styles.sectionShell}>
           <div className={styles.servicesIntro}>
             <p className={styles.eyebrow} data-reveal>Our connected capabilities</p>
@@ -224,7 +224,7 @@ export default function HomepageReference() {
 
       <HomepageIndustryGateway />
 
-      <section className={styles.work} aria-labelledby="work-heading">
+      <section className={styles.work} aria-labelledby="work-heading" data-motion-section="work">
         <div className={styles.sectionShell}>
           <div className={styles.workIntro}>
             <div>
@@ -282,7 +282,7 @@ export default function HomepageReference() {
         </div>
       </section>
 
-      <section id="growthbot" className={styles.technology} aria-labelledby="technology-heading">
+      <section id="growthbot" className={styles.technology} aria-labelledby="technology-heading" data-motion-section="technology">
         <div className={styles.sectionShell}>
           <div className={styles.techTop}>
             <div className={styles.techCopy}>
@@ -323,7 +323,7 @@ export default function HomepageReference() {
         </div>
       </section>
 
-      <section className={styles.people} aria-labelledby="people-heading">
+      <section className={styles.people} aria-labelledby="people-heading" data-motion-section="people">
         <div className={styles.sectionShell}>
           <div className={styles.peopleGrid}>
             <div className={styles.peopleCopy}>
@@ -349,7 +349,7 @@ export default function HomepageReference() {
       </section>
 
       {featuredPost && (
-        <section className={styles.insights} aria-labelledby="insights-heading">
+        <section className={styles.insights} aria-labelledby="insights-heading" data-motion-section="insights">
           <div className={styles.sectionShell}>
             <div className={styles.insightsHeading}>
               <div>
