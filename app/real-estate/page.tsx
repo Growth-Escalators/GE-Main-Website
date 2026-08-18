@@ -1,6 +1,7 @@
-import CommercialLandingPage from '@/components/commercial/CommercialLandingPage'
+import PersuasiveCommercialLandingPage from '@/components/commercial/PersuasiveCommercialLandingPage'
+import { safeCommercialContent } from '@/components/commercial/safeCommercialContent'
 import { REAL_ESTATE_CONTENT } from './_data/content'
 
 export default function RealEstatePage() {
-  return <CommercialLandingPage content={REAL_ESTATE_CONTENT} />
+  return <PersuasiveCommercialLandingPage content={safeCommercialContent(REAL_ESTATE_CONTENT)} />
 }
