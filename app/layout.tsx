@@ -8,6 +8,7 @@ import './globals.css'
 import './portfolio/portfolio.css'
 import dynamic from 'next/dynamic'
 import GoogleAnalytics from '@/components/analytics/GoogleAnalytics'
+import ContactIdentityGuard from '@/components/ui/ContactIdentityGuard'
 
 const GrowthBot = dynamic(() => import('@/components/ui/GrowthBot'), { ssr: false })
 const CursorGlow = dynamic(() => import('@/components/portfolio/CursorGlow'), { ssr: false })
@@ -88,8 +89,8 @@ const ORGANIZATION_SCHEMA = {
   url: SITE_ID,
   logo: `${SITE_ID}/og-image.jpg`,
   description: 'AI-first performance marketing agency. Specialists for doctors, roofing contractors and growing brands.',
-  email: 'Info@growthescalators.com',
-  telephone: '+91-77338-88883',
+  email: 'jatin@growthescalators.com',
+  telephone: '+91-7733888883',
   address: {
     '@type': 'PostalAddress',
     streetAddress: '264/103-104, Sector 26, Sanganer, Pratap Nagar',
@@ -184,6 +185,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={jakarta.variable}>
         <GoogleAnalytics />
+        <ContactIdentityGuard />
         <ScrollProgress />
         <CursorGlow />
         {children}

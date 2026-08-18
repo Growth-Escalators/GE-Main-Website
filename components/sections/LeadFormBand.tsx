@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Star, Check } from 'lucide-react'
+import { Check, Star } from 'lucide-react'
 import { trackLead } from '@/lib/analytics'
 
 const SERVICE_OPTIONS = [
@@ -22,8 +22,11 @@ const BUDGET_OPTIONS = [
 ]
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
+type LeadFormBandProps = { submitLabel?: string }
 
-export default function LeadFormBand() {
+const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
+
+export default function LeadFormBand({ submitLabel = 'Book My Free Call →' }: LeadFormBandProps) {
   const [status, setStatus] = useState<Status>('idle')
   const [err, setErr] = useState<string | null>(null)
 
@@ -60,185 +63,92 @@ export default function LeadFormBand() {
   }
 
   return (
-    <section
-      id="book"
-      className="relative overflow-hidden"
-      style={{ background: 'var(--bg-secondary)', borderTop: '1px solid var(--border-hair)' }}
-    >
-      <div
-        aria-hidden
-        className="hidden md:block pointer-events-none"
-        style={{
-          position: 'absolute', width: 520, height: 520, borderRadius: '50%',
-          filter: 'blur(110px)',
-          background: 'radial-gradient(circle, rgba(255,107,53,0.12), transparent 70%)',
-          top: -160, right: -120,
-          animation: 'orb-drift-1 28s ease-in-out infinite',
-        }}
-      />
-      <div
-        aria-hidden
-        className="hidden md:block pointer-events-none"
-        style={{
-          position: 'absolute', width: 380, height: 380, borderRadius: '50%',
-          filter: 'blur(110px)',
-          background: 'radial-gradient(circle, rgba(108,99,255,0.10), transparent 70%)',
-          bottom: -120, left: -100,
-          animation: 'orb-drift-3 30s ease-in-out infinite',
-        }}
-      />
-      <div
-        className="container-x grid grid-cols-1 lg:grid-cols-2 items-center relative"
-        style={{ padding: 'clamp(56px, 9vw, 88px) clamp(20px, 4vw, 40px)', gap: 'clamp(32px, 5vw, 56px)' }}
-      >
-        {/* Left intro */}
+    <section id="book" className="audit-chapter">
+      <div className="audit-grid-bg" aria-hidden />
+      <div className="audit-shell">
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
+          className="audit-copy"
+          initial={{ opacity: 0, y: 42 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-80px' }}
-          transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+          viewport={{ once: true, margin: '-90px' }}
+          transition={{ duration: 0.8, ease }}
         >
-          <span style={{ fontSize: 12, fontWeight: 800, letterSpacing: '0.22em', textTransform: 'uppercase', color: 'var(--orange)' }}>
-            Book your free audit
-          </span>
-          <h2
-            style={{
-              fontSize: 'clamp(28px, 4.5vw, 42px)',
-              fontWeight: 800, letterSpacing: '-0.03em',
-              lineHeight: 1.08, margin: '14px 0 16px',
-              color: 'var(--text-primary)',
-            }}
-          >
-            See exactly where you&rsquo;re leaking ad spend.
-          </h2>
-          <p style={{ fontSize: 17, color: 'var(--text-secondary)', maxWidth: 460, margin: '0 0 28px', lineHeight: 1.6 }}>
-            Tell us a little about your business and we&rsquo;ll send back a no-commitment audit
-            of your funnel and ad accounts — the gaps, and the plan to fix them.
+          <span className="audit-eyebrow">Grow faster · waste less</span>
+          <h2>GET YOUR<br />FREE GROWTH<br />AUDIT.</h2>
+          <p>
+            Find the constraint before you add more spend. A real strategist reviews the acquisition
+            and conversion journey and sends back the gaps that matter most.
           </p>
-          <ul className="flex flex-col" style={{ gap: 14, marginBottom: 30, listStyle: 'none', padding: 0 }}>
+
+          <div className="audit-points">
             {[
               'A real strategist reviews your accounts — not a template',
               'Clear next steps you can use with or without us',
               'We reply within 24 hours — no spam, ever',
             ].map((line) => (
-              <li key={line} className="flex items-center" style={{ gap: 11, fontSize: 15, color: '#2a2a3a' }}>
-                <span
-                  className="inline-flex items-center justify-center flex-shrink-0"
-                  style={{
-                    width: 24, height: 24, borderRadius: '50%',
-                    background: 'rgba(0,212,170,0.14)', color: 'var(--teal-dark)',
-                  }}
-                >
-                  <Check size={14} strokeWidth={3} />
-                </span>
-                {line}
-              </li>
+              <div className="audit-point" key={line}>
+                <span><Check size={13} strokeWidth={3} /></span>{line}
+              </div>
             ))}
-          </ul>
-          <div className="flex items-center" style={{ gap: 14, paddingTop: 22, borderTop: '1px solid rgba(17,18,26,0.1)' }}>
-            <span className="flex" style={{ color: 'var(--gold)', gap: 1 }}>
+          </div>
+
+          <div className="audit-proof">
+            <span className="audit-stars">
               {[0, 1, 2, 3, 4].map((s) => <Star key={s} size={15} fill="currentColor" stroke="none" />)}
             </span>
-            <span style={{ fontSize: 14, color: 'var(--text-secondary)', fontWeight: 600 }}>
-              Rated 4.9/5 by 187+ brands across India &amp; abroad
-            </span>
+            <strong>4.9/5</strong>
+            <small>187+ Google reviews</small>
           </div>
         </motion.div>
 
-        {/* Right form card */}
         <motion.div
-          initial={{ opacity: 0, y: 24 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
-          className="glass relative"
-          style={{
-            borderRadius: 22,
-            padding: 'clamp(20px, 4vw, 32px)',
-          }}
+          className="audit-form-card"
+          initial={{ opacity: 0, y: 46, scale: 0.985 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
+          viewport={{ once: true, margin: '-70px' }}
+          transition={{ duration: 0.82, delay: 0.08, ease }}
         >
+          <div className="form-kicker"><span>01</span><b>Tell us where growth is stuck.</b></div>
+
           {status === 'success' ? (
-            <div className="text-center" style={{ padding: '40px 0' }}>
-              <div
-                className="inline-flex items-center justify-center"
-                style={{
-                  width: 56, height: 56, borderRadius: '50%',
-                  background: 'rgba(0,212,170,0.16)', color: 'var(--teal-dark)',
-                  marginBottom: 16,
-                }}
-              >
-                <Check size={28} strokeWidth={3} />
-              </div>
-              <h3 style={{ fontSize: 22, fontWeight: 800, color: 'var(--text-primary)', marginBottom: 10 }}>
-                Got it — we&rsquo;re on it.
-              </h3>
-              <p style={{ fontSize: 15, color: 'var(--text-secondary)', lineHeight: 1.6 }}>
-                We&rsquo;ll review your details and reply within 24 hours.
-              </p>
+            <div className="success-state">
+              <div className="success-icon"><Check size={30} strokeWidth={3} /></div>
+              <h3>We&apos;re on it.</h3>
+              <p>We&apos;ll review your details and reply within 24 hours.</p>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="flex flex-col" style={{ gap: 14 }}>
-              <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 14 }}>
-                <Field name="name"  label="Full name"          placeholder="Jane Doe"     required />
-                <Field name="phone" label="WhatsApp / Phone"   placeholder="+1 / +91 …"   required type="tel" />
+            <form onSubmit={handleSubmit} className="audit-form">
+              <div className="field-grid">
+                <Field name="name" label="Full name" placeholder="Jane Doe" required />
+                <Field name="phone" label="WhatsApp / Phone" placeholder="+1 / +91 …" required type="tel" />
               </div>
-              <Field name="email"   label="Work email"         placeholder="jane@company.com" required type="email" />
+              <Field name="email" label="Work email" placeholder="jane@company.com" required type="email" />
               <Field name="company" label="Business / website" placeholder="company.com" />
-              <div className="grid grid-cols-1 sm:grid-cols-2" style={{ gap: 14 }}>
+              <div className="field-grid">
                 <SelectField name="service" label="I need help with" options={SERVICE_OPTIONS} />
-                <SelectField name="budget"  label="Monthly budget"    options={BUDGET_OPTIONS} />
+                <SelectField name="budget" label="Monthly budget" options={BUDGET_OPTIONS} />
               </div>
-              <button
-                type="submit"
-                className="lf-submit"
-                disabled={status === 'submitting'}
-                style={{
-                  textAlign: 'center',
-                  background: 'linear-gradient(135deg, var(--orange), var(--orange-light))',
-                  color: '#fff',
-                  fontSize: 16, fontWeight: 800,
-                  padding: 16, borderRadius: 12,
-                  boxShadow: '0 8px 26px rgba(255,107,53,0.34)',
-                  marginTop: 8,
-                  transition: 'transform .25s, box-shadow .25s, opacity .25s',
-                  opacity: status === 'submitting' ? 0.65 : 1,
-                  cursor: status === 'submitting' ? 'wait' : 'pointer',
-                }}
-              >
-                {status === 'submitting' ? 'Sending…' : 'Book My Free Call →'}
+
+              <button type="submit" className="audit-submit" disabled={status === 'submitting'}>
+                {status === 'submitting' ? 'Sending…' : submitLabel}
               </button>
 
-              <div className="flex items-center" style={{ gap: 10, marginTop: 6 }}>
-                <div style={{ flex: 1, height: 1, background: 'rgba(17,18,26,0.1)' }} />
-                <span style={{ fontSize: 12, color: 'var(--text-muted)', fontWeight: 600 }}>or</span>
-                <div style={{ flex: 1, height: 1, background: 'rgba(17,18,26,0.1)' }} />
-              </div>
+              <div className="form-or"><span />or<span /></div>
 
               <a
                 href="https://wa.me/917733888883?text=Hi%20Growth%20Escalators%2C%20I%27d%20like%20to%20discuss%20a%20free%20audit."
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackLead('whatsapp')}
-                className="text-center wa-btn"
-                style={{
-                  background: 'var(--green-wa)',
-                  color: '#fff',
-                  fontSize: 15, fontWeight: 800,
-                  padding: 14, borderRadius: 12,
-                  marginTop: 4,
-                  display: 'block',
-                  transition: 'transform .25s, opacity .25s',
-                }}
+                className="audit-whatsapp"
               >
-                Chat on WhatsApp
+                Chat on WhatsApp ↗
               </a>
 
               {status === 'error' && (
-                <p role="alert" style={{ fontSize: 13, color: '#b91c1c', marginTop: 6 }}>
-                  Couldn&rsquo;t send{err ? ` (${err})` : ''}.{' '}
-                  <a href="mailto:Info@growthescalators.com" onClick={() => trackLead('email')} className="underline">
-                    Email us directly →
-                  </a>
+                <p role="alert" className="form-error">
+                  Couldn&apos;t send{err ? ` (${err})` : ''}.{' '}
+                  <a href="mailto:jatin@growthescalators.com" onClick={() => trackLead('email')}>Email us directly →</a>
                 </p>
               )}
             </form>
@@ -247,37 +157,127 @@ export default function LeadFormBand() {
       </div>
 
       <style jsx>{`
-        :global(.lf-submit:hover) { transform: translateY(-2px); box-shadow: 0 12px 30px rgba(255,107,53,0.4); }
-        :global(.wa-btn:hover) { transform: translateY(-2px); opacity: 0.95; }
+        :global(.audit-chapter) {
+          --font-display: 'Arial Narrow';
+          --audit-ink: #170653;
+          position: relative;
+          overflow: hidden;
+          background: var(--audit-ink);
+          color: #fff;
+          min-height: 930px;
+          padding: clamp(96px, 10vw, 150px) 0;
+          isolation: isolate;
+        }
+        :global(.audit-grid-bg) {
+          position: absolute;
+          inset: 0;
+          z-index: -1;
+          opacity: .18;
+          background-image:
+            radial-gradient(circle at 11% 78%, rgba(101, 238, 197, .55), transparent 18%),
+            radial-gradient(circle at 91% 12%, rgba(78, 65, 255, .72), transparent 24%),
+            linear-gradient(rgba(255,255,255,.13) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,.13) 1px, transparent 1px);
+          background-size: auto, auto, 48px 48px, 48px 48px;
+          mask-image: linear-gradient(to bottom, #000, rgba(0,0,0,.46));
+        }
+        :global(.audit-shell) {
+          width: min(100%, 1440px);
+          margin: 0 auto;
+          padding: 0 clamp(24px, 5vw, 76px);
+          display: grid;
+          grid-template-columns: .92fr 1.08fr;
+          gap: clamp(54px, 7vw, 104px);
+          align-items: center;
+        }
+        :global(.audit-eyebrow) {
+          display: block;
+          font-size: 10px;
+          font-weight: 900;
+          letter-spacing: .18em;
+          text-transform: uppercase;
+          color: #7bf0c4;
+        }
+        :global(.audit-copy h2) {
+          margin: 22px 0 26px;
+          font-family: var(--font-display), var(--font-jakarta), sans-serif;
+          font-size: clamp(70px, 8.4vw, 124px);
+          line-height: .78;
+          letter-spacing: -.04em;
+          text-transform: uppercase;
+          color: #fff;
+        }
+        :global(.audit-copy > p) {
+          max-width: 590px;
+          margin: 0;
+          font-size: 17px;
+          line-height: 1.58;
+          color: rgba(255,255,255,.72);
+        }
+        :global(.audit-points) { margin-top: 32px; border-top: 1px solid rgba(255,255,255,.2); }
+        :global(.audit-point) { min-height: 53px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid rgba(255,255,255,.2); font-size: 12px; font-weight: 700; color: rgba(255,255,255,.84); }
+        :global(.audit-point > span) { width: 23px; height: 23px; display: grid; place-items: center; border-radius: 50%; background: #72ebc0; color: var(--audit-ink); }
+        :global(.audit-proof) { display: flex; align-items: center; gap: 10px; margin-top: 27px; }
+        :global(.audit-stars) { display: flex; color: #ffbd3d; }
+        :global(.audit-proof strong) { font-family: var(--font-display), sans-serif; font-size: 25px; }
+        :global(.audit-proof small) { color: rgba(255,255,255,.57); font-size: 10px; font-weight: 700; }
+        :global(.audit-form-card) { padding: clamp(28px, 4vw, 48px); border-radius: 32px; background: #fff; color: var(--audit-ink); box-shadow: 0 34px 78px rgba(0,0,0,.28); }
+        :global(.form-kicker) { display: flex; align-items: center; gap: 13px; padding-bottom: 24px; border-bottom: 1px solid rgba(23,6,83,.14); }
+        :global(.form-kicker span) { width: 34px; height: 34px; display: grid; place-items: center; border-radius: 50%; background: #eeeaff; color: #5c24f5; font-size: 10px; font-weight: 900; }
+        :global(.form-kicker b) { font-family: var(--font-display), sans-serif; font-size: 25px; text-transform: uppercase; letter-spacing: -.01em; }
+        :global(.audit-form) { display: flex; flex-direction: column; gap: 16px; padding-top: 27px; }
+        :global(.field-grid) { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+        :global(.audit-field) { display: block; }
+        :global(.audit-field-label) { display: block; margin-bottom: 7px; font-size: 9px; font-weight: 900; letter-spacing: .095em; text-transform: uppercase; color: #5c5b70; }
+        :global(.audit-control) { width: 100%; min-height: 52px; padding: 0 15px; border: 1px solid rgba(23,6,83,.18); border-radius: 13px; background: #f8f8fc; color: var(--audit-ink); font: inherit; font-size: 13px; outline: none; transition: border-color .2s ease, box-shadow .2s ease, background .2s ease; }
+        :global(.audit-control:focus) { border-color: #5c24f5; box-shadow: 0 0 0 4px rgba(92,36,245,.1); background: #fff; }
+        :global(.audit-submit), :global(.audit-whatsapp) { width: 100%; min-height: 55px; display: flex; align-items: center; justify-content: center; border-radius: 999px; font-size: 11px; font-weight: 900; letter-spacing: .05em; text-transform: uppercase; transition: transform .22s ease, box-shadow .22s ease, opacity .22s ease; }
+        :global(.audit-submit) { margin-top: 7px; background: #5c24f5; color: #fff; box-shadow: 0 10px 26px rgba(92,36,245,.27); cursor: pointer; }
+        :global(.audit-submit:hover) { transform: translateY(-3px); box-shadow: 0 15px 31px rgba(92,36,245,.34); }
+        :global(.audit-submit:disabled) { cursor: wait; opacity: .62; transform: none; }
+        :global(.audit-whatsapp) { color: var(--audit-ink); border: 1px solid rgba(23,6,83,.22); }
+        :global(.audit-whatsapp:hover) { transform: translateY(-2px); }
+        :global(.form-or) { display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: center; color: #9795a6; font-size: 10px; font-weight: 800; text-transform: uppercase; }
+        :global(.form-or span) { height: 1px; background: rgba(23,6,83,.12); }
+        :global(.form-error) { margin: 2px 0 0; font-size: 12px; color: #a31313; }.form-error a { text-decoration: underline; }
+        :global(.success-state) { min-height: 440px; display: grid; place-items: center; align-content: center; text-align: center; }
+        :global(.success-icon) { width: 60px; height: 60px; display: grid; place-items: center; border-radius: 50%; background: #dff9ef; color: #157954; }
+        :global(.success-state h3) { margin: 18px 0 9px; font-family: var(--font-display), sans-serif; font-size: 50px; text-transform: uppercase; }
+        :global(.success-state p) { margin: 0; color: #6d6b7c; }
+        @media (max-width: 960px) {
+          :global(.audit-chapter) { min-height: auto; }
+          :global(.audit-shell) { grid-template-columns: 1fr; }
+          :global(.audit-copy) { max-width: 740px; }
+          :global(.audit-copy h2) { font-size: clamp(72px, 13vw, 108px); }
+        }
+        @media (max-width: 640px) {
+          :global(.audit-chapter) { padding: 82px 0 92px; }
+          :global(.audit-shell) { padding-inline: 20px; gap: 45px; }
+          :global(.audit-copy h2) { font-size: clamp(61px, 18vw, 78px); }
+          :global(.audit-copy > p) { font-size: 15px; }
+          :global(.audit-form-card) { padding: 25px 19px; border-radius: 24px; }
+          :global(.field-grid) { grid-template-columns: 1fr; }
+          :global(.form-kicker b) { font-size: 21px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          :global(.audit-submit), :global(.audit-whatsapp), :global(.audit-control) { transition: none; }
+        }
       `}</style>
     </section>
   )
 }
 
-function Field({
-  name, label, placeholder, type = 'text', required,
-}: { name: string; label: string; placeholder?: string; type?: string; required?: boolean }) {
+function Field({ name, label, placeholder, type = 'text', required }: { name: string; label: string; placeholder?: string; type?: string; required?: boolean }) {
   return (
-    <label className="block">
-      <span style={{ display: 'block', fontSize: 12.5, fontWeight: 700, color: 'var(--text-secondary)', marginBottom: 6 }}>
-        {label}{required ? ' *' : ''}
-      </span>
+    <label className="audit-field">
+      <span className="audit-field-label">{label}{required ? ' *' : ''}</span>
       <input
+        className="audit-control"
         type={type}
         name={name}
         required={required}
         placeholder={placeholder}
         autoComplete={type === 'email' ? 'email' : type === 'tel' ? 'tel' : undefined}
-        style={{
-          width: '100%',
-          padding: '13px 15px',
-          border: '1px solid rgba(17,18,26,0.14)',
-          borderRadius: 11,
-          fontSize: 14,
-          color: 'var(--text-primary)',
-          boxSizing: 'border-box',
-          background: '#fff',
-        }}
       />
     </label>
   )
@@ -285,25 +285,9 @@ function Field({
 
 function SelectField({ name, label, options }: { name: string; label: string; options: string[] }) {
   return (
-    <label className="block">
-      <span style={{ display: 'block', fontSize: 12.5, fontWeight: 700, color: 'var(--text-secondary)', marginBottom: 6 }}>
-        {label}
-      </span>
-      <select
-        name={name}
-        defaultValue=""
-        style={{
-          width: '100%',
-          padding: '13px 15px',
-          border: '1px solid rgba(17,18,26,0.14)',
-          borderRadius: 11,
-          fontSize: 14,
-          color: 'var(--text-primary)',
-          boxSizing: 'border-box',
-          background: '#fff',
-          appearance: 'none',
-        }}
-      >
+    <label className="audit-field">
+      <span className="audit-field-label">{label}</span>
+      <select className="audit-control" name={name} defaultValue="">
         <option value="" disabled>Select…</option>
         {options.map((o) => <option key={o} value={o}>{o}</option>)}
       </select>

@@ -1,178 +1,81 @@
-'use client'
-
-import { useEffect, useRef, useState } from 'react'
-import { gsap } from '@/lib/gsap'
+import Image from 'next/image'
+import Link from 'next/link'
 import Navbar from '@/components/sections/Navbar'
 import Footer from '@/components/sections/Footer'
-import CTA from '@/components/sections/CTA'
-import { CASE_STUDIES } from '@/lib/constants'
+import BackToTop from '@/components/ui/BackToTop'
+import Phase2Motion from '@/components/phase2/Phase2Motion'
+import styles from '@/components/phase2/Phase2Core.module.css'
 
-const FILTERS = ['All', 'Performance', 'Social', 'Web', 'Branding', 'Funnels']
+const CASES = [
+  {
+    client:'Paraiso Comfortwears', category:'D2C Performance Marketing · Ecommerce', className:styles.paraiso,
+    headline:'From 1.9× to 3.2× ROAS — and 6× revenue in 60 days.',
+    copy:'The work focused on turning paid acquisition into a more reliable ecommerce growth system: sharper media decisions, faster testing and a conversion journey that could support scale.',
+    metrics:[['3.2×','ROAS'],['6×','revenue growth'],['60 days','growth window']], href:'/d2c'
+  },
+  {
+    client:'Elixzor', category:'Ecommerce Advertising · Full Funnel', className:styles.elixzor,
+    headline:'A full-funnel performance engine that reached 10× ROAS.',
+    copy:'Acquisition was treated as a connected system rather than a collection of campaigns — aligning media, funnel decisions and ecommerce performance around profitable revenue.',
+    metrics:[['10×','ROAS'],['₹3.2Cr+','revenue'],['Full funnel','growth system']], href:'/ecommerce-advertising-agency'
+  },
+  {
+    client:'Dr. Dheeraj Dubay', category:'Healthcare · Patient Acquisition', className:styles.dheeraj,
+    headline:'35,000+ leads across a patient acquisition journey built for intent.',
+    copy:'Healthcare demand needs clarity, trust and a friction-light route from search or ad to enquiry. The work connected paid acquisition with the website and lead journey around patient intent.',
+    metrics:[['35,000+','leads'],['Healthcare','growth'],['High intent','lead journey']], href:'/doctors'
+  }
+] as const
 
-const TAG_FILTER_MAP: Record<string, string[]> = {
-  All: [],
-  Performance: ['Performance Marketing', 'Creative Strategy'],
-  Social: ['Social Media Marketing'],
-  Web: ['Web Development', 'SEO'],
-  Branding: ['Branding'],
-  Funnels: ['Funnel Marketing', 'WhatsApp Automation', 'B2B Funnels', 'Email Automation', 'Funnel Optimisation'],
-}
-
-export default function WorkPage() {
-  const [activeFilter, setActiveFilter] = useState('All')
-  const heroRef = useRef<HTMLDivElement>(null)
-  const gridRef = useRef<HTMLDivElement>(null)
-
-  const filtered = activeFilter === 'All'
-    ? CASE_STUDIES
-    : CASE_STUDIES.filter((cs) =>
-        cs.tags.some((tag) => TAG_FILTER_MAP[activeFilter]?.some((f) => tag.includes(f)))
-      )
-
-  useEffect(() => {
-    if (!heroRef.current) return
-    const ctx = gsap.context(() => {
-      gsap.fromTo('.work-hero-content > *', { y: 30, opacity: 0 }, {
-        y: 0, opacity: 1, duration: 0.7, stagger: 0.1, ease: 'power3.out', delay: 0.2,
-      })
-    }, heroRef.current)
-    return () => ctx.revert()
-  }, [])
-
-  useEffect(() => {
-    if (!gridRef.current) return
-    const ctx = gsap.context(() => {
-      gsap.fromTo('.case-card', { y: 40, opacity: 0 }, {
-        y: 0, opacity: 1, duration: 0.6, stagger: 0.08, ease: 'power3.out',
-      })
-    }, gridRef.current)
-    return () => ctx.revert()
-  }, [activeFilter])
-
-  return (
-    <>
-      <Navbar />
-      <main>
-        {/* Hero */}
-        <section ref={heroRef} className="pt-36 pb-20 px-6 md:px-12 lg:px-24" style={{ background: 'var(--bg-primary)' }}>
-          <div className="max-w-7xl mx-auto work-hero-content">
-            <span className="font-outfit text-[10px] tracking-[0.4em] uppercase block mb-5" style={{ color: 'var(--orange)' }}>
-              Case Studies
-            </span>
-            <h1 className="font-syne font-extrabold leading-none mb-5" style={{ fontSize: 'clamp(44px, 8vw, 100px)', color: 'var(--text-primary)' }}>
-              Work That Speaks<br />For Itself
-            </h1>
-            <p className="font-outfit font-light text-xl max-w-xl" style={{ color: 'var(--text-muted)', lineHeight: 1.75 }}>
-              Results are the only language we speak. Here&apos;s proof.
-            </p>
+export default function WorkPage(){
+  return <>
+    <Navbar />
+    <main className={styles.page}>
+      <Phase2Motion />
+      <section className={styles.hero}>
+        <div className={styles.shell}>
+          <div className={styles.heroGrid}>
+            <div><p className={styles.eyebrow} data-p2-hero>Results + selected portfolio</p><h1 data-p2-hero>Proof before<br/>promises.</h1></div>
+            <div className={styles.heroAside} data-p2-hero><p>Start with what changed for the business, then see the performance, creative, web and technology work behind the system. One page gives you both the outcome and the execution.</p><div className={styles.heroActions}><Link href="#portfolio" className={styles.pill}>See selected portfolio ↗</Link><Link href="/#book" className={styles.pillLine}>Get Free Audit</Link></div></div>
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Filter tabs */}
-        <section className="px-6 md:px-12 lg:px-24 pb-6" style={{ background: 'var(--bg-primary)' }}>
-          <div className="max-w-7xl mx-auto">
-            <div className="flex flex-wrap gap-2">
-              {FILTERS.map((f) => (
-                <button
-                  key={f}
-                  onClick={() => setActiveFilter(f)}
-                  className="relative font-outfit text-sm px-5 py-2 transition-all duration-300"
-                  style={{
-                    background: activeFilter === f ? 'var(--orange)' : 'var(--bg-card)',
-                    color: activeFilter === f ? '#06060A' : 'var(--text-muted)',
-                    border: `1px solid ${activeFilter === f ? 'var(--orange)' : 'var(--border-subtle)'}`,
-                  }}
-                >
-                  {f}
-                </button>
-              ))}
-            </div>
+      <section className={`${styles.section} ${styles.dark}`}>
+        <div className={styles.shell}>
+          <div className={styles.sectionHead}><div><p className={styles.eyebrow} data-p2-reveal>Featured case studies</p><h2 data-p2-reveal>Growth you can<br/>measure.</h2></div><p data-p2-reveal>No vanity wall. Each featured story leads with the commercial outcome and keeps the client, category and route to the relevant specialist page crawlable.</p></div>
+          <div className={styles.caseStack}>
+            {CASES.map((item)=><article className={styles.case} key={item.client} data-p2-card>
+              <div className={`${styles.caseVisual} ${item.className}`} data-p2-media><span>{item.client}</span><strong>{item.metrics[0][0]}</strong></div>
+              <div className={styles.caseBody}><div className={styles.caseKicker}>{item.category}</div><h3>{item.headline}</h3><p>{item.copy}</p><div className={styles.metrics}>{item.metrics.map(([v,l])=><div className={styles.metric} key={l}><strong>{v}</strong><span>{l}</span></div>)}</div><div className={styles.heroActions}><Link href={item.href} className={styles.pill}>Explore the growth system ↗</Link></div></div>
+            </article>)}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Case studies grid */}
-        <section className="px-6 md:px-12 lg:px-24 pb-24" style={{ background: 'var(--bg-primary)' }}>
-          <div className="max-w-7xl mx-auto">
-            <div ref={gridRef} className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-              {filtered.map((cs) => (
-                <div key={cs.id} className="case-card ge-card p-8 group hover:-translate-y-1 transition-transform duration-300">
-                  {/* Top bar */}
-                  <div className="flex items-start justify-between mb-6">
-                    <div>
-                      <h3 className="font-syne font-bold text-xl mb-1" style={{ color: 'var(--text-primary)' }}>
-                        {cs.name}
-                      </h3>
-                      <span
-                        className="font-outfit text-[10px] uppercase tracking-widest px-2 py-1"
-                        style={{ color: 'var(--orange)', background: 'rgba(255,101,0,0.08)' }}
-                      >
-                        {cs.industry}
-                      </span>
-                    </div>
-                    <div className="w-12 h-12 rounded-full flex items-center justify-center font-syne font-bold shrink-0" style={{ background: cs.gradient, fontSize: 14, color: '#F0EDE8' }}>
-                      {cs.name[0]}
-                    </div>
-                  </div>
-
-                  {/* Challenge / Solution */}
-                  <div className="space-y-3 mb-6">
-                    <div>
-                      <span className="font-outfit text-[10px] uppercase tracking-widest block mb-1" style={{ color: 'var(--text-muted)', opacity: 0.6 }}>Challenge</span>
-                      <p className="font-outfit text-sm" style={{ color: 'var(--text-muted)' }}>{cs.challenge}</p>
-                    </div>
-                    <div>
-                      <span className="font-outfit text-[10px] uppercase tracking-widest block mb-1" style={{ color: 'var(--text-muted)', opacity: 0.6 }}>Solution</span>
-                      <p className="font-outfit text-sm" style={{ color: 'var(--text-muted)' }}>{cs.solution}</p>
-                    </div>
-                  </div>
-
-                  {/* Results */}
-                  <div className="grid grid-cols-3 gap-3 mb-6">
-                    {cs.results.map((r, i) => {
-                      const displayVal = r.from ? `${r.from}→${r.to}` : (r.value ?? r.metric)
-                      return (
-                        <div key={i} className="p-3 text-center" style={{ background: 'var(--bg-secondary)', border: '1px solid var(--border-subtle)' }}>
-                          <div className="font-bebas text-xl leading-none mb-1" style={{ color: 'var(--orange)' }}>
-                            {displayVal}
-                          </div>
-                          <div className="font-outfit text-[10px] uppercase tracking-wider leading-tight" style={{ color: 'var(--text-muted)' }}>
-                            {r.metric}
-                          </div>
-                        </div>
-                      )
-                    })}
-                  </div>
-
-                  {/* Tags */}
-                  <div className="flex flex-wrap gap-2 mb-6">
-                    {cs.tags.map((tag) => (
-                      <span key={tag} className="font-outfit text-[10px] uppercase tracking-wider px-2 py-1" style={{ color: 'var(--orange)', border: '1px solid rgba(255,101,0,0.2)' }}>
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-
-                  <div className="font-outfit text-sm transition-colors duration-300" style={{ color: 'var(--orange)' }}>
-                    Read Full Case Study →
-                  </div>
-                </div>
-              ))}
-            </div>
+      <section id="portfolio" className={`${styles.section} ${styles.white}`}>
+        <div className={styles.shell}>
+          <div className={styles.sectionHead}><div><p className={styles.eyebrow} data-p2-reveal>Selected portfolio</p><h2 data-p2-reveal>What the system<br/>looks like.</h2></div><p data-p2-reveal>Results tell you whether the work mattered. Portfolio shows the actual mix of media, commerce, creative, web and technology that gets connected behind those outcomes.</p></div>
+          <div className={styles.visualHero} data-p2-media>
+            <Image src="/portfolio/hero.png" alt="Growth Escalators selected portfolio montage" fill priority={false} sizes="(max-width: 900px) 100vw, 1320px" />
+            <div className={styles.visualLabel}><span>Selected work / growth × technology</span><h2>Designed to move the business.</h2></div>
           </div>
-        </section>
+          <div className={styles.tileGrid}>
+            <article className={`${styles.tile} ${styles.violetTile}`} data-p2-card><p className={styles.eyebrow}>Performance × commerce</p><h3>Media that answers to revenue.</h3><p>Meta Ads, Google Ads, offers, product journeys and conversion decisions treated as one acquisition system.</p></article>
+            <article className={`${styles.tile} ${styles.darkTile}`} data-p2-card><p className={styles.eyebrow}>Web × product</p><h3>Experiences built to convert.</h3><p>Shopify, Next.js, CRO and software work designed around the next action a real user needs to take.</p></article>
+            <article className={styles.tile} data-p2-card><p className={styles.eyebrow}>Creative × social</p><h3>Ideas built for testing.</h3><p>Multiple statics, concepts, offers and content angles built to discover what earns attention and moves intent.</p></article>
+            <article className={styles.tile} data-p2-card><p className={styles.eyebrow}>AI × automation</p><h3>Custom systems behind growth.</h3><p>GrowthBot, qualification, workflow automation and software that connect the website to the team behind it.</p></article>
+          </div>
+          <div className={styles.heroActions}><Link href="/portfolio" className={styles.pill}>Explore the full portfolio ↗</Link><Link href="/services" className={styles.pillLine}>See connected services</Link></div>
+        </div>
+      </section>
 
-        {/* Social proof strip */}
-        <section className="py-12 px-6 md:px-12 text-center" style={{ background: 'var(--bg-secondary)' }}>
-          <p className="font-outfit text-sm" style={{ color: 'var(--text-muted)' }}>
-            Trusted by <strong style={{ color: 'var(--text-primary)' }}>100+ brands</strong> across India.{' '}
-            <strong style={{ color: 'var(--text-primary)' }}>₹10Cr+</strong> in ad spend managed.{' '}
-            <strong style={{ color: 'var(--text-primary)' }}>10,000+</strong> campaigns run.
-          </p>
-        </section>
-
-        <CTA />
-      </main>
-      <Footer />
-    </>
-  )
+      <section className={`${styles.section} ${styles.lavender}`}>
+        <div className={styles.shell}>
+          <div className={styles.proofBand} data-p2-reveal><strong>187+ brands.<br/>One standard: outcomes.</strong><div><p>Across the wider body of work, Growth Escalators has managed ₹10Cr+ in ad spend with a 97% client retention rate. As we add deeper case studies, this page becomes the single place to understand both the outcome and the execution.</p><div className={styles.heroActions}><Link href="/services" className={styles.pill}>See services ↗</Link><Link href="/#book" className={styles.pillLine}>Get Free Audit</Link></div></div></div>
+        </div>
+      </section>
+    </main>
+    <Footer /><BackToTop />
+  </>
 }
