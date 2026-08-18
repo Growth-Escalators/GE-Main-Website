@@ -13,8 +13,9 @@ export function generateStaticParams() {
   return getAllPostSlugs().map((slug) => ({ slug }))
 }
 
-export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
-  const post = getPost(params.slug)
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params
+  const post = getPost(slug)
   if (!post) return { title: 'Not found' }
   return {
     title: `${post.title} — Growth Escalators`,
@@ -45,8 +46,9 @@ function inferCommercialRoute(post: Post) {
   return { href: '/services', label: 'Explore our growth system' }
 }
 
-export default function BlogPost({ params }: { params: { slug: string } }) {
-  const post = getPost(params.slug)
+export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
+  const post = getPost(slug)
   if (!post) notFound()
   const related = getRelatedPosts(post, 3)
   const inferred = inferCommercialRoute(post)
