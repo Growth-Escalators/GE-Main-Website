@@ -1,6 +1,12 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  // Canonical public/team contact identity. Keeping this in Next config also
+  // ensures the lead API's optional Resend fallback does not fall back to a
+  // legacy address when LEAD_NOTIFY_EMAIL is absent in the deployment.
+  env: {
+    LEAD_NOTIFY_EMAIL: 'jatin@growthescalators.com',
+  },
 
   async redirects() {
     return [
