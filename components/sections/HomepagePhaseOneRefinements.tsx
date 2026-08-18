@@ -3,10 +3,9 @@
 /**
  * Phase 1 responsive correction layer.
  *
- * Kept separate from the main reference module so the Tinuiti-reference
- * geometry can continue to evolve without burying viewport-specific fixes in
- * the art-direction stylesheet. Once the wider site adopts this system in
- * later phases, these values can graduate into shared design tokens.
+ * Kept separate from the main reference module so the reference-led desktop
+ * art direction stays readable while viewport-specific corrections remain
+ * easy to audit before the later shared-design-system rollout.
  */
 export default function HomepagePhaseOneRefinements() {
   return (
