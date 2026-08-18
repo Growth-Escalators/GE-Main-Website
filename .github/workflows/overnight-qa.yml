@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - feat/overnight-phases-4-7
+  pull_request:
+    branches:
+      - feat/phase-3-commercial-pages
   workflow_dispatch:
 
 permissions:
