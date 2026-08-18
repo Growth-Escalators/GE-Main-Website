@@ -148,7 +148,7 @@ export default function LeadFormBand({ submitLabel = 'Book My Free Call →' }: 
               {status === 'error' && (
                 <p role="alert" className="form-error">
                   Couldn&apos;t send{err ? ` (${err})` : ''}.{' '}
-                  <a href="mailto:Info@growthescalators.com" onClick={() => trackLead('email')}>Email us directly →</a>
+                  <a href="mailto:jatin@growthescalators.com" onClick={() => trackLead('email')}>Email us directly →</a>
                 </p>
               )}
             </form>
