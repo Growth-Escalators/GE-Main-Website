@@ -1,0 +1,67 @@
+name: Next 15 Security Migration
+
+on:
+  push:
+    branches:
+      - feat/phase-8-next15-security
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  migrate-and-validate:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - name: Checkout migration branch
+        uses: actions/checkout@v4
+        with:
+          ref: feat/phase-8-next15-security
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Upgrade patched framework stack
+        run: npm install next@15.5.21 react@19 react-dom@19 eslint-config-next@15.5.21 @types/react@19 @types/react-dom@19 sharp@latest
+
+      - name: Production dependency audit
+        run: |
+          npm audit --omit=dev --json > /tmp/audit.json || true
+          node - <<'NODE'
+          const fs = require('fs')
+          const audit = JSON.parse(fs.readFileSync('/tmp/audit.json','utf8'))
+          console.log('Production vulnerability counts:', audit.metadata?.vulnerabilities || {})
+          NODE
+
+      - name: Production build
+        run: npm run build
+
+      - name: Start production server
+        run: |
+          npm run start -- -H 127.0.0.1 -p 3000 > /tmp/ge-next15.log 2>&1 &
+          for i in {1..30}; do
+            if curl -fsS http://127.0.0.1:3000/ >/dev/null; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/ge-next15.log
+          exit 1
+
+      - name: Full route and lead-contract crawl
+        run: node scripts/release-qa.mjs http://127.0.0.1:3000
+
+      - name: Commit migration after green validation
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add package.json package-lock.json
+          git commit -m 'phase8: upgrade to patched Next 15 stack'
+          git push origin HEAD:feat/phase-8-next15-security
+
+      - name: Server log tail
+        if: always()
+        run: tail -n 120 /tmp/ge-next15.log || true
