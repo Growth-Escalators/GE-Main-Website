@@ -74,7 +74,7 @@ const FOOTER_GROUPS = [
 
 export default function Footer() {
   return (
-    <footer className="ge-footer" aria-label="Growth Escalators footer">
+    <footer className="ge-footer" aria-label="Growth Escalators footer" data-phase-one="footer">
       <div className="ge-footer-shell">
         <div className="ge-footer-top">
           <div className="ge-footer-brand">
