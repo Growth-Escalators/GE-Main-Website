@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - feat/phase-8-refinement-release
+  pull_request:
+    branches:
+      - feat/overnight-phases-4-7
   workflow_dispatch:
 
 permissions:
