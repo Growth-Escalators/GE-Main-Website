@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import Navbar from '@/components/sections/Navbar'
 import Footer from '@/components/sections/Footer'
+import TeamRoster from '@/components/sections/TeamRoster'
 import BackToTop from '@/components/ui/BackToTop'
 import Phase2Motion from '@/components/phase2/Phase2Motion'
 import styles from '@/components/phase2/Phase2Core.module.css'
@@ -37,10 +38,12 @@ export default function AboutPage(){
         </div>
       </section>
 
+      <TeamRoster />
+
       <section className={`${styles.section} ${styles.lavender}`}>
         <div className={styles.shell}>
-          <div className={styles.sectionHead}><div><p className={styles.eyebrow} data-p2-reveal>Leadership</p><h2 data-p2-reveal>Founder-led.<br/>Operator-minded.</h2></div><p data-p2-reveal>Jatin Agrawal leads Growth Escalators from Jaipur. The wider team spans performance, design, content, SEO, technology and delivery — with specialist ownership close to the work instead of a layer-heavy agency model.</p></div>
-          <div className={styles.proofBand} data-p2-reveal><strong>Jatin Agrawal<br/>Founder</strong><div><p>Growth Escalators also has a disclosed sister-brand relationship with WizMatch, the technology staffing business founded by Jatin. The brands serve different buyer needs while sharing an operator-led approach to delivery.</p><div className={styles.heroActions}><Link href="/staffing" className={styles.pillLine}>Explore technology staffing</Link><Link href="/contact" className={styles.pill}>Talk to the team ↗</Link></div></div></div>
+          <div className={styles.sectionHead}><div><p className={styles.eyebrow} data-p2-reveal>Leadership</p><h2 data-p2-reveal>Founder-led.<br/>Operator-minded.</h2></div><p data-p2-reveal>Jatin leads Growth Escalators from Jaipur as Founder & Performance Marketing Lead. The wider team spans performance, conversion, design, creative, video, technology and people operations — with specialist ownership close to the work instead of a layer-heavy agency model.</p></div>
+          <div className={styles.proofBand} data-p2-reveal><strong>Jatin<br/>Founder &amp; Performance Marketing Lead</strong><div><p>Growth Escalators also has a disclosed sister-brand relationship with WizMatch, the technology staffing business founded by Jatin. The brands serve different buyer needs while sharing an operator-led approach to delivery.</p><div className={styles.heroActions}><Link href="/staffing" className={styles.pillLine}>Explore technology staffing</Link><Link href="/contact" className={styles.pill}>Talk to the team ↗</Link></div></div></div>
         </div>
       </section>
 
