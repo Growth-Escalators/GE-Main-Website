@@ -23,47 +23,45 @@ const jakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.growthescalators.com'),
   title: {
-    default: 'Growth Escalators — AI-First Performance Marketing Agency',
+    default: 'Growth Escalators — Growth Marketing, Technology & Talent',
     template: '%s — Growth Escalators',
   },
   description:
-    "AI-first performance marketing agency. 10,000+ campaigns run, ₹10Cr+ in ad spend managed, 97% client retention. Specialists for doctors, roofing contractors and growing brands.",
+    'Jaipur-based growth company connecting performance marketing, ecommerce, websites, SEO, creative, AI automation, software and India-based technology talent around measurable commercial outcomes.',
   keywords: [
+    'growth marketing agency',
     'performance marketing agency',
-    'AI marketing agency',
-    'D2C performance marketing agency',
-    'ecommerce Meta ads agency',
-    'marketing for doctors',
-    'roofing contractor marketing',
-    'restaurant marketing',
-    'Meta ads agency',
-    'Google ads agency',
-    'India marketing agency',
+    'ecommerce growth agency',
+    'conversion rate optimization',
+    'website development company',
+    'SEO agency',
+    'AI automation agency',
+    'software development company',
+    'India technology staffing',
+    'Jaipur growth agency',
   ],
   alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
     siteName: 'Growth Escalators',
-    title: 'Growth Escalators — AI-First Performance Marketing Agency',
-    description: 'AI-first performance marketing for doctors, roofing contractors and growing brands.',
+    title: 'Growth Escalators — Growth Marketing, Technology & Talent',
+    description:
+      'Performance marketing, ecommerce, websites, search, creative, AI, software and technology talent connected around measurable growth.',
     url: 'https://www.growthescalators.com',
     images: [
       {
-        // Was a dead 2023 WordPress URL on the non-www host. Points at a
-        // same-host path now — but no real 1200x630 asset exists yet at
-        // public/og-image.jpg. MUST be added before this is fully fixed
-        // (see SEO audit notes) — a broken OG image degrades every social/AI share.
-        url: `${'https://www.growthescalators.com'}/og-image.jpg`,
+        url: 'https://www.growthescalators.com/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Growth Escalators — AI-first performance marketing agency',
+        alt: 'Growth Escalators — Growth Marketing, Technology & Talent',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Growth Escalators — AI-First Performance Marketing Agency',
-    description: 'AI-first performance marketing for doctors, roofing contractors and growing brands.',
+    title: 'Growth Escalators — Growth Marketing, Technology & Talent',
+    description:
+      'Performance marketing, ecommerce, websites, search, creative, AI, software and technology talent connected around measurable growth.',
   },
   robots: {
     index: true,
@@ -87,8 +85,9 @@ const ORGANIZATION_SCHEMA = {
   '@id': `${SITE_ID}/#organization`,
   name: 'Growth Escalators',
   url: SITE_ID,
-  logo: `${SITE_ID}/og-image.jpg`,
-  description: 'AI-first performance marketing agency. Specialists for doctors, roofing contractors and growing brands.',
+  logo: `${SITE_ID}/logo.webp`,
+  description:
+    'Jaipur-based growth company connecting performance marketing, ecommerce, websites, SEO, creative, AI automation, software and India-based technology talent around measurable commercial outcomes.',
   email: 'jatin@growthescalators.com',
   telephone: '+91-7733888883',
   address: {
