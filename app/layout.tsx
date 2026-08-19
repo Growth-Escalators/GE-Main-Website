@@ -14,20 +14,21 @@ const jakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.growthescalators.com'),
   title: {
-    default: 'Growth Escalators — AI-First Performance Marketing Agency',
+    default: 'Growth Escalators — Growth Marketing, Technology & Talent',
     template: '%s — Growth Escalators',
   },
   description:
-    'Jaipur-based growth partner for performance marketing, ecommerce, websites, software, AI automation and India-based technology staffing. ₹10Cr+ ad spend managed with 97% client retention.',
+    'Jaipur-based growth company connecting performance marketing, ecommerce, websites, SEO, creative, AI automation, software and India-based technology talent around measurable commercial outcomes.',
   keywords: [
+    'growth marketing agency',
     'performance marketing agency',
     'performance marketing agency Jaipur',
     'D2C growth agency',
-    'ecommerce advertising agency',
-    'Meta ads agency',
-    'Google ads agency',
+    'ecommerce growth agency',
+    'conversion rate optimization',
     'website development company Jaipur',
     'software development company Jaipur',
+    'SEO agency',
     'AI automation agency',
     'India technology staffing',
     'offshore tech staffing',
@@ -36,15 +37,17 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     siteName: 'Growth Escalators',
-    title: 'Growth Escalators — AI-First Performance Marketing Agency',
-    description: 'Performance marketing, ecommerce, web, software, AI automation and technology staffing connected around measurable growth.',
+    title: 'Growth Escalators — Growth Marketing, Technology & Talent',
+    description:
+      'Performance marketing, ecommerce, websites, search, creative, AI, software and technology talent connected around measurable growth.',
     url: 'https://www.growthescalators.com',
-    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Growth Escalators — Growth, Engineered' }],
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Growth Escalators — Growth Marketing, Technology & Talent' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Growth Escalators — AI-First Performance Marketing Agency',
-    description: 'Performance marketing, ecommerce, web, software, AI automation and technology staffing connected around measurable growth.',
+    title: 'Growth Escalators — Growth Marketing, Technology & Talent',
+    description:
+      'Performance marketing, ecommerce, websites, search, creative, AI, software and technology talent connected around measurable growth.',
     images: ['/opengraph-image'],
   },
   robots: {
@@ -62,7 +65,8 @@ const ORGANIZATION_SCHEMA = {
   name: 'Growth Escalators',
   url: SITE_ID,
   logo: `${SITE_ID}/logo.webp`,
-  description: 'Jaipur-based growth partner for performance marketing, ecommerce, websites, software, AI automation and India-based technology staffing.',
+  description:
+    'Jaipur-based growth company connecting performance marketing, ecommerce, websites, SEO, creative, AI automation, software and India-based technology talent around measurable commercial outcomes.',
   email: 'jatin@growthescalators.com',
   telephone: '+91-7733888883',
   address: {
