@@ -51,49 +51,55 @@ main :where(section[id], div[id]) {
 }
 
 /* Cross-site contrast hardening discovered in the full mobile Lighthouse pass.
-   These are intentionally narrow CSS-module substring selectors so we can fix
-   the shared release without weakening each component's local design system. */
-[class*="HomepageReference_heroMetric"] > :is(span, small) {
+   The body/main prefix intentionally outranks CSS-module rules loaded later. */
+body main [class*="HomepageReference_heroMetric"] > span,
+body main [class*="HomepageReference_heroMetric"] > small {
   color: #fff !important;
 }
-[class*="HomepageReference_heroTag"] {
+body main [class*="HomepageReference_heroTag"] {
   color: #170653 !important;
 }
-[class*="HomepageReference_botHeader"] div span {
-  color: #5a5d6e !important;
+body main [class*="HomepageReference_botHeader"] div > span {
+  color: #4f5262 !important;
 }
-[class*="HomepageReference_online"] {
-  color: #1f6553 !important;
+body main [class*="HomepageReference_online"] {
+  color: #185747 !important;
 }
-[class*="HomepageReference_botInput"] {
-  color: #646778 !important;
+body main [class*="HomepageReference_botInput"] {
+  color: #555969 !important;
 }
-[class*="HomepageReference_botSignalCard"] > span {
+body main [class*="HomepageReference_botSignalCard"] > span {
   color: #170653 !important;
 }
-[class*="HomepageReference_botResultCard"] > span {
-  color: #403252 !important;
+body main [class*="HomepageReference_botResultCard"] > span {
+  color: #332644 !important;
 }
-[class*="HomepageReference_peopleLabel"] {
+body main [class*="HomepageReference_peopleLabel"] {
   color: #170653 !important;
 }
-[class*="Phase2Core_heroStat"] > span {
+body main [class*="Phase2Core_heroStat"] > span {
   color: #686a7a !important;
 }
-[class*="ServicesRefinement_serviceIndex"] {
+body main [class*="ServicesRefinement_serviceIndex"] {
   color: #666575 !important;
 }
-[class*="CommercialLandingPage_wordRail"] span > b,
-[class*="CommercialLandingPage_constraintCard"] > span {
-  color: #666575 !important;
+body main [class*="CommercialLandingPage_wordRail"] span > b,
+body main [class*="CommercialLandingPage_constraintCard"] > span,
+body main [class*="CommercialLandingPage_capabilityIndex"],
+body main [class*="CommercialLandingPage_whyList"] article > span,
+body main [class*="CommercialLandingPage_faqItem"] summary > span {
+  color: #5c5e6c !important;
 }
-[class*="CommercialLandingPage_proofRail"] > div > span {
-  color: #6b6d7b !important;
+body main [class*="CommercialLandingPage_proofRail"] > div > span {
+  color: #626473 !important;
 }
-[class*="StaffingMarketPage_trustRail"] article p {
-  color: #6f7180 !important;
+body main [class*="CommercialDecisionTool_result"] > span {
+  color: #303342 !important;
 }
-[class*="StaffingMarketPage_models"] article > span {
+body main [class*="StaffingMarketPage_trustRail"] article p {
+  color: #6a6c7b !important;
+}
+body main [class*="StaffingMarketPage_models"] article > span {
   color: #244cff !important;
 }
 
