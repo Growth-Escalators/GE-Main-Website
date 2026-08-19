@@ -36,18 +36,65 @@ main :where(section[id], div[id]) {
   outline-offset: 3px;
 }
 
-/* Keep the sticky navigation's physical footprint constant. The previous
-   scroll state changed its height and shifted every page's <main>, creating
-   the same CLS penalty across every template. Background/shadow changes can
-   still communicate the scrolled state without moving content. */
+/* Keep the sticky navigation's physical footprint constant. Background/shadow
+   changes can communicate the scrolled state without moving page content. */
+.ge-nav,
 .ge-nav.is-scrolled {
   --nav-h: 94px !important;
+  height: 94px;
 }
-.ge-mega.is-scrolled {
-  top: 94px !important;
-}
+.ge-mega,
+.ge-mega.is-scrolled,
+.ge-backdrop,
 .ge-backdrop.is-scrolled {
   top: 94px !important;
+}
+
+/* Cross-site contrast hardening discovered in the full mobile Lighthouse pass.
+   These are intentionally narrow CSS-module substring selectors so we can fix
+   the shared release without weakening each component's local design system. */
+[class*="HomepageReference_heroMetric"] > :is(span, small) {
+  color: #fff !important;
+}
+[class*="HomepageReference_heroTag"] {
+  color: #170653 !important;
+}
+[class*="HomepageReference_botHeader"] div span {
+  color: #5a5d6e !important;
+}
+[class*="HomepageReference_online"] {
+  color: #1f6553 !important;
+}
+[class*="HomepageReference_botInput"] {
+  color: #646778 !important;
+}
+[class*="HomepageReference_botSignalCard"] > span {
+  color: #170653 !important;
+}
+[class*="HomepageReference_botResultCard"] > span {
+  color: #403252 !important;
+}
+[class*="HomepageReference_peopleLabel"] {
+  color: #170653 !important;
+}
+[class*="Phase2Core_heroStat"] > span {
+  color: #686a7a !important;
+}
+[class*="ServicesRefinement_serviceIndex"] {
+  color: #666575 !important;
+}
+[class*="CommercialLandingPage_wordRail"] span > b,
+[class*="CommercialLandingPage_constraintCard"] > span {
+  color: #666575 !important;
+}
+[class*="CommercialLandingPage_proofRail"] > div > span {
+  color: #6b6d7b !important;
+}
+[class*="StaffingMarketPage_trustRail"] article p {
+  color: #6f7180 !important;
+}
+[class*="StaffingMarketPage_models"] article > span {
+  color: #244cff !important;
 }
 
 /* Long emails, URLs and generated labels should never widen a mobile layout. */
@@ -60,9 +107,12 @@ main :where(section[id], div[id]) {
     --ge-sticky-offset: 86px;
   }
 
+  .ge-nav,
   .ge-nav.is-scrolled {
     --nav-h: 76px !important;
+    height: 76px !important;
   }
+  .ge-mobile-menu,
   .ge-mobile-menu.is-scrolled {
     top: 76px !important;
   }
