@@ -49,7 +49,7 @@ const MENUS: Record<MenuKey, MenuConfig> = {
 }
 
 const DIRECT = [
-  { label: 'Work', href: '/work' },
+  { label: 'Case Studies', href: '/work' },
   { label: 'Portfolio', href: '/portfolio' },
   { label: 'Insights', href: '/blog' },
   { label: 'About', href: '/about' },

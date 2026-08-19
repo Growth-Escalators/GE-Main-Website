@@ -6,29 +6,12 @@ const PATH = '/meta-ads-agency-for-ecommerce'
 export const metadata: Metadata = {
   title: 'Meta Ads Agency for Ecommerce Brands',
   description:
-    'Meta ads agency for ecommerce — UGC creative & offer testing, not just audience tweaks. Sneha Kapoor: ROAS 1.9×→6.1× in 75 days. Free audit.',
-  keywords: [
-    'meta ads agency for ecommerce',
-    'facebook ads agency for shopify',
-    'instagram ads for online store',
-    'meta ads agency india',
-    'facebook ads agency for ecommerce',
-    'ugc creative testing agency',
-  ],
+    'Meta ads agency for ecommerce brands focused on creative testing, offer iteration, account structure and Shopify conversion — not just audience tweaks. Verified D2C proof: Paraiso reached 3.2× ROAS with 6× revenue growth in 60 days.',
+  keywords: ['meta ads agency for ecommerce','facebook ads agency for shopify','instagram ads for online store','meta ads agency india','facebook ads agency for ecommerce','ugc creative testing agency'],
   alternates: { canonical: PATH },
-  openGraph: {
-    title: 'Meta Ads Agency for Ecommerce Brands — Growth Escalators',
-    description:
-      'Meta-only ecommerce ads agency: UGC creative testing at scale, offer structuring, CBO pacing. Sneha Kapoor: ROAS 1.9×→6.1× in 75 days.',
-    url: PATH,
-    type: 'website',
-  },
+  openGraph: { title: 'Meta Ads Agency for Ecommerce Brands — Growth Escalators', description: 'Creative testing, offer iteration, account structure and Shopify conversion for ecommerce Meta Ads. Paraiso: 3.2× ROAS and 6× revenue growth in 60 days.', url: PATH, type: 'website' },
 }
 
-/* Page-level JSON-LD — a NATIONAL Service node linked to the global
-   #organization graph (app/layout.tsx). No PostalAddress / local NAP: this
-   page targets all-India ecommerce founders, not a single city. Server-
-   rendered so AI crawlers see it in raw HTML. */
 const SCHEMA = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -39,8 +22,7 @@ const SCHEMA = {
       serviceType: 'Meta Ads Management',
       provider: { '@id': `${SITE}/#organization` },
       areaServed: { '@type': 'Country', name: 'India' },
-      description:
-        'Meta-only (Facebook, Instagram, Reels) advertising for ecommerce brands — UGC creative testing at scale, offer structuring, account structure, and CBO budget pacing.',
+      description: 'Meta advertising for ecommerce brands across Facebook, Instagram and Reels, focused on creative testing, offer structure, account pacing and conversion.',
     },
     {
       '@type': 'BreadcrumbList',
@@ -54,10 +36,5 @@ const SCHEMA = {
 }
 
 export default function MetaAdsEcommerceLayout({ children }: { children: React.ReactNode }) {
-  return (
-    <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA) }} />
-      {children}
-    </>
-  )
+  return <><script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA) }} />{children}</>
 }

@@ -1,18 +1,22 @@
 import type { Metadata } from 'next'
 import Navbar from '@/components/sections/Navbar'
-import './white-label.css'
 
 export const metadata: Metadata = {
-  title: 'White-Label Software & App Development',
+  title: 'White-Label Software & App Development for Agencies',
   description:
-    'Your silent engineering partner. We build production-grade multi-tenant SaaS, web & mobile apps, and AI automation under your brand — with live payments, deep integrations, and India-market compliance already shipped.',
+    'White-label software and app development for agencies and product teams. India-based delivery for SaaS, web and mobile applications, ecommerce, internal tools, integrations and AI-enabled workflows under your brand.',
   alternates: { canonical: '/white-label-software-development' },
   openGraph: {
-    title: 'White-Label Software & App Development — Growth Escalators',
+    title: 'White-Label Software & App Development for Agencies — Growth Escalators',
     description:
-      'Production-grade SaaS, web & mobile apps, and AI automation, built under your brand. You keep the client; we write the code.',
+      'A silent engineering partner for SaaS, web and mobile applications, ecommerce, internal tools, integrations and AI-enabled workflows. Your client relationship stays yours.',
     url: '/white-label-software-development',
     type: 'website',
+  },
+  twitter: {
+    card: 'summary',
+    title: 'White-Label Software & App Development for Agencies — Growth Escalators',
+    description: 'White-label software and app delivery under your brand, with clear scope, ownership and handover.',
   },
 }
 
@@ -20,7 +24,7 @@ export default function WhiteLabelLayout({ children }: { children: React.ReactNo
   return (
     <>
       <Navbar />
-      <div className="wl-root">{children}</div>
+      {children}
     </>
   )
 }

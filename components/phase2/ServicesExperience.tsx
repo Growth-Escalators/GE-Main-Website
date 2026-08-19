@@ -5,41 +5,13 @@ import Link from 'next/link'
 import styles from './ServicesRefinement.module.css'
 
 const SERVICES = [
-  {
-    n:'01', title:'Performance Marketing', href:'/performance-marketing-agency-jaipur',
-    copy:'Meta Ads, Google Ads and full-funnel media connected to revenue, qualified demand and measurable acquisition.',
-    outcome:'Increase profitable store revenue — not just traffic.', type:'performance',
-  },
-  {
-    n:'02', title:'Funnels & Automation', href:'/contact',
-    copy:'Landing journeys, CRM logic, WhatsApp and lifecycle automation designed to reduce leakage between click, lead and sale.',
-    outcome:'Turn attention into conversion, repeat purchase and loyalty.', type:'funnels',
-  },
-  {
-    n:'03', title:'Web & Commerce', href:'/website-development-company-jaipur',
-    copy:'Conversion-led websites, Shopify experiences and Next.js builds that connect acquisition with a faster, clearer buying journey.',
-    outcome:'Build the path from product discovery to checkout around conversion.', type:'commerce',
-  },
-  {
-    n:'04', title:'Creative & Social', href:'/portfolio',
-    copy:'Creative systems, campaign concepts, social content and production built around customer insight rather than posting volume.',
-    outcome:'Test more useful ideas — offers, proof, product, pain and desire.', type:'creative',
-  },
-  {
-    n:'05', title:'SEO & Organic', href:'/services',
-    copy:'Technical SEO, content architecture and search-led authority that help the right pages earn sustained discovery.',
-    outcome:'Move commercially useful pages upward while compounding organic demand.', type:'seo',
-  },
-  {
-    n:'06', title:'Software & AI', href:'/software-development-company-jaipur',
-    copy:'Software development, AI automation and integrations that remove operational friction and connect growth workflows.',
-    outcome:'Build the custom features your growth system actually needs.', type:'software',
-  },
-  {
-    n:'07', title:'Technology Talent', href:'/staffing',
-    copy:'India-based and offshore technology staffing support for teams that need screened delivery capacity around specific requirements.',
-    outcome:'Move from requirement to relevant screened shortlist with less noise.', type:'talent',
-  },
+  { n:'01', title:'Performance Marketing', href:'/performance-marketing-agency-jaipur', copy:'Meta Ads, Google Ads and full-funnel media connected to revenue, qualified demand and measurable acquisition.', outcome:'Increase profitable store revenue — not just traffic.', type:'performance' },
+  { n:'02', title:'Funnels & Automation', href:'/contact', copy:'Landing journeys, CRM logic, WhatsApp and lifecycle automation designed to reduce leakage between click, lead and sale.', outcome:'Turn attention into conversion, repeat purchase and loyalty.', type:'funnels' },
+  { n:'03', title:'Web & Commerce', href:'/website-development-company-jaipur', copy:'Conversion-led websites, Shopify experiences and Next.js builds that connect acquisition with a faster, clearer buying journey.', outcome:'Build the path from product discovery to checkout around conversion.', type:'commerce' },
+  { n:'04', title:'Creative & Social', href:'/portfolio', copy:'Creative systems, campaign concepts, social content and production built around customer insight rather than posting volume.', outcome:'Test more useful ideas — offers, proof, product, pain and desire.', type:'creative' },
+  { n:'05', title:'SEO & Organic', href:'/services', copy:'Technical SEO, content architecture and search-led authority that help the right pages earn sustained discovery.', outcome:'Move commercially useful pages upward while compounding organic demand.', type:'seo' },
+  { n:'06', title:'Software & AI', href:'/software-development-company-jaipur', copy:'Software development, AI automation and integrations that remove operational friction and connect growth workflows.', outcome:'Build the custom features your growth system actually needs.', type:'software' },
+  { n:'07', title:'Technology Talent', href:'/staffing', copy:'India-based and offshore technology staffing support for teams that need screened delivery capacity around specific requirements.', outcome:'Move from requirement to relevant screened shortlist with less noise.', type:'talent' },
 ] as const
 
 type ServiceType = typeof SERVICES[number]['type']
@@ -114,7 +86,7 @@ export default function ServicesExperience(){
           <div className={styles.serviceOutcome}>
             <span>What changes</span>
             <strong>{service.outcome}</strong>
-            <Link href={service.href}>Explore this capability ↗</Link>
+            <Link href={service.href} tabIndex={isActive ? 0 : -1}>Explore this capability ↗</Link>
           </div>
           <ServiceVisual type={service.type}/>
         </div>

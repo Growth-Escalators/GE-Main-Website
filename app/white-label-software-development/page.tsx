@@ -1,385 +1,467 @@
-'use client'
-
-import { motion } from 'framer-motion'
+import Link from 'next/link'
 import Footer from '@/components/sections/Footer'
-import LeadMagnetCalculator from '@/components/landing/LeadMagnetCalculator'
-import { WHITE_LABEL_CONTENT as C } from './_data/content'
+import WhiteLabelLeadForm from '@/components/white-label/WhiteLabelLeadForm'
+import styles from './page.module.css'
 
-/* Bespoke, fully-scoped redesign (styles in ./white-label.css under .wl-root).
-   Reuses the copy in _data/content.ts. Does NOT use the shared IndustryLandingPage engine. */
-
-const BOOK = C.bookingUrl || 'https://cal.com/growth-escalators/30min'
-const ext = { target: '_blank', rel: 'noopener noreferrer' } as const
-
-const reveal = {
-  initial: { opacity: 0, y: 24 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: '-60px' },
-  transition: { duration: 0.5 },
-}
-
-const PROOF = [
-  { n: '237+', l: 'Projects delivered' },
-  { n: '₹70Cr+', l: 'Payments processed' },
-  { n: '50+', l: 'Integrations shipped' },
-  { n: '1,000+', l: 'Automated tests' },
+const FIT = [
+  {
+    title: 'Agencies selling software without an engineering bench',
+    copy: 'Keep the strategy and client relationship. Bring us in behind the scenes for product architecture, build, QA and handover.',
+  },
+  {
+    title: 'Teams that need delivery capacity without permanent hiring',
+    copy: 'Add engineering capacity for a defined build or delivery window without carrying a larger fixed team between projects.',
+  },
+  {
+    title: 'Partners that need one accountable technical owner',
+    copy: 'Use one delivery partner across web applications, internal tools, ecommerce, integrations and AI-enabled workflows.',
+  },
 ]
 
-const SERVICE_ICONS = ['💻', '📱', '🛒', '🤖', '🧩', '🔌']
+const CAPABILITIES = [
+  {
+    title: 'SaaS & web applications',
+    copy: 'Multi-user products, portals, dashboards, admin systems, authentication, permissions, subscriptions and application workflows.',
+  },
+  {
+    title: 'Ecommerce & conversion builds',
+    copy: 'Custom storefront experiences, checkout logic, integrations, post-purchase flows and the technical layer behind growth experiments.',
+  },
+  {
+    title: 'AI automation & agents',
+    copy: 'Useful AI inside real workflows: assisted research, content operations, internal copilots, routing, extraction and repeatable task automation.',
+  },
+  {
+    title: 'Internal tools & CRM workflows',
+    copy: 'Operational software for sales, delivery, staffing, reporting and business processes that no off-the-shelf tool fits cleanly.',
+  },
+  {
+    title: 'Integrations & data flows',
+    copy: 'Payments, messaging, CRM, commerce, authentication and third-party APIs connected with clear ownership and failure handling.',
+  },
+  {
+    title: 'Dedicated engineering capacity',
+    copy: 'A delivery pod that can work against your roadmap and operating rhythm when a single fixed-scope project is not the right model.',
+  },
+]
 
-/* [name, simple-icons slug]. slug '' → clean text-only pill (no logo available). */
-const TECH: { label: string; items: [string, string][] }[] = [
-  { label: 'Frontend', items: [['React', 'react'], ['Next.js', 'nextdotjs'], ['TypeScript', 'typescript'], ['Tailwind', 'tailwindcss'], ['Vite', 'vite'], ['Framer Motion', 'framer'], ['shadcn/ui', 'shadcnui'], ['TanStack Query', 'reactquery']] },
-  { label: 'Backend & data', items: [['Node.js', 'nodedotjs'], ['Express', 'express'], ['PostgreSQL', 'postgresql'], ['Supabase', 'supabase'], ['Prisma', 'prisma'], ['Drizzle', ''], ['Redis', 'redis'], ['Socket.io', 'socketdotio'], ['Zod', '']] },
-  { label: 'Payments & messaging', items: [['Razorpay', 'razorpay'], ['Cashfree', ''], ['Stripe', 'stripe'], ['WhatsApp', 'whatsapp'], ['Meta', 'meta'], ['MSG91', ''], ['Resend', 'resend']] },
-  { label: 'AI', items: [['OpenAI (GPT-4)', 'openai'], ['Anthropic (Claude)', 'anthropic']] },
-  { label: 'Cloud & infra', items: [['AWS', 'amazonwebservices'], ['Cloudflare', 'cloudflare'], ['Docker', 'docker'], ['GitHub Actions', 'githubactions'], ['Sentry', 'sentry'], ['Vercel', 'vercel'], ['Railway', 'railway']] },
+const PRINCIPLES = [
+  {
+    title: 'Your brand stays in front',
+    copy: 'The end-client relationship remains with you. We can work as a silent delivery partner and keep communication inside the agreed operating model.',
+  },
+  {
+    title: 'Scope before optimism',
+    copy: 'We clarify product boundaries, integrations, assumptions and acceptance criteria before turning an idea into a delivery commitment.',
+  },
+  {
+    title: 'Code and handover are part of delivery',
+    copy: 'Repository access, documentation and ownership expectations are agreed up front rather than becoming a negotiation at the end.',
+  },
+  {
+    title: 'No invented proof',
+    copy: 'Confidential white-label work stays confidential. We use owned product examples and approved public work rather than manufacturing client logos or claims.',
+  },
+]
+
+const WORK = [
+  {
+    label: 'Owned platform',
+    title: 'Growth Escalators CRM',
+    copy: 'A multi-user internal CRM and workflow platform used to support sales and operating processes inside the business.',
+    stack: 'CRM · workflow automation · messaging · business operations',
+  },
+  {
+    label: 'Owned product work',
+    title: 'Dealos',
+    copy: 'A real-estate sales operating system built around lead handling, documents, commissions and team workflows.',
+    stack: 'SaaS · multi-user workflows · payments · operations',
+  },
+  {
+    label: 'Public client platform',
+    title: 'Dr Dubay',
+    copy: 'A public healthcare website paired with operational tooling for enquiries, bookings and clinic workflows.',
+    stack: 'Next.js · application workflows · healthcare operations',
+  },
+  {
+    label: 'Product in development',
+    title: 'Wizmatch',
+    copy: 'A staffing workflow product focused on candidate review, sourcing signals and recruitment operations.',
+    stack: 'Staffing operations · scoring workflows · internal tooling',
+  },
+]
+
+const PROCESS = [
+  {
+    title: 'Clarify the commercial promise',
+    copy: 'What has been sold, who the end user is, what absolutely has to work and what can wait.',
+  },
+  {
+    title: 'Define architecture & scope',
+    copy: 'Data model, integrations, delivery boundaries, milestones, acceptance criteria and ownership are written down before build.',
+  },
+  {
+    title: 'Build with review points',
+    copy: 'You get working increments and review points instead of disappearing into a long black-box development cycle.',
+  },
+  {
+    title: 'Launch, hand over or continue',
+    copy: 'Move into launch support, handover, or an ongoing delivery model depending on what your client or product needs next.',
+  },
 ]
 
 const ENGAGEMENTS = [
-  { ic: '📦', t: 'Fixed-scope project', d: 'A defined build with a written scope, timeline, and price — best for a clear, bounded product or feature.' },
-  { ic: '👥', t: 'Dedicated team', d: 'A monthly retainer for an embedded engineering pod that ships continuously under your brand.' },
-  { ic: '🧑‍💻', t: 'Staff augmentation', d: 'Our engineers slot into your existing team and process — scale capacity up or down per project.' },
+  {
+    title: 'Fixed-scope build',
+    copy: 'For a bounded product, feature set or migration with clear acceptance criteria and a defined delivery window.',
+  },
+  {
+    title: 'Dedicated delivery pod',
+    copy: 'For agencies or product teams that need continuing engineering capacity across an active roadmap.',
+  },
+  {
+    title: 'Embedded capacity',
+    copy: 'For teams that already own product direction and need engineers to work inside the existing process and priorities.',
+  },
 ]
 
-const INDUSTRIES = [
-  { ic: '🏠', t: 'Real estate' },
-  { ic: '🏥', t: 'Healthcare' },
-  { ic: '🛍️', t: 'D2C & e-commerce' },
-  { ic: '🧑‍💼', t: 'Staffing / HR-tech' },
-  { ic: '📈', t: 'Agencies & marketing' },
+const FAQS = [
+  {
+    q: 'Can the work be completely white-label?',
+    a: 'Yes. We can structure delivery so your agency remains the visible partner and the client relationship stays with you. Communication boundaries are agreed before work starts.',
+  },
+  {
+    q: 'Who owns the code and intellectual property?',
+    a: 'Ownership and repository access are documented in the engagement terms. For client-funded builds, the expected handover model is agreed before development begins so there is no ambiguity later.',
+  },
+  {
+    q: 'Will you sign an NDA?',
+    a: 'Yes, where the engagement requires one. White-label delivery only works when confidentiality, access and communication rules are explicit.',
+  },
+  {
+    q: 'What kinds of products can you build?',
+    a: 'Typical work includes SaaS and web applications, ecommerce experiences, internal tools, CRM workflows, integrations, AI-enabled operations and dedicated engineering capacity.',
+  },
+  {
+    q: 'How do you price white-label development?',
+    a: 'The commercial model depends on how defined the work is. A bounded build can be scoped as a project; an evolving roadmap is usually better handled through dedicated or embedded capacity.',
+  },
+  {
+    q: 'How quickly can a project start?',
+    a: 'Start timing depends on scope clarity and current delivery capacity. We would rather give you a realistic start and milestone plan after reviewing the brief than advertise a generic turnaround promise.',
+  },
 ]
 
-const COMPARE: [string, string, string, string][] = [
-  ['Time to start', 'Weeks of hiring', 'Slow, timezone lag', 'Days — we start now'],
-  ['Code quality', 'Depends on the hire', 'Hit or miss, rework', 'Production-grade, tested'],
-  ['Integrations', 'Built from scratch', 'Built from scratch', 'Reused from our library'],
-  ['India compliance', 'You figure it out', 'Usually missing', 'GST / TDS / RERA shipped'],
-  ['Cost', 'Salary + overhead', 'Cheap but risky', 'Scoped & predictable'],
-  ['Your brand', '—', 'Rarely', 'Fully white-label'],
-]
+function JsonLd() {
+  const service = {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: 'White-Label Software Development',
+    serviceType: 'White-label software and application development',
+    provider: {
+      '@type': 'Organization',
+      name: 'Growth Escalators',
+      url: 'https://www.growthescalators.com',
+    },
+    url: 'https://www.growthescalators.com/white-label-software-development',
+    description:
+      'White-label software delivery for agencies and product teams across SaaS, web applications, ecommerce, internal tools, integrations and AI-enabled workflows.',
+  }
 
-const FOUNDER = {
-  quote:
-    'We built our own products — a multi-tenant CRM, a real-estate SaaS, a live clinic platform — before we ever offered to build yours. That’s the difference: you get a partner who has shipped and runs production software, not a shop learning on your client’s dime. Tell me what you need built, and I’ll tell you exactly how we’d do it.',
-  name: 'Jatin Agrawal',
-  role: 'Founder, Growth Escalators',
-}
+  const faq = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: FAQS.map((item) => ({
+      '@type': 'Question',
+      name: item.q,
+      acceptedAnswer: { '@type': 'Answer', text: item.a },
+    })),
+  }
 
-const CODE = `<span class="c">// multi-tenant API — shipped under your brand</span>
-<span class="k">export const</span> <span class="f">createTenant</span> = <span class="k">async</span> (input) =&gt; {
-  <span class="k">const</span> tenant = <span class="k">await</span> db.<span class="f">insert</span>(tenants).values(input)
-  <span class="k">await</span> <span class="f">provisionBilling</span>(tenant, <span class="s">'razorpay'</span>)
-  <span class="k">await</span> <span class="f">connectWhatsApp</span>(tenant.id)
-  <span class="k">return</span> { id: tenant.id, status: <span class="s">'live'</span> }
-}`
+  const breadcrumb = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.growthescalators.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Services', item: 'https://www.growthescalators.com/services' },
+      {
+        '@type': 'ListItem',
+        position: 3,
+        name: 'White-Label Software Development',
+        item: 'https://www.growthescalators.com/white-label-software-development',
+      },
+    ],
+  }
 
-const faqSchema = {
-  '@context': 'https://schema.org',
-  '@type': 'FAQPage',
-  mainEntity: C.faqs.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(service) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faq) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
+    </>
+  )
 }
 
 export default function WhiteLabelSoftwareDevelopmentPage() {
   return (
-    <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
+    <main className={styles.page}>
+      <JsonLd />
 
-      {/* ── HERO ── (header comes from the shared site <Navbar/> in layout.tsx) */}
-      <section className="wl-hero wl-mesh">
-        <div className="wl-container wl-hero-grid">
-          <div>
-            <span className="wl-pill"><span className="wl-dot" /> {C.hero.badge}</span>
-            <h1>{C.hero.headlineLines[0]}<br /><span className="wl-grad">{C.hero.headlineLines[1]}</span></h1>
-            <p className="wl-sub">{C.hero.subhead}</p>
-            <div className="wl-hero-ctas">
-              <a href={BOOK} {...ext} className="wl-btn">{C.hero.primaryCta.label} →</a>
-              <a href="#builds" className="wl-btn-ghost">See what we&rsquo;ve built</a>
+      <section className={styles.hero}>
+        <div className={styles.shell}>
+          <div className={styles.heroGrid}>
+            <div className={styles.heroCopy}>
+              <p className={styles.eyebrow}>White-label software development / agency delivery</p>
+              <h1>Ship software.<br />Keep your brand<br />in front.</h1>
+              <p className={styles.heroLead}>
+                Growth Escalators works behind agencies and product teams as an India-based engineering partner for
+                SaaS, web applications, ecommerce, internal tools, integrations and AI-enabled workflows. You own the
+                relationship. We help carry the technical delivery.
+              </p>
+              <div className={styles.actions}>
+                <a href="#project-brief" className={styles.primary}>Discuss a project ↗</a>
+                <Link href="/work" className={styles.secondary}>See selected work</Link>
+              </div>
             </div>
-            <div className="wl-stats">
-              {C.hero.statPills.map((p) => (
-                <div className="wl-stat" key={p.label}>
-                  <div className="n wl-grad">{p.value}</div>
-                  <div className="l">{p.label}</div>
-                </div>
+
+            <div className={styles.heroPanel} aria-label="White-label delivery model">
+              <div className={styles.panelTop}>
+                <span>Silent delivery partner</span>
+                <span>India-based engineering</span>
+              </div>
+              <div className={styles.panelStatement}>
+                Your client.<br />Your relationship.<br /><span>Shared delivery.</span>
+              </div>
+              <div className={styles.panelSteps}>
+                {['Brief', 'Scope', 'Build', 'Handover'].map((item, index) => (
+                  <div key={item}>
+                    <small>0{index + 1}</small>
+                    <strong>{item}</strong>
+                  </div>
+                ))}
+              </div>
+              <div className={styles.panelBottom}>
+                <span>NDA-ready</span>
+                <span>Repository access agreed up front</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.trustRail} aria-label="Delivery principles">
+        <div className={styles.shell}>
+          <div className={styles.trustGrid}>
+            <div><span>Agency-controlled client relationship</span></div>
+            <div><span>Confidentiality built into the operating model</span></div>
+            <div><span>Scope and acceptance criteria before build</span></div>
+            <div><span>Handover expectations agreed before delivery</span></div>
+          </div>
+        </div>
+      </section>
+
+      <section className={`${styles.section} ${styles.cream}`}>
+        <div className={styles.shell}>
+          <div className={styles.sectionHead}>
+            <div>
+              <p className={styles.eyebrow}>Who this is for</p>
+              <h2>Sell the capability without carrying all the headcount.</h2>
+            </div>
+            <p>
+              White-label delivery is useful when the commercial opportunity is real but building a permanent team
+              for every technical capability is not.
+            </p>
+          </div>
+          <div className={styles.fitGrid}>
+            {FIT.map((item, index) => (
+              <article className={styles.fitCard} key={item.title}>
+                <span>0{index + 1}</span>
+                <h3>{item.title}</h3>
+                <p>{item.copy}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className={`${styles.section} ${styles.lavender}`}>
+        <div className={styles.shell}>
+          <div className={styles.sectionHead}>
+            <div>
+              <p className={styles.eyebrow}>Technical coverage</p>
+              <h2>One delivery partner across the product layer.</h2>
+            </div>
+            <p>
+              The goal is not to sell a longer technology list. It is to remove the coordination gap between product,
+              engineering, integrations and launch.
+            </p>
+          </div>
+          <div className={styles.capGrid}>
+            {CAPABILITIES.map((item, index) => (
+              <article className={styles.capCard} key={item.title}>
+                <span>0{String(index + 1).padStart(2, '0')}</span>
+                <h3>{item.title}</h3>
+                <p>{item.copy}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className={`${styles.section} ${styles.dark}`}>
+        <div className={styles.shell}>
+          <div className={styles.principleGrid}>
+            <div className={styles.principleCopy}>
+              <p className={styles.eyebrow}>How white-label should actually work</p>
+              <h2>Invisible does not mean unaccountable.</h2>
+              <p>
+                A silent partner still needs explicit ownership, clear scope, disciplined communication and a clean
+                handover path. Those are operating requirements, not sales promises.
+              </p>
+            </div>
+            <div className={styles.principles}>
+              {PRINCIPLES.map((item, index) => (
+                <article className={styles.principle} key={item.title}>
+                  <span>0{index + 1}</span>
+                  <div>
+                    <h3>{item.title}</h3>
+                    <p>{item.copy}</p>
+                  </div>
+                </article>
               ))}
             </div>
           </div>
-          <motion.div className="wl-mock" initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.1 }}>
-            <div className="wl-window">
-              <div className="wl-bar">
-                <span className="wl-tl" style={{ background: '#ff5f57' }} />
-                <span className="wl-tl" style={{ background: '#febc2e' }} />
-                <span className="wl-tl" style={{ background: '#28c840' }} />
-                <span className="wl-url">api / tenants.ts</span>
-              </div>
-              <pre className="wl-code" dangerouslySetInnerHTML={{ __html: CODE }} />
+        </div>
+      </section>
+
+      <section className={styles.section}>
+        <div className={styles.shell}>
+          <div className={styles.sectionHead}>
+            <div>
+              <p className={styles.eyebrow}>Product evidence</p>
+              <h2>We can show the systems we actually work on.</h2>
             </div>
-            <div className="wl-toast wl-toast-1"><span className="tico wl-t2">✓</span> Deployed to prod</div>
-            <div className="wl-toast wl-toast-2"><span className="tico wl-t1">🔌</span> WhatsApp connected</div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ── PROOF STRIP ── */}
-      <section className="wl-section" style={{ paddingTop: 0 }}>
-        <div className="wl-container">
-          <div className="wl-proof">
-            {PROOF.map((s) => (
-              <div key={s.l}><div className="n wl-grad">{s.n}</div><div className="l">{s.l}</div></div>
+            <p>
+              Confidential client work stays confidential. These examples are owned product work or public delivery
+              that can be discussed without inventing logos, testimonials or private results.
+            </p>
+          </div>
+          <div className={styles.workGrid}>
+            {WORK.map((item) => (
+              <article className={styles.workCard} key={item.title}>
+                <span>{item.label}</span>
+                <h3>{item.title}</h3>
+                <p>{item.copy}</p>
+                <small>{item.stack}</small>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── WHAT WE BUILD ── */}
-      <section className="wl-section">
-        <div className="wl-container">
-          <div className="wl-head wl-center">
-            <span className="wl-eyebrow">What we build for you</span>
-            <h2 className="wl-h2">Full-stack product engineering, <span className="wl-grad">one roof</span></h2>
-            <p className="wl-sub">From database schema to shipped product — on your brand.</p>
-          </div>
-          <div className="wl-grid wl-grid-3">
-            {C.services.map((s, i) => (
-              <motion.div key={s.title} className="wl-card wl-feature" initial={reveal.initial} whileInView={reveal.whileInView} viewport={reveal.viewport} transition={{ duration: 0.5, delay: (i % 3) * 0.06 }}>
-                <div className={`wl-ico wl-t${i % 6}`}>{SERVICE_ICONS[i % SERVICE_ICONS.length]}</div>
-                <h3>{s.title}</h3>
-                <p>{s.body}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── TECHNOLOGIES ── */}
-      <section className="wl-section wl-mesh">
-        <div className="wl-container">
-          <div className="wl-head wl-center">
-            <span className="wl-eyebrow">Technologies we provide</span>
-            <h2 className="wl-h2">A <span className="wl-grad">production-proven</span> stack</h2>
-            <p className="wl-sub">The same tools we run our own products on — no experiments on your client&rsquo;s dime.</p>
-          </div>
-          {TECH.map((g) => (
-            <div className="wl-tech-group" key={g.label}>
-              <div className="wl-tech-label">{g.label}</div>
-              <div className="wl-tech-row">
-                {g.items.map(([name, slug]) => (
-                  <span className="wl-tech" key={name}>
-                    {slug && (
-                      <>
-                        {/* eslint-disable-next-line @next/next/no-img-element */}
-                        <img src={`/tech/${slug}.svg`} alt={name} loading="lazy" />
-                      </>
-                    )}
-                    {name}
-                  </span>
-                ))}
-              </div>
+      <section className={`${styles.section} ${styles.cream}`}>
+        <div className={styles.shell}>
+          <div className={styles.sectionHead}>
+            <div>
+              <p className={styles.eyebrow}>Delivery process</p>
+              <h2>Make the uncertainty visible before it becomes rework.</h2>
             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ── INDUSTRIES ── */}
-      <section className="wl-section">
-        <div className="wl-container wl-center">
-          <span className="wl-eyebrow">Industries we build for</span>
-          <h2 className="wl-h2">Shipped across <span className="wl-grad">real verticals</span></h2>
-          <div className="wl-ind-row">
-            {INDUSTRIES.map((x) => (
-              <div className="wl-ind" key={x.t}><span className="wl-ind-ic">{x.ic}</span>{x.t}</div>
+            <p>
+              The process is designed to make scope, assumptions and decisions inspectable from the beginning rather
+              than discovering them after the deadline moves.
+            </p>
+          </div>
+          <div className={styles.process}>
+            {PROCESS.map((item, index) => (
+              <article key={item.title}>
+                <span>0{index + 1}</span>
+                <h3>{item.title}</h3>
+                <p>{item.copy}</p>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── BUILDS ── */}
-      <section className="wl-section" id="builds">
-        <div className="wl-container">
-          <div className="wl-head wl-center">
-            <span className="wl-eyebrow">Proof, not promises</span>
-            <h2 className="wl-h2">Real products <span className="wl-grad">we&rsquo;ve shipped</span></h2>
-            <p className="wl-sub">Our own live builds — the same engineering we put behind your brand.</p>
-          </div>
-          <div className="wl-grid wl-grid-2">
-            {(C.builds?.items ?? []).map((b, i) => (
-              <motion.div key={b.name} className="wl-build" initial={reveal.initial} whileInView={reveal.whileInView} viewport={reveal.viewport} transition={{ duration: 0.5, delay: (i % 2) * 0.08 }}>
-                <div className="wl-build-top">
-                  <span className="wl-tl" style={{ background: '#ff5f57' }} />
-                  <span className="wl-tl" style={{ background: '#febc2e' }} />
-                  <span className="wl-tl" style={{ background: '#28c840' }} />
-                </div>
-                <div className="wl-build-body">
-                  <h3>{b.name}</h3>
-                  <p>{b.what}</p>
-                  <div className="wl-stack">{b.stack}</div>
-                  {b.href && <div style={{ marginTop: 12 }}><a href={b.href} {...ext}>Visit ↗</a></div>}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── WHY AGENCIES ── */}
-      <section className="wl-section wl-mesh">
-        <div className="wl-container">
-          <div className="wl-head wl-center">
-            <span className="wl-eyebrow">Why agencies partner with us</span>
-            <h2 className="wl-h2">Add an <span className="wl-grad">engineering arm</span> to your agency</h2>
-          </div>
-          <div className="wl-grid wl-grid-3">
-            {C.whyUs.map((w, i) => (
-              <motion.div key={w.title} className="wl-card wl-feature" initial={reveal.initial} whileInView={reveal.whileInView} viewport={reveal.viewport} transition={{ duration: 0.5, delay: (i % 3) * 0.06 }}>
-                <h3>{w.title}</h3>
-                <p>{w.body}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── COMPARISON ── */}
-      <section className="wl-section wl-mesh">
-        <div className="wl-container">
-          <div className="wl-head wl-center">
-            <span className="wl-eyebrow">Why not the alternatives</span>
-            <h2 className="wl-h2">In-house vs. offshore vs. <span className="wl-grad">Growth Escalators</span></h2>
-          </div>
-          <div className="wl-cmp">
-            <div className="wl-cmp-row wl-cmp-h">
-              <div></div><div>In-house hire</div><div>Offshore shop</div><div className="wl-cmp-us">Growth Escalators</div>
+      <section className={`${styles.section} ${styles.dark}`}>
+        <div className={styles.shell}>
+          <div className={styles.sectionHead}>
+            <div>
+              <p className={styles.eyebrow}>Engagement models</p>
+              <h2>Match the commercial model to the uncertainty.</h2>
             </div>
-            {COMPARE.map((r) => (
-              <div className="wl-cmp-row" key={r[0]}>
-                <div className="wl-cmp-k">{r[0]}</div>
-                <div>{r[1]}</div>
-                <div>{r[2]}</div>
-                <div className="wl-cmp-us">{r[3]}</div>
-              </div>
+            <p>
+              A fixed scope is useful when the work is bounded. An evolving roadmap needs a different operating model.
+              We choose the structure after understanding the delivery problem.
+            </p>
+          </div>
+          <div className={styles.engagementGrid}>
+            {ENGAGEMENTS.map((item, index) => (
+              <article className={styles.engagement} key={item.title}>
+                <span>0{index + 1}</span>
+                <h3>{item.title}</h3>
+                <p>{item.copy}</p>
+              </article>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── PROCESS ── */}
-      <section className="wl-section">
-        <div className="wl-container">
-          <div className="wl-head wl-center">
-            <span className="wl-eyebrow">How we work</span>
-            <h2 className="wl-h2">From brief to shipped — <span className="wl-grad">with you in the loop</span></h2>
+      <section className={styles.section}>
+        <div className={styles.shell}>
+          <div className={styles.sectionHead}>
+            <div>
+              <p className={styles.eyebrow}>Before you hand us a client</p>
+              <h2>Questions worth resolving before the first sprint.</h2>
+            </div>
+            <p>
+              The white-label relationship works when commercial expectations and delivery rules are explicit on both
+              sides.
+            </p>
           </div>
-          <div className="wl-grid wl-grid-4">
-            {C.process.map((p) => (
-              <motion.div key={p.step} className="wl-step" initial={reveal.initial} whileInView={reveal.whileInView} viewport={reveal.viewport} transition={{ duration: 0.5 }}>
-                <div className="num wl-grad">{p.step}</div>
-                <h3>{p.title}</h3>
-                <p>{p.body}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── ENGAGEMENT MODELS (dark) ── */}
-      <section className="wl-section wl-dark">
-        <div className="wl-container">
-          <div className="wl-head wl-center">
-            <span className="wl-eyebrow">Engagement models</span>
-            <h2 className="wl-h2" style={{ color: '#fff' }}>Work with us the way <span className="wl-grad">that fits</span></h2>
-          </div>
-          <div className="wl-grid wl-grid-3">
-            {ENGAGEMENTS.map((e, i) => (
-              <motion.div key={e.t} className="wl-card wl-feature" style={{ background: 'rgba(255,255,255,0.05)', borderColor: 'rgba(255,255,255,0.12)' }} initial={reveal.initial} whileInView={reveal.whileInView} viewport={reveal.viewport} transition={{ duration: 0.5, delay: i * 0.06 }}>
-                <div className={`wl-ico wl-t${i}`}>{e.ic}</div>
-                <h3 style={{ color: '#fff' }}>{e.t}</h3>
-                <p style={{ color: 'rgba(255,255,255,0.72)' }}>{e.d}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── FAQ ── */}
-      <section className="wl-section">
-        <div className="wl-container">
-          <div className="wl-head wl-center">
-            <span className="wl-eyebrow">Questions, answered</span>
-            <h2 className="wl-h2">White-label, <span className="wl-grad">answered</span></h2>
-          </div>
-          <div className="wl-faq">
-            {C.faqs.map((f) => (
-              <details key={f.q}>
-                <summary>{f.q}</summary>
-                <p>{f.a}</p>
+          <div className={styles.faqList}>
+            {FAQS.map((item) => (
+              <details key={item.q}>
+                <summary>{item.q}</summary>
+                <p>{item.a}</p>
               </details>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ── FOUNDER NOTE ── */}
-      <section className="wl-section">
-        <div className="wl-container">
-          <div className="wl-founder">
-            <div className="wl-avatar">J</div>
-            <div>
-              <p className="wl-founder-q">{FOUNDER.quote}</p>
-              <div className="wl-founder-n">{FOUNDER.name}</div>
-              <div className="wl-founder-r">{FOUNDER.role}</div>
+      <section id="project-brief" className={styles.conversion}>
+        <div className={styles.shell}>
+          <div className={styles.conversionGrid}>
+            <div className={styles.conversionCopy}>
+              <p className={styles.eyebrow}>Start with the actual brief</p>
+              <h2>Tell us what has to be delivered.</h2>
+              <p>
+                Share what you have already promised, what the end user needs and where the uncertainty is. We&apos;ll
+                respond with the most useful next step rather than forcing every enquiry into the same package.
+              </p>
+              <div className={styles.conversionNotes}>
+                <span>Your client relationship remains yours.</span>
+                <span>NDA and communication rules can be agreed before project detail is shared.</span>
+                <span>No generic timeline or price is promised before the scope is understood.</span>
+              </div>
             </div>
+            <WhiteLabelLeadForm />
           </div>
         </div>
       </section>
 
-      {/* ── SHOWCASE (image band) ── */}
-      {C.showcase && C.showcase.images.length > 0 && (
-        <section className="wl-section">
-          <div className="wl-container">
-            <div className="wl-head wl-center">
-              <span className="wl-eyebrow">{C.showcase.tag ?? 'What we ship'}</span>
-              <h2 className="wl-h2">{C.showcase.headline ?? 'Production software, on your brand'}</h2>
-              {C.showcase.subhead && <p className="wl-sub">{C.showcase.subhead}</p>}
-            </div>
-            <div className="wl-grid wl-grid-3">
-              {C.showcase.images.map((img) => (
-                <figure key={img.src} style={{ margin: 0 }}>
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={img.src}
-                    alt={img.alt}
-                    width={800}
-                    height={600}
-                    loading="lazy"
-                    decoding="async"
-                    style={{ width: '100%', height: 220, objectFit: 'cover', borderRadius: 16, display: 'block', border: '1px solid rgba(13,13,15,0.08)' }}
-                  />
-                  {img.caption && (
-                    <figcaption style={{ fontSize: 13.5, color: 'var(--text-secondary)', marginTop: 10, textAlign: 'center', lineHeight: 1.5 }}>
-                      {img.caption}
-                    </figcaption>
-                  )}
-                </figure>
-              ))}
-            </div>
+      <section className={styles.related}>
+        <div className={styles.shell}>
+          <div className={styles.relatedGrid}>
+            <Link href="/software-development-company-jaipur"><small>Related capability</small><strong>Software development ↗</strong></Link>
+            <Link href="/services"><small>Full capability map</small><strong>All services ↗</strong></Link>
+            <Link href="/work"><small>Selected evidence</small><strong>Work & outcomes ↗</strong></Link>
           </div>
-        </section>
-      )}
-
-      {/* ── LEAD-MAGNET CALCULATOR ── */}
-      {C.leadMagnet && <LeadMagnetCalculator config={C.leadMagnet} />}
-
-      {/* ── FINAL CTA (dark) ── */}
-      <section className="wl-section wl-dark wl-cta">
-        <div className="wl-container">
-          <h2 style={{ color: '#fff' }}>{C.finalCta.title}</h2>
-          <p className="wl-sub" style={{ marginBottom: 26 }}>{C.finalCta.subhead}</p>
-          <a href={BOOK} {...ext} className="wl-btn">{C.finalCta.ctaLabel} →</a>
         </div>
       </section>
 
       <Footer />
-    </>
+    </main>
   )
 }

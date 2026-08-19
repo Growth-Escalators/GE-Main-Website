@@ -1,18 +1,9 @@
 import type { Metadata } from 'next'
 import { Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
-// Load the portfolio-scoped stylesheet site-wide so any page can opt into
-// the portfolio look by wrapping its content in `<div class="portfolio-root">`.
-// Selectors inside portfolio.css are all prefixed with .portfolio-root, so
-// loading it globally doesn't bleed styling into pages that don't use the wrapper.
-import './portfolio/portfolio.css'
-import dynamic from 'next/dynamic'
+import './refinement.css'
 import GoogleAnalytics from '@/components/analytics/GoogleAnalytics'
-import ContactIdentityGuard from '@/components/ui/ContactIdentityGuard'
-
-const GrowthBot = dynamic(() => import('@/components/ui/GrowthBot'), { ssr: false })
-const CursorGlow = dynamic(() => import('@/components/portfolio/CursorGlow'), { ssr: false })
-const ScrollProgress = dynamic(() => import('@/components/portfolio/ScrollProgress'), { ssr: false })
+import GrowthBot from '@/components/ui/GrowthBot'
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -23,47 +14,41 @@ const jakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.growthescalators.com'),
   title: {
-    default: 'Growth Escalators — AI-First Performance Marketing Agency',
+    default: 'Growth Escalators — Growth Marketing, Technology & Talent',
     template: '%s — Growth Escalators',
   },
   description:
-    "AI-first performance marketing agency. 10,000+ campaigns run, ₹10Cr+ in ad spend managed, 97% client retention. Specialists for doctors, roofing contractors and growing brands.",
+    'Jaipur-based growth company connecting performance marketing, ecommerce, websites, SEO, creative, AI automation, software and India-based technology talent around measurable commercial outcomes.',
   keywords: [
+    'growth marketing agency',
     'performance marketing agency',
-    'AI marketing agency',
-    'D2C performance marketing agency',
-    'ecommerce Meta ads agency',
-    'marketing for doctors',
-    'roofing contractor marketing',
-    'restaurant marketing',
-    'Meta ads agency',
-    'Google ads agency',
-    'India marketing agency',
+    'performance marketing agency Jaipur',
+    'D2C growth agency',
+    'ecommerce growth agency',
+    'conversion rate optimization',
+    'website development company Jaipur',
+    'software development company Jaipur',
+    'SEO agency',
+    'AI automation agency',
+    'India technology staffing',
+    'offshore tech staffing',
   ],
   alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
     siteName: 'Growth Escalators',
-    title: 'Growth Escalators — AI-First Performance Marketing Agency',
-    description: 'AI-first performance marketing for doctors, roofing contractors and growing brands.',
+    title: 'Growth Escalators — Growth Marketing, Technology & Talent',
+    description:
+      'Performance marketing, ecommerce, websites, search, creative, AI, software and technology talent connected around measurable growth.',
     url: 'https://www.growthescalators.com',
-    images: [
-      {
-        // Was a dead 2023 WordPress URL on the non-www host. Points at a
-        // same-host path now — but no real 1200x630 asset exists yet at
-        // public/og-image.jpg. MUST be added before this is fully fixed
-        // (see SEO audit notes) — a broken OG image degrades every social/AI share.
-        url: `${'https://www.growthescalators.com'}/og-image.jpg`,
-        width: 1200,
-        height: 630,
-        alt: 'Growth Escalators — AI-first performance marketing agency',
-      },
-    ],
+    images: [{ url: '/opengraph-image', width: 1200, height: 630, alt: 'Growth Escalators — Growth Marketing, Technology & Talent' }],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Growth Escalators — AI-First Performance Marketing Agency',
-    description: 'AI-first performance marketing for doctors, roofing contractors and growing brands.',
+    title: 'Growth Escalators — Growth Marketing, Technology & Talent',
+    description:
+      'Performance marketing, ecommerce, websites, search, creative, AI, software and technology talent connected around measurable growth.',
+    images: ['/opengraph-image'],
   },
   robots: {
     index: true,
@@ -72,23 +57,16 @@ export const metadata: Metadata = {
   },
 }
 
-/* JSON-LD entity graph — emitted on every page so search engines and AI
-   crawlers see one consistent, connected business identity (GE SEO Standard
-   v1, Layer 5: "connected @id graph, not isolated blocks").
-
-   TODO before this is fully complete (real values needed, not fabricated):
-   - JATIN_PERSON.sameAs: add Jatin's real personal LinkedIn profile URL.
-   - ORGANIZATION.hasMap / geo: add the verified Google Business Profile
-     maps URL + lat/long once GBP is claimed/confirmed (see SEO audit). */
-const SITE_ID = `${'https://www.growthescalators.com'}`
+const SITE_ID = 'https://www.growthescalators.com'
 
 const ORGANIZATION_SCHEMA = {
   '@type': ['Organization', 'ProfessionalService'],
   '@id': `${SITE_ID}/#organization`,
   name: 'Growth Escalators',
   url: SITE_ID,
-  logo: `${SITE_ID}/og-image.jpg`,
-  description: 'AI-first performance marketing agency. Specialists for doctors, roofing contractors and growing brands.',
+  logo: `${SITE_ID}/logo.webp`,
+  description:
+    'Jaipur-based growth company connecting performance marketing, ecommerce, websites, SEO, creative, AI automation, software and India-based technology talent around measurable commercial outcomes.',
   email: 'jatin@growthescalators.com',
   telephone: '+91-7733888883',
   address: {
@@ -105,10 +83,6 @@ const ORGANIZATION_SCHEMA = {
     'https://www.linkedin.com/company/growth-escalators',
   ],
   founder: { '@id': `${SITE_ID}/#jatin-agrawal` },
-  /* Sister brand — WizMatch is Jatin's staffing/recruitment company (same
-     founder, disclosed relationship). Declared as a subOrganization so search
-     + AI engines treat the two brands as one connected entity family. Points
-     at WizMatch's canonical @id on wizmatchenterprises.com. */
   subOrganization: {
     '@type': 'Organization',
     '@id': 'https://www.wizmatchenterprises.com/#organization',
@@ -123,9 +97,6 @@ const JATIN_PERSON_SCHEMA = {
   name: 'Jatin Agrawal',
   jobTitle: 'Founder',
   worksFor: { '@id': `${SITE_ID}/#organization` },
-  /* Same individual also founded the sister brand WizMatch — link the two
-     Person nodes across domains so the entity resolves as one person.
-     TODO: add Jatin's real personal LinkedIn URL to this array once confirmed. */
   sameAs: ['https://www.wizmatchenterprises.com/#jatin-agrawal'],
 }
 
@@ -160,11 +131,6 @@ const SERVICE_SCHEMAS = [
     name: 'Offshore Technology Staffing',
     serviceType: 'IT Staffing',
     provider: { '@id': `${SITE_ID}/#organization` },
-    // One Service node for the whole offshore-tech-staffing offer, not one per
-    // country landing page (see international-landing Stage A brief: "do not
-    // create separate structured-data business identities for each country").
-    // UK shipped first; areaServed is pre-generalized to the full 4-market set
-    // (UK/UAE/US/Australia) so this node needs no edit when those pages ship.
     areaServed: ['GB', 'AE', 'US', 'AU'],
   },
 ]
@@ -178,16 +144,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA_GRAPH) }}
-        />
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA_GRAPH) }} />
       </head>
       <body className={jakarta.variable}>
         <GoogleAnalytics />
-        <ContactIdentityGuard />
-        <ScrollProgress />
-        <CursorGlow />
         {children}
         <GrowthBot />
       </body>

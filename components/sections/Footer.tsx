@@ -63,7 +63,7 @@ const FOOTER_GROUPS = [
   {
     heading: 'Company',
     links: [
-      { label: 'Work', href: '/work' },
+      { label: 'Case Studies', href: '/work' },
       { label: 'About', href: '/about' },
       { label: 'Insights', href: '/blog' },
       { label: 'Contact', href: '/contact' },
@@ -105,8 +105,8 @@ export default function Footer() {
 
         <div className="ge-footer-contact">
           <div className="ge-footer-trust">
-            <span>Meta & Google Ads certified</span>
-            <span>10,000+ campaigns</span>
+            <span>187+ brands scaled</span>
+            <span>97% client retention</span>
             <span>₹10Cr+ ad spend managed</span>
             <span>Jaipur, India</span>
           </div>

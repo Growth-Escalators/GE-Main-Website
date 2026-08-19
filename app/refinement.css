@@ -1,0 +1,172 @@
+/* Phase 8 shared refinement layer.
+   This file intentionally contains only cross-site behavior that should remain
+   consistent across the homepage, Phase 2 core pages, commercial pages,
+   staffing and editorial routes. Route-specific visual systems stay scoped. */
+
+:root {
+  --ge-sticky-offset: 110px;
+}
+
+html {
+  scroll-padding-top: var(--ge-sticky-offset);
+}
+
+main :where(h1, h2, h3) {
+  text-wrap: balance;
+}
+
+main :where(p, li) {
+  text-wrap: pretty;
+}
+
+main :where(section[id], div[id]) {
+  scroll-margin-top: var(--ge-sticky-offset);
+}
+
+:where(input, textarea, select, button) {
+  font: inherit;
+}
+
+:where(input, textarea, select) {
+  max-width: 100%;
+}
+
+:where(a, button, input, textarea, select):focus-visible {
+  outline: 3px solid #5c24f5;
+  outline-offset: 3px;
+}
+
+/* Keep the sticky navigation's physical footprint constant. Background/shadow
+   changes can communicate the scrolled state without moving page content. */
+.ge-nav,
+.ge-nav.is-scrolled {
+  --nav-h: 94px !important;
+  height: 94px;
+}
+.ge-mega,
+.ge-mega.is-scrolled,
+.ge-backdrop,
+.ge-backdrop.is-scrolled {
+  top: 94px !important;
+}
+
+/* Cross-site contrast hardening discovered in the full mobile Lighthouse pass. */
+body main [class*="HomepageReference_heroMetric"] > span,
+body main [class*="HomepageReference_heroMetric"] > small {
+  color: #fff !important;
+  opacity: 1 !important;
+}
+body main [class*="HomepageReference_heroTag"] {
+  color: #170653 !important;
+  opacity: 1 !important;
+}
+body main [class*="HomepageReference_botHeader"] div > span {
+  color: #4f5262 !important;
+  opacity: 1 !important;
+}
+body main [class*="HomepageReference_online"] {
+  color: #185747 !important;
+  opacity: 1 !important;
+}
+body main [class*="HomepageReference_botInput"] {
+  color: #555969 !important;
+  opacity: 1 !important;
+}
+body main [class*="HomepageReference_botSignalCard"] > span {
+  color: #fff !important;
+  opacity: 1 !important;
+}
+body main [class*="HomepageReference_botResultCard"] > span {
+  color: #332644 !important;
+  opacity: 1 !important;
+}
+body main [class*="HomepageReference_peopleLabel"] {
+  color: #fff !important;
+  opacity: 1 !important;
+}
+body main [class*="Phase2Core_heroStat"] > span {
+  color: #686a7a !important;
+  opacity: 1 !important;
+}
+body main [class*="ServicesRefinement_serviceIndex"] {
+  color: #666575 !important;
+  opacity: 1 !important;
+}
+body main [class*="CommercialLandingPage_wordRail"] span > b,
+body main [class*="CommercialLandingPage_constraintCard"] > span,
+body main [class*="CommercialLandingPage_capabilityIndex"],
+body main [class*="CommercialLandingPage_whyList"] article > span,
+body main [class*="CommercialLandingPage_faqItem"] summary > span,
+body main [class*="CommercialLandingPage_resourceList"] a > span {
+  color: #555766 !important;
+  opacity: 1 !important;
+}
+body main [class*="CommercialLandingPage_proofRail"] > div > span {
+  color: #626473 !important;
+  opacity: 1 !important;
+}
+body main [class*="CommercialDecisionTool_result"] > span {
+  color: #303342 !important;
+  opacity: 1 !important;
+}
+body main [class*="StaffingMarketPage_trustRail"] article p {
+  color: #656776 !important;
+  opacity: 1 !important;
+}
+body main [class*="StaffingMarketPage_models"] article > span {
+  color: #244cff !important;
+  opacity: 1 !important;
+}
+
+/* Long emails, URLs and generated labels should never widen a mobile layout. */
+:where(.ge-footer-contact-links, .ge-footer-bottom, main) a {
+  overflow-wrap: anywhere;
+}
+
+@media (max-width: 980px) {
+  :root {
+    --ge-sticky-offset: 86px;
+  }
+
+  .ge-nav,
+  .ge-nav.is-scrolled {
+    --nav-h: 76px !important;
+    height: 76px !important;
+  }
+  .ge-mobile-menu,
+  .ge-mobile-menu.is-scrolled {
+    top: 76px !important;
+  }
+}
+
+@media (max-width: 700px) {
+  :root {
+    --ge-sticky-offset: 78px;
+  }
+
+  /* Prevent Safari/iOS zooming form controls and keep forms visually steady. */
+  :where(input, textarea, select) {
+    font-size: 16px !important;
+  }
+
+  main {
+    min-width: 0;
+  }
+
+  main :where(h1, h2, h3, p, li) {
+    max-width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto !important;
+  }
+
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
