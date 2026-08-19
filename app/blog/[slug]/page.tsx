@@ -48,6 +48,7 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
 }
 
 function ArticleJsonLd({ post }: { post: Post }) {
+  const isTeamAuthor = /growth escalators|\bteam\b/i.test(post.author)
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'Article',
@@ -55,12 +56,17 @@ function ArticleJsonLd({ post }: { post: Post }) {
     description: post.description,
     datePublished: post.date,
     dateModified: post.updated ?? post.date,
-    author: { '@type': 'Organization', name: post.author },
+    author: {
+      '@type': isTeamAuthor ? 'Organization' : 'Person',
+      name: post.author,
+      ...(isTeamAuthor ? { '@id': 'https://www.growthescalators.com/#organization' } : {}),
+    },
     ...(post.reviewedBy
       ? { reviewedBy: { '@type': 'Person', name: post.reviewedBy } }
       : {}),
     publisher: {
       '@type': 'Organization',
+      '@id': 'https://www.growthescalators.com/#organization',
       name: 'Growth Escalators',
       logo: {
         '@type': 'ImageObject',
@@ -134,12 +140,20 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
                   </div>
                 </div>
               </div>
-              <EditorialVisual
-                title={post.title}
-                category={post.categoryLabel}
-                typeLabel={post.contentTypeLabel}
-                tone={post.gradient}
-              />
+              {post.heroImage ? (
+                <figure className={styles.heroMedia}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={post.heroImage} alt={post.title} />
+                  <figcaption>{post.categoryLabel} / {post.contentTypeLabel}</figcaption>
+                </figure>
+              ) : (
+                <EditorialVisual
+                  title={post.title}
+                  category={post.categoryLabel}
+                  typeLabel={post.contentTypeLabel}
+                  tone={post.gradient}
+                />
+              )}
             </div>
           </div>
         </section>
@@ -166,17 +180,19 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
               </aside>
 
               <article className={styles.article}>
-                {post.keyTakeaways && post.keyTakeaways.length > 0 && (
-                  <div className={styles.takeaways}>
-                    <div>
-                      <span>TL;DR</span>
-                      <strong>The useful part, first.</strong>
-                    </div>
+                <div className={styles.takeaways}>
+                  <div>
+                    <span>Quick read</span>
+                    <strong>The useful part, first.</strong>
+                  </div>
+                  {post.keyTakeaways && post.keyTakeaways.length > 0 ? (
                     <ul>
                       {post.keyTakeaways.map((takeaway) => <li key={takeaway}>{takeaway}</li>)}
                     </ul>
-                  </div>
-                )}
+                  ) : (
+                    <p className={styles.quickSummary}>{post.description}</p>
+                  )}
+                </div>
 
                 <div className={styles.prose} dangerouslySetInnerHTML={{ __html: post.bodyHtml }} />
 
