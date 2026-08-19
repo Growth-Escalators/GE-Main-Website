@@ -24,7 +24,7 @@ export function generateMetadata({ params }: { params: { slug: string } }): Meta
   if (!post) return { title: 'Not found' }
 
   return {
-    title: `${post.title} — Growth Escalators`,
+    title: post.title,
     description: post.description,
     alternates: { canonical: `/blog/${post.slug}` },
     openGraph: {
