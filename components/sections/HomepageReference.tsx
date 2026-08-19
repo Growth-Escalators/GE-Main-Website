@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { formatPostDate, getAllPosts } from '@/lib/blog'
 import HomepageIndustryGateway from './HomepageIndustryGateway'
 import HomepageMotion from './HomepageMotion'
+import TeamRoster from './TeamRoster'
 import styles from './HomepageReference.module.css'
 
 const PROOF = [
@@ -323,30 +324,7 @@ export default function HomepageReference() {
         </div>
       </section>
 
-      <section className={styles.people} aria-labelledby="people-heading" data-motion-section="people">
-        <div className={styles.sectionShell}>
-          <div className={styles.peopleGrid}>
-            <div className={styles.peopleCopy}>
-              <p className={styles.eyebrow} data-reveal>The people behind the system</p>
-              <h2 id="people-heading" data-reveal="headline">Human-led.<br />AI-enabled.<br />Accountable.</h2>
-              <p data-reveal>
-                Strategy stays close to the people doing the work. Performance, creative and technology
-                operators share the same outcomes instead of disappearing into separate queues.
-              </p>
-              <Link href="/about" className={styles.pillOutline} data-reveal>Meet the team</Link>
-            </div>
-            <div className={styles.peopleMedia} data-media-reveal>
-              <div className={styles.peopleMain} data-media-inner>
-                <Image src="/photos/photo-1.png" alt="Growth Escalators team" fill sizes="(max-width: 900px) 100vw, 52vw" />
-              </div>
-              <div className={styles.peopleInset} data-parallax="4">
-                <Image src="/photos/photo-2.jpeg" alt="Growth Escalators team at work" fill sizes="(max-width: 900px) 45vw, 20vw" />
-              </div>
-              <div className={styles.peopleLabel}>JAIPUR / INDIA<br />GROWTH × TECHNOLOGY</div>
-            </div>
-          </div>
-        </div>
-      </section>
+      <TeamRoster />
 
       {featuredPost && (
         <section className={styles.insights} aria-labelledby="insights-heading" data-motion-section="insights">
