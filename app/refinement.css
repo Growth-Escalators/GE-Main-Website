@@ -50,57 +50,72 @@ main :where(section[id], div[id]) {
   top: 94px !important;
 }
 
-/* Cross-site contrast hardening discovered in the full mobile Lighthouse pass.
-   The body/main prefix intentionally outranks CSS-module rules loaded later. */
+/* Cross-site contrast hardening discovered in the full mobile Lighthouse pass. */
 body main [class*="HomepageReference_heroMetric"] > span,
 body main [class*="HomepageReference_heroMetric"] > small {
   color: #fff !important;
+  opacity: 1 !important;
 }
 body main [class*="HomepageReference_heroTag"] {
   color: #170653 !important;
+  opacity: 1 !important;
 }
 body main [class*="HomepageReference_botHeader"] div > span {
   color: #4f5262 !important;
+  opacity: 1 !important;
 }
 body main [class*="HomepageReference_online"] {
   color: #185747 !important;
+  opacity: 1 !important;
 }
 body main [class*="HomepageReference_botInput"] {
   color: #555969 !important;
+  opacity: 1 !important;
 }
 body main [class*="HomepageReference_botSignalCard"] > span {
-  color: #170653 !important;
+  color: #fff !important;
+  opacity: 1 !important;
 }
 body main [class*="HomepageReference_botResultCard"] > span {
   color: #332644 !important;
+  opacity: 1 !important;
 }
 body main [class*="HomepageReference_peopleLabel"] {
-  color: #170653 !important;
+  color: #fff !important;
+  opacity: 1 !important;
 }
 body main [class*="Phase2Core_heroStat"] > span {
   color: #686a7a !important;
+  opacity: 1 !important;
 }
 body main [class*="ServicesRefinement_serviceIndex"] {
   color: #666575 !important;
+  opacity: 1 !important;
 }
 body main [class*="CommercialLandingPage_wordRail"] span > b,
 body main [class*="CommercialLandingPage_constraintCard"] > span,
 body main [class*="CommercialLandingPage_capabilityIndex"],
 body main [class*="CommercialLandingPage_whyList"] article > span,
-body main [class*="CommercialLandingPage_faqItem"] summary > span {
-  color: #5c5e6c !important;
+body main [class*="CommercialLandingPage_faqItem"] summary > span,
+body main [class*="CommercialLandingPage_resourceList"] a > span {
+  color: #555766 !important;
+  opacity: 1 !important;
 }
 body main [class*="CommercialLandingPage_proofRail"] > div > span {
   color: #626473 !important;
+  opacity: 1 !important;
 }
 body main [class*="CommercialDecisionTool_result"] > span {
   color: #303342 !important;
+  opacity: 1 !important;
 }
 body main [class*="StaffingMarketPage_trustRail"] article p {
-  color: #6a6c7b !important;
+  color: #656776 !important;
+  opacity: 1 !important;
 }
 body main [class*="StaffingMarketPage_models"] article > span {
   color: #244cff !important;
+  opacity: 1 !important;
 }
 
 /* Long emails, URLs and generated labels should never widen a mobile layout. */
