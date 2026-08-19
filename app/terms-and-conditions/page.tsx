@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: 'Terms & Conditions',
   description: 'Terms and conditions governing use of growthescalators.com and Growth Escalators services.',
   alternates: { canonical: '/terms-and-conditions' },
-  robots: { index: true, follow: false },
+  robots: { index: true, follow: true },
 }
 
 const sections = [
