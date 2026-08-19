@@ -7,7 +7,7 @@ export const metadata: Metadata = {
   title: 'Privacy Policy',
   description: 'How Growth Escalators collects, uses, and protects your personal information.',
   alternates: { canonical: '/privacy-policy' },
-  robots: { index: true, follow: false },
+  robots: { index: true, follow: true },
 }
 
 const sections = [
