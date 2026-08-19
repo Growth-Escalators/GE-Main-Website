@@ -1,96 +1,177 @@
 import Link from 'next/link'
 import type { Metadata } from 'next'
+import Navbar from '@/components/sections/Navbar'
 import Footer from '@/components/sections/Footer'
-import { getAllPosts, formatPostDate } from '@/lib/blog'
+import BackToTop from '@/components/ui/BackToTop'
+import EditorialVisual from '@/components/blog/EditorialVisual'
+import { formatPostDate, getAllPosts, getFeaturedPost } from '@/lib/blog'
 import styles from './page.module.css'
 
 export const metadata: Metadata = {
-  title: 'Marketing Blog — AI-First Playbooks & Field Notes',
+  title: 'Insights — Growth, Performance, Commerce & AI',
   description:
-    'AI-first marketing playbooks for doctors, roofers & growing brands — lessons from ₹10Cr+ in ad spend. No fluff, no theory.',
+    'Field notes, playbooks and points of view on performance marketing, ecommerce growth, creative, SEO, AI automation and building better growth systems.',
   alternates: { canonical: '/blog' },
   openGraph: {
-    title: 'Marketing Blog — Growth Escalators',
-    description: 'AI-first marketing playbooks for doctors, roofers & growing brands. Lessons from ₹10Cr+ in ad spend.',
+    title: 'Insights — Growth Escalators',
+    description:
+      'Growth thinking built from the work: performance, commerce, creative, search, AI and scalable acquisition systems.',
     url: '/blog',
     type: 'website',
   },
 }
 
+const CATEGORY_ORDER = [
+  'Performance',
+  'Commerce & CRO',
+  'Creative',
+  'AI & Automation',
+  'SEO & Organic',
+  'Growth Strategy',
+] as const
+
 export default function BlogIndex() {
   const posts = getAllPosts()
+  const featured = getFeaturedPost()
+  const latest = posts.filter((post) => post.slug !== featured?.slug).slice(0, 8)
+  const categories = CATEGORY_ORDER
+    .map((name) => ({ name, count: posts.filter((post) => post.categoryLabel === name).length }))
+    .filter((item) => item.count > 0)
 
   return (
-    <div className={styles.page}>
-      {/* ── HEADER ─────────────────────────────────────────────────────── */}
-      <header className={styles.header}>
-        <div className={`${styles.headerInner} container-x`}>
-          <Link href="/" className={styles.logo} aria-label="Growth Escalators home">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/logo.webp"
-              alt="Growth Escalators"
-              loading="eager"
-            />
-          </Link>
-          <Link href="/contact" className={`btn-primary ${styles.headerCta}`}>
-            Book a Free Call
-          </Link>
-        </div>
-      </header>
+    <>
+      <Navbar />
+      <main className={styles.page}>
+        <section className={styles.hero} aria-labelledby="insights-title">
+          <div className={styles.shell}>
+            <div className={styles.heroGrid}>
+              <div>
+                <p className={styles.eyebrow}>Insights / Growth intelligence</p>
+                <h1 id="insights-title">Ideas for finding<br />and compounding growth.</h1>
+              </div>
+              <div className={styles.heroAside}>
+                <p>
+                  Performance, commerce, creative, search and AI — written from the work, not from the sidelines.
+                  Practical thinking for teams that need better decisions, not more marketing noise.
+                </p>
+                <div className={styles.heroRule}>
+                  <span>{posts.length} field notes</span>
+                  <span>Built in Jaipur · applied globally</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
-      {/* ── HERO ───────────────────────────────────────────────────────── */}
-      <section className={styles.hero}>
-        <div className={styles.heroAurora} aria-hidden>
-          <div className={styles.heroOrb1} />
-          <div className={styles.heroOrb2} />
-        </div>
-        <div className={`${styles.heroInner} container-x`}>
-          <span className="section-tag">PLAYBOOKS &amp; FIELD NOTES</span>
-          <h1 className={styles.heroTitle}>The Growth Escalators Blog</h1>
-          <p className={styles.heroSub}>
-            AI-first marketing playbooks for doctors, roofers, and growing brands. Hard-won
-            lessons from running over ₹10Cr in ad spend, not regurgitated theory.
-          </p>
-        </div>
-      </section>
-
-      {/* ── POST GRID ──────────────────────────────────────────────────── */}
-      <section className={styles.section}>
-        <div className="container-x">
-          {posts.length === 0 ? (
-            <p className={styles.emptyState}>
-              No posts yet — the first ones are being written. Check back soon.
-            </p>
-          ) : (
-            <div className={styles.grid}>
-              {posts.map((p) => (
-                <Link key={p.slug} href={`/blog/${p.slug}`} className={styles.card}>
-                  <div className={`${styles.thumb} ${styles[`grad_${p.gradient ?? 'mixed'}`]}`}>
-                    <span className={styles.thumbTitle}>{p.title}</span>
-                  </div>
+        {featured && (
+          <section className={styles.featuredSection} aria-labelledby="featured-insight">
+            <div className={styles.shell}>
+              <div className={styles.sectionTop}>
+                <p className={styles.eyebrow}>Featured intelligence</p>
+                <Link href="#latest" className={styles.textLink}>Browse latest ↓</Link>
+              </div>
+              <Link href={`/blog/${featured.slug}`} className={styles.featuredCard}>
+                <EditorialVisual
+                  title={featured.title}
+                  category={featured.categoryLabel}
+                  typeLabel={featured.contentTypeLabel}
+                  tone={featured.gradient}
+                />
+                <div className={styles.featuredCopy}>
                   <div className={styles.meta}>
-                    <div className={styles.metaTags}>
-                      {p.tags.slice(0, 2).map((t) => (
-                        <span key={t} className={styles.tag}>{t}</span>
-                      ))}
+                    <span>{featured.categoryLabel}</span>
+                    <span>{featured.contentTypeLabel}</span>
+                    <span>{featured.readingTimeMins} min</span>
+                  </div>
+                  <h2 id="featured-insight">{featured.title}</h2>
+                  <p>{featured.description}</p>
+                  <div className={styles.featuredFooter}>
+                    <span>{formatPostDate(featured.date)}</span>
+                    <strong>Read insight ↗</strong>
+                  </div>
+                </div>
+              </Link>
+            </div>
+          </section>
+        )}
+
+        {categories.length > 0 && (
+          <section className={styles.categoryBand} aria-label="Insight categories">
+            <div className={styles.shell}>
+              <div className={styles.categoryGrid}>
+                {categories.map((category, index) => (
+                  <div className={styles.categoryItem} key={category.name}>
+                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    <strong>{category.name}</strong>
+                    <small>{category.count} article{category.count === 1 ? '' : 's'}</small>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        <section id="latest" className={styles.latest} aria-labelledby="latest-heading">
+          <div className={styles.shell}>
+            <div className={styles.latestHeading}>
+              <div>
+                <p className={styles.eyebrow}>Latest intelligence</p>
+                <h2 id="latest-heading">Useful enough<br />to change the work.</h2>
+              </div>
+              <p>
+                Each article is built around a decision, system or growth problem. No filler posts written just to
+                occupy a keyword.
+              </p>
+            </div>
+
+            <div className={styles.grid}>
+              {latest.map((post, index) => (
+                <Link href={`/blog/${post.slug}`} className={styles.card} key={post.slug}>
+                  <EditorialVisual
+                    title={post.title}
+                    category={post.categoryLabel}
+                    typeLabel={post.contentTypeLabel}
+                    tone={post.gradient}
+                    compact
+                  />
+                  <div className={styles.cardBody}>
+                    <div className={styles.cardIndex}>{String(index + 2).padStart(2, '0')}</div>
+                    <div className={styles.meta}>
+                      <span>{post.categoryLabel}</span>
+                      <span>{post.contentTypeLabel}</span>
                     </div>
-                    <h2 className={styles.cardTitle}>{p.title}</h2>
-                    <p className={styles.cardDesc}>{p.description}</p>
-                    <div className={styles.metaBottom}>
-                      <span>{formatPostDate(p.date)}</span>
-                      <span aria-hidden>·</span>
-                      <span>{p.readingTimeMins} min read</span>
+                    <h3>{post.title}</h3>
+                    <p>{post.description}</p>
+                    <div className={styles.cardFooter}>
+                      <span>{formatPostDate(post.date)} · {post.readingTimeMins} min</span>
+                      <strong>↗</strong>
                     </div>
                   </div>
                 </Link>
               ))}
             </div>
-          )}
-        </div>
-      </section>
 
+            {posts.length === 0 && (
+              <p className={styles.empty}>The first field notes are being prepared.</p>
+            )}
+          </div>
+        </section>
+
+        <section className={styles.editorialPromise}>
+          <div className={styles.shell}>
+            <div className={styles.promiseGrid}>
+              <p className={styles.eyebrow}>Our editorial rule</p>
+              <h2>Write from evidence.<br />Explain the decision.<br />Give the reader a next move.</h2>
+              <p>
+                That structure now powers every Growth Escalators article — whether it is a playbook, comparison,
+                case study, framework, point of view or research note.
+              </p>
+            </div>
+          </div>
+        </section>
+      </main>
       <Footer />
-    </div>
+      <BackToTop />
+    </>
   )
 }
