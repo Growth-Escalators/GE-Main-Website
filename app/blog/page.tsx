@@ -19,6 +19,12 @@ export const metadata: Metadata = {
     url: '/blog',
     type: 'website',
   },
+  twitter: {
+    card: 'summary',
+    title: 'Insights — Growth Escalators',
+    description:
+      'Field notes on performance, commerce, creative, search, AI and scalable growth systems.',
+  },
 }
 
 const CATEGORY_ORDER = [
