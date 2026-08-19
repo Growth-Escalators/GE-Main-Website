@@ -5,9 +5,15 @@ import Navbar from '@/components/sections/Navbar'
 import Footer from '@/components/sections/Footer'
 import BackToTop from '@/components/ui/BackToTop'
 import BlogLeadCapture from '@/components/blog/BlogLeadCapture'
-import { getAllPostSlugs, getPost, getRelatedPosts, formatPostDate, type Post } from '@/lib/blog'
+import EditorialVisual from '@/components/blog/EditorialVisual'
+import {
+  getAllPostSlugs,
+  getPost,
+  getRelatedPosts,
+  formatPostDate,
+  type Post,
+} from '@/lib/blog'
 import styles from './post.module.css'
-import indexStyles from '../page.module.css'
 
 export function generateStaticParams() {
   return getAllPostSlugs().map((slug) => ({ slug }))
@@ -16,92 +22,156 @@ export function generateStaticParams() {
 export function generateMetadata({ params }: { params: { slug: string } }): Metadata {
   const post = getPost(params.slug)
   if (!post) return { title: 'Not found' }
+
   return {
-    title: `${post.title} — Growth Escalators`,
+    title: post.title,
     description: post.description,
     alternates: { canonical: `/blog/${post.slug}` },
-    openGraph: { title: post.title, description: post.description, url: `/blog/${post.slug}`, type: 'article', publishedTime: post.date, authors: [post.author], tags: post.tags },
-    twitter: { card: 'summary_large_image', title: post.title, description: post.description },
+    openGraph: {
+      title: post.title,
+      description: post.description,
+      url: `/blog/${post.slug}`,
+      type: 'article',
+      publishedTime: post.date,
+      modifiedTime: post.updated ?? post.date,
+      authors: [post.author],
+      tags: post.tags,
+      ...(post.heroImage ? { images: [{ url: post.heroImage, alt: post.title }] } : {}),
+    },
+    twitter: {
+      card: post.heroImage ? 'summary_large_image' : 'summary',
+      title: post.title,
+      description: post.description,
+      ...(post.heroImage ? { images: [post.heroImage] } : {}),
+    },
   }
 }
 
 function ArticleJsonLd({ post }: { post: Post }) {
+  const isTeamAuthor = /growth escalators|\bteam\b/i.test(post.author)
   const schema = {
-    '@context': 'https://schema.org', '@type': 'Article', headline: post.title, description: post.description,
-    datePublished: post.date, dateModified: post.date,
-    author: { '@type': 'Organization', name: post.author },
-    publisher: { '@type': 'Organization', name: 'Growth Escalators', logo: { '@type': 'ImageObject', url: 'https://www.growthescalators.com/logo.webp' } },
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    description: post.description,
+    datePublished: post.date,
+    dateModified: post.updated ?? post.date,
+    author: {
+      '@type': isTeamAuthor ? 'Organization' : 'Person',
+      name: post.author,
+      ...(isTeamAuthor ? { '@id': 'https://www.growthescalators.com/#organization' } : {}),
+    },
+    ...(post.reviewedBy ? { reviewedBy: { '@type': 'Person', name: post.reviewedBy } } : {}),
+    publisher: {
+      '@type': 'Organization',
+      '@id': 'https://www.growthescalators.com/#organization',
+      name: 'Growth Escalators',
+      logo: { '@type': 'ImageObject', url: 'https://www.growthescalators.com/logo.webp' },
+    },
     mainEntityOfPage: { '@type': 'WebPage', '@id': `https://www.growthescalators.com/blog/${post.slug}` },
+    about: post.categoryLabel,
+    keywords: post.tags.join(', '),
+    ...(post.heroImage ? { image: `https://www.growthescalators.com${post.heroImage}` } : {}),
   }
-  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-}
 
-function inferCommercialRoute(post: Post) {
-  const haystack = `${post.slug} ${post.tags.join(' ')}`.toLowerCase()
-  if (/(doctor|clinic|patient|healthcare)/.test(haystack)) return { href: '/doctors', label: 'Explore healthcare growth' }
-  if (/(b2b|linkedin|saas|pipeline)/.test(haystack)) return { href: '/b2b-lead-generation-agency', label: 'Explore B2B pipeline' }
-  if (/(d2c|ecommerce|meta|roas|cac|ltv|creative)/.test(haystack)) return { href: '/d2c', label: 'Explore D2C growth' }
-  if (/(jaipur|performance)/.test(haystack)) return { href: '/performance-marketing-agency-jaipur', label: 'Explore performance marketing' }
-  return { href: '/services', label: 'Explore our growth system' }
+  const breadcrumb = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.growthescalators.com/' },
+      { '@type': 'ListItem', position: 2, name: 'Insights', item: 'https://www.growthescalators.com/blog' },
+      { '@type': 'ListItem', position: 3, name: post.title, item: `https://www.growthescalators.com/blog/${post.slug}` },
+    ],
+  }
+
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumb) }} />
+    </>
+  )
 }
 
 export default function BlogPost({ params }: { params: { slug: string } }) {
   const post = getPost(params.slug)
   if (!post) notFound()
   const related = getRelatedPosts(post, 3)
-  const inferred = inferCommercialRoute(post)
-  const commercial = post.ctaHref && post.ctaHref !== '/contact' ? { href: post.ctaHref, label: post.ctaLabel ?? inferred.label } : inferred
 
   return (
     <>
-      <ArticleJsonLd post={post} />
       <Navbar />
       <main className={styles.page}>
-        <section className={`${styles.hero} ${indexStyles[`grad_${post.gradient ?? 'mixed'}`]}`}>
+        <ArticleJsonLd post={post} />
+        <section className={styles.hero}>
           <div className={styles.shell}>
-            <Link href="/blog" className={styles.back}>← All field notes</Link>
-            <div className={styles.tags}>{post.tags.map((tag) => <span key={tag}>{tag}</span>)}</div>
-            <h1>{post.title}</h1>
-            <p className={styles.deck}>{post.description}</p>
-            <div className={styles.meta}><span>{post.author}</span><span>{formatPostDate(post.date)}</span><span>{post.readingTimeMins} min read</span></div>
+            <Link href="/blog" className={styles.backLink}>← All insights</Link>
+            <div className={styles.heroGrid}>
+              <div className={styles.heroCopy}>
+                <div className={styles.heroMeta}><span>{post.categoryLabel}</span><span>{post.contentTypeLabel}</span><span>{post.readingTimeMins} min read</span></div>
+                <h1>{post.title}</h1>
+                <p className={styles.dek}>{post.description}</p>
+                <div className={styles.byline}>
+                  <div><strong>{post.author}</strong>{post.reviewedBy && <span>Reviewed by {post.reviewedBy}</span>}</div>
+                  <div><strong>{formatPostDate(post.date)}</strong>{post.updated && <span>Updated {formatPostDate(post.updated)}</span>}</div>
+                </div>
+              </div>
+              {post.heroImage ? (
+                <figure className={styles.heroMedia}>
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img src={post.heroImage} alt={post.title} />
+                  <figcaption>{post.categoryLabel} / {post.contentTypeLabel}</figcaption>
+                </figure>
+              ) : (
+                <EditorialVisual title={post.title} category={post.categoryLabel} typeLabel={post.contentTypeLabel} tone={post.gradient} />
+              )}
+            </div>
           </div>
         </section>
 
-        <article className={styles.article}>
-          <div className={styles.articleGrid}>
-            <aside className={styles.rail}>
-              <span>APPLY THE IDEA</span>
-              <strong>Turn the field note into a business decision.</strong>
-              <p>If this is the problem you are actively trying to solve, the relevant commercial page shows the system, proof and audit path.</p>
-              <Link href={commercial.href}>{commercial.label} ↗</Link>
-              <div className={styles.railMeta}><small>Published</small><b>{formatPostDate(post.date)}</b><small>Reading time</small><b>{post.readingTimeMins} minutes</b></div>
-            </aside>
+        <section className={styles.articleSection}>
+          <div className={styles.shell}>
+            <div className={styles.articleGrid}>
+              <aside className={styles.rail}>
+                <div className={styles.railSticky}>
+                  <p className={styles.railLabel}>In this article</p>
+                  {post.headings.length > 0 ? (
+                    <nav aria-label="Article sections">{post.headings.map((heading) => <a key={heading.id} href={`#${heading.id}`}>{heading.text}</a>)}</nav>
+                  ) : <span className={styles.railEmpty}>A focused field note with no detours.</span>}
+                  <div className={styles.railRule} />
+                  <span>{post.categoryLabel}</span><span>{post.readingTimeMins} min read</span>
+                </div>
+              </aside>
 
-            <div className={styles.content}>
-              <div className={styles.prose} dangerouslySetInnerHTML={{ __html: post.bodyHtml }} />
+              <article className={styles.article}>
+                <div className={styles.takeaways}>
+                  <div><span>Quick read</span><strong>The useful part, first.</strong></div>
+                  {post.keyTakeaways && post.keyTakeaways.length > 0 ? (
+                    <ul>{post.keyTakeaways.map((takeaway) => <li key={takeaway}>{takeaway}</li>)}</ul>
+                  ) : <p className={styles.quickSummary}>{post.description}</p>}
+                </div>
 
-              <section className={styles.appliedCta}>
-                <span>FROM PLAYBOOK TO EXECUTION</span>
-                <h2>Want to know what this means for your numbers?</h2>
-                <p>We’ll diagnose the current constraint before recommending another channel, tool or campaign.</p>
-                <div><Link href={commercial.href}>{commercial.label} ↗</Link><Link href="/contact">Book a free audit</Link></div>
-              </section>
-
-              <BlogLeadCapture postSlug={post.slug} postTitle={post.title} contactHref={commercial.href} />
+                <div className={styles.prose} dangerouslySetInnerHTML={{ __html: post.bodyHtml }} />
+                <BlogLeadCapture postSlug={post.slug} postTitle={post.title} contactHref={post.ctaHref ?? '/contact'} />
+                <div className={styles.endCta}>
+                  <p>Turn the insight into an operating decision.</p>
+                  <h2>Want us to apply this to your growth system?</h2>
+                  <span>We&apos;ll review the acquisition, website and conversion path and show you the highest-leverage fixes before asking you to buy anything.</span>
+                  <Link href={post.ctaHref ?? '/contact'} className={styles.ctaButton}>{post.ctaLabel ?? 'Get a free growth audit'} ↗</Link>
+                </div>
+              </article>
             </div>
           </div>
-        </article>
+        </section>
 
         {related.length > 0 && (
           <section className={styles.related}>
             <div className={styles.shell}>
-              <span className={styles.sectionKicker}>KEEP READING</span>
-              <h2>Related field notes.</h2>
+              <div className={styles.relatedHeading}><div><p>Keep exploring</p><h2>Adjacent ideas.<br />Same growth system.</h2></div><Link href="/blog">View all insights ↗</Link></div>
               <div className={styles.relatedGrid}>
                 {related.map((item, index) => (
-                  <Link key={item.slug} href={`/blog/${item.slug}`} className={styles.relatedCard}>
-                    <div className={`${styles.relatedVisual} ${indexStyles[`grad_${item.gradient ?? 'mixed'}`]}`}><span>0{index + 1}</span><strong>{item.title}</strong></div>
-                    <div><h3>{item.title}</h3><p>{item.description}</p><small>{item.readingTimeMins} min read ↗</small></div>
+                  <Link href={`/blog/${item.slug}`} className={styles.relatedCard} key={item.slug}>
+                    <EditorialVisual title={item.title} category={item.categoryLabel} typeLabel={item.contentTypeLabel} tone={item.gradient} compact />
+                    <div className={styles.relatedBody}><span>{String(index + 1).padStart(2, '0')} / {item.categoryLabel}</span><h3>{item.title}</h3><p>{formatPostDate(item.date)} · {item.readingTimeMins} min</p></div>
                   </Link>
                 ))}
               </div>
