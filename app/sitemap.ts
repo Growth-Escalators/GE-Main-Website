@@ -2,7 +2,7 @@ import type { MetadataRoute } from 'next'
 import { getAllPosts } from '@/lib/blog'
 
 const SITE = 'https://www.growthescalators.com'
-const OVERNIGHT_REFRESH = '2026-08-19T00:30:00+05:30'
+const FINAL_REBUILD_REFRESH = '2026-08-19T11:54:00+05:30'
 
 type Route = {
   path: string
@@ -19,7 +19,7 @@ const ROUTES: Route[] = [
   { path: '/uae-offshore-tech-resources', priority: .9, changeFrequency: 'monthly' },
   { path: '/us-tech-staffing-fulfilment', priority: .9, changeFrequency: 'monthly' },
   { path: '/australia-offshore-tech-resources', priority: .9, changeFrequency: 'monthly' },
-  { path: '/white-label-software-development', priority: .9, changeFrequency: 'monthly', lastModified: '2026-07-13T13:30:00+05:30' },
+  { path: '/white-label-software-development', priority: .9, changeFrequency: 'monthly' },
   { path: '/work', priority: .9, changeFrequency: 'weekly', lastModified: '2026-08-18T23:00:00+05:30' },
   { path: '/portfolio', priority: .9, changeFrequency: 'weekly', lastModified: '2026-08-18T23:00:00+05:30' },
   { path: '/about', priority: .7, changeFrequency: 'monthly', lastModified: '2026-08-18T23:00:00+05:30' },
@@ -54,30 +54,32 @@ const ROUTES: Route[] = [
   { path: '/doctors', priority: .9, changeFrequency: 'monthly' },
   { path: '/roofing', priority: .9, changeFrequency: 'monthly' },
   { path: '/real-estate', priority: .9, changeFrequency: 'monthly' },
-  { path: '/privacy-policy', priority: .3, changeFrequency: 'yearly', lastModified: '2026-05-28T18:14:21+05:30' },
-  { path: '/terms-and-conditions', priority: .3, changeFrequency: 'yearly', lastModified: '2026-05-28T18:14:21+05:30' },
+  { path: '/privacy-policy', priority: .3, changeFrequency: 'yearly' },
+  { path: '/terms-and-conditions', priority: .3, changeFrequency: 'yearly' },
 ]
 
-const OVERNIGHT_ROUTES = new Set([
+const FINAL_REBUILD_ROUTES = new Set([
   '/staffing', '/uk-offshore-tech-resources', '/uae-offshore-tech-resources', '/us-tech-staffing-fulfilment', '/australia-offshore-tech-resources',
-  '/blog', '/d2c', '/d2c/fashion', '/performance-marketing-agency-jaipur', '/real-estate-marketing-agency-jaipur', '/software-development-company-jaipur', '/website-development-company-jaipur',
-  '/travel-agency-marketing-jaipur', '/dental-clinic-marketing-agency-jaipur', '/coaching-institute-marketing-agency-jaipur', '/gym-fitness-marketing-agency-jaipur',
-  '/jewellery-marketing-agency-jaipur', '/salon-spa-marketing-agency-jaipur', '/hotel-resort-marketing-agency-jaipur', '/interior-designer-marketing-agency-jaipur', '/car-detailing-marketing-agency-jaipur',
-  '/doctors-marketing-agency-jaipur', '/patient-acquisition-agency', '/personal-branding-for-doctors', '/ecommerce-advertising-agency', '/meta-ads-agency-for-ecommerce', '/ecommerce-scaling-agency',
-  '/d2c/beauty', '/skincare-retention-marketing', '/b2b-lead-generation-agency', '/linkedin-marketing-agency', '/saas-marketing-agency', '/doctors', '/roofing', '/real-estate',
+  '/white-label-software-development', '/blog', '/d2c', '/d2c/fashion', '/performance-marketing-agency-jaipur', '/real-estate-marketing-agency-jaipur',
+  '/software-development-company-jaipur', '/website-development-company-jaipur', '/travel-agency-marketing-jaipur', '/dental-clinic-marketing-agency-jaipur',
+  '/coaching-institute-marketing-agency-jaipur', '/gym-fitness-marketing-agency-jaipur', '/jewellery-marketing-agency-jaipur', '/salon-spa-marketing-agency-jaipur',
+  '/hotel-resort-marketing-agency-jaipur', '/interior-designer-marketing-agency-jaipur', '/car-detailing-marketing-agency-jaipur', '/doctors-marketing-agency-jaipur',
+  '/patient-acquisition-agency', '/personal-branding-for-doctors', '/ecommerce-advertising-agency', '/meta-ads-agency-for-ecommerce', '/ecommerce-scaling-agency',
+  '/d2c/beauty', '/skincare-retention-marketing', '/b2b-lead-generation-agency', '/linkedin-marketing-agency', '/saas-marketing-agency', '/doctors', '/roofing',
+  '/real-estate', '/privacy-policy', '/terms-and-conditions',
 ])
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticEntries: MetadataRoute.Sitemap = ROUTES.map((route) => ({
     url: `${SITE}${route.path}`,
-    lastModified: OVERNIGHT_ROUTES.has(route.path) ? OVERNIGHT_REFRESH : route.lastModified,
+    lastModified: FINAL_REBUILD_ROUTES.has(route.path) ? FINAL_REBUILD_REFRESH : route.lastModified,
     changeFrequency: route.changeFrequency,
     priority: route.priority,
   }))
 
   const postEntries: MetadataRoute.Sitemap = getAllPosts().map((post) => ({
     url: `${SITE}/blog/${post.slug}`,
-    lastModified: new Date(post.date),
+    lastModified: new Date(post.updated ?? post.date),
     changeFrequency: 'monthly',
     priority: .7,
   }))
