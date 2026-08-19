@@ -95,14 +95,32 @@ function estimateReadingTime(markdown: string): number {
 function inferCategory(fm: PostFrontmatter): string {
   if (fm.category?.trim()) return fm.category.trim()
 
-  const haystack = `${fm.title} ${fm.tags.join(' ')}`.toLowerCase()
-  if (/(ai|automation|agent|chatgpt|tool)/.test(haystack)) return 'AI & Automation'
-  if (/(seo|search|google business|organic|local seo)/.test(haystack)) return 'SEO & Organic'
-  if (/(creative|content|ugc|social|hook|ad creative)/.test(haystack)) return 'Creative'
-  if (/(d2c|dtc|ecommerce|shopify|cro|ltv|cac|retention)/.test(haystack)) return 'Commerce & CRO'
-  if (/(meta ads|google ads|performance|roas|media buying|ad spend|lead generation)/.test(haystack)) {
+  const title = fm.title.toLowerCase()
+  const tags = fm.tags.join(' ').toLowerCase()
+
+  // Legacy posts predate the editorial category field. Prefer strong title
+  // intent first, then use tags only as a fallback. This prevents a secondary
+  // "AI" tag from swallowing an article whose actual subject is performance,
+  // commerce, creative or search.
+  if (/(seo|search|google business|organic|local seo)/.test(title)) return 'SEO & Organic'
+  if (/(creative|ugc|social content|ad creative|creative testing|hook)/.test(title)) return 'Creative'
+  if (/(d2c|dtc|ecommerce|shopify|cro|ltv|cac|retention)/.test(title)) return 'Commerce & CRO'
+  if (/(meta ads|google ads|performance marketing|roas|media buying|ad spend|lead generation)/.test(title)) {
     return 'Performance'
   }
+  if (/(\bai\b|artificial intelligence|automation|agent|chatgpt)/.test(title)) return 'AI & Automation'
+  if (/(agency|agencies|in-house|freelancer|growth strategy|marketing strategy)/.test(title)) {
+    return 'Growth Strategy'
+  }
+
+  if (/(seo|search|google-business|organic|local-seo)/.test(tags)) return 'SEO & Organic'
+  if (/(creative|ugc|social|content|ad-creative|hooks?)/.test(tags)) return 'Creative'
+  if (/(d2c|dtc|ecommerce|shopify|cro|ltv|cac|retention)/.test(tags)) return 'Commerce & CRO'
+  if (/(meta-ads|google-ads|performance-marketing|roas|media-buying|ad-spend|lead-generation)/.test(tags)) {
+    return 'Performance'
+  }
+  if (/(\bai\b|ai-marketing|automation|agent|chatgpt)/.test(tags)) return 'AI & Automation'
+
   return 'Growth Strategy'
 }
 
