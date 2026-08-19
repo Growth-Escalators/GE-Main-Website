@@ -4,6 +4,7 @@ import Navbar from '@/components/sections/Navbar'
 import Footer from '@/components/sections/Footer'
 import BackToTop from '@/components/ui/BackToTop'
 import EditorialVisual from '@/components/blog/EditorialVisual'
+import InsightsExplorer from '@/components/blog/InsightsExplorer'
 import { formatPostDate, getAllPosts, getFeaturedPost } from '@/lib/blog'
 import styles from './page.module.css'
 
@@ -27,27 +28,47 @@ export const metadata: Metadata = {
   },
 }
 
-const CATEGORY_ORDER = [
-  'Performance',
-  'Commerce & CRO',
-  'Creative',
-  'AI & Automation',
-  'SEO & Organic',
-  'Growth Strategy',
-] as const
+function InsightsCollectionJsonLd({ posts }: { posts: ReturnType<typeof getAllPosts> }) {
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': 'https://www.growthescalators.com/blog#collection',
+    url: 'https://www.growthescalators.com/blog',
+    name: 'Growth Escalators Insights',
+    description:
+      'Field notes, playbooks and points of view on performance marketing, ecommerce growth, creative, SEO, AI automation and scalable growth systems.',
+    isPartOf: {
+      '@type': 'WebSite',
+      '@id': 'https://www.growthescalators.com/#website',
+      name: 'Growth Escalators',
+      url: 'https://www.growthescalators.com',
+    },
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: posts.length,
+      itemListElement: posts.map((post, index) => ({
+        '@type': 'ListItem',
+        position: index + 1,
+        url: `https://www.growthescalators.com/blog/${post.slug}`,
+        name: post.title,
+      })),
+    },
+  }
+
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+}
 
 export default function BlogIndex() {
   const posts = getAllPosts()
   const featured = getFeaturedPost()
-  const latest = posts.filter((post) => post.slug !== featured?.slug).slice(0, 8)
-  const categories = CATEGORY_ORDER
-    .map((name) => ({ name, count: posts.filter((post) => post.categoryLabel === name).length }))
-    .filter((item) => item.count > 0)
+  const archivePosts = posts.filter((post) => post.slug !== featured?.slug)
 
   return (
     <>
       <Navbar />
       <main className={styles.page}>
+        <InsightsCollectionJsonLd posts={posts} />
+
         <section className={styles.hero} aria-labelledby="insights-title">
           <div className={styles.shell}>
             <div className={styles.heroGrid}>
@@ -74,7 +95,7 @@ export default function BlogIndex() {
             <div className={styles.shell}>
               <div className={styles.sectionTop}>
                 <p className={styles.eyebrow}>Featured intelligence</p>
-                <Link href="#latest" className={styles.textLink}>Browse latest ↓</Link>
+                <Link href="#latest" className={styles.textLink}>Browse all insights ↓</Link>
               </div>
               <Link href={`/blog/${featured.slug}`} className={styles.featuredCard}>
                 <EditorialVisual
@@ -92,7 +113,9 @@ export default function BlogIndex() {
                   <h2 id="featured-insight">{featured.title}</h2>
                   <p>{featured.description}</p>
                   <div className={styles.featuredFooter}>
-                    <span>{formatPostDate(featured.date)}</span>
+                    <span>
+                      {featured.author} · {formatPostDate(featured.date)}
+                    </span>
                     <strong>Read insight ↗</strong>
                   </div>
                 </div>
@@ -101,77 +124,22 @@ export default function BlogIndex() {
           </section>
         )}
 
-        {categories.length > 0 && (
-          <section className={styles.categoryBand} aria-label="Insight categories">
-            <div className={styles.shell}>
-              <div className={styles.categoryGrid}>
-                {categories.map((category, index) => (
-                  <div className={styles.categoryItem} key={category.name}>
-                    <span>{String(index + 1).padStart(2, '0')}</span>
-                    <strong>{category.name}</strong>
-                    <small>{category.count} article{category.count === 1 ? '' : 's'}</small>
-                  </div>
-                ))}
-              </div>
-            </div>
-          </section>
-        )}
+        <div className={styles.shell}>
+          <InsightsExplorer posts={archivePosts} />
+        </div>
 
-        <section id="latest" className={styles.latest} aria-labelledby="latest-heading">
+        <section className={styles.closingBand}>
           <div className={styles.shell}>
-            <div className={styles.latestHeading}>
+            <div className={styles.closingGrid}>
+              <p className={styles.eyebrow}>From insight to action</p>
+              <h2>Found the problem?<br />Now fix the system.</h2>
               <div>
-                <p className={styles.eyebrow}>Latest intelligence</p>
-                <h2 id="latest-heading">Useful enough<br />to change the work.</h2>
+                <p>
+                  If an article exposed a leak in acquisition, conversion, technology or delivery, we can audit the
+                  system and show you the highest-leverage next moves.
+                </p>
+                <Link href="/#book" className={styles.closingCta}>Get a free growth audit ↗</Link>
               </div>
-              <p>
-                Each article is built around a decision, system or growth problem. No filler posts written just to
-                occupy a keyword.
-              </p>
-            </div>
-
-            <div className={styles.grid}>
-              {latest.map((post, index) => (
-                <Link href={`/blog/${post.slug}`} className={styles.card} key={post.slug}>
-                  <EditorialVisual
-                    title={post.title}
-                    category={post.categoryLabel}
-                    typeLabel={post.contentTypeLabel}
-                    tone={post.gradient}
-                    compact
-                  />
-                  <div className={styles.cardBody}>
-                    <div className={styles.cardIndex}>{String(index + 2).padStart(2, '0')}</div>
-                    <div className={styles.meta}>
-                      <span>{post.categoryLabel}</span>
-                      <span>{post.contentTypeLabel}</span>
-                    </div>
-                    <h3>{post.title}</h3>
-                    <p>{post.description}</p>
-                    <div className={styles.cardFooter}>
-                      <span>{formatPostDate(post.date)} · {post.readingTimeMins} min</span>
-                      <strong>↗</strong>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-
-            {posts.length === 0 && (
-              <p className={styles.empty}>The first field notes are being prepared.</p>
-            )}
-          </div>
-        </section>
-
-        <section className={styles.editorialPromise}>
-          <div className={styles.shell}>
-            <div className={styles.promiseGrid}>
-              <p className={styles.eyebrow}>Our editorial rule</p>
-              <h2>Write from evidence.<br />Explain the decision.<br />Give the reader a next move.</h2>
-              <p>
-                That structure now powers every Growth Escalators article — whether it is a playbook, comparison,
-                case study, framework, point of view or research note.
-              </p>
             </div>
           </div>
         </section>
