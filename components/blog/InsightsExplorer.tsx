@@ -114,7 +114,7 @@ export default function InsightsExplorer({ posts }: InsightsExplorerProps) {
                     <div><strong>{post.author}</strong><span>{new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: '2-digit' })}</span></div>
                     <div className={styles.readMeta}><span>{post.readingTimeMins} min read</span><Link href={`/blog/${post.slug}`} aria-label={`Read ${post.title}`}>↗</Link></div>
                   </div>
-                  <span className={styles.index}>{String(index + 1).padStart(2, '0')}</span>
+                  <span className={styles.index} aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
                 </div>
               </article>
             ))}
