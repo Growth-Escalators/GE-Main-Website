@@ -35,6 +35,11 @@ export default function WhiteLabelLeadForm() {
       payload[key] = String(value)
     })
 
+    const projectType = payload.projectType?.trim()
+    const brief = payload.message?.trim()
+    payload.message = [projectType ? `Project type: ${projectType}` : '', brief].filter(Boolean).join('\n\n')
+    delete payload.projectType
+
     try {
       const response = await fetch('/api/lead', {
         method: 'POST',
