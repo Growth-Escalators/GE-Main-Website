@@ -11,9 +11,11 @@ export default function CommercialMotion() {
 
     gsap.registerPlugin(ScrollTrigger)
     const ctx = gsap.context(() => {
-      gsap.fromTo('[data-cm-hero]', { yPercent: 42, autoAlpha: 0 }, {
+      /* Use opacity rather than autoAlpha so semantic headings and card copy
+         remain in the accessibility tree while they are waiting to reveal. */
+      gsap.fromTo('[data-cm-hero]', { yPercent: 42, opacity: 0 }, {
         yPercent: 0,
-        autoAlpha: 1,
+        opacity: 1,
         duration: .9,
         stagger: .08,
         ease: 'power4.out',
@@ -21,9 +23,9 @@ export default function CommercialMotion() {
       })
 
       gsap.utils.toArray<HTMLElement>('[data-cm-reveal]').forEach((el) => {
-        gsap.fromTo(el, { y: 46, autoAlpha: 0 }, {
+        gsap.fromTo(el, { y: 46, opacity: 0 }, {
           y: 0,
-          autoAlpha: 1,
+          opacity: 1,
           duration: .8,
           ease: 'power3.out',
           scrollTrigger: { trigger: el, start: 'top 86%', once: true },
@@ -33,9 +35,9 @@ export default function CommercialMotion() {
       ScrollTrigger.batch('[data-cm-card]', {
         start: 'top 88%',
         once: true,
-        onEnter: (batch) => gsap.fromTo(batch, { y: 52, autoAlpha: 0 }, {
+        onEnter: (batch) => gsap.fromTo(batch, { y: 52, opacity: 0 }, {
           y: 0,
-          autoAlpha: 1,
+          opacity: 1,
           duration: .78,
           stagger: .08,
           ease: 'power3.out',
