@@ -1,31 +1,6 @@
 import Image from 'next/image'
+import { GE_TEAM } from '@/lib/team'
 import styles from './TeamRoster.module.css'
-
-type TeamMember = {
-  name: string
-  role: string
-  index: string
-  image?: string
-  imagePosition?: string
-}
-
-const TEAM: TeamMember[] = [
-  { name: 'Jatin', role: 'Founder & Performance Marketing Lead', index: '01' },
-  { name: 'Sanskriti', role: 'Lead Graphic Designer', index: '02' },
-  { name: 'Kanishk', role: 'Technology Lead & AI Architect', index: '03' },
-  { name: 'Sakcham', role: 'CRO & Conversion Specialist', index: '04' },
-  { name: 'Harsh', role: 'Creative Director', index: '05' },
-  { name: 'Sagar', role: 'Creative Strategist', index: '06' },
-  { name: 'Keshav', role: 'Senior Video Editor', index: '07' },
-  { name: 'Mayank', role: 'Junior Video Editor', index: '08' },
-  {
-    name: 'Vishaka',
-    role: 'Human Resource',
-    index: '09',
-    image: '/team/vishaka.webp',
-    imagePosition: 'center 24%',
-  },
-]
 
 export default function TeamRoster() {
   return (
@@ -46,7 +21,7 @@ export default function TeamRoster() {
         </div>
 
         <div className={styles.grid}>
-          {TEAM.map((member) => (
+          {GE_TEAM.map((member) => (
             <article className={styles.card} key={member.name} data-card-reveal>
               <div className={`${styles.visual} ${member.image ? styles.visualPhoto : styles.visualPlaceholder}`}>
                 {member.image ? (
