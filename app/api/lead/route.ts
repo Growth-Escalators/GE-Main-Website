@@ -4,52 +4,18 @@ import type { LandingMarket } from '@/lib/content/international-landing/types'
 /**
  * POST /api/lead
  *
- * Receives form submissions from <LeadForm /> on every industry landing page,
- * from /contact, and from the international-landing-page family (UK live;
- * UAE/US/Australia share this same endpoint from day one — see the `market`
- * field below). Delivers the lead via up to two optional channels (email via
- * Resend, generic webhook) and falls back to a server log if neither is
- * configured.
+ * Shared lead endpoint for industry pages, /contact and international landing
+ * pages. The website remains resilient: every accepted lead is logged, Resend
+ * and generic webhooks are optional, and CRM delivery soft-fails rather than
+ * breaking the visitor's submission.
  *
- * Env vars (all optional — see CLAUDE.md for full setup notes):
- *   RESEND_API_KEY         — if set, sends an email via Resend's REST API.
- *   LEAD_NOTIFY_EMAIL      — recipient address (default: Info@growthescalators.com).
- *   LEAD_FROM_EMAIL        — from address (default: onboarding@resend.dev).
- *   LEAD_WEBHOOK_URL       — if set, POSTs the lead body as JSON to this URL.
- *
- * Prospect auto-responder: when RESEND_API_KEY is set we also email the LEAD
- * (not just the team) a helpful breakdown + a real case study, keyed off
- * `market` (preferred, exact) with a `source` substring match retained as a
- * fallback for forms that don't send `market`. Reaching arbitrary inboxes
- * requires a VERIFIED sending domain in Resend (set LEAD_FROM_EMAIL) — with
- * the default onboarding@resend.dev Resend only delivers to the account
- * owner. Soft-fails, never blocks the submit.
- *
- * JD attachment (used by the international-landing-page family): the client
- * reads the uploaded file as base64 and sends it inline in the JSON body.
- * Validated server-side (PDF/DOC/DOCX, <=4MB decoded) before being attached
- * to the Resend email — never trust the client-side check alone.
- *
- * Rate limit: 5 requests per IP per minute (in-memory; resets on cold start).
- * Defensible against trivial form spam without adding a Redis dep.
- *
- * ── International-landing-page contract (UK/UAE/US/Australia) ──────────
- * These forms always send `market`, which gates a stricter validation layer
- * (see `validate()` below) WITHOUT touching the loose validation every other
- * form on the site (doctors/staffing/contact/calculator) already relies on —
- * none of those forms send `market`, so they are completely unaffected.
- *
- * Always required (any market):        name, email, company, role (skill/job
- *                                       title), seats (number of resources), market.
- * Market-specific REQUIRED additions:  UAE → emirate.
- *                                       US  → companyType (enum, see
- *                                       US_COMPANY_TYPES below), usTimeZone.
- *                                       Australia → auStateOrTimeZone.
- * Optional (any market):               startDate, engagementDuration,
- *                                       workingHoursNote, message, JD upload.
- *                                       US also: budgetRange.
- * Always captured (any market/form):   utmSource/Medium/Campaign/Term/Content,
- *                                       referrerUrl, landingPageRoute.
+ * Optional env vars:
+ *   RESEND_API_KEY
+ *   LEAD_NOTIFY_EMAIL
+ *   LEAD_FROM_EMAIL
+ *   LEAD_WEBHOOK_URL
+ *   CRM_WEBSITE_LEAD_URL   — CRM POST /api/leads/website endpoint.
+ *   LEAD_WEBHOOK_SECRET    — shared secret sent to CRM as x-ge-lead-secret.
  */
 
 export const runtime = 'nodejs'
@@ -63,97 +29,101 @@ interface LeadPayload {
   name?: string
   email?: string
   phone?: string
-  clinic?: string         // doctors / healthcare
+  clinic?: string
   specialization?: string
   city?: string
   budget?: string
   message?: string
-  /** Set by the form so server-side knows which industry/offer the lead came from */
   source?: string
-  // ── Staffing fields (also reused as the "always required" fields for the
-  //    international-landing-page family — company/role/seats mean the same
-  //    thing there: company name, skill/job title, number of resources). ──
+
+  // Generic / context-aware website fields.
   company?: string
+  industry?: string
+  website?: string
+  service?: string
+  monthlyRevenue?: string
+  businessVertical?: string
+  businessType?: string
+  formType?: string
+
+  // Staffing fields.
   role?: string
   seats?: string
-  engagement?: string     // Contract | Permanent | Either
-  workMode?: string       // Remote | Hybrid | Onsite
+  engagement?: string
+  workMode?: string
   timeline?: string
-  // ── International-landing-page fields (UK/UAE/US/Australia) ──
-  /** Which market's page the lead came from. Gates the stricter validation below. */
+
+  // International landing-page fields.
   market?: LandingMarket
   startDate?: string
   engagementDuration?: string
-  /** Free-text working-hour / overlap expectation — generic across all 4 markets. */
   workingHoursNote?: string
-  /** UAE only, required when market === 'UAE'. */
   emirate?: string
-  /** US only, required when market === 'US'. One of US_COMPANY_TYPES. */
   companyType?: string
-  /** US only, required when market === 'US'. */
   usTimeZone?: string
-  /** Australia only, required when market === 'Australia'. */
   auStateOrTimeZone?: string
-  /** US only, optional. */
   budgetRange?: string
+
+  // Acquisition context. UTMs are first-touch values captured client-side.
   utmSource?: string
   utmMedium?: string
   utmCampaign?: string
   utmTerm?: string
   utmContent?: string
-  /** Page the referring browser came from (document.referrer), captured client-side. */
+  firstReferrerUrl?: string
+  firstLandingPage?: string
   referrerUrl?: string
-  /** Path of the landing page the lead was submitted from, e.g. '/uk-offshore-tech-resources'. */
+  /** Page where the lead actually converted/submitted. */
   landingPageRoute?: string
-  /** JD upload, sent inline as base64 — validated below (PDF/DOC/DOCX, <=4MB). */
+  whatsappClicked?: boolean
+  whatsappClickSource?: string
+
+  // Optional JD upload used by international staffing forms.
   jdFileName?: string
   jdFileType?: string
   jdFileBase64?: string
 }
 
-const MAX_JD_BYTES = 4 * 1024 * 1024 // 4MB
+const MAX_JD_BYTES = 4 * 1024 * 1024
 const ALLOWED_JD_TYPES = [
   'application/pdf',
   'application/msword',
   'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
 ]
 
-/* ── Hand-rolled validation. No Zod dep. ─────────────────────────────── */
 function validate(body: unknown): { ok: true; data: LeadPayload } | { ok: false; error: string } {
   if (!body || typeof body !== 'object') return { ok: false, error: 'Body must be a JSON object' }
   const b = body as Record<string, unknown>
   const str = (v: unknown) => (typeof v === 'string' ? v.trim() : '')
+  const bool = (v: unknown) => v === true || v === 'true' || v === 1 || v === '1'
 
   const name = str(b.name)
   const email = str(b.email)
-  // Phone is required by most industry lead forms (client-side `required`) but
-  // NOT collected by the international-landing-page family — kept optional
-  // here so one shared endpoint serves both without a fake required field.
   const phone = str(b.phone)
 
-  if (!name)  return { ok: false, error: 'Name is required' }
+  if (!name) return { ok: false, error: 'Name is required' }
   if (!email) return { ok: false, error: 'Email is required' }
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return { ok: false, error: 'Email looks invalid' }
   if (name.length > 200 || email.length > 200 || phone.length > 50) {
     return { ok: false, error: 'Field too long' }
   }
 
-  const company = str(b.company)
+  // `business` was used by an older shared form. Normalize it into company so
+  // old pages and the new contextual forms end up in the same CRM field.
+  const company = str(b.company) || str(b.business)
   const role = str(b.role)
   const seats = str(b.seats)
 
-  // International-landing-page validation layer — ONLY runs when the payload
-  // declares a `market`. Every other lead form on the site (doctors/staffing/
-  // contact/calculator) never sends `market`, so this block is a no-op for
-  // them and cannot regress their existing (looser) validation.
+  // International validation is intentionally gated by market so existing
+  // doctors/D2C/contact/calculator forms keep their looser contract.
   const marketRaw = str(b.market)
   if (marketRaw) {
     if (!INTERNATIONAL_MARKETS.includes(marketRaw as LandingMarket)) {
       return { ok: false, error: 'Invalid market' }
     }
     if (!company) return { ok: false, error: 'Company is required' }
-    if (!role)    return { ok: false, error: 'Skill or job title is required' }
-    if (!seats)   return { ok: false, error: 'Number of resources is required' }
+    if (!role) return { ok: false, error: 'Skill or job title is required' }
+    if (!seats) return { ok: false, error: 'Number of resources is required' }
 
     if (marketRaw === 'UAE' && !str(b.emirate)) {
       return { ok: false, error: 'Emirate is required' }
@@ -171,7 +141,6 @@ function validate(body: unknown): { ok: true; data: LeadPayload } | { ok: false;
   }
   const market = marketRaw ? (marketRaw as LandingMarket) : undefined
 
-  // JD attachment: re-validate server-side, never trust the client check alone.
   const jdFileName = str(b.jdFileName)
   const jdFileType = str(b.jdFileType)
   const jdFileBase64Raw = str(b.jdFileBase64)
@@ -190,41 +159,60 @@ function validate(body: unknown): { ok: true; data: LeadPayload } | { ok: false;
   return {
     ok: true,
     data: {
-      name, email, phone,
-      clinic:         str(b.clinic),
+      name,
+      email,
+      phone,
+      clinic: str(b.clinic),
       specialization: str(b.specialization),
-      city:           str(b.city),
-      budget:         str(b.budget),
-      message:        str(b.message).slice(0, 4000),
-      source:         str(b.source) || 'unknown',
-      company, role, seats,
-      engagement:     str(b.engagement),
-      workMode:       str(b.workMode),
-      timeline:       str(b.timeline),
+      city: str(b.city),
+      budget: str(b.budget),
+      message: str(b.message).slice(0, 4000),
+      source: str(b.source) || 'unknown',
+
+      company,
+      industry: str(b.industry),
+      website: str(b.website).slice(0, 500),
+      service: str(b.service),
+      monthlyRevenue: str(b.monthlyRevenue),
+      businessVertical: str(b.businessVertical),
+      businessType: str(b.businessType),
+      formType: str(b.formType),
+
+      role,
+      seats,
+      engagement: str(b.engagement),
+      workMode: str(b.workMode),
+      timeline: str(b.timeline),
+
       market,
-      startDate:           str(b.startDate),
-      engagementDuration:  str(b.engagementDuration),
-      workingHoursNote:    str(b.workingHoursNote),
-      emirate:             str(b.emirate),
-      companyType:         str(b.companyType),
-      usTimeZone:          str(b.usTimeZone),
-      auStateOrTimeZone:   str(b.auStateOrTimeZone),
-      budgetRange:         str(b.budgetRange),
-      referrerUrl:         str(b.referrerUrl).slice(0, 500),
-      landingPageRoute:    str(b.landingPageRoute).slice(0, 200),
-      utmSource:           str(b.utmSource),
-      utmMedium:           str(b.utmMedium),
-      utmCampaign:         str(b.utmCampaign),
-      utmTerm:             str(b.utmTerm),
-      utmContent:          str(b.utmContent),
-      jdFileName:     jdFileBase64 ? jdFileName || 'jd-attachment' : '',
-      jdFileType:     jdFileBase64 ? jdFileType : '',
+      startDate: str(b.startDate),
+      engagementDuration: str(b.engagementDuration),
+      workingHoursNote: str(b.workingHoursNote),
+      emirate: str(b.emirate),
+      companyType: str(b.companyType),
+      usTimeZone: str(b.usTimeZone),
+      auStateOrTimeZone: str(b.auStateOrTimeZone),
+      budgetRange: str(b.budgetRange),
+
+      firstReferrerUrl: str(b.firstReferrerUrl).slice(0, 700),
+      firstLandingPage: str(b.firstLandingPage).slice(0, 300),
+      referrerUrl: str(b.referrerUrl).slice(0, 700),
+      landingPageRoute: str(b.landingPageRoute).slice(0, 300),
+      utmSource: str(b.utmSource).slice(0, 200),
+      utmMedium: str(b.utmMedium).slice(0, 200),
+      utmCampaign: str(b.utmCampaign).slice(0, 250),
+      utmTerm: str(b.utmTerm).slice(0, 250),
+      utmContent: str(b.utmContent).slice(0, 250),
+      whatsappClicked: bool(b.whatsappClicked),
+      whatsappClickSource: str(b.whatsappClickSource).slice(0, 200),
+
+      jdFileName: jdFileBase64 ? jdFileName || 'jd-attachment' : '',
+      jdFileType: jdFileBase64 ? jdFileType : '',
       jdFileBase64,
     },
   }
 }
 
-/* ── Rate limit: 5 req/min/IP. In-memory; per-instance. ──────────────── */
 const RATE_WINDOW_MS = 60_000
 const RATE_LIMIT = 5
 const ipBuckets = new Map<string, number[]>()
@@ -247,8 +235,6 @@ function clientIp(req: Request): string {
   return req.headers.get('x-real-ip') ?? 'unknown'
 }
 
-/* ── Delivery channels ───────────────────────────────────────────────── */
-
 async function sendViaResend(lead: LeadPayload): Promise<{ ok: boolean; reason?: string }> {
   const key = process.env.RESEND_API_KEY
   if (!key) return { ok: false, reason: 'no-key' }
@@ -258,33 +244,41 @@ async function sendViaResend(lead: LeadPayload): Promise<{ ok: boolean; reason?:
 
   const subject = `New ${lead.source || 'website'} lead: ${lead.name}`
   const lines = [
-    lead.market         && `Market: ${lead.market}`,
+    lead.market && `Market: ${lead.market}`,
     `Name: ${lead.name}`,
-    lead.phone          && `Phone: ${lead.phone}`,
+    lead.phone && `Phone: ${lead.phone}`,
     `Email: ${lead.email}`,
-    lead.company        && `Company: ${lead.company}`,
-    lead.clinic         && `Practice / Business: ${lead.clinic}`,
+    lead.company && `Company / brand: ${lead.company}`,
+    lead.website && `Website: ${lead.website}`,
+    lead.industry && `Industry: ${lead.industry}`,
+    lead.businessVertical && `Business vertical: ${lead.businessVertical}`,
+    lead.formType && `Form type: ${lead.formType}`,
+    lead.service && `Service interest: ${lead.service}`,
+    lead.monthlyRevenue && `Monthly online revenue: ${lead.monthlyRevenue}`,
+    lead.clinic && `Practice / Business: ${lead.clinic}`,
     lead.specialization && `Specialization / Type: ${lead.specialization}`,
-    lead.city           && `City: ${lead.city}`,
-    lead.budget         && `Monthly marketing spend: ${lead.budget}`,
-    lead.role           && `Role / skill needed: ${lead.role}`,
-    lead.seats          && `Number of resources: ${lead.seats}`,
-    lead.engagement     && `Engagement: ${lead.engagement}`,
-    lead.workMode       && `Work mode: ${lead.workMode}`,
-    lead.timeline       && `Timeline: ${lead.timeline}`,
-    lead.startDate          && `Preferred start date: ${lead.startDate}`,
+    lead.city && `City: ${lead.city}`,
+    lead.budget && `Monthly marketing spend: ${lead.budget}`,
+    lead.role && `Role / skill needed: ${lead.role}`,
+    lead.seats && `Number of resources: ${lead.seats}`,
+    lead.engagement && `Engagement: ${lead.engagement}`,
+    lead.workMode && `Work mode: ${lead.workMode}`,
+    lead.timeline && `Timeline: ${lead.timeline}`,
+    lead.startDate && `Preferred start date: ${lead.startDate}`,
     lead.engagementDuration && `Engagement duration: ${lead.engagementDuration}`,
-    lead.workingHoursNote   && `Working-hour expectations: ${lead.workingHoursNote}`,
-    lead.emirate            && `Emirate: ${lead.emirate}`,
-    lead.companyType        && `Company type: ${lead.companyType}`,
-    lead.usTimeZone         && `US time zone: ${lead.usTimeZone}`,
-    lead.auStateOrTimeZone  && `Australian state / time zone: ${lead.auStateOrTimeZone}`,
-    lead.budgetRange        && `Budget / rate range: ${lead.budgetRange}`,
-    lead.jdFileName         && `JD attached: ${lead.jdFileName}`,
+    lead.workingHoursNote && `Working-hour expectations: ${lead.workingHoursNote}`,
+    lead.emirate && `Emirate: ${lead.emirate}`,
+    lead.companyType && `Company type: ${lead.companyType}`,
+    lead.usTimeZone && `US time zone: ${lead.usTimeZone}`,
+    lead.auStateOrTimeZone && `Australian state / time zone: ${lead.auStateOrTimeZone}`,
+    lead.budgetRange && `Budget / rate range: ${lead.budgetRange}`,
+    lead.jdFileName && `JD attached: ${lead.jdFileName}`,
     (lead.utmSource || lead.utmMedium || lead.utmCampaign || lead.utmTerm || lead.utmContent)
       && `UTM: source=${lead.utmSource || '-'} medium=${lead.utmMedium || '-'} campaign=${lead.utmCampaign || '-'} term=${lead.utmTerm || '-'} content=${lead.utmContent || '-'}`,
-    lead.referrerUrl        && `Referring URL: ${lead.referrerUrl}`,
-    lead.landingPageRoute   && `Landing page: ${lead.landingPageRoute}`,
+    lead.firstReferrerUrl && `First referrer: ${lead.firstReferrerUrl}`,
+    lead.firstLandingPage && `First landing page: ${lead.firstLandingPage}`,
+    lead.landingPageRoute && `Conversion page: ${lead.landingPageRoute}`,
+    lead.whatsappClicked && `WhatsApp used before form: yes${lead.whatsappClickSource ? ` (${lead.whatsappClickSource})` : ''}`,
     `Source: ${lead.source}`,
     '',
     'Message:',
@@ -292,7 +286,6 @@ async function sendViaResend(lead: LeadPayload): Promise<{ ok: boolean; reason?:
   ].filter(Boolean) as string[]
 
   const html = lines.map((l) => `<p>${l.replace(/&/g, '&amp;').replace(/</g, '&lt;')}</p>`).join('')
-
   const attachments = lead.jdFileBase64 && lead.jdFileName
     ? [{ filename: lead.jdFileName, content: lead.jdFileBase64 }]
     : undefined
@@ -305,7 +298,9 @@ async function sendViaResend(lead: LeadPayload): Promise<{ ok: boolean; reason?:
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        from, to, subject,
+        from,
+        to,
+        subject,
         text: lines.join('\n'),
         html,
         reply_to: lead.email,
@@ -338,21 +333,31 @@ async function sendViaWebhook(lead: LeadPayload): Promise<{ ok: boolean; reason?
   }
 }
 
-/* ── Prospect auto-responder ──────────────────────────────────────────────── */
+async function sendViaCrm(lead: LeadPayload): Promise<{ ok: boolean; reason?: string }> {
+  const url = process.env.CRM_WEBSITE_LEAD_URL
+  if (!url) return { ok: false, reason: 'no-url' }
+  const secret = process.env.LEAD_WEBHOOK_SECRET
 
-/**
- * Pick a REAL case study + resource line for the lead. Market-aware first:
- * every international-landing-page lead (UK/UAE/US/Australia — identified by
- * the exact `market` field, not string-sniffing) gets the same honest
- * process-proof branch below, since that copy was already written to be
- * market-generic (no "UK" claim baked into the text) and there's no real,
- * shipped result to differentiate by market yet — inventing one per market
- * would be exactly the fabrication this file's proof discipline forbids.
- * Falls back to substring-matching `source` for every other lead form on the
- * site (unchanged from before) and, as a safety net, for any international
- * lead that somehow arrives without `market` set.
- * Proof discipline: every snippet below is a real, shipped GE result.
- */
+  try {
+    const res = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        ...(secret ? { 'x-ge-lead-secret': secret } : {}),
+      },
+      body: JSON.stringify({ ...lead, receivedAt: new Date().toISOString() }),
+      cache: 'no-store',
+    })
+    if (!res.ok) {
+      const detail = await res.text().catch(() => '')
+      return { ok: false, reason: `crm-${res.status}: ${detail.slice(0, 200)}` }
+    }
+    return { ok: true }
+  } catch (e) {
+    return { ok: false, reason: `crm-throw: ${(e as Error).message}` }
+  }
+}
+
 function resourceFor(lead: Pick<LeadPayload, 'market' | 'source'>): { caseStudy: string; resourceLine: string } {
   const offshoreStaffingProof = {
     caseStudy: 'Every requirement we receive is converted into a mandatory-skill scorecard before any profile is shared, so what lands in your inbox is already screened for the skills, experience and availability you asked for.',
@@ -386,11 +391,6 @@ function resourceFor(lead: Pick<LeadPayload, 'market' | 'source'>): { caseStudy:
     return { caseStudy: 'For premium creative brands we’ve built social engines with multiple million-view reels and steady inbound enquiries.', resourceLine: 'the booking-season campaign plan' }
   if (has('car', 'detailing', 'auto', 'garage'))
     return { caseStudy: 'For local service businesses we consistently push cost-per-lead below ₹100 with 4× funnel conversion.', resourceLine: 'the local-service lead playbook' }
-  // Legacy fallback for an offshore/staffing-shaped `source` with no `market` set
-  // (shouldn't happen for the international-landing-page family post-refactor,
-  // kept for safety) — same reasoning as the market-gated branch above: this is
-  // a staffing requirement, not a marketing enquiry, so it gets process proof
-  // instead of an ad-spend case study that would be irrelevant to a hiring buyer.
   if (has('offshore', 'uk offshore', 'tech requirement')) return offshoreStaffingProof
   return { caseStudy: 'Across 187+ brands we’ve managed ₹10Cr+ in ad spend at a 97% client-retention rate.', resourceLine: 'a plan tailored to your goals' }
 }
@@ -405,7 +405,6 @@ async function sendAutoResponder(lead: LeadPayload): Promise<{ ok: boolean; reas
   const firstName = (lead.name || 'there').split(' ')[0]
   const { caseStudy, resourceLine } = resourceFor(lead)
 
-  // If the lead came from a calculator, echo their result back to them.
   const raw = lead.message || ''
   const calcMatch = /\]\s*(.+)$/.exec(raw)
   const calcSummary = raw.startsWith('[') && /calculator/i.test(raw) && calcMatch ? calcMatch[1] : ''
@@ -452,8 +451,6 @@ async function sendAutoResponder(lead: LeadPayload): Promise<{ ok: boolean; reas
   }
 }
 
-/* ── Handler ─────────────────────────────────────────────────────────── */
-
 export async function POST(req: Request) {
   const ip = clientIp(req)
   if (rateLimited(ip)) {
@@ -470,16 +467,13 @@ export async function POST(req: Request) {
   const v = validate(body)
   if (!v.ok) return NextResponse.json({ error: v.error }, { status: 400 })
 
-  const [resendResult, webhookResult, autoResponderResult] = await Promise.all([
+  const [resendResult, webhookResult, crmResult, autoResponderResult] = await Promise.all([
     sendViaResend(v.data),
     sendViaWebhook(v.data),
+    sendViaCrm(v.data),
     sendAutoResponder(v.data),
   ])
 
-  // Always log the lead so it's recoverable from server logs even if all
-  // delivery channels failed. Format kept stable on purpose so future log
-  // grepping stays predictable. The (potentially large) base64 JD attachment
-  // is redacted to a byte count so one upload doesn't flood the log line.
   const logSafeLead = {
     ...v.data,
     jdFileBase64: v.data.jdFileBase64
@@ -494,13 +488,10 @@ export async function POST(req: Request) {
       lead: logSafeLead,
       resend: resendResult,
       webhook: webhookResult,
+      crm: crmResult,
       autoResponder: autoResponderResult,
     }),
   )
 
-  // Soft-success policy: as long as we received and logged the lead, return
-  // 200 to the user. Email/webhook failures are operational issues, not user
-  // failures — the lead isn't lost (we have the server log + the form
-  // doesn't visibly break for the prospect).
   return NextResponse.json({ ok: true })
 }
