@@ -8,6 +8,7 @@ import './globals.css'
 import './portfolio/portfolio.css'
 import dynamic from 'next/dynamic'
 import GoogleAnalytics from '@/components/analytics/GoogleAnalytics'
+import LeadAttributionCapture from '@/components/analytics/LeadAttributionCapture'
 import ContactIdentityGuard from '@/components/ui/ContactIdentityGuard'
 
 const GrowthBot = dynamic(() => import('@/components/ui/GrowthBot'), { ssr: false })
@@ -184,6 +185,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className={jakarta.variable}>
         <GoogleAnalytics />
+        <LeadAttributionCapture />
         <ContactIdentityGuard />
         <ScrollProgress />
         <CursorGlow />
