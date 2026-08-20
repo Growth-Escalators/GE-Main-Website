@@ -23,7 +23,7 @@ const jakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.growthescalators.com'),
   title: {
-    default: 'Growth Escalators — Growth Marketing, Technology & Talent',
+    default: 'Growth Escalators — Performance Marketing, Web, AI & Talent',
     template: '%s — Growth Escalators',
   },
   description:
@@ -44,7 +44,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: 'website',
     siteName: 'Growth Escalators',
-    title: 'Growth Escalators — Growth Marketing, Technology & Talent',
+    title: 'Growth Escalators — Performance Marketing, Web, AI & Talent',
     description:
       'Performance marketing, ecommerce, websites, search, creative, AI, software and technology talent connected around measurable growth.',
     url: 'https://www.growthescalators.com',
@@ -53,13 +53,13 @@ export const metadata: Metadata = {
         url: 'https://www.growthescalators.com/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Growth Escalators — Growth Marketing, Technology & Talent',
+        alt: 'Growth Escalators — Performance Marketing, Web, AI & Talent',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Growth Escalators — Growth Marketing, Technology & Talent',
+    title: 'Growth Escalators — Performance Marketing, Web, AI & Talent',
     description:
       'Performance marketing, ecommerce, websites, search, creative, AI, software and technology talent connected around measurable growth.',
   },
