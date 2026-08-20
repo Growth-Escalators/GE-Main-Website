@@ -10,14 +10,15 @@ const CLUSTERS: SeoCluster[] = [
   {
     label: 'D2C & ECOMMERCE',
     headline: 'Explore related ecommerce growth services',
-    paths: ['/d2c', '/d2c/fashion', '/d2c/beauty', '/ecommerce-advertising-agency', '/meta-ads-agency-for-ecommerce', '/ecommerce-scaling-agency', '/skincare-retention-marketing', '/jewellery-marketing-agency-jaipur'],
+    paths: ['/d2c', '/d2c/fashion', '/d2c/beauty', '/ecommerce-advertising-agency', '/meta-ads-agency-for-ecommerce', '/ecommerce-scaling-agency', '/skincare-retention-marketing'],
     links: [
       { label: 'D2C Performance Marketing', href: '/d2c', blurb: 'The full-funnel growth system for ecommerce brands.' },
+      { label: 'Fashion D2C', href: '/d2c/fashion', blurb: 'Performance marketing for fashion and apparel brands.' },
+      { label: 'Beauty & Skincare D2C', href: '/d2c/beauty', blurb: 'Growth systems for beauty and skincare ecommerce.' },
       { label: 'Ecommerce Advertising', href: '/ecommerce-advertising-agency', blurb: 'Meta and Google campaigns built around profitable revenue.' },
       { label: 'Meta Ads for Ecommerce', href: '/meta-ads-agency-for-ecommerce', blurb: 'Creative testing, account structure and scaling for Meta.' },
       { label: 'Ecommerce Scaling', href: '/ecommerce-scaling-agency', blurb: 'Fix the plateau before pushing more budget into it.' },
-      { label: 'Fashion D2C', href: '/d2c/fashion', blurb: 'Performance marketing for fashion and apparel brands.' },
-      { label: 'Beauty & Skincare D2C', href: '/d2c/beauty', blurb: 'Growth systems for beauty and skincare ecommerce.' },
+      { label: 'Skincare Retention Marketing', href: '/skincare-retention-marketing', blurb: 'Retention systems for repeat purchase and stronger customer value.' },
     ],
   },
   {
@@ -35,14 +36,21 @@ const CLUSTERS: SeoCluster[] = [
   {
     label: 'JAIPUR LOCAL GROWTH',
     headline: 'Explore related Jaipur growth services',
-    paths: ['/performance-marketing-agency-jaipur', '/real-estate-marketing-agency-jaipur', '/travel-agency-marketing-jaipur', '/coaching-institute-marketing-agency-jaipur', '/gym-fitness-marketing-agency-jaipur', '/salon-spa-marketing-agency-jaipur', '/hotel-resort-marketing-agency-jaipur', '/interior-designer-marketing-agency-jaipur', '/car-detailing-marketing-agency-jaipur', '/restaurant-marketing-agency-jaipur', '/law-firm-marketing-agency-jaipur', '/wedding-event-marketing-agency-jaipur'],
+    paths: ['/performance-marketing-agency-jaipur', '/jewellery-marketing-agency-jaipur', '/real-estate-marketing-agency-jaipur', '/travel-agency-marketing-jaipur', '/coaching-institute-marketing-agency-jaipur', '/gym-fitness-marketing-agency-jaipur', '/salon-spa-marketing-agency-jaipur', '/hotel-resort-marketing-agency-jaipur', '/interior-designer-marketing-agency-jaipur', '/car-detailing-marketing-agency-jaipur', '/restaurant-marketing-agency-jaipur', '/law-firm-marketing-agency-jaipur', '/wedding-event-marketing-agency-jaipur'],
     links: [
       { label: 'Performance Marketing in Jaipur', href: '/performance-marketing-agency-jaipur', blurb: 'The local growth hub connecting paid media, search, CRO and creative.' },
-      { label: 'Restaurant Marketing', href: '/restaurant-marketing-agency-jaipur', blurb: 'Local discovery, bookings and repeat demand for F&B.' },
-      { label: 'Hotel & Resort Marketing', href: '/hotel-resort-marketing-agency-jaipur', blurb: 'Direct bookings and demand generation for hospitality.' },
-      { label: 'Wedding & Event Marketing', href: '/wedding-event-marketing-agency-jaipur', blurb: 'Lead generation and trust systems for event businesses.' },
+      { label: 'Jewellery Marketing', href: '/jewellery-marketing-agency-jaipur', blurb: 'Digital growth for Jaipur jewellery brands and showrooms.' },
       { label: 'Real Estate Marketing', href: '/real-estate-marketing-agency-jaipur', blurb: 'Qualified project enquiries and measurable lead generation.' },
-      { label: 'Website Development in Jaipur', href: '/website-development-company-jaipur', blurb: 'Conversion-focused websites supporting local growth campaigns.' },
+      { label: 'Travel Agency Marketing', href: '/travel-agency-marketing-jaipur', blurb: 'Demand generation for Jaipur travel and tourism businesses.' },
+      { label: 'Coaching Institute Marketing', href: '/coaching-institute-marketing-agency-jaipur', blurb: 'Lead generation and conversion for education businesses.' },
+      { label: 'Gym & Fitness Marketing', href: '/gym-fitness-marketing-agency-jaipur', blurb: 'Local member acquisition and retention for fitness brands.' },
+      { label: 'Salon & Spa Marketing', href: '/salon-spa-marketing-agency-jaipur', blurb: 'Local discovery, bookings and repeat visits for beauty services.' },
+      { label: 'Hotel & Resort Marketing', href: '/hotel-resort-marketing-agency-jaipur', blurb: 'Direct bookings and demand generation for hospitality.' },
+      { label: 'Interior Designer Marketing', href: '/interior-designer-marketing-agency-jaipur', blurb: 'Qualified local enquiries for interior design businesses.' },
+      { label: 'Car Detailing Marketing', href: '/car-detailing-marketing-agency-jaipur', blurb: 'Local lead generation for detailing and automotive care.' },
+      { label: 'Restaurant Marketing', href: '/restaurant-marketing-agency-jaipur', blurb: 'Local discovery, bookings and repeat demand for F&B.' },
+      { label: 'Law Firm Marketing', href: '/law-firm-marketing-agency-jaipur', blurb: 'Compliance-aware search visibility and authority for legal firms.' },
+      { label: 'Wedding & Event Marketing', href: '/wedding-event-marketing-agency-jaipur', blurb: 'Lead generation and trust systems for event businesses.' },
     ],
   },
   {
@@ -85,12 +93,25 @@ function getCluster(pathname: string) {
   return CLUSTERS.find((cluster) => cluster.paths.includes(pathname))
 }
 
+function chooseLinks(cluster: SeoCluster, pathname: string) {
+  const pillar = cluster.links[0]
+  const siblings = cluster.links.filter((link) => link.href !== pathname && link.href !== pillar.href)
+  if (!siblings.length) return pillar.href === pathname ? [] : [pillar]
+
+  const currentIndex = Math.max(0, cluster.paths.indexOf(pathname))
+  const start = currentIndex % siblings.length
+  const rotated = [...siblings.slice(start), ...siblings.slice(0, start)]
+
+  if (pathname === pillar.href) return rotated.slice(0, 4)
+  return [pillar, ...rotated].filter((link) => link.href !== pathname).slice(0, 4)
+}
+
 export default function SeoContextLinks() {
   const pathname = usePathname()
   const cluster = getCluster(pathname)
   if (!cluster) return null
 
-  const links = cluster.links.filter((link) => link.href !== pathname).slice(0, 4)
+  const links = chooseLinks(cluster, pathname)
   if (!links.length) return null
 
   return (
