@@ -154,7 +154,7 @@ export default function HomepageReference() {
               <Image src="/portfolio/hero.png" alt="Growth Escalators work montage" fill priority sizes="(max-width: 900px) 92vw, 46vw" />
             </div>
             <div className={styles.heroTeam} data-parallax="5">
-              <Image src="/photos/photo-1.png" alt="Growth Escalators team in Jaipur" fill sizes="(max-width: 900px) 45vw, 20vw" />
+              <Image src="/team/jatin-agrawal.webp" alt="Jatin Agrawal, founder of Growth Escalators" fill sizes="(max-width: 900px) 45vw, 20vw" />
             </div>
             <div className={styles.heroMetric}>
               <span>PROOF / 01</span>

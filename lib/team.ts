@@ -16,7 +16,7 @@ export const GE_TEAM: TeamMember[] = [
   },
   {
     name: 'Sanskriti',
-    role: 'Project Manager',
+    role: 'Software Architect',
     index: '02',
     image: '/team/sanskriti.webp',
     imagePosition: 'center 20%',
@@ -67,7 +67,7 @@ export const GE_TEAM: TeamMember[] = [
     name: 'Vishaka',
     role: 'Human Resource',
     index: '09',
-    image: '/team/vishaka.webp',
-    imagePosition: 'center 38%',
+    image: '/team/vishaka-profile.webp',
+    imagePosition: 'center center',
   },
 ]
