@@ -28,7 +28,6 @@ type Props = {
 }
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
-
 type LeadFields = Record<string, string | boolean>
 
 const D2C_SERVICES = [
@@ -66,19 +65,27 @@ const MARKETING_SPEND = [
   '₹10L+ / month',
 ]
 
+function inferLeadFormVariant(subjectPrefix: string, headline: string): LeadFormVariant {
+  const context = `${subjectPrefix} ${headline}`.toLowerCase()
+  if (/(d2c|e-?commerce|shopify|fashion|beauty|skincare|apparel)/.test(context)) return 'd2c'
+  if (/(clinic|doctor|dental|dentist|healthcare|medical|patient|hospital|orthop|dermat)/.test(context)) return 'clinic'
+  return 'generic'
+}
+
 export default function LeadForm({
   recipient = 'Info@growthescalators.com',
   subjectPrefix = 'New Website Lead',
   headline = 'Tell us about your business',
   subhead = "Fill this in and we'll get back within 24 hours with a no-obligation strategy session.",
   tag = "LET'S TALK",
-  variant = 'generic',
+  variant: requestedVariant,
   businessVertical,
   service,
 }: Props) {
   const [status, setStatus] = useState<Status>('idle')
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
 
+  const variant = requestedVariant ?? inferLeadFormVariant(subjectPrefix, headline)
   const vertical = businessVertical || (variant === 'generic' ? 'general' : variant)
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -281,7 +288,7 @@ function SelectField({ name, label, options }: { name: string; label: string; op
     <label className={styles.field}>
       <span>{label}</span>
       <select name={name} defaultValue="">
-        <option value="" disabled>Select range</option>
+        <option value="" disabled>Select…</option>
         {options.map((option) => <option key={option} value={option}>{option}</option>)}
       </select>
     </label>
