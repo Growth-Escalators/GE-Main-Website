@@ -58,18 +58,15 @@ const nextConfig = {
       { source: '/social-media-audit', destination: '/contact', permanent: true }, // 16 imp (old lead-magnet)
       { source: '/seo-auditgegv', destination: '/services', permanent: true },     // 8 imp (demo slug, still ranks)
 
-      // --- Retired /restaurants (was noindexed/de-targeted) -> homepage. Used to point at
-      //     /restaurant-marketing-agency-jaipur, but that BOFU page is retired too (2026-08-17,
-      //     see below) -- pointed straight at the final destination to avoid a redirect chain. ---
-      { source: '/restaurants', destination: '/', permanent: true },
+      // --- Restaurant hub -> restored BOFU restaurant page. The exact niche URL
+      //     is live again, so keep this legacy alias topically aligned instead of
+      //     sending restaurant intent to the generic homepage. ---
+      { source: '/restaurants', destination: '/restaurant-marketing-agency-jaipur', permanent: true },
 
-      // --- Retired thin industry-vertical pages (2026-08-17): near-zero SEO traffic in the
-      //     28-day GSC window (wedding 2 clicks/49 impr, law-firm 1/30, restaurant 1/70) and not
-      //     worth further investment. No topically equivalent live page to point at, so these
-      //     redirect to the homepage (nav + #industries section) rather than a mismatched page. ---
-      { source: '/wedding-event-marketing-agency-jaipur', destination: '/', permanent: true },
-      { source: '/law-firm-marketing-agency-jaipur', destination: '/', permanent: true },
-      { source: '/restaurant-marketing-agency-jaipur', destination: '/', permanent: true },
+      // /restaurant-marketing-agency-jaipur, /law-firm-marketing-agency-jaipur
+      // and /wedding-event-marketing-agency-jaipur were restored on 2026-08-20.
+      // Do not add redirects for those exact URLs: preserving the URL and a
+      // dedicated page is the strongest migration path for their existing signals.
 
       // --- OPTIONAL / lower confidence (uncomment after review) ---
       // { source: '/home-digital-marketing', destination: '/', permanent: true },
