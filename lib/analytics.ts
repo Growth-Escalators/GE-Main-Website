@@ -1,20 +1,9 @@
-/**
- * Lightweight, SSR-safe GA4 lead-conversion tracking.
- *
- * GA4's tag (gtag.js) is loaded by `components/analytics/GoogleAnalytics.tsx`,
- * rendered site-wide from the root layout (app/layout.tsx) — so this helper
- * is deliberately defensive:
- * it prefers `window.gtag` (GA4) and falls back to a GTM-style `dataLayer`
- * push, and no-ops entirely on the server or when neither global exists.
- *
- * Every lead action on the site funnels through `trackLead(...)`, firing GA4's
- * recommended `generate_lead` event with a `method` param so leads become
- * measurable in GA4 (Reports → Engagement → Events, and as a Key event).
- */
+/** Lightweight, SSR-safe analytics helpers. */
 
 import { getLeadAttribution, markWhatsAppClick } from '@/lib/leadAttribution'
 
 export type LeadMethod = 'whatsapp' | 'call' | 'email' | 'booking' | 'form'
+export type ContactInteraction = 'whatsapp_click' | 'phone_click' | 'booking_click'
 
 type GtagFn = (
   command: string,
@@ -29,19 +18,38 @@ declare global {
   }
 }
 
+function attributionParams(): Record<string, unknown> {
+  const attribution = getLeadAttribution()
+  return {
+    page_path: window.location?.pathname,
+    first_landing_page: attribution.firstLandingPage,
+    first_referrer: attribution.firstReferrerUrl,
+    utm_source: attribution.utmSource,
+    utm_medium: attribution.utmMedium,
+    utm_campaign: attribution.utmCampaign,
+    utm_term: attribution.utmTerm,
+    utm_content: attribution.utmContent,
+    whatsapp_clicked: attribution.whatsappClicked,
+    whatsapp_click_source: attribution.whatsappClickSource,
+  }
+}
+
+function fireEvent(eventName: string, payload: Record<string, unknown>): void {
+  if (typeof window === 'undefined') return
+  if (typeof window.gtag === 'function') {
+    window.gtag('event', eventName, payload)
+    return
+  }
+  if (Array.isArray(window.dataLayer)) {
+    window.dataLayer.push({ event: eventName, ...payload })
+  }
+}
+
 /**
- * Fire a GA4 `generate_lead` event for one of the site's five lead actions.
- *
- * Attribution is deliberately small: first landing page/referrer/UTMs plus the
- * page where the action happened. No name, email, phone or other PII is sent to
- * GA4. WhatsApp clicks are also remembered locally so a later form submission
- * can tell the CRM that WhatsApp assisted the journey.
- *
- * @param method  Which lead channel fired (whatsapp | call | email | booking | form).
- * @param extra   Optional extra params merged into the event (e.g. `{ source }`).
+ * Existing site-wide lead event kept intact for analytics continuity. No PII is
+ * included; only the small acquisition envelope is appended.
  */
 export function trackLead(method: LeadMethod, extra?: Record<string, unknown>): void {
-  // No-op during SSR / prerender.
   if (typeof window === 'undefined') return
 
   if (method === 'whatsapp') {
@@ -53,62 +61,30 @@ export function trackLead(method: LeadMethod, extra?: Record<string, unknown>): 
     markWhatsAppClick(clickSource)
   }
 
-  const attribution = getLeadAttribution()
-  const payload: Record<string, unknown> = {
+  fireEvent('generate_lead', {
     method,
-    page_path: window.location?.pathname,
-    first_landing_page: attribution.firstLandingPage,
-    first_referrer: attribution.firstReferrerUrl,
-    utm_source: attribution.utmSource,
-    utm_medium: attribution.utmMedium,
-    utm_campaign: attribution.utmCampaign,
-    utm_term: attribution.utmTerm,
-    utm_content: attribution.utmContent,
-    whatsapp_clicked: attribution.whatsappClicked,
-    whatsapp_click_source: attribution.whatsappClickSource,
+    ...attributionParams(),
     ...extra,
-  }
-
-  // Prefer GA4 gtag.js.
-  if (typeof window.gtag === 'function') {
-    window.gtag('event', 'generate_lead', payload)
-    return
-  }
-
-  // Fall back to a GTM / dataLayer setup.
-  if (Array.isArray(window.dataLayer)) {
-    window.dataLayer.push({ event: 'generate_lead', ...payload })
-  }
-
-  // If no analytics global is present, silently no-op.
+  })
 }
 
 /**
- * Fire a market-scoped landing-page event: `${prefix}_lp_${suffix}`.
- *
- * Backs the international-landing-page component family
- * (components/landing/international/*) shared across /uk-offshore-tech-resources
- * and its UAE/US/Australia siblings, plus any page-local sections on those
- * routes that fire an event a shared component doesn't own (e.g. a WhatsApp
- * click or a "test a requirement" CTA). Same defensive gtag → dataLayer → no-op
- * fallback chain as `trackLead`, kept separate because these events are named
- * per-market-prefix rather than funneling into one canonical `generate_lead`.
- *
- * @param prefix  Market event prefix, e.g. 'uk' | 'uae' | 'us' | 'australia'.
- * @param suffix  Event suffix, e.g. 'primary_cta_click' → fires 'uk_lp_primary_cta_click'.
- * @param params  Optional extra params merged into the event (e.g. `{ location: 'hero' }`).
+ * Clean channel events used for reporting WhatsApp, phone and booking clicks.
+ * These are intentionally the only globally captured interaction events.
  */
+export function trackContactInteraction(
+  eventName: ContactInteraction,
+  extra?: Record<string, unknown>,
+): void {
+  if (typeof window === 'undefined') return
+  fireEvent(eventName, {
+    ...attributionParams(),
+    ...extra,
+  })
+}
+
+/** Market-scoped landing-page event helper retained for international pages. */
 export function trackLandingEvent(prefix: string, suffix: string, params?: Record<string, unknown>): void {
   if (typeof window === 'undefined') return
-
-  const name = `${prefix}_lp_${suffix}`
-  const payload: Record<string, unknown> = { page_path: window.location?.pathname, ...params }
-
-  if (typeof window.gtag === 'function') {
-    window.gtag('event', name, payload)
-    return
-  }
-  if (Array.isArray(window.dataLayer)) {
-    window.dataLayer.push({ event: name, ...payload })
-  }
+  fireEvent(`${prefix}_lp_${suffix}`, { page_path: window.location?.pathname, ...params })
 }
