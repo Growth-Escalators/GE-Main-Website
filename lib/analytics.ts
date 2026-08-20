@@ -12,6 +12,8 @@
  * measurable in GA4 (Reports → Engagement → Events, and as a Key event).
  */
 
+import { getLeadAttribution, markWhatsAppClick } from '@/lib/leadAttribution'
+
 export type LeadMethod = 'whatsapp' | 'call' | 'email' | 'booking' | 'form'
 
 type GtagFn = (
@@ -30,6 +32,11 @@ declare global {
 /**
  * Fire a GA4 `generate_lead` event for one of the site's five lead actions.
  *
+ * Attribution is deliberately small: first landing page/referrer/UTMs plus the
+ * page where the action happened. No name, email, phone or other PII is sent to
+ * GA4. WhatsApp clicks are also remembered locally so a later form submission
+ * can tell the CRM that WhatsApp assisted the journey.
+ *
  * @param method  Which lead channel fired (whatsapp | call | email | booking | form).
  * @param extra   Optional extra params merged into the event (e.g. `{ source }`).
  */
@@ -37,9 +44,28 @@ export function trackLead(method: LeadMethod, extra?: Record<string, unknown>): 
   // No-op during SSR / prerender.
   if (typeof window === 'undefined') return
 
+  if (method === 'whatsapp') {
+    const clickSource = typeof extra?.source === 'string'
+      ? extra.source
+      : typeof extra?.cta_location === 'string'
+        ? extra.cta_location
+        : ''
+    markWhatsAppClick(clickSource)
+  }
+
+  const attribution = getLeadAttribution()
   const payload: Record<string, unknown> = {
     method,
     page_path: window.location?.pathname,
+    first_landing_page: attribution.firstLandingPage,
+    first_referrer: attribution.firstReferrerUrl,
+    utm_source: attribution.utmSource,
+    utm_medium: attribution.utmMedium,
+    utm_campaign: attribution.utmCampaign,
+    utm_term: attribution.utmTerm,
+    utm_content: attribution.utmContent,
+    whatsapp_clicked: attribution.whatsappClicked,
+    whatsapp_click_source: attribution.whatsappClickSource,
     ...extra,
   }
 
