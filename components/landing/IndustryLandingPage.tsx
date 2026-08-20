@@ -3,15 +3,14 @@
 import { useEffect, useId, useState } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import Navbar from '@/components/sections/Navbar'
 import Footer from '@/components/sections/Footer'
-import VideoTestimonialsShorts, {
-  type VideoTestimonial,
-} from '@/components/landing/VideoTestimonialsShorts'
+import BackToTop from '@/components/ui/BackToTop'
+import VideoTestimonialsShorts, { type VideoTestimonial } from '@/components/landing/VideoTestimonialsShorts'
 import LeadForm from '@/components/landing/LeadForm'
 import LeadMagnetCalculator, { type CalculatorConfig } from '@/components/landing/LeadMagnetCalculator'
 import styles from './IndustryLandingPage.module.css'
 
-/* ── Typed content shape that every industry page must provide ───────────── */
 export type LandingContent = {
   hero: {
     badge: string
@@ -21,18 +20,12 @@ export type LandingContent = {
     primaryCta: { label: string; href: string }
     secondaryCta: { label: string; href: string }
     statPills: { emoji: string; value: string; label: string }[]
-    /** 'bold' opts this page into the heavier gradient hero. Omit = unchanged. */
     variant?: 'default' | 'bold'
-    /** Optional supporting hero visual (framed image under the pills). Omit and
-       nothing renders — pages that don't set it are completely unaffected. */
     image?: { src: string; alt: string }
   }
   painPoints: { emoji: string; title: string; body: string }[]
   painPointsTag?: string
   painPointsHeadline?: string
-  /** Optional image band ("what this niche looks like when it works"). Atmospheric
-     stock imagery only — never implied as real client work. Omit and nothing
-     renders; existing pages that don't set it are completely unaffected. */
   showcase?: {
     tag?: string
     headline?: string
@@ -49,8 +42,6 @@ export type LandingContent = {
   servicesTag?: string
   servicesHeadline?: string
   servicesSubhead?: string
-  /** Optional "products we've shipped" proof grid — real builds as cards. Omit it
-     and nothing renders; pages that don't set it are completely unaffected. */
   builds?: {
     tag?: string
     headline?: string
@@ -87,17 +78,9 @@ export type LandingContent = {
     subhead?: string
     tag?: string
   }
-  /** Optional interactive lead-magnet calculator. Omit and nothing renders —
-     pages that don't set it are completely unaffected. */
   leadMagnet?: CalculatorConfig
-  /** Used in the mailto subject + a tiny header chip if you want it. */
   industryLabel?: string
-  /** If set, every "book" CTA (header, hero primary, final) points here (external,
-     new tab) and the in-page LeadForm is hidden — e.g. a Cal.com scheduling link. */
   bookingUrl?: string
-  /** Optional topic-cluster links (pillar↔spoke + supporting posts) rendered as an
-     internal-linking section. Omit it and nothing renders — other industry pages
-     that don't set it are completely unaffected. */
   relatedResources?: {
     tag?: string
     headline?: string
@@ -106,538 +89,277 @@ export type LandingContent = {
   }
 }
 
-/* ── Cycling word hook ── */
+const reveal = {
+  initial: { opacity: 0, y: 22 },
+  whileInView: { opacity: 1, y: 0 },
+  viewport: { once: true, margin: '-50px' },
+  transition: { duration: 0.52 },
+}
+
 function useCyclingWord(words: string[], intervalMs = 2400) {
   const [idx, setIdx] = useState(0)
   useEffect(() => {
     if (words.length <= 1) return
-    const t = setInterval(() => setIdx((i) => (i + 1) % words.length), intervalMs)
-    return () => clearInterval(t)
+    const timer = setInterval(() => setIdx((value) => (value + 1) % words.length), intervalMs)
+    return () => clearInterval(timer)
   }, [words, intervalMs])
   return words[idx] ?? ''
 }
 
-/* ── FAQ accordion item ── */
 function FaqItem({ q, a, defaultOpen = false }: { q: string; a: string; defaultOpen?: boolean }) {
   const [open, setOpen] = useState(defaultOpen)
   const panelId = useId()
   return (
     <div className={`${styles.faqItem} ${open ? styles.faqOpen : ''}`}>
-      <button
-        type="button"
-        className={styles.faqHead}
-        aria-expanded={open}
-        aria-controls={panelId}
-        onClick={() => setOpen((o) => !o)}
-      >
-        <span>{q}</span>
-        <span className={styles.faqIcon} aria-hidden>+</span>
+      <button type="button" className={styles.faqHead} aria-expanded={open} aria-controls={panelId} onClick={() => setOpen((value) => !value)}>
+        <span>{q}</span><span className={styles.faqIcon} aria-hidden>+</span>
       </button>
-      {/* Always in the DOM so crawlers (which don't click) can read every answer;
-         `hidden` keeps the collapsed visual state identical. */}
       <div id={panelId} className={styles.faqBody} hidden={!open}>{a}</div>
     </div>
   )
 }
 
-/* ── JSON-LD FAQPage schema — emits the industry's FAQs as structured data
-   so they're eligible for FAQ rich-results in Google, which significantly
-   increases SERP click-through rate. */
 function FaqPageJsonLd({ faqs }: { faqs: { q: string; a: string }[] }) {
-  if (faqs.length === 0) return null
+  if (!faqs.length) return null
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
-    mainEntity: faqs.map((f) => ({
+    mainEntity: faqs.map((faq) => ({
       '@type': 'Question',
-      name: f.q,
-      acceptedAnswer: { '@type': 'Answer', text: f.a },
+      name: faq.q,
+      acceptedAnswer: { '@type': 'Answer', text: faq.a },
     })),
   }
+  return <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+}
+
+function SectionHeading({ tag, title, subhead }: { tag: string; title: string; subhead?: string }) {
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-    />
+    <div className={styles.sectionHeader}>
+      <span className="section-tag">{tag}</span>
+      <h2 className={styles.sectionHeadline}>{title}</h2>
+      {subhead && <p className={styles.sectionSub}>{subhead}</p>}
+    </div>
   )
 }
 
 export default function IndustryLandingPage({ content }: { content: LandingContent }) {
   const cycle = useCyclingWord(content.hero.cyclingWords)
-  const extProps = (href: string) =>
-    href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' as const } : {}
   const bookHref = content.bookingUrl ?? '#lead-form'
+  const extProps = (href: string) => href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' as const } : {}
 
   return (
     <div className={styles.page}>
       <FaqPageJsonLd faqs={content.faqs} />
-
-      {/* ── HEADER ─────────────────────────────────────────────────────── */}
-      <header className={styles.header}>
-        <div className={`${styles.headerInner} container-x`}>
-          <Link href="/" className={styles.logo} aria-label="Growth Escalators home">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/logo.webp"
-              alt="Growth Escalators"
-              loading="eager"
-            />
-          </Link>
-          <a href={bookHref} {...extProps(bookHref)} className={`btn-primary ${styles.headerCta}`}>
-            Book a Free Call
-          </a>
-        </div>
-      </header>
-
-      {/* ── HERO ───────────────────────────────────────────────────────── */}
-      <section className={`${styles.hero} ${content.hero.variant === 'bold' ? styles.heroBold : ''}`} aria-label="Hero">
-        <div className={styles.heroAurora} aria-hidden>
-          <div className={styles.heroOrb1} />
-          <div className={styles.heroOrb2} />
-          <div className={styles.heroOrb3} />
-        </div>
-        <div className={`${styles.heroInner} container-x`}>
-          <motion.span
-            className={styles.heroBadge}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-          >
-            {content.hero.badge}
-          </motion.span>
-
-          <motion.h1
-            className={styles.heroTitle}
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.05 }}
-          >
-            {content.hero.headlineLines[0]}
-            <br />
-            {content.hero.headlineLines[1]}
-          </motion.h1>
-
-          <motion.div
-            className={styles.heroCycle}
-            key={cycle}
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-          >
-            {cycle}
-          </motion.div>
-
-          <motion.p
-            className={styles.heroSub}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            {content.hero.subhead}
-          </motion.p>
-
-          <motion.div
-            className={styles.heroCtas}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-          >
-            <a href={content.hero.primaryCta.href} {...extProps(content.hero.primaryCta.href)} className="btn-primary">
-              {content.hero.primaryCta.label}
-            </a>
-            <a href={content.hero.secondaryCta.href} {...extProps(content.hero.secondaryCta.href)} className="btn-outline">
-              {content.hero.secondaryCta.label}
-            </a>
-          </motion.div>
-
-          <motion.div
-            className={styles.heroPills}
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-          >
-            {content.hero.statPills.map((p) => (
-              <span key={p.label} className={`glass-pill ${styles.heroPill}`}>
-                <span className={styles.heroPillEmoji}>{p.emoji}</span>
-                <span className={styles.heroPillValue}>{p.value}</span>
-                <span>{p.label}</span>
-              </span>
-            ))}
-          </motion.div>
-
-          {content.hero.image && (
-            <motion.div
-              className={styles.heroImageWrap}
-              initial={{ opacity: 0, y: 28 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.5 }}
-            >
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                className={styles.heroImage}
-                src={content.hero.image.src}
-                alt={content.hero.image.alt}
-                width={1200}
-                height={720}
-                loading="eager"
-                decoding="async"
-              />
-            </motion.div>
-          )}
-        </div>
-      </section>
-
-      {/* ── PAIN POINTS ────────────────────────────────────────────────── */}
-      <section className={styles.section} aria-label="Pain points">
-        <div className="container-x">
-          <div className={styles.sectionHeader}>
-            <span className="section-tag">{content.painPointsTag ?? 'SOUND FAMILIAR?'}</span>
-            <h2 className={styles.sectionHeadline}>
-              {content.painPointsHeadline ?? "What's really holding you back"}
-            </h2>
-          </div>
-          <div className={styles.painGrid}>
-            {content.painPoints.map((p, i) => (
-              <motion.div
-                key={p.title}
-                className={styles.painCard}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.5, delay: i * 0.07 }}
-              >
-                <div className={styles.painEmoji}>{p.emoji}</div>
-                <h3 className={styles.painTitle}>{p.title}</h3>
-                <p className={styles.painBody}>{p.body}</p>
+      <Navbar />
+      <main>
+        <section className={`${styles.hero} ${content.hero.variant === 'bold' ? styles.heroBold : ''}`} aria-label="Hero">
+          <div className={styles.heroAurora} aria-hidden><div className={styles.heroOrb1} /><div className={styles.heroOrb2} /><div className={styles.heroOrb3} /></div>
+          <div className={`${styles.heroInner} container-x`}>
+            <div className={styles.heroGrid}>
+              <div className={styles.heroMain}>
+                <motion.span className={styles.heroBadge} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .45 }}>
+                  {content.hero.badge}
+                </motion.span>
+                <motion.h1 className={styles.heroTitle} initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .65, delay: .04 }}>
+                  {content.hero.headlineLines[0]}<br />{content.hero.headlineLines[1]}
+                </motion.h1>
+              </div>
+              <motion.div className={styles.heroAside} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .6, delay: .14 }}>
+                <motion.div className={styles.heroCycle} key={cycle} initial={{ opacity: 0, y: 7 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .35 }}>{cycle}</motion.div>
+                <p className={styles.heroSub}>{content.hero.subhead}</p>
+                <div className={styles.heroCtas}>
+                  <a href={content.hero.primaryCta.href} {...extProps(content.hero.primaryCta.href)} className="btn-primary">{content.hero.primaryCta.label}</a>
+                  <a href={content.hero.secondaryCta.href} {...extProps(content.hero.secondaryCta.href)} className="btn-outline">{content.hero.secondaryCta.label}</a>
+                </div>
               </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── SHOWCASE (optional image band) ─────────────────────────────── */}
-      {content.showcase && content.showcase.images.length > 0 && (
-        <section className={styles.section} aria-label="Showcase">
-          <div className="container-x">
-            <div className={styles.sectionHeader}>
-              <span className="section-tag">{content.showcase.tag ?? 'THE OPPORTUNITY'}</span>
-              <h2 className={styles.sectionHeadline}>
-                {content.showcase.headline ?? 'What growth looks like'}
-              </h2>
-              {content.showcase.subhead && (
-                <p className={styles.sectionSub}>{content.showcase.subhead}</p>
-              )}
             </div>
-            <div className={styles.showcaseGrid}>
-              {content.showcase.images.map((img, i) => (
-                <motion.figure
-                  key={img.src}
-                  className={styles.showcaseItem}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-50px' }}
-                  transition={{ duration: 0.5, delay: (i % 3) * 0.08 }}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    className={styles.showcaseImg}
-                    src={img.src}
-                    alt={img.alt}
-                    width={800}
-                    height={600}
-                    loading="lazy"
-                    decoding="async"
-                  />
-                  {img.caption && <figcaption className={styles.showcaseCaption}>{img.caption}</figcaption>}
-                </motion.figure>
+
+            <motion.div className={styles.heroPills} initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .6, delay: .28 }}>
+              {content.hero.statPills.map((pill) => (
+                <span key={pill.label} className={`glass-pill ${styles.heroPill}`}>
+                  <span className={styles.heroPillEmoji}>{pill.emoji}</span>
+                  <span className={styles.heroPillValue}>{pill.value}</span>
+                  <span>{pill.label}</span>
+                </span>
               ))}
-            </div>
-          </div>
-        </section>
-      )}
+            </motion.div>
 
-      {/* ── AI ADVANTAGE (optional) ───────────────────────────────────── */}
-      {content.aiAdvantage && (
-        <section className={styles.aiSection} aria-label="AI advantage">
-          <div className={styles.aiAurora} aria-hidden>
-            <div className={styles.aiOrb1} />
-            <div className={styles.aiOrb2} />
-          </div>
-          <div className={`${styles.aiInner} container-x`}>
-            <div className={styles.sectionHeader}>
-              <span className={`section-tag ${styles.aiTag}`}>{content.aiAdvantage.tag}</span>
-              <h2 className={styles.sectionHeadline}>{content.aiAdvantage.headline}</h2>
-              {content.aiAdvantage.subhead && (
-                <p className={styles.sectionSub}>{content.aiAdvantage.subhead}</p>
-              )}
-            </div>
-            <div className={styles.aiGrid}>
-              {content.aiAdvantage.cards.map((c, i) => (
-                <motion.div
-                  key={c.title}
-                  className={styles.aiCard}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-50px' }}
-                  transition={{ duration: 0.5, delay: i * 0.06 }}
-                >
-                  <div className={styles.aiCardEmoji}>{c.emoji}</div>
-                  <h3 className={styles.aiCardTitle}>{c.title}</h3>
-                  <p className={styles.aiCardBody}>{c.body}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* ── SERVICES ───────────────────────────────────────────────────── */}
-      <section className={styles.section} aria-label="Services">
-        <div className="container-x">
-          <div className={styles.sectionHeader}>
-            <span className="section-tag">{content.servicesTag ?? 'WHAT WE DO'}</span>
-            <h2 className={styles.sectionHeadline}>
-              {content.servicesHeadline ?? 'Everything you need, under one roof'}
-            </h2>
-            {content.servicesSubhead && (
-              <p className={styles.sectionSub}>{content.servicesSubhead}</p>
+            {content.hero.image && (
+              <motion.div className={styles.heroImageWrap} initial={{ opacity: 0, y: 26 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .68, delay: .36 }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img className={styles.heroImage} src={content.hero.image.src} alt={content.hero.image.alt} width={1200} height={720} loading="eager" decoding="async" />
+              </motion.div>
             )}
           </div>
-          <div className={styles.svcGrid}>
-            {content.services.map((s, i) => (
-              <motion.div
-                key={s.title}
-                className={styles.svcCard}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.5, delay: (i % 3) * 0.07 }}
-              >
-                <h3 className={styles.svcTitle}>{s.title}</h3>
-                <p className={styles.svcBody}>{s.body}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+        </section>
 
-      {/* ── BUILDS (proof grid) — optional "products we've shipped" ─────── */}
-      {content.builds && content.builds.items.length > 0 && (
-        <section className={styles.section} id="builds" aria-label="What we have built">
+        <section className={styles.section} aria-label="Pain points">
           <div className="container-x">
-            <div className={styles.sectionHeader}>
-              <span className="section-tag">{content.builds.tag ?? 'WHAT WE’VE BUILT'}</span>
-              <h2 className={styles.sectionHeadline}>
-                {content.builds.headline ?? 'Real products we’ve shipped'}
-              </h2>
-              {content.builds.subhead && (
-                <p className={styles.sectionSub}>{content.builds.subhead}</p>
-              )}
-            </div>
-            <div className={styles.svcGrid}>
-              {content.builds.items.map((b, i) => (
-                <motion.div
-                  key={b.name}
-                  className={styles.svcCard}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-50px' }}
-                  transition={{ duration: 0.5, delay: (i % 3) * 0.07 }}
-                >
-                  <h3 className={styles.svcTitle}>
-                    {b.href ? (
-                      <a href={b.href} target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>
-                        {b.name} ↗
-                      </a>
-                    ) : (
-                      b.name
-                    )}
-                  </h3>
-                  <p className={styles.svcBody}>{b.what}</p>
-                  <p style={{ margin: '14px 0 0', fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace', fontSize: '12px', lineHeight: 1.6, color: 'var(--text-secondary)', opacity: 0.85 }}>
-                    {b.stack}
-                  </p>
-                </motion.div>
+            <SectionHeading tag={content.painPointsTag ?? 'SOUND FAMILIAR?'} title={content.painPointsHeadline ?? "What's really holding you back"} />
+            <div className={styles.painGrid}>
+              {content.painPoints.map((item, index) => (
+                <motion.article key={item.title} className={styles.painCard} {...reveal} transition={{ duration: .5, delay: (index % 2) * .06 }}>
+                  <div className={styles.painEmoji}>{item.emoji}</div><h3 className={styles.painTitle}>{item.title}</h3><p className={styles.painBody}>{item.body}</p>
+                </motion.article>
               ))}
             </div>
           </div>
         </section>
-      )}
 
-      {/* ── RESULT HIGHLIGHT ───────────────────────────────────────────── */}
-      <section className={styles.section} id="results" aria-label="Featured result">
-        <div className="container-x">
-          <div className={styles.sectionHeader}>
-            <span className="section-tag">{content.resultsTag ?? 'REAL RESULTS'}</span>
-            <h2 className={styles.sectionHeadline}>
-              {content.resultsHeadline ?? 'Clients we&rsquo;ve helped grow'}
-            </h2>
-          </div>
-          <motion.div
-            className={styles.resultBlock}
-            initial={{ opacity: 0, y: 24 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-50px' }}
-            transition={{ duration: 0.6 }}
-          >
-            <div>
-              <p className={styles.resultMeta}>{content.resultHighlight.label ?? 'FEATURED CLIENT'}</p>
-              <h3 className={styles.resultDoctor}>{content.resultHighlight.name}</h3>
-              <p className={styles.resultSpec}>{content.resultHighlight.detail}</p>
-              <blockquote className={styles.resultQuote}>{content.resultHighlight.quote}</blockquote>
+        {content.showcase && content.showcase.images.length > 0 && (
+          <section className={styles.section} aria-label="Showcase">
+            <div className="container-x">
+              <SectionHeading tag={content.showcase.tag ?? 'THE OPPORTUNITY'} title={content.showcase.headline ?? 'What growth looks like'} subhead={content.showcase.subhead} />
+              <div className={styles.showcaseGrid}>
+                {content.showcase.images.map((image, index) => (
+                  <motion.figure key={image.src} className={styles.showcaseItem} {...reveal} transition={{ duration: .5, delay: (index % 3) * .06 }}>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img className={styles.showcaseImg} src={image.src} alt={image.alt} width={800} height={600} loading="lazy" decoding="async" />
+                    {image.caption && <figcaption className={styles.showcaseCaption}>{image.caption}</figcaption>}
+                  </motion.figure>
+                ))}
+              </div>
             </div>
-            <div className={styles.resultMetrics}>
-              {content.resultHighlight.metrics.map((m) => (
-                <div key={m.label} className={styles.metric}>
-                  <div className={styles.metricValue}>{m.value}</div>
-                  <div className={styles.metricLabel}>{m.label}</div>
-                </div>
-              ))}
+          </section>
+        )}
+
+        {content.aiAdvantage && (
+          <section className={styles.aiSection} aria-label="AI advantage">
+            <div className={`${styles.aiInner} container-x`}>
+              <div className={styles.sectionHeader}>
+                <span className={`section-tag ${styles.aiTag}`}>{content.aiAdvantage.tag}</span>
+                <h2 className={styles.sectionHeadline}>{content.aiAdvantage.headline}</h2>
+                {content.aiAdvantage.subhead && <p className={styles.sectionSub}>{content.aiAdvantage.subhead}</p>}
+              </div>
+              <div className={styles.aiGrid}>
+                {content.aiAdvantage.cards.map((card, index) => (
+                  <motion.article key={card.title} className={styles.aiCard} {...reveal} transition={{ duration: .5, delay: (index % 2) * .06 }}>
+                    <div className={styles.aiCardEmoji}>{card.emoji}</div><h3 className={styles.aiCardTitle}>{card.title}</h3><p className={styles.aiCardBody}>{card.body}</p>
+                  </motion.article>
+                ))}
+              </div>
             </div>
-          </motion.div>
-        </div>
-      </section>
+          </section>
+        )}
 
-      {/* ── VIDEO TESTIMONIALS (only when there are videos) ─────────────── */}
-      {content.videoTestimonials.length > 0 && (
-        <VideoTestimonialsShorts
-          videos={content.videoTestimonials}
-          tag={content.videoTestimonialsTag ?? 'HEAR FROM OUR CLIENTS'}
-          headline={content.videoTestimonialsHeadline ?? 'Real clients, real outcomes'}
-          subhead={content.videoTestimonialsSubhead}
-        />
-      )}
-
-      {/* ── PROCESS ────────────────────────────────────────────────────── */}
-      <section className={styles.section} aria-label="Process">
-        <div className="container-x">
-          <div className={styles.sectionHeader}>
-            <span className="section-tag">{content.processTag ?? 'HOW IT WORKS'}</span>
-            <h2 className={styles.sectionHeadline}>
-              {content.processHeadline ?? 'Four steps, zero guesswork'}
-            </h2>
-          </div>
-          <div className={styles.procGrid}>
-            {content.process.map((p, i) => (
-              <motion.div
-                key={p.step}
-                className={styles.procCard}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.5, delay: i * 0.08 }}
-              >
-                <div className={styles.procStep}>{p.step}</div>
-                <h3 className={styles.procTitle}>{p.title}</h3>
-                <p className={styles.procBody}>{p.body}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── WHY US ─────────────────────────────────────────────────────── */}
-      <section className={styles.section} aria-label="Why us">
-        <div className="container-x">
-          <div className={styles.sectionHeader}>
-            <span className="section-tag">{content.whyUsTag ?? 'WHY GROWTH ESCALATORS'}</span>
-            <h2 className={styles.sectionHeadline}>
-              {content.whyUsHeadline ?? 'Not your average agency'}
-            </h2>
-          </div>
-          <div className={styles.whyGrid}>
-            {content.whyUs.map((w, i) => (
-              <motion.div
-                key={w.title}
-                className={styles.whyCard}
-                initial={{ opacity: 0, y: 24 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: '-50px' }}
-                transition={{ duration: 0.5, delay: (i % 2) * 0.07 }}
-              >
-                <h3 className={styles.whyTitle}>{w.title}</h3>
-                <p className={styles.whyBody}>{w.body}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── LEAD-MAGNET CALCULATOR (optional) ──────────────────────────── */}
-      {content.leadMagnet && <LeadMagnetCalculator config={content.leadMagnet} />}
-
-      {/* ── LEAD FORM (hidden when a bookingUrl / external CTA is used) ──── */}
-      {!content.bookingUrl && (
-        <LeadForm
-          recipient={content.leadForm.recipient ?? 'Info@growthescalators.com'}
-          subjectPrefix={content.leadForm.subjectPrefix ?? `New ${content.industryLabel ?? 'Industry'} Lead`}
-          headline={content.leadForm.headline}
-          subhead={content.leadForm.subhead}
-          tag={content.leadForm.tag}
-        />
-      )}
-
-      {/* ── FAQ ────────────────────────────────────────────────────────── */}
-      <section className={styles.section} aria-label="FAQ">
-        <div className="container-x">
-          <div className={styles.sectionHeader}>
-            <span className="section-tag">{content.faqsTag ?? 'QUESTIONS, ANSWERED'}</span>
-            <h2 className={styles.sectionHeadline}>{content.faqsHeadline ?? 'Frequently asked'}</h2>
-          </div>
-          <div className={styles.faqList}>
-            {content.faqs.map((f, i) => (
-              <FaqItem key={f.q} q={f.q} a={f.a} defaultOpen={i === 0} />
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── RELATED RESOURCES (topic-cluster internal links) ───────────── */}
-      {content.relatedResources && content.relatedResources.links.length > 0 && (
-        <section className={styles.section} aria-label="Related resources">
+        <section className={styles.section} aria-label="Services">
           <div className="container-x">
-            <div className={styles.sectionHeader}>
-              <span className="section-tag">{content.relatedResources.tag ?? 'GO DEEPER'}</span>
-              <h2 className={styles.sectionHeadline}>
-                {content.relatedResources.headline ?? 'Related reading & resources'}
-              </h2>
-              {content.relatedResources.subhead && (
-                <p className={styles.sectionSub}>{content.relatedResources.subhead}</p>
-              )}
-            </div>
+            <SectionHeading tag={content.servicesTag ?? 'WHAT WE DO'} title={content.servicesHeadline ?? 'Everything you need, under one roof'} subhead={content.servicesSubhead} />
             <div className={styles.svcGrid}>
-              {content.relatedResources.links.map((l, i) => (
-                <motion.div
-                  key={l.href}
-                  className={styles.svcCard}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: '-50px' }}
-                  transition={{ duration: 0.5, delay: (i % 3) * 0.07 }}
-                >
-                  <Link href={l.href} style={{ textDecoration: 'none', color: 'inherit', display: 'block' }}>
-                    <h3 className={styles.svcTitle}>{l.label}</h3>
-                    {l.blurb && <p className={styles.svcBody}>{l.blurb}</p>}
-                  </Link>
-                </motion.div>
+              {content.services.map((service, index) => (
+                <motion.article key={service.title} className={styles.svcCard} {...reveal} transition={{ duration: .5, delay: (index % 3) * .05 }}>
+                  <h3 className={styles.svcTitle}>{service.title}</h3><p className={styles.svcBody}>{service.body}</p>
+                </motion.article>
               ))}
             </div>
           </div>
         </section>
-      )}
 
-      {/* ── FINAL CTA ──────────────────────────────────────────────────── */}
-      <section className={styles.ctaBanner} aria-label="Final call to action">
-        <div className="container-x">
-          <h2 className={styles.ctaTitle}>{content.finalCta.title}</h2>
-          <p className={styles.ctaSub}>{content.finalCta.subhead}</p>
-          <a href={bookHref} {...extProps(bookHref)} className="btn-primary">
-            {content.finalCta.ctaLabel}
-          </a>
-        </div>
-      </section>
+        {content.builds && content.builds.items.length > 0 && (
+          <section className={styles.section} id="builds" aria-label="What we have built">
+            <div className="container-x">
+              <SectionHeading tag={content.builds.tag ?? 'WHAT WE’VE BUILT'} title={content.builds.headline ?? 'Real products we’ve shipped'} subhead={content.builds.subhead} />
+              <div className={styles.svcGrid}>
+                {content.builds.items.map((build, index) => (
+                  <motion.article key={build.name} className={styles.svcCard} {...reveal} transition={{ duration: .5, delay: (index % 3) * .05 }}>
+                    <h3 className={styles.svcTitle}>{build.href ? <a href={build.href} target="_blank" rel="noopener noreferrer">{build.name} ↗</a> : build.name}</h3>
+                    <p className={styles.svcBody}>{build.what}</p>
+                    <p className={styles.svcBody} style={{ marginTop: 14, fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace', fontSize: 12 }}>{build.stack}</p>
+                  </motion.article>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
 
+        <section className={styles.section} id="results" aria-label="Featured result">
+          <div className="container-x">
+            <SectionHeading tag={content.resultsTag ?? 'REAL RESULTS'} title={content.resultsHeadline ?? 'Clients we’ve helped grow'} />
+            <motion.div className={styles.resultBlock} {...reveal}>
+              <div>
+                <p className={styles.resultMeta}>{content.resultHighlight.label ?? 'FEATURED CLIENT'}</p>
+                <h3 className={styles.resultDoctor}>{content.resultHighlight.name}</h3>
+                <p className={styles.resultSpec}>{content.resultHighlight.detail}</p>
+                <blockquote className={styles.resultQuote}>{content.resultHighlight.quote}</blockquote>
+              </div>
+              <div className={styles.resultMetrics}>
+                {content.resultHighlight.metrics.map((metric) => <div key={metric.label} className={styles.metric}><div className={styles.metricValue}>{metric.value}</div><div className={styles.metricLabel}>{metric.label}</div></div>)}
+              </div>
+            </motion.div>
+          </div>
+        </section>
+
+        {content.videoTestimonials.length > 0 && (
+          <VideoTestimonialsShorts videos={content.videoTestimonials} tag={content.videoTestimonialsTag ?? 'HEAR FROM OUR CLIENTS'} headline={content.videoTestimonialsHeadline ?? 'Real clients, real outcomes'} subhead={content.videoTestimonialsSubhead} />
+        )}
+
+        <section className={styles.section} aria-label="Process">
+          <div className="container-x">
+            <SectionHeading tag={content.processTag ?? 'HOW IT WORKS'} title={content.processHeadline ?? 'Four steps, zero guesswork'} />
+            <div className={styles.procGrid}>
+              {content.process.map((step, index) => (
+                <motion.article key={step.step} className={styles.procCard} {...reveal} transition={{ duration: .5, delay: index * .05 }}>
+                  <div className={styles.procStep}>{step.step}</div><h3 className={styles.procTitle}>{step.title}</h3><p className={styles.procBody}>{step.body}</p>
+                </motion.article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className={styles.section} aria-label="Why us">
+          <div className="container-x">
+            <SectionHeading tag={content.whyUsTag ?? 'WHY GROWTH ESCALATORS'} title={content.whyUsHeadline ?? 'Not your average agency'} />
+            <div className={styles.whyGrid}>
+              {content.whyUs.map((item, index) => (
+                <motion.article key={item.title} className={styles.whyCard} {...reveal} transition={{ duration: .5, delay: (index % 2) * .05 }}>
+                  <h3 className={styles.whyTitle}>{item.title}</h3><p className={styles.whyBody}>{item.body}</p>
+                </motion.article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {content.leadMagnet && <LeadMagnetCalculator config={content.leadMagnet} />}
+
+        {!content.bookingUrl && (
+          <LeadForm recipient={content.leadForm.recipient ?? 'Info@growthescalators.com'} subjectPrefix={content.leadForm.subjectPrefix ?? `New ${content.industryLabel ?? 'Industry'} Lead`} headline={content.leadForm.headline} subhead={content.leadForm.subhead} tag={content.leadForm.tag} />
+        )}
+
+        <section className={styles.section} aria-label="FAQ">
+          <div className="container-x">
+            <SectionHeading tag={content.faqsTag ?? 'QUESTIONS, ANSWERED'} title={content.faqsHeadline ?? 'Frequently asked'} />
+            <div className={styles.faqList}>{content.faqs.map((faq, index) => <FaqItem key={faq.q} q={faq.q} a={faq.a} defaultOpen={index === 0} />)}</div>
+          </div>
+        </section>
+
+        {content.relatedResources && content.relatedResources.links.length > 0 && (
+          <section className={styles.section} aria-label="Related resources">
+            <div className="container-x">
+              <SectionHeading tag={content.relatedResources.tag ?? 'GO DEEPER'} title={content.relatedResources.headline ?? 'Related reading & resources'} subhead={content.relatedResources.subhead} />
+              <div className={styles.svcGrid}>
+                {content.relatedResources.links.map((resource, index) => (
+                  <motion.article key={resource.href} className={styles.svcCard} {...reveal} transition={{ duration: .5, delay: (index % 3) * .05 }}>
+                    <Link href={resource.href} style={{ textDecoration: 'none', color: 'inherit', display: 'block', height: '100%' }}>
+                      <h3 className={styles.svcTitle}>{resource.label}</h3>{resource.blurb && <p className={styles.svcBody}>{resource.blurb}</p>}
+                    </Link>
+                  </motion.article>
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        <section className={styles.ctaBanner} aria-label="Final call to action">
+          <div className="container-x">
+            <h2 className={styles.ctaTitle}>{content.finalCta.title}</h2>
+            <p className={styles.ctaSub}>{content.finalCta.subhead}</p>
+            <a href={bookHref} {...extProps(bookHref)} className="btn-primary">{content.finalCta.ctaLabel}</a>
+          </div>
+        </section>
+      </main>
       <Footer />
+      <BackToTop />
     </div>
   )
 }
