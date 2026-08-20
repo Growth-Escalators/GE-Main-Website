@@ -21,7 +21,9 @@ export type VideoTestimonial = {
 
 type Props = {
   /** Array of testimonial videos. Add by pasting YouTube URLs into your data file. */
-  videos: VideoTestimonial[]
+  videos?: VideoTestimonial[]
+  /** Compatibility alias used by the Phase 3 commercial page system. */
+  testimonials?: VideoTestimonial[]
   /** Section tag pill text (e.g. "REAL DOCTORS, REAL RESULTS") */
   tag?: string
   /** Section headline */
@@ -32,6 +34,7 @@ type Props = {
 
 export default function VideoTestimonialsShorts({
   videos,
+  testimonials,
   tag = 'REAL CLIENTS, REAL RESULTS',
   headline = 'Hear it from our clients',
   subhead,
@@ -41,7 +44,6 @@ export default function VideoTestimonialsShorts({
 
   useEffect(() => { setMounted(true) }, [])
 
-  // Lock body scroll while modal open
   useEffect(() => {
     if (!activeId) return
     const prev = document.body.style.overflow
@@ -49,7 +51,6 @@ export default function VideoTestimonialsShorts({
     return () => { document.body.style.overflow = prev }
   }, [activeId])
 
-  // Close on Escape
   useEffect(() => {
     if (!activeId) return
     const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setActiveId(null) }
@@ -57,8 +58,8 @@ export default function VideoTestimonialsShorts({
     return () => window.removeEventListener('keydown', onKey)
   }, [activeId])
 
-  // Pre-resolve IDs once so we don't re-parse on every render
-  const items = videos
+  const sourceVideos = videos ?? testimonials ?? []
+  const items = sourceVideos
     .map((v) => ({ ...v, id: getYouTubeId(v.url) }))
     .filter((v): v is VideoTestimonial & { id: string } => v.id !== null)
 
@@ -103,7 +104,6 @@ export default function VideoTestimonialsShorts({
                     loading="lazy"
                     className={styles.thumb}
                     onError={(e) => {
-                      // hqdefault always exists; if it fails, hide gracefully
                       e.currentTarget.style.opacity = '0.3'
                     }}
                   />
@@ -128,7 +128,6 @@ export default function VideoTestimonialsShorts({
         )}
       </div>
 
-      {/* Modal — rendered into document.body via portal */}
       {mounted && createPortal(
         <AnimatePresence>
           {activeId && (
