@@ -4,6 +4,9 @@ import { useState } from 'react'
 import { motion } from 'framer-motion'
 import styles from './LeadForm.module.css'
 import { trackLead } from '@/lib/analytics'
+import { getLeadAttribution } from '@/lib/leadAttribution'
+
+export type LeadFormVariant = 'generic' | 'd2c' | 'clinic'
 
 type Props = {
   /** Email address used in the mailto fallback link if /api/lead errors. */
@@ -16,9 +19,58 @@ type Props = {
   subhead?: string
   /** Section tag pill text. */
   tag?: string
+  /** Controls which qualifying questions the visitor sees. */
+  variant?: LeadFormVariant
+  /** CRM/reporting classification, e.g. d2c or clinic. */
+  businessVertical?: string
+  /** Optional page-level service. If present, it is submitted without asking again. */
+  service?: string
 }
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
+type LeadFields = Record<string, string | boolean>
+
+const D2C_SERVICES = [
+  'Meta Ads',
+  'Google Ads',
+  'Shopify CRO',
+  'Shopify / Website Development',
+  'SEO & AI Search',
+  'Full Growth Support',
+]
+
+const CLINIC_SERVICES = [
+  'Patient Lead Generation',
+  'Google Ads',
+  'Meta Ads',
+  'Local SEO / Google Maps',
+  'Website / Conversion Improvement',
+  'Full Clinic Growth Support',
+]
+
+const D2C_REVENUE = [
+  'Under ₹5L / month',
+  '₹5L–₹25L / month',
+  '₹25L–₹50L / month',
+  '₹50L–₹1Cr / month',
+  '₹1Cr+ / month',
+]
+
+const MARKETING_SPEND = [
+  'Not spending yet',
+  'Under ₹50K / month',
+  '₹50K–₹2L / month',
+  '₹2L–₹5L / month',
+  '₹5L–₹10L / month',
+  '₹10L+ / month',
+]
+
+function inferLeadFormVariant(subjectPrefix: string, headline: string): LeadFormVariant {
+  const context = `${subjectPrefix} ${headline}`.toLowerCase()
+  if (/(d2c|e-?commerce|shopify|fashion|beauty|skincare|apparel)/.test(context)) return 'd2c'
+  if (/(clinic|doctor|dental|dentist|healthcare|medical|patient|hospital|orthop|dermat)/.test(context)) return 'clinic'
+  return 'generic'
+}
 
 export default function LeadForm({
   recipient = 'Info@growthescalators.com',
@@ -26,9 +78,15 @@ export default function LeadForm({
   headline = 'Tell us about your business',
   subhead = "Fill this in and we'll get back within 24 hours with a no-obligation strategy session.",
   tag = "LET'S TALK",
+  variant: requestedVariant,
+  businessVertical,
+  service,
 }: Props) {
   const [status, setStatus] = useState<Status>('idle')
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
+
+  const variant = requestedVariant ?? inferLeadFormVariant(subjectPrefix, headline)
+  const vertical = businessVertical || (variant === 'generic' ? 'general' : variant)
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -37,7 +95,14 @@ export default function LeadForm({
 
     const form = e.currentTarget
     const data = new FormData(form)
-    const fields: Record<string, string> = { source: subjectPrefix }
+    const attribution = getLeadAttribution()
+    const fields: LeadFields = {
+      source: subjectPrefix,
+      formType: variant,
+      businessVertical: vertical,
+      ...attribution,
+    }
+    if (service) fields.service = service
     data.forEach((v, k) => { fields[k] = String(v) })
 
     const minWait = new Promise((r) => setTimeout(r, 200))
@@ -56,7 +121,12 @@ export default function LeadForm({
         throw new Error(body.error || `Server returned ${res.status}`)
       }
       setStatus('success')
-      trackLead('form', { source: subjectPrefix })
+      trackLead('form', {
+        source: subjectPrefix,
+        form_type: variant,
+        business_vertical: vertical,
+        service: String(fields.service || ''),
+      })
       form.reset()
     } catch (err) {
       setStatus('error')
@@ -118,55 +188,55 @@ export default function LeadForm({
               transition={{ duration: 0.5, ease: 'easeOut' }}
             >
               <div className={styles.row}>
-                <label className={styles.field}>
-                  <span>Your name</span>
-                  <input name="name" type="text" required autoComplete="name" placeholder="Your name" />
-                </label>
-                <label className={styles.field}>
-                  <span>Phone</span>
-                  <input name="phone" type="tel" required autoComplete="tel" placeholder="+91 98xxxxxxxx" />
-                </label>
+                <TextField name="name" label="Your name" required autoComplete="name" placeholder="Your name" />
+                <TextField name="phone" label="Phone / WhatsApp" type="tel" required autoComplete="tel" placeholder="+91 98xxxxxxxx" />
               </div>
 
-              <label className={styles.field}>
-                <span>Email</span>
-                <input name="email" type="email" required autoComplete="email" placeholder="you@company.com" />
-              </label>
+              <TextField name="email" label="Work email" type="email" required autoComplete="email" placeholder="you@company.com" />
 
-              <div className={styles.row}>
-                <label className={styles.field}>
-                  <span>Business / brand name</span>
-                  <input name="business" type="text" placeholder="Your business" />
-                </label>
-                <label className={styles.field}>
-                  <span>Industry / category</span>
-                  <input name="industry" type="text" placeholder="Fashion, healthcare, SaaS…" />
-                </label>
-              </div>
+              {variant === 'd2c' && (
+                <>
+                  <div className={styles.row}>
+                    <TextField name="company" label="Brand name" placeholder="Your brand" />
+                    <TextField name="website" label="Website / Shopify URL" type="url" placeholder="https://yourbrand.com" />
+                  </div>
+                  <div className={styles.row}>
+                    <SelectField name="monthlyRevenue" label="Monthly online revenue" options={D2C_REVENUE} />
+                    <SelectField name="budget" label="Monthly ad / marketing spend" options={MARKETING_SPEND} />
+                  </div>
+                  {!service && <SelectField name="service" label="Where do you need help?" options={D2C_SERVICES} />}
+                  <TextAreaField label="What is the main growth constraint? (optional)" placeholder="ROAS plateau, low conversion rate, creative fatigue, scaling issues…" />
+                </>
+              )}
 
-              <div className={styles.row}>
-                <label className={styles.field}>
-                  <span>City / market</span>
-                  <input name="city" type="text" placeholder="Jaipur / India / Global" />
-                </label>
-                <label className={styles.field}>
-                  <span>Current monthly marketing spend</span>
-                  <select name="budget" defaultValue="">
-                    <option value="" disabled>Select range</option>
-                    <option value="None">None / just starting</option>
-                    <option value="Under ₹25k">Under ₹25k</option>
-                    <option value="₹25k–₹50k">₹25k–₹50k</option>
-                    <option value="₹50k–₹1L">₹50k–₹1L</option>
-                    <option value="₹1L–₹3L">₹1L–₹3L</option>
-                    <option value="₹3L+">₹3L+</option>
-                  </select>
-                </label>
-              </div>
+              {variant === 'clinic' && (
+                <>
+                  <div className={styles.row}>
+                    <TextField name="clinic" label="Clinic / practice name" placeholder="Clinic name" />
+                    <TextField name="specialization" label="Speciality" placeholder="Orthopaedics, dental, dermatology…" />
+                  </div>
+                  <div className={styles.row}>
+                    <TextField name="city" label="City / service area" placeholder="Jaipur" />
+                    <SelectField name="budget" label="Monthly marketing spend" options={MARKETING_SPEND} />
+                  </div>
+                  {!service && <SelectField name="service" label="What do you need help with?" options={CLINIC_SERVICES} />}
+                  <TextAreaField label="What are you trying to improve? (optional)" placeholder="More appointments, better lead quality, Google visibility, website conversion…" />
+                </>
+              )}
 
-              <label className={styles.field}>
-                <span>What do you want help with? (optional)</span>
-                <textarea name="message" rows={3} placeholder="Tell us what you want to grow, improve or fix." />
-              </label>
+              {variant === 'generic' && (
+                <>
+                  <div className={styles.row}>
+                    <TextField name="company" label="Business / brand name" placeholder="Your business" />
+                    <TextField name="industry" label="Industry / category" placeholder="Fashion, healthcare, SaaS…" />
+                  </div>
+                  <div className={styles.row}>
+                    <TextField name="city" label="City / market" placeholder="Jaipur / India / Global" />
+                    <SelectField name="budget" label="Current monthly marketing spend" options={MARKETING_SPEND} />
+                  </div>
+                  <TextAreaField label="What do you want help with? (optional)" placeholder="Tell us what you want to grow, improve or fix." />
+                </>
+              )}
 
               <button type="submit" className={`btn-primary ${styles.submit}`} disabled={submitting}>
                 {submitting ? 'Sending…' : 'Send my enquiry'}
@@ -187,5 +257,49 @@ export default function LeadForm({
         </div>
       </div>
     </section>
+  )
+}
+
+function TextField({
+  name,
+  label,
+  type = 'text',
+  required,
+  autoComplete,
+  placeholder,
+}: {
+  name: string
+  label: string
+  type?: string
+  required?: boolean
+  autoComplete?: string
+  placeholder?: string
+}) {
+  return (
+    <label className={styles.field}>
+      <span>{label}{required ? ' *' : ''}</span>
+      <input name={name} type={type} required={required} autoComplete={autoComplete} placeholder={placeholder} />
+    </label>
+  )
+}
+
+function SelectField({ name, label, options }: { name: string; label: string; options: string[] }) {
+  return (
+    <label className={styles.field}>
+      <span>{label}</span>
+      <select name={name} defaultValue="">
+        <option value="" disabled>Select…</option>
+        {options.map((option) => <option key={option} value={option}>{option}</option>)}
+      </select>
+    </label>
+  )
+}
+
+function TextAreaField({ label, placeholder }: { label: string; placeholder: string }) {
+  return (
+    <label className={styles.field}>
+      <span>{label}</span>
+      <textarea name="message" rows={3} placeholder={placeholder} />
+    </label>
   )
 }
