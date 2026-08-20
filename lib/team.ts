@@ -14,7 +14,13 @@ export const GE_TEAM: TeamMember[] = [
     image: '/team/jatin-agrawal.webp',
     imagePosition: 'center center',
   },
-  { name: 'Sanskriti', role: 'Lead Graphic Designer', index: '02' },
+  {
+    name: 'Sanskriti',
+    role: 'Project Manager',
+    index: '02',
+    image: '/team/sanskriti.webp',
+    imagePosition: 'center 20%',
+  },
   {
     name: 'Kanishk',
     role: 'Technology Lead & AI Architect',
@@ -62,6 +68,6 @@ export const GE_TEAM: TeamMember[] = [
     role: 'Human Resource',
     index: '09',
     image: '/team/vishaka.webp',
-    imagePosition: 'center 24%',
+    imagePosition: 'center 38%',
   },
 ]
