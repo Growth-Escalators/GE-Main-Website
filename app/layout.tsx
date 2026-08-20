@@ -6,6 +6,7 @@ import './globals.css'
 // Selectors inside portfolio.css are all prefixed with .portfolio-root, so
 // loading it globally doesn't bleed styling into pages that don't use the wrapper.
 import './portfolio/portfolio.css'
+import './growthbot-theme.css'
 import dynamic from 'next/dynamic'
 import GoogleAnalytics from '@/components/analytics/GoogleAnalytics'
 import ContactIdentityGuard from '@/components/ui/ContactIdentityGuard'
