@@ -4,6 +4,7 @@ import { getAllPosts } from '@/lib/blog'
 const SITE = 'https://www.growthescalators.com'
 const REBUILD_2026_08_20 = '2026-08-20T23:23:00+05:30'
 const BRAND_ARCH_2026_08_21 = '2026-08-21T12:06:00+05:30'
+const SEO_CLUSTER_2026_08_21 = '2026-08-21T16:33:00+05:30'
 
 /*
  * `lastModified` is intentionally tied to real, significant page changes.
@@ -35,6 +36,18 @@ const STATIC_ROUTES: {
   { path: '/website-development-company-jaipur',       priority: 0.95, changeFrequency: 'monthly', lastModified: BRAND_ARCH_2026_08_21 },
   { path: '/software-development-company-jaipur',      priority: 0.95, changeFrequency: 'monthly', lastModified: BRAND_ARCH_2026_08_21 },
   { path: '/seo-lead-generation-agency-jaipur',        priority: 0.95, changeFrequency: 'monthly', lastModified: BRAND_ARCH_2026_08_21 },
+
+  // Shopify / web / software / fashion SEO cluster — unique search intent pages.
+  { path: '/shopify-development-agency',                      priority: 0.9, changeFrequency: 'monthly', lastModified: SEO_CLUSTER_2026_08_21 },
+  { path: '/shopify-development-company-jaipur',              priority: 0.85, changeFrequency: 'monthly', lastModified: SEO_CLUSTER_2026_08_21 },
+  { path: '/ecommerce-website-development-company-jaipur',    priority: 0.85, changeFrequency: 'monthly', lastModified: SEO_CLUSTER_2026_08_21 },
+  { path: '/website-redesign-agency-jaipur',                  priority: 0.8, changeFrequency: 'monthly', lastModified: SEO_CLUSTER_2026_08_21 },
+  { path: '/custom-software-development-company-jaipur',      priority: 0.85, changeFrequency: 'monthly', lastModified: SEO_CLUSTER_2026_08_21 },
+  { path: '/web-app-development-company-jaipur',              priority: 0.85, changeFrequency: 'monthly', lastModified: SEO_CLUSTER_2026_08_21 },
+  { path: '/saas-development-company-jaipur',                 priority: 0.85, changeFrequency: 'monthly', lastModified: SEO_CLUSTER_2026_08_21 },
+  { path: '/d2c/fashion/womens-clothing',                     priority: 0.85, changeFrequency: 'monthly', lastModified: SEO_CLUSTER_2026_08_21 },
+  { path: '/d2c/fashion/kurti',                               priority: 0.85, changeFrequency: 'monthly', lastModified: SEO_CLUSTER_2026_08_21 },
+  { path: '/d2c/fashion/meta-ads',                            priority: 0.85, changeFrequency: 'monthly', lastModified: SEO_CLUSTER_2026_08_21 },
 
   // Shared IndustryLandingPage money pages — materially redesigned on 2026-08-20.
   { path: '/d2c/fashion',                              priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
