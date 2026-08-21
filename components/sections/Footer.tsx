@@ -7,41 +7,43 @@ import SeoContextLinks from '@/components/seo/SeoContextLinks'
 
 const FOOTER_GROUPS = [
   {
-    heading: 'Growth',
+    heading: 'Core Services',
     links: [
-      { label: 'Performance Marketing', href: '/performance-marketing-agency-jaipur' },
-      { label: 'D2C Growth', href: '/d2c' },
+      { label: 'D2C Performance Marketing', href: '/d2c' },
+      { label: 'SEO & Lead Generation', href: '/seo-lead-generation-agency-jaipur' },
+      { label: 'Website Development', href: '/website-development-company-jaipur' },
+      { label: 'Software & App Development', href: '/software-development-company-jaipur' },
+      { label: 'Hire Tech Talent', href: '/staffing' },
+      { label: 'All Services', href: '/services' },
+    ],
+  },
+  {
+    heading: 'Growth Specialisms',
+    links: [
+      { label: 'Performance Marketing Jaipur', href: '/performance-marketing-agency-jaipur' },
       { label: 'Ecommerce Advertising', href: '/ecommerce-advertising-agency' },
       { label: 'Meta Ads for Ecommerce', href: '/meta-ads-agency-for-ecommerce' },
       { label: 'B2B Lead Generation', href: '/b2b-lead-generation-agency' },
-      { label: 'Services', href: '/services' },
+      { label: 'LinkedIn Marketing', href: '/linkedin-marketing-agency' },
+      { label: 'SaaS Marketing', href: '/saas-marketing-agency' },
     ],
   },
   {
-    heading: 'Technology',
-    links: [
-      { label: 'Website Development', href: '/website-development-company-jaipur' },
-      { label: 'Software Development', href: '/software-development-company-jaipur' },
-      { label: 'White-Label Development', href: '/white-label-software-development' },
-      { label: 'GrowthBot', href: '/#growthbot' },
-      { label: 'Portfolio', href: '/portfolio' },
-    ],
-  },
-  {
-    heading: 'Markets',
+    heading: 'Industries',
     links: [
       { label: 'Healthcare', href: '/doctors' },
       { label: 'Real Estate', href: '/real-estate' },
       { label: 'Beauty & Skincare', href: '/d2c/beauty' },
+      { label: 'Fashion & Apparel', href: '/d2c/fashion' },
       { label: 'Jewellery', href: '/jewellery-marketing-agency-jaipur' },
       { label: 'Education', href: '/coaching-institute-marketing-agency-jaipur' },
       { label: 'Hospitality', href: '/hotel-resort-marketing-agency-jaipur' },
     ],
   },
   {
-    heading: 'Staffing',
+    heading: 'Tech Talent',
     links: [
-      { label: 'Staffing Hub', href: '/staffing' },
+      { label: 'Hire Tech Talent', href: '/staffing' },
       { label: 'UK Offshore Tech', href: '/uk-offshore-tech-resources' },
       { label: 'UAE Offshore Tech', href: '/uae-offshore-tech-resources' },
       { label: 'US Fulfilment', href: '/us-tech-staffing-fulfilment' },
@@ -49,7 +51,7 @@ const FOOTER_GROUPS = [
     ],
   },
   {
-    heading: 'Local Niches',
+    heading: 'Local Industries',
     links: [
       { label: 'Doctors in Jaipur', href: '/doctors-marketing-agency-jaipur' },
       { label: 'Dental Clinics', href: '/dental-clinic-marketing-agency-jaipur' },
@@ -88,11 +90,11 @@ export default function Footer() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img src="/logo.webp" alt="Growth Escalators" />
               </Link>
-              <p className="ge-footer-kicker">Growth × Technology × Talent</p>
+              <p className="ge-footer-kicker">Marketing × Development × Talent</p>
               <h2>Growth systems built to compound.</h2>
               <p className="ge-footer-copy">
-                Performance marketing, ecommerce, websites, software, AI automation and India-based technology
-                staffing — connected around measurable commercial outcomes.
+                D2C performance marketing, SEO and lead generation, websites, software and India-based technology
+                talent — connected around measurable commercial outcomes.
               </p>
               <Link href="/#book" className="ge-footer-cta">Get your free growth audit <span aria-hidden>↗</span></Link>
             </div>

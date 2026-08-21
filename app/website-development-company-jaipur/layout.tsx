@@ -4,10 +4,11 @@ const SITE = 'https://www.growthescalators.com'
 const PATH = '/website-development-company-jaipur'
 
 export const metadata: Metadata = {
-  title: 'Website Development Company in Jaipur',
+  title: 'Website Development Agency in Jaipur',
   description:
-    'Jaipur website development company building fast, SEO-ready, conversion-optimised websites — coded from scratch. Average 67% faster load, 40% more time on site. Get a free website audit.',
+    'Website development agency in Jaipur building fast, SEO-ready, conversion-optimised websites, ecommerce stores and landing pages. Get a free website audit from Growth Escalators.',
   keywords: [
+    'website development agency in jaipur',
     'website development company in jaipur',
     'website development company jaipur',
     'web development company jaipur',
@@ -18,9 +19,9 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: PATH },
   openGraph: {
-    title: 'Website Development Company in Jaipur — Growth Escalators',
+    title: 'Website Development Agency in Jaipur — Growth Escalators',
     description:
-      'Fast, SEO-ready, conversion-optimised websites for Jaipur businesses. Coded from scratch — 67% faster load, 40% more time on site.',
+      'Fast, SEO-ready, conversion-optimised websites, ecommerce stores and landing pages built by a Jaipur development team.',
     url: PATH,
     type: 'website',
   },
@@ -37,11 +38,11 @@ const SCHEMA = {
     {
       '@type': 'ProfessionalService',
       '@id': `${SITE}${PATH}#business`,
-      name: 'Growth Escalators — Website Development Company in Jaipur',
+      name: 'Growth Escalators — Website Development Agency in Jaipur',
       url: `${SITE}${PATH}`,
       image: `${SITE}/og-image.jpg`,
       description:
-        'Website development company in Jaipur building fast, SEO-ready, conversion-optimised websites coded from scratch.',
+        'Website development agency in Jaipur building fast, SEO-ready, conversion-optimised websites, ecommerce stores and landing pages.',
       telephone: '+91-77338-88883',
       email: 'Info@growthescalators.com',
       priceRange: '₹₹',
@@ -72,7 +73,7 @@ const SCHEMA = {
       '@id': `${SITE}${PATH}#breadcrumb`,
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
-        { '@type': 'ListItem', position: 2, name: 'Website Development Company in Jaipur', item: `${SITE}${PATH}` },
+        { '@type': 'ListItem', position: 2, name: 'Website Development Agency in Jaipur', item: `${SITE}${PATH}` },
       ],
     },
   ],

@@ -5,6 +5,7 @@ const read = (path) => fs.readFileSync(path, 'utf8')
 const sitemap = read('app/sitemap.ts')
 const contextLinks = read('components/seo/SeoContextLinks.tsx')
 const footer = read('components/sections/Footer.tsx')
+const brandPriority = read('components/seo/BrandServicePriority.tsx')
 const redirects = read('next.config.js')
 const layout = read('app/layout.tsx')
 
@@ -17,6 +18,7 @@ const CRITICAL_MONEY_ROUTES = [
   '/ecommerce-scaling-agency',
   '/skincare-retention-marketing',
   '/performance-marketing-agency-jaipur',
+  '/seo-lead-generation-agency-jaipur',
   '/jewellery-marketing-agency-jaipur',
   '/real-estate-marketing-agency-jaipur',
   '/restaurant-marketing-agency-jaipur',
@@ -47,6 +49,14 @@ const CRITICAL_MONEY_ROUTES = [
   '/australia-offshore-tech-resources',
 ]
 
+const BRAND_CORE_ROUTES = [
+  '/d2c',
+  '/website-development-company-jaipur',
+  '/software-development-company-jaipur',
+  '/staffing',
+  '/seo-lead-generation-agency-jaipur',
+]
+
 const RESTORED_ROUTES = [
   '/restaurant-marketing-agency-jaipur',
   '/law-firm-marketing-agency-jaipur',
@@ -62,6 +72,15 @@ for (const route of CRITICAL_MONEY_ROUTES) {
   }
   if (!inboundSources.includes(`href: '${route}'`) && !inboundSources.includes(`href=\"${route}\"`)) {
     failures.push(`${route}: missing from contextual/footer internal-link sources`)
+  }
+}
+
+for (const route of BRAND_CORE_ROUTES) {
+  if (!footer.includes(`href: '${route}'`)) {
+    failures.push(`${route}: missing from Core Services footer links`)
+  }
+  if (!brandPriority.includes(`href: '${route}'`)) {
+    failures.push(`${route}: missing from homepage core-service priority links`)
   }
 }
 
@@ -82,7 +101,7 @@ if (!redirects.includes("{ source: '/restaurants', destination: '/restaurant-mar
   failures.push('/restaurants: must redirect directly to restored restaurant page')
 }
 
-const expectedTitle = 'Growth Escalators — Performance Marketing, Web, AI & Talent'
+const expectedTitle = 'Growth Escalators — Performance Marketing, Development, SEO & Tech Talent'
 if (!layout.includes(expectedTitle)) failures.push(`homepage metadata: expected title \"${expectedTitle}\" not found`)
 
 if (!sitemap.includes("const REBUILD_2026_08_20 = '2026-08-20T23:23:00+05:30'")) {
@@ -96,4 +115,4 @@ if (failures.length) {
 }
 
 console.log(`SEO integrity check passed: ${CRITICAL_MONEY_ROUTES.length} money routes are sitemap-listed and internally discoverable.`)
-console.log('Restored Jaipur routes, redirect continuity, homepage title and rebuild sitemap marker are valid.')
+console.log('Core brand routes, homepage links, restored Jaipur routes, redirect continuity, homepage title and sitemap markers are valid.')

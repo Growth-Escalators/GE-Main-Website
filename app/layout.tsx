@@ -24,45 +24,46 @@ const jakarta = Plus_Jakarta_Sans({
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.growthescalators.com'),
   title: {
-    default: 'Growth Escalators — Performance Marketing, Web, AI & Talent',
+    default: 'Growth Escalators — Performance Marketing, Development, SEO & Tech Talent',
     template: '%s — Growth Escalators',
   },
   description:
-    'Jaipur-based growth company connecting performance marketing, ecommerce, websites, SEO, creative, AI automation, software and India-based technology talent around measurable commercial outcomes.',
+    'Growth Escalators is a Jaipur-based growth company for D2C performance marketing, SEO and lead generation, website and software development, and pre-screened technology talent.',
   keywords: [
     'growth marketing agency',
+    'D2C performance marketing agency',
     'performance marketing agency',
-    'ecommerce growth agency',
-    'conversion rate optimization',
-    'website development company',
-    'SEO agency',
-    'AI automation agency',
-    'software development company',
-    'India technology staffing',
+    'SEO agency Jaipur',
+    'lead generation agency Jaipur',
+    'website development agency Jaipur',
+    'software development agency Jaipur',
+    'app development agency Jaipur',
+    'technology staffing India',
+    'hire tech talent India',
     'Jaipur growth agency',
   ],
   alternates: { canonical: '/' },
   openGraph: {
     type: 'website',
     siteName: 'Growth Escalators',
-    title: 'Growth Escalators — Performance Marketing, Web, AI & Talent',
+    title: 'Growth Escalators — Performance Marketing, Development, SEO & Tech Talent',
     description:
-      'Performance marketing, ecommerce, websites, search, creative, AI, software and technology talent connected around measurable growth.',
+      'D2C performance marketing, SEO and lead generation, website and software development, and technology talent connected around measurable growth.',
     url: 'https://www.growthescalators.com',
     images: [
       {
         url: 'https://www.growthescalators.com/og-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Growth Escalators — Performance Marketing, Web, AI & Talent',
+        alt: 'Growth Escalators — Performance Marketing, Development, SEO & Tech Talent',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Growth Escalators — Performance Marketing, Web, AI & Talent',
+    title: 'Growth Escalators — Performance Marketing, Development, SEO & Tech Talent',
     description:
-      'Performance marketing, ecommerce, websites, search, creative, AI, software and technology talent connected around measurable growth.',
+      'D2C performance marketing, SEO and lead generation, website and software development, and technology talent connected around measurable growth.',
   },
   robots: {
     index: true,
@@ -73,12 +74,7 @@ export const metadata: Metadata = {
 
 /* JSON-LD entity graph — emitted on every page so search engines and AI
    crawlers see one consistent, connected business identity (GE SEO Standard
-   v1, Layer 5: "connected @id graph, not isolated blocks").
-
-   TODO before this is fully complete (real values needed, not fabricated):
-   - JATIN_PERSON.sameAs: add Jatin's real personal LinkedIn profile URL.
-   - ORGANIZATION.hasMap / geo: add the verified Google Business Profile
-     maps URL + lat/long once GBP is claimed/confirmed (see SEO audit). */
+   v1, Layer 5: "connected @id graph, not isolated blocks"). */
 const SITE_ID = `${'https://www.growthescalators.com'}`
 
 const ORGANIZATION_SCHEMA = {
@@ -88,7 +84,7 @@ const ORGANIZATION_SCHEMA = {
   url: SITE_ID,
   logo: `${SITE_ID}/logo.webp`,
   description:
-    'Jaipur-based growth company connecting performance marketing, ecommerce, websites, SEO, creative, AI automation, software and India-based technology talent around measurable commercial outcomes.',
+    'Jaipur-based growth company for D2C performance marketing, SEO and lead generation, website and software development, and India-based technology talent.',
   email: 'jatin@growthescalators.com',
   telephone: '+91-7733888883',
   address: {
@@ -105,16 +101,6 @@ const ORGANIZATION_SCHEMA = {
     'https://www.linkedin.com/company/growth-escalators',
   ],
   founder: { '@id': `${SITE_ID}/#jatin-agrawal` },
-  /* Sister brand — WizMatch is Jatin's staffing/recruitment company (same
-     founder, disclosed relationship). Declared as a subOrganization so search
-     + AI engines treat the two brands as one connected entity family. Points
-     at WizMatch's canonical @id on wizmatchenterprises.com. */
-  subOrganization: {
-    '@type': 'Organization',
-    '@id': 'https://www.wizmatchenterprises.com/#organization',
-    name: 'WizMatch',
-    url: 'https://www.wizmatchenterprises.com',
-  },
 }
 
 const JATIN_PERSON_SCHEMA = {
@@ -123,49 +109,53 @@ const JATIN_PERSON_SCHEMA = {
   name: 'Jatin Agrawal',
   jobTitle: 'Founder',
   worksFor: { '@id': `${SITE_ID}/#organization` },
-  /* Same individual also founded the sister brand WizMatch — link the two
-     Person nodes across domains so the entity resolves as one person.
-     TODO: add Jatin's real personal LinkedIn URL to this array once confirmed. */
-  sameAs: ['https://www.wizmatchenterprises.com/#jatin-agrawal'],
 }
 
 const SERVICE_SCHEMAS = [
   {
     '@type': 'Service',
-    '@id': `${SITE_ID}/#service-performance-marketing`,
-    name: 'Performance Marketing & Media Buying',
-    serviceType: 'Performance Marketing',
+    '@id': `${SITE_ID}/#service-d2c-performance-marketing`,
+    name: 'Performance Marketing for D2C Brands',
+    serviceType: 'D2C Performance Marketing',
+    url: `${SITE_ID}/d2c`,
     provider: { '@id': `${SITE_ID}/#organization` },
     areaServed: 'IN',
   },
   {
     '@type': 'Service',
-    '@id': `${SITE_ID}/#service-software-development`,
-    name: 'Software Development',
-    serviceType: 'Software Development',
+    '@id': `${SITE_ID}/#service-website-development`,
+    name: 'Website Development',
+    serviceType: 'Website Development',
+    url: `${SITE_ID}/website-development-company-jaipur`,
     provider: { '@id': `${SITE_ID}/#organization` },
     areaServed: 'IN',
   },
   {
     '@type': 'Service',
-    '@id': `${SITE_ID}/#service-ai-automation`,
-    name: 'AI Automation',
-    serviceType: 'AI Automation',
+    '@id': `${SITE_ID}/#service-software-app-development`,
+    name: 'Software & App Development',
+    serviceType: 'Software and App Development',
+    url: `${SITE_ID}/software-development-company-jaipur`,
     provider: { '@id': `${SITE_ID}/#organization` },
     areaServed: 'IN',
   },
   {
     '@type': 'Service',
-    '@id': `${SITE_ID}/#service-offshore-tech-staffing`,
-    name: 'Offshore Technology Staffing',
+    '@id': `${SITE_ID}/#service-tech-talent`,
+    name: 'Technology Talent & Staffing',
     serviceType: 'IT Staffing',
+    url: `${SITE_ID}/staffing`,
     provider: { '@id': `${SITE_ID}/#organization` },
-    // One Service node for the whole offshore-tech-staffing offer, not one per
-    // country landing page (see international-landing Stage A brief: "do not
-    // create separate structured-data business identities for each country").
-    // UK shipped first; areaServed is pre-generalized to the full 4-market set
-    // (UK/UAE/US/Australia) so this node needs no edit when those pages ship.
-    areaServed: ['GB', 'AE', 'US', 'AU'],
+    areaServed: ['IN', 'GB', 'AE', 'US', 'AU'],
+  },
+  {
+    '@type': 'Service',
+    '@id': `${SITE_ID}/#service-seo-lead-generation`,
+    name: 'SEO & Lead Generation',
+    serviceType: 'SEO and Lead Generation',
+    url: `${SITE_ID}/seo-lead-generation-agency-jaipur`,
+    provider: { '@id': `${SITE_ID}/#organization` },
+    areaServed: 'IN',
   },
 ]
 

@@ -4,23 +4,24 @@ const SITE = 'https://www.growthescalators.com'
 const PATH = '/software-development-company-jaipur'
 
 export const metadata: Metadata = {
-  title: 'Software Development Company in Jaipur',
+  title: 'Software & App Development Agency in Jaipur',
   description:
-    'Jaipur-based software development company building production SaaS, web & mobile apps, and AI automation. 237+ projects, 50+ integrations shipped — with India compliance (GST/TDS/RERA) built in. Get a free scoping call.',
+    'Software and app development agency in Jaipur building production SaaS, web apps, mobile apps, integrations and AI automation. Book a free scoping call with Growth Escalators.',
   keywords: [
+    'software development agency in jaipur',
+    'app development agency in jaipur',
     'software development company in jaipur',
     'software development company jaipur',
     'custom software development jaipur',
     'app development company jaipur',
     'saas development company jaipur',
-    'software company in jaipur',
     'mobile app development jaipur',
   ],
   alternates: { canonical: PATH },
   openGraph: {
-    title: 'Software Development Company in Jaipur — Growth Escalators',
+    title: 'Software & App Development Agency in Jaipur — Growth Escalators',
     description:
-      'Production SaaS, web & mobile apps, and AI automation from a Jaipur team. 237+ projects, 50+ integrations, India compliance built in.',
+      'Production SaaS, web apps, mobile apps, integrations and AI automation from a Jaipur development team.',
     url: PATH,
     type: 'website',
   },
@@ -37,11 +38,11 @@ const SCHEMA = {
     {
       '@type': 'ProfessionalService',
       '@id': `${SITE}${PATH}#business`,
-      name: 'Growth Escalators — Software Development Company in Jaipur',
+      name: 'Growth Escalators — Software & App Development Agency in Jaipur',
       url: `${SITE}${PATH}`,
       image: `${SITE}/og-image.jpg`,
       description:
-        'Software development company in Jaipur building production SaaS, web & mobile apps, and AI automation with India compliance built in.',
+        'Software and app development agency in Jaipur building SaaS, web apps, mobile apps, integrations and AI automation.',
       telephone: '+91-77338-88883',
       email: 'Info@growthescalators.com',
       priceRange: '₹₹',
@@ -58,7 +59,7 @@ const SCHEMA = {
         { '@type': 'City', name: 'Jaipur' },
         { '@type': 'Country', name: 'India' },
       ],
-      knowsAbout: ['Custom Software Development', 'SaaS Development', 'Web & Mobile Apps', 'AI Automation'],
+      knowsAbout: ['Custom Software Development', 'SaaS Development', 'Web Apps', 'Mobile Apps', 'AI Automation'],
       openingHours: 'Mo-Sa 10:00-19:00',
       parentOrganization: { '@id': `${SITE}/#organization` },
       sameAs: [
@@ -72,7 +73,7 @@ const SCHEMA = {
       '@id': `${SITE}${PATH}#breadcrumb`,
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
-        { '@type': 'ListItem', position: 2, name: 'Software Development Company in Jaipur', item: `${SITE}${PATH}` },
+        { '@type': 'ListItem', position: 2, name: 'Software & App Development Agency in Jaipur', item: `${SITE}${PATH}` },
       ],
     },
   ],

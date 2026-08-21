@@ -12,14 +12,14 @@ type MenuConfig = { label: string; kicker: string; hubHref: string; hubLabel: st
 const MENUS: Record<MenuKey, MenuConfig> = {
   services: {
     label: 'Services',
-    kicker: 'Connected capabilities',
+    kicker: 'Core growth capabilities',
     hubHref: '/services',
     hubLabel: 'View all services',
     items: [
-      { label: 'Performance Marketing', href: '/performance-marketing-agency-jaipur', description: 'Meta Ads, Google Ads, funnels and measurable acquisition.' },
-      { label: 'D2C Growth', href: '/d2c', description: 'Commerce acquisition, creative testing, CRO and retention.' },
-      { label: 'Creative & Social', href: '/services', description: 'Creative systems and social execution built for demand.' },
-      { label: 'SEO & Organic', href: '/services', description: 'Search-led authority, content and organic discovery.' },
+      { label: 'D2C Performance Marketing', href: '/d2c', description: 'Paid acquisition, creative testing, CRO and ecommerce scaling.' },
+      { label: 'SEO & Lead Generation', href: '/seo-lead-generation-agency-jaipur', description: 'Search visibility, local SEO, content and qualified lead systems.' },
+      { label: 'Website Development', href: '/website-development-company-jaipur', description: 'Fast, SEO-ready websites, ecommerce and conversion experiences.' },
+      { label: 'Software & App Development', href: '/software-development-company-jaipur', description: 'SaaS, web apps, mobile apps, integrations and AI automation.' },
     ],
   },
   industries: {
@@ -35,15 +35,15 @@ const MENUS: Record<MenuKey, MenuConfig> = {
     ],
   },
   technology: {
-    label: 'Technology',
-    kicker: 'Build + automate + scale',
-    hubHref: '/#growthbot',
-    hubLabel: 'Explore technology',
+    label: 'Technology & Talent',
+    kicker: 'Build + hire + scale',
+    hubHref: '/services',
+    hubLabel: 'Explore technology & talent',
     items: [
-      { label: 'Web & Commerce', href: '/website-development-company-jaipur', description: 'Conversion-led websites, Shopify and Next.js experiences.' },
-      { label: 'Software & AI', href: '/software-development-company-jaipur', description: 'Software development, integrations and AI automation.' },
+      { label: 'Hire Tech Talent', href: '/staffing', description: 'Pre-screened India-based technology specialists for permanent, contract and C2H needs.' },
+      { label: 'Website Development', href: '/website-development-company-jaipur', description: 'Conversion-led websites, Shopify and Next.js experiences.' },
+      { label: 'Software & App Development', href: '/software-development-company-jaipur', description: 'Production software, apps, integrations and AI-enabled workflows.' },
       { label: 'White-Label Development', href: '/white-label-software-development', description: 'Production engineering capacity delivered under your brand.' },
-      { label: 'Technology Staffing', href: '/staffing', description: 'Screened India-based technology specialists for delivery teams.' },
     ],
   },
 }
@@ -187,9 +187,9 @@ export default function Navbar() {
               </div>
 
               <Link href={MENUS[open].hubHref} className="ge-mega-feature" onClick={() => setOpen(null)}>
-                <span>{open === 'technology' ? 'Built by GE' : open === 'industries' ? 'Explore the system' : 'Services overview'}</span>
-                <strong>{open === 'technology' ? 'Meet GrowthBot.' : open === 'industries' ? 'Different growth physics.' : 'Every growth lever. One system.'}</strong>
-                <p>{open === 'technology' ? 'See how AI qualification and automation connect into the growth system.' : open === 'industries' ? 'Explore the market-specific growth pathways built into the homepage.' : 'See the complete connected capability system and choose the right specialist path.'}</p>
+                <span>{open === 'technology' ? 'Build + talent' : open === 'industries' ? 'Explore the system' : 'Services overview'}</span>
+                <strong>{open === 'technology' ? 'Build it. Staff it. Scale it.' : open === 'industries' ? 'Different growth physics.' : 'Every growth lever. One system.'}</strong>
+                <p>{open === 'technology' ? 'Connect software, automation and pre-screened technology talent around the same delivery goal.' : open === 'industries' ? 'Explore the market-specific growth pathways built into the homepage.' : 'See the complete connected capability system and choose the right specialist path.'}</p>
                 <b>{MENUS[open].hubLabel} ↗</b>
               </Link>
             </div>
