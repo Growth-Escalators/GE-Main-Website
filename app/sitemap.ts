@@ -3,16 +3,12 @@ import { getAllPosts } from '@/lib/blog'
 
 const SITE = 'https://www.growthescalators.com'
 const REBUILD_2026_08_20 = '2026-08-20T23:23:00+05:30'
+const BRAND_ARCH_2026_08_21 = '2026-08-21T12:06:00+05:30'
 
 /*
  * `lastModified` is intentionally tied to real, significant page changes.
  * Do not replace these values with `new Date()` at build time: doing so would
  * make every deployment look like a content update and weaken the signal.
- *
- * The 2026-08-20 timestamp below is used only for routes materially changed by
- * the Phase 2 rebuild (layout/content visibility/internal links), the staffing
- * rebuild, the international staffing rebuild, the white-label migration, or
- * the three restored Jaipur-local SEO pages.
  */
 const STATIC_ROUTES: {
   path: string
@@ -20,9 +16,9 @@ const STATIC_ROUTES: {
   changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency']
   lastModified?: string
 }[] = [
-  { path: '/',                       priority: 1.0, changeFrequency: 'weekly',   lastModified: REBUILD_2026_08_20 },
+  { path: '/',                       priority: 1.0, changeFrequency: 'weekly',   lastModified: BRAND_ARCH_2026_08_21 },
   { path: '/services',               priority: 0.9, changeFrequency: 'monthly', lastModified: '2026-04-24T16:34:20+05:30' },
-  { path: '/staffing',               priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
+  { path: '/staffing',               priority: 0.9, changeFrequency: 'monthly', lastModified: BRAND_ARCH_2026_08_21 },
   { path: '/uk-offshore-tech-resources',        priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/uae-offshore-tech-resources',       priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/us-tech-staffing-fulfilment',       priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
@@ -34,14 +30,17 @@ const STATIC_ROUTES: {
   { path: '/contact',                priority: 0.8, changeFrequency: 'yearly',   lastModified: '2026-06-22T17:18:21+05:30' },
   { path: '/blog',                   priority: 0.9, changeFrequency: 'weekly',   lastModified: '2026-04-30T01:03:34+05:30' },
 
-  // Shared IndustryLandingPage money pages — all materially redesigned on 2026-08-20.
-  { path: '/d2c',                                      priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
+  // Core brand / commercial pillars.
+  { path: '/d2c',                                      priority: 0.95, changeFrequency: 'monthly', lastModified: BRAND_ARCH_2026_08_21 },
+  { path: '/website-development-company-jaipur',       priority: 0.95, changeFrequency: 'monthly', lastModified: BRAND_ARCH_2026_08_21 },
+  { path: '/software-development-company-jaipur',      priority: 0.95, changeFrequency: 'monthly', lastModified: BRAND_ARCH_2026_08_21 },
+  { path: '/seo-lead-generation-agency-jaipur',        priority: 0.95, changeFrequency: 'monthly', lastModified: BRAND_ARCH_2026_08_21 },
+
+  // Shared IndustryLandingPage money pages — materially redesigned on 2026-08-20.
   { path: '/d2c/fashion',                              priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/d2c/beauty',                               priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/performance-marketing-agency-jaipur',      priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/real-estate-marketing-agency-jaipur',      priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
-  { path: '/software-development-company-jaipur',      priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
-  { path: '/website-development-company-jaipur',       priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/travel-agency-marketing-jaipur',           priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/dental-clinic-marketing-agency-jaipur',    priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/coaching-institute-marketing-agency-jaipur', priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
