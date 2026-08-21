@@ -5,6 +5,7 @@ const SITE = 'https://www.growthescalators.com'
 const REBUILD_2026_08_20 = '2026-08-20T23:23:00+05:30'
 const BRAND_ARCH_2026_08_21 = '2026-08-21T12:06:00+05:30'
 const SEO_CLUSTER_2026_08_21 = '2026-08-21T16:33:00+05:30'
+const WHITE_LABEL_2026_08_21 = '2026-08-21T19:55:00+05:30'
 
 /*
  * `lastModified` is intentionally tied to real, significant page changes.
@@ -24,18 +25,24 @@ const STATIC_ROUTES: {
   { path: '/uae-offshore-tech-resources',       priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/us-tech-staffing-fulfilment',       priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/australia-offshore-tech-resources', priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
-  { path: '/white-label-software-development',  priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
+  { path: '/white-label-software-development',  priority: 0.95, changeFrequency: 'monthly', lastModified: WHITE_LABEL_2026_08_21 },
   { path: '/work',                   priority: 0.9, changeFrequency: 'weekly',   lastModified: '2026-04-24T16:34:20+05:30' },
   { path: '/portfolio',              priority: 0.9, changeFrequency: 'weekly',   lastModified: '2026-05-21T11:11:56+05:30' },
-  { path: '/about',                  priority: 0.7, changeFrequency: 'monthly',  lastModified: '2026-08-17T12:00:00+05:30' },
-  { path: '/contact',                priority: 0.8, changeFrequency: 'yearly',   lastModified: '2026-06-22T17:18:21+05:30' },
-  { path: '/blog',                   priority: 0.9, changeFrequency: 'weekly',   lastModified: '2026-04-30T01:03:34+05:30' },
+  { path: '/about',                  priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-08-17T12:00:00+05:30' },
+  { path: '/contact',                priority: 0.8, changeFrequency: 'yearly', lastModified: '2026-06-22T17:18:21+05:30' },
+  { path: '/blog',                   priority: 0.9, changeFrequency: 'weekly', lastModified: '2026-04-30T01:03:34+05:30' },
 
   // Core brand / commercial pillars.
   { path: '/d2c',                                      priority: 0.95, changeFrequency: 'monthly', lastModified: BRAND_ARCH_2026_08_21 },
   { path: '/website-development-company-jaipur',       priority: 0.95, changeFrequency: 'monthly', lastModified: BRAND_ARCH_2026_08_21 },
   { path: '/software-development-company-jaipur',      priority: 0.95, changeFrequency: 'monthly', lastModified: BRAND_ARCH_2026_08_21 },
   { path: '/seo-lead-generation-agency-jaipur',        priority: 0.95, changeFrequency: 'monthly', lastModified: BRAND_ARCH_2026_08_21 },
+
+  // US white-label agency cluster — national commercial intent, India delivery disclosed honestly.
+  { path: '/white-label-digital-marketing-agency',      priority: 0.95, changeFrequency: 'monthly', lastModified: WHITE_LABEL_2026_08_21 },
+  { path: '/white-label-web-development-agency',        priority: 0.9, changeFrequency: 'monthly', lastModified: WHITE_LABEL_2026_08_21 },
+  { path: '/white-label-shopify-development-agency',    priority: 0.9, changeFrequency: 'monthly', lastModified: WHITE_LABEL_2026_08_21 },
+  { path: '/white-label-performance-marketing-agency',  priority: 0.9, changeFrequency: 'monthly', lastModified: WHITE_LABEL_2026_08_21 },
 
   // Shopify / web / software / fashion SEO cluster — unique search intent pages.
   { path: '/shopify-development-agency',                      priority: 0.9, changeFrequency: 'monthly', lastModified: SEO_CLUSTER_2026_08_21 },
