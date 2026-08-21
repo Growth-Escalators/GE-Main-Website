@@ -5,6 +5,7 @@ const read = (path) => fs.readFileSync(path, 'utf8')
 const sitemap = read('app/sitemap.ts')
 const contextLinks = read('components/seo/SeoContextLinks.tsx')
 const footer = read('components/sections/Footer.tsx')
+const brandPriority = read('components/seo/BrandServicePriority.tsx')
 const redirects = read('next.config.js')
 const layout = read('app/layout.tsx')
 
@@ -78,6 +79,9 @@ for (const route of BRAND_CORE_ROUTES) {
   if (!footer.includes(`href: '${route}'`)) {
     failures.push(`${route}: missing from Core Services footer links`)
   }
+  if (!brandPriority.includes(`href: '${route}'`)) {
+    failures.push(`${route}: missing from homepage core-service priority links`)
+  }
 }
 
 for (const route of RESTORED_ROUTES) {
@@ -111,4 +115,4 @@ if (failures.length) {
 }
 
 console.log(`SEO integrity check passed: ${CRITICAL_MONEY_ROUTES.length} money routes are sitemap-listed and internally discoverable.`)
-console.log('Core brand routes, restored Jaipur routes, redirect continuity, homepage title and sitemap markers are valid.')
+console.log('Core brand routes, homepage links, restored Jaipur routes, redirect continuity, homepage title and sitemap markers are valid.')
