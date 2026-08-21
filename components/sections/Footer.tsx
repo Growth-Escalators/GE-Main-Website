@@ -14,6 +14,7 @@ const FOOTER_GROUPS = [
       { label: 'Website Development', href: '/website-development-company-jaipur' },
       { label: 'Software & App Development', href: '/software-development-company-jaipur' },
       { label: 'Hire Tech Talent', href: '/staffing' },
+      { label: 'White-Label Agency Partner', href: '/white-label-digital-marketing-agency' },
       { label: 'All Services', href: '/services' },
     ],
   },
