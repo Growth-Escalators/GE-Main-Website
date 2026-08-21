@@ -1,6 +1,7 @@
-import IndustryLandingPage from '@/components/landing/IndustryLandingPage'
-import { WHITE_LABEL_CONTENT } from './_data/content'
+import WhiteLabelSeoLanding, { getWhiteLabelMetadata } from '@/components/seo/WhiteLabelSeoLanding'
+
+export const metadata = getWhiteLabelMetadata('softwareDevelopment')
 
 export default function WhiteLabelSoftwareDevelopmentPage() {
-  return <IndustryLandingPage content={WHITE_LABEL_CONTENT} />
+  return <WhiteLabelSeoLanding pageKey="softwareDevelopment" />
 }

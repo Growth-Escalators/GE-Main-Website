@@ -41,7 +41,11 @@ const CRITICAL_MONEY_ROUTES = [
   '/saas-marketing-agency',
   '/website-development-company-jaipur',
   '/software-development-company-jaipur',
+  '/white-label-digital-marketing-agency',
+  '/white-label-web-development-agency',
   '/white-label-software-development',
+  '/white-label-shopify-development-agency',
+  '/white-label-performance-marketing-agency',
   '/staffing',
   '/uk-offshore-tech-resources',
   '/uae-offshore-tech-resources',
@@ -55,6 +59,14 @@ const BRAND_CORE_ROUTES = [
   '/software-development-company-jaipur',
   '/staffing',
   '/seo-lead-generation-agency-jaipur',
+]
+
+const WHITE_LABEL_ROUTES = [
+  '/white-label-digital-marketing-agency',
+  '/white-label-web-development-agency',
+  '/white-label-software-development',
+  '/white-label-shopify-development-agency',
+  '/white-label-performance-marketing-agency',
 ]
 
 const RESTORED_ROUTES = [
@@ -82,6 +94,20 @@ for (const route of BRAND_CORE_ROUTES) {
   if (!brandPriority.includes(`href: '${route}'`)) {
     failures.push(`${route}: missing from homepage core-service priority links`)
   }
+}
+
+for (const route of WHITE_LABEL_ROUTES) {
+  const pagePath = `app${route}/page.tsx`
+  if (!fs.existsSync(pagePath)) failures.push(`${route}: white-label page file is missing`)
+  if (!contextLinks.includes(`href: '${route}'`)) failures.push(`${route}: missing from white-label contextual links`)
+}
+
+if (!footer.includes("href: '/white-label-digital-marketing-agency'")) {
+  failures.push('/white-label-digital-marketing-agency: white-label hub missing from global footer')
+}
+
+if (!sitemap.includes("const WHITE_LABEL_2026_08_21 = '2026-08-21T19:55:00+05:30'")) {
+  failures.push('sitemap: white-label lastModified marker missing')
 }
 
 for (const route of RESTORED_ROUTES) {
@@ -115,4 +141,4 @@ if (failures.length) {
 }
 
 console.log(`SEO integrity check passed: ${CRITICAL_MONEY_ROUTES.length} money routes are sitemap-listed and internally discoverable.`)
-console.log('Core brand routes, homepage links, restored Jaipur routes, redirect continuity, homepage title and sitemap markers are valid.')
+console.log('Core brand routes, US white-label cluster, restored Jaipur routes, redirect continuity, homepage title and sitemap markers are valid.')

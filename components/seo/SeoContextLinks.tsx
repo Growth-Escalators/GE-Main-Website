@@ -79,11 +79,23 @@ const CLUSTERS: SeoCluster[] = [
   {
     label: 'WEB & SOFTWARE',
     headline: 'Explore related technology services',
-    paths: ['/website-development-company-jaipur', '/software-development-company-jaipur', '/white-label-software-development'],
+    paths: ['/website-development-company-jaipur', '/software-development-company-jaipur'],
     links: [
       { label: 'Website Development', href: '/website-development-company-jaipur', blurb: 'Conversion-focused websites built for measurable growth.' },
       { label: 'Software & App Development', href: '/software-development-company-jaipur', blurb: 'Custom products, apps and internal systems built around business outcomes.' },
       { label: 'White-Label Development', href: '/white-label-software-development', blurb: 'Delivery capacity for agencies that need a dependable technology partner.' },
+    ],
+  },
+  {
+    label: 'WHITE-LABEL FOR US AGENCIES',
+    headline: 'Expand what your agency can deliver without expanding payroll first',
+    paths: ['/white-label-digital-marketing-agency', '/white-label-web-development-agency', '/white-label-software-development', '/white-label-shopify-development-agency', '/white-label-performance-marketing-agency'],
+    links: [
+      { label: 'White Label Digital Marketing', href: '/white-label-digital-marketing-agency', blurb: 'The US-agency fulfilment hub for marketing, CRO and cross-functional delivery.' },
+      { label: 'White Label Web Development', href: '/white-label-web-development-agency', blurb: 'Websites, landing pages and ongoing development behind your agency.' },
+      { label: 'White Label Software Development', href: '/white-label-software-development', blurb: 'SaaS, apps, APIs, integrations and AI-enabled product work under your brand.' },
+      { label: 'White Label Shopify Development', href: '/white-label-shopify-development-agency', blurb: 'Shopify themes, CRO, integrations and ecommerce implementation for client accounts.' },
+      { label: 'White Label Performance Marketing', href: '/white-label-performance-marketing-agency', blurb: 'Meta, Google, ecommerce and lead-generation fulfilment behind your account team.' },
     ],
   },
   {
