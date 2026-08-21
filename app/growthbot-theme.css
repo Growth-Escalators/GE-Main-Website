@@ -1,0 +1,225 @@
+/* GrowthBot visual alignment
+   Keeps the existing bot logic intact while matching the current GE homepage
+   palette: deep ink/navy, electric blue/violet, warm cream, and restrained orange. */
+
+.growthbot-window,
+.gb-trigger {
+  --gb-ink: #170653;
+  --gb-ink-2: #071b3b;
+  --gb-navy: #0d0539;
+  --gb-blue: #244cff;
+  --gb-violet: #5d24f5;
+  --gb-orange: #f36b36;
+  --gb-ice: #efefff;
+  --gb-ice-2: #e7e7ff;
+  --gb-cream: #f7f5ef;
+  --gb-white: #ffffff;
+  --gb-muted: #62687a;
+}
+
+/* Shell */
+.growthbot-window {
+  background: linear-gradient(180deg, var(--gb-white) 0%, var(--gb-cream) 100%) !important;
+  border: 1px solid rgba(23, 6, 83, 0.14) !important;
+  box-shadow:
+    0 28px 72px rgba(13, 5, 57, 0.24),
+    0 8px 24px rgba(36, 76, 255, 0.08),
+    0 0 0 1px rgba(255, 255, 255, 0.72) inset !important;
+  color: var(--gb-ink-2) !important;
+}
+
+/* Header */
+.growthbot-window > div:first-child {
+  background:
+    radial-gradient(circle at 88% 0%, rgba(36, 76, 255, 0.38), transparent 42%),
+    linear-gradient(135deg, var(--gb-ink) 0%, var(--gb-navy) 72%) !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12) !important;
+}
+
+.growthbot-window > div:first-child > div:first-of-type > span {
+  background: conic-gradient(
+    from 210deg at 50% 50%,
+    var(--gb-blue),
+    var(--gb-violet),
+    var(--gb-orange),
+    var(--gb-blue)
+  ) !important;
+}
+
+.growthbot-window > div:first-child > div:first-of-type > div {
+  background: linear-gradient(135deg, var(--gb-blue), var(--gb-violet)) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.42),
+    inset 0 -2px 5px rgba(13, 5, 57, 0.26) !important;
+}
+
+.growthbot-window > div:first-child button {
+  background: rgba(255, 255, 255, 0.08) !important;
+  border-color: rgba(255, 255, 255, 0.14) !important;
+  color: rgba(255, 255, 255, 0.78) !important;
+}
+
+.growthbot-window > div:first-child button:last-of-type {
+  background: rgba(243, 107, 54, 0.14) !important;
+  border-color: rgba(243, 107, 54, 0.28) !important;
+  color: #ff9a75 !important;
+}
+
+/* Keep WhatsApp semantically green, but let its surface live inside the GE header. */
+.growthbot-window > div:first-child a[title='Chat on WhatsApp'] {
+  background: rgba(37, 211, 102, 0.11) !important;
+  border-color: rgba(37, 211, 102, 0.24) !important;
+}
+
+/* Conversation surface */
+.growthbot-messages {
+  background:
+    radial-gradient(circle at 90% 8%, rgba(93, 36, 245, 0.065), transparent 30%),
+    linear-gradient(180deg, #ffffff 0%, var(--gb-cream) 100%) !important;
+  scrollbar-color: rgba(36, 76, 255, 0.32) rgba(23, 6, 83, 0.04) !important;
+}
+
+.growthbot-messages::-webkit-scrollbar-track {
+  background: rgba(23, 6, 83, 0.04) !important;
+}
+
+.growthbot-messages::-webkit-scrollbar-thumb {
+  background: rgba(36, 76, 255, 0.34) !important;
+}
+
+.growthbot-messages::-webkit-scrollbar-thumb:hover {
+  background: rgba(36, 76, 255, 0.58) !important;
+}
+
+/* Bot avatar + bot bubble. The :has selector distinguishes the bot row from a
+   single user bubble without changing the existing component markup. */
+.growthbot-messages > div > div:first-child:has(> div:nth-child(2)) > div:first-child {
+  background: linear-gradient(135deg, var(--gb-blue), var(--gb-violet)) !important;
+  color: var(--gb-white) !important;
+}
+
+.growthbot-messages > div > div:first-child:has(> div:nth-child(2)) > div:nth-child(2) {
+  background: var(--gb-ice) !important;
+  border-color: rgba(23, 6, 83, 0.10) !important;
+  color: var(--gb-ink-2) !important;
+  box-shadow: 0 8px 20px rgba(23, 6, 83, 0.045) !important;
+}
+
+/* User messages are intentionally dark, matching the homepage's primary CTA. */
+.growthbot-messages > div > div:only-child:not(:has(> div)) {
+  background: linear-gradient(135deg, var(--gb-ink) 0%, #2a146d 100%) !important;
+  color: var(--gb-white) !important;
+  box-shadow: 0 8px 18px rgba(23, 6, 83, 0.14) !important;
+}
+
+/* Quick-reply chips */
+.growthbot-messages button {
+  background: rgba(255, 255, 255, 0.82) !important;
+  border-color: rgba(36, 76, 255, 0.30) !important;
+  color: var(--gb-blue) !important;
+  font-weight: 700 !important;
+}
+
+.growthbot-messages button:hover,
+.growthbot-messages button:focus-visible {
+  background: var(--gb-blue) !important;
+  border-color: var(--gb-blue) !important;
+  color: var(--gb-white) !important;
+}
+
+/* Typing indicator */
+.growthbot-messages > div:has(> div:nth-child(2)):not(:has(> div:first-child > div)) > div:first-child {
+  background: linear-gradient(135deg, var(--gb-blue), var(--gb-violet)) !important;
+  color: var(--gb-white) !important;
+}
+
+.growthbot-messages > div:has(> div:nth-child(2)):not(:has(> div:first-child > div)) > div:nth-child(2) {
+  background: var(--gb-ice) !important;
+  border-color: rgba(23, 6, 83, 0.10) !important;
+}
+
+.growthbot-messages > div:has(> div:nth-child(2)):not(:has(> div:first-child > div)) > div:nth-child(2) > div {
+  background: var(--gb-blue) !important;
+}
+
+/* Input composer */
+.growthbot-window > div:has(> input) {
+  background: rgba(255, 255, 255, 0.92) !important;
+  border-top-color: rgba(23, 6, 83, 0.10) !important;
+}
+
+.growthbot-window input {
+  background: var(--gb-white) !important;
+  border-color: rgba(23, 6, 83, 0.16) !important;
+  color: var(--gb-ink-2) !important;
+  caret-color: var(--gb-blue);
+}
+
+.growthbot-window input::placeholder {
+  color: rgba(98, 104, 122, 0.72);
+}
+
+.growthbot-window input:focus {
+  border-color: rgba(36, 76, 255, 0.58) !important;
+  box-shadow: 0 0 0 3px rgba(36, 76, 255, 0.10);
+}
+
+.growthbot-window input + button:not(:disabled) {
+  background: linear-gradient(135deg, var(--gb-blue), var(--gb-violet)) !important;
+  color: var(--gb-white) !important;
+  box-shadow: 0 8px 18px rgba(36, 76, 255, 0.20);
+}
+
+.growthbot-window input + button:disabled {
+  background: var(--gb-ice) !important;
+  color: rgba(23, 6, 83, 0.28) !important;
+}
+
+/* Bottom signature */
+.growthbot-window > div:last-child {
+  background: #ffffff !important;
+  border-top-color: rgba(23, 6, 83, 0.08) !important;
+}
+
+.growthbot-window > div:last-child span:first-child {
+  color: rgba(98, 104, 122, 0.72) !important;
+}
+
+.growthbot-window > div:last-child span:last-child {
+  color: var(--gb-ink) !important;
+}
+
+/* Launcher: turn the old orange orb into the same deep-ink / electric-blue
+   language used by the homepage. Orange remains a small accent, not the base. */
+.gb-trigger {
+  background:
+    radial-gradient(circle at 30% 25%, rgba(255, 255, 255, 0.32) 0%, transparent 32%),
+    linear-gradient(135deg, var(--gb-ink) 0%, var(--gb-blue) 70%, var(--gb-violet) 100%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.72) !important;
+  box-shadow:
+    0 16px 34px rgba(23, 6, 83, 0.28),
+    0 6px 18px rgba(36, 76, 255, 0.20),
+    inset 0 1px 0 rgba(255, 255, 255, 0.42) !important;
+}
+
+.gb-trigger:hover {
+  box-shadow:
+    0 20px 44px rgba(23, 6, 83, 0.32),
+    0 8px 22px rgba(36, 76, 255, 0.26),
+    inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+}
+
+/* Unread badge becomes the controlled orange accent used elsewhere on home. */
+.gb-trigger > div {
+  background: var(--gb-orange) !important;
+  box-shadow: 0 4px 10px rgba(243, 107, 54, 0.32) !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .growthbot-window,
+  .growthbot-window *,
+  .gb-trigger,
+  .gb-trigger * {
+    scroll-behavior: auto !important;
+  }
+}
