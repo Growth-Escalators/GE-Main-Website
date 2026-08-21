@@ -1,6 +1,7 @@
-import WhiteLabelSeoLanding, { getWhiteLabelMetadata } from '@/components/seo/WhiteLabelSeoLanding'
+import WhiteLabelSeoLanding, { WHITE_LABEL_PAGES, getWhiteLabelMetadata } from '@/components/seo/WhiteLabelSeoLanding'
 
-export const metadata = getWhiteLabelMetadata('shopifyDevelopment')
+const baseMetadata = getWhiteLabelMetadata('shopifyDevelopment')
+export const metadata = { ...baseMetadata, title: { absolute: WHITE_LABEL_PAGES.shopifyDevelopment.title } }
 
 export default function WhiteLabelShopifyDevelopmentAgencyPage() {
   return <WhiteLabelSeoLanding pageKey="shopifyDevelopment" />
