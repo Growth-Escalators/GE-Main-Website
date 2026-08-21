@@ -1,14 +1,22 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'AI Staffing & Recruiting — Tech & Marketing Talent',
+  title: 'Hire the Best Tech Talent',
   description:
-    'AI-matched tech & marketing staffing. Vetted developers, designers, and marketers — full-time or contract, remote-ready. Get a free hiring audit from Growth Escalators.',
+    'Hire pre-screened technology talent through Growth Escalators. India-based developers, cloud, data, QA, enterprise software and niche tech specialists for permanent, contract and C2H requirements.',
+  keywords: [
+    'hire tech talent India',
+    'technology staffing company India',
+    'IT staffing agency India',
+    'hire developers India',
+    'contract tech talent India',
+    'pre-screened technology talent',
+  ],
   alternates: { canonical: '/staffing' },
   openGraph: {
-    title: 'AI Staffing & Recruiting — Growth Escalators',
+    title: 'Hire the Best Tech Talent — Growth Escalators',
     description:
-      'AI-matched tech & marketing talent. Full-time or contract. Remote-ready. The same people we use for our own clients.',
+      'Pre-screened India-based technology talent for permanent, contract and C2H requirements.',
     url: 'https://www.growthescalators.com/staffing',
   },
 }
