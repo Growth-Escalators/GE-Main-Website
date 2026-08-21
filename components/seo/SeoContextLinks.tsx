@@ -22,6 +22,18 @@ const CLUSTERS: SeoCluster[] = [
     ],
   },
   {
+    label: 'SEO & LEAD GENERATION',
+    headline: 'Connect search visibility to qualified demand',
+    paths: ['/seo-lead-generation-agency-jaipur'],
+    links: [
+      { label: 'SEO & Lead Generation in Jaipur', href: '/seo-lead-generation-agency-jaipur', blurb: 'Technical SEO, local search, content, conversion and lead tracking in one system.' },
+      { label: 'Performance Marketing in Jaipur', href: '/performance-marketing-agency-jaipur', blurb: 'Paid search and paid social for measurable acquisition.' },
+      { label: 'B2B Lead Generation', href: '/b2b-lead-generation-agency', blurb: 'Pipeline creation for B2B services and consulting businesses.' },
+      { label: 'Website Development', href: '/website-development-company-jaipur', blurb: 'Fast, SEO-ready websites and landing pages built to convert.' },
+      { label: 'LinkedIn Marketing', href: '/linkedin-marketing-agency', blurb: 'Authority, outbound and demand creation for B2B growth.' },
+    ],
+  },
+  {
     label: 'HEALTHCARE GROWTH',
     headline: 'Explore related healthcare growth services',
     paths: ['/doctors', '/doctors-marketing-agency-jaipur', '/patient-acquisition-agency', '/personal-branding-for-doctors', '/dental-clinic-marketing-agency-jaipur'],
@@ -39,6 +51,7 @@ const CLUSTERS: SeoCluster[] = [
     paths: ['/performance-marketing-agency-jaipur', '/jewellery-marketing-agency-jaipur', '/real-estate-marketing-agency-jaipur', '/travel-agency-marketing-jaipur', '/coaching-institute-marketing-agency-jaipur', '/gym-fitness-marketing-agency-jaipur', '/salon-spa-marketing-agency-jaipur', '/hotel-resort-marketing-agency-jaipur', '/interior-designer-marketing-agency-jaipur', '/car-detailing-marketing-agency-jaipur', '/restaurant-marketing-agency-jaipur', '/law-firm-marketing-agency-jaipur', '/wedding-event-marketing-agency-jaipur'],
     links: [
       { label: 'Performance Marketing in Jaipur', href: '/performance-marketing-agency-jaipur', blurb: 'The local growth hub connecting paid media, search, CRO and creative.' },
+      { label: 'SEO & Lead Generation', href: '/seo-lead-generation-agency-jaipur', blurb: 'Organic search, local discovery, landing pages and qualified lead systems.' },
       { label: 'Jewellery Marketing', href: '/jewellery-marketing-agency-jaipur', blurb: 'Digital growth for Jaipur jewellery brands and showrooms.' },
       { label: 'Real Estate Marketing', href: '/real-estate-marketing-agency-jaipur', blurb: 'Qualified project enquiries and measurable lead generation.' },
       { label: 'Travel Agency Marketing', href: '/travel-agency-marketing-jaipur', blurb: 'Demand generation for Jaipur travel and tourism businesses.' },
@@ -69,7 +82,7 @@ const CLUSTERS: SeoCluster[] = [
     paths: ['/website-development-company-jaipur', '/software-development-company-jaipur', '/white-label-software-development'],
     links: [
       { label: 'Website Development', href: '/website-development-company-jaipur', blurb: 'Conversion-focused websites built for measurable growth.' },
-      { label: 'Software Development', href: '/software-development-company-jaipur', blurb: 'Custom products and internal systems built around business outcomes.' },
+      { label: 'Software & App Development', href: '/software-development-company-jaipur', blurb: 'Custom products, apps and internal systems built around business outcomes.' },
       { label: 'White-Label Development', href: '/white-label-software-development', blurb: 'Delivery capacity for agencies that need a dependable technology partner.' },
     ],
   },
@@ -78,7 +91,7 @@ const CLUSTERS: SeoCluster[] = [
     headline: 'Explore related offshore staffing services',
     paths: ['/staffing', '/uk-offshore-tech-resources', '/uae-offshore-tech-resources', '/us-tech-staffing-fulfilment', '/australia-offshore-tech-resources'],
     links: [
-      { label: 'India Technology Staffing', href: '/staffing', blurb: 'Screened India-based technology talent for permanent, contract and C2H needs.' },
+      { label: 'Hire Tech Talent', href: '/staffing', blurb: 'Screened India-based technology talent for permanent, contract and C2H needs.' },
       { label: 'UK Offshore Tech Resources', href: '/uk-offshore-tech-resources', blurb: 'India-based delivery support for UK technology requirements.' },
       { label: 'UAE Offshore Tech Resources', href: '/uae-offshore-tech-resources', blurb: 'Offshore technology talent supporting UAE teams.' },
       { label: 'US Offshore Fulfilment', href: '/us-tech-staffing-fulfilment', blurb: 'India-based fulfilment for suitable US technology requirements.' },
