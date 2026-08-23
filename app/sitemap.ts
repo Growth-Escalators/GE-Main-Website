@@ -6,6 +6,7 @@ const REBUILD_2026_08_20 = '2026-08-20T23:23:00+05:30'
 const BRAND_ARCH_2026_08_21 = '2026-08-21T12:06:00+05:30'
 const SEO_CLUSTER_2026_08_21 = '2026-08-21T16:33:00+05:30'
 const WHITE_LABEL_2026_08_21 = '2026-08-21T19:55:00+05:30'
+const INDEXING_LINKS_2026_08_23 = '2026-08-23T21:50:00+05:30'
 
 /*
  * `lastModified` is intentionally tied to real, significant page changes.
@@ -59,7 +60,7 @@ const STATIC_ROUTES: {
   // Shared IndustryLandingPage money pages — materially redesigned on 2026-08-20.
   { path: '/d2c/fashion',                              priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/d2c/beauty',                               priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
-  { path: '/performance-marketing-agency-jaipur',      priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
+  { path: '/performance-marketing-agency-jaipur',      priority: 0.9, changeFrequency: 'monthly', lastModified: INDEXING_LINKS_2026_08_23 },
   { path: '/real-estate-marketing-agency-jaipur',      priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/travel-agency-marketing-jaipur',           priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/dental-clinic-marketing-agency-jaipur',    priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
@@ -70,7 +71,7 @@ const STATIC_ROUTES: {
   { path: '/hotel-resort-marketing-agency-jaipur',     priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/interior-designer-marketing-agency-jaipur', priority: 0.8, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/car-detailing-marketing-agency-jaipur',    priority: 0.8, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
-  { path: '/doctors-marketing-agency-jaipur',          priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
+  { path: '/doctors-marketing-agency-jaipur',          priority: 0.9, changeFrequency: 'monthly', lastModified: INDEXING_LINKS_2026_08_23 },
   { path: '/patient-acquisition-agency',               priority: 0.8, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/personal-branding-for-doctors',            priority: 0.8, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/ecommerce-advertising-agency',             priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
@@ -80,7 +81,7 @@ const STATIC_ROUTES: {
   { path: '/b2b-lead-generation-agency',               priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/linkedin-marketing-agency',                priority: 0.8, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/saas-marketing-agency',                    priority: 0.8, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
-  { path: '/doctors',                                  priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
+  { path: '/doctors',                                  priority: 0.9, changeFrequency: 'monthly', lastModified: INDEXING_LINKS_2026_08_23 },
   { path: '/roofing',                                  priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/real-estate',                              priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
 
