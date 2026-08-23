@@ -2,6 +2,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { formatPostDate, getAllPosts } from '@/lib/blog'
 import HomepageIndustryGateway from './HomepageIndustryGateway'
+import HomepageGrowthSystem from './HomepageGrowthSystem'
 import HomepageMotion from './HomepageMotion'
 import TeamRoster from './TeamRoster'
 import styles from './HomepageReference.module.css'
@@ -222,6 +223,8 @@ export default function HomepageReference() {
           </div>
         </div>
       </section>
+
+      <HomepageGrowthSystem />
 
       <HomepageIndustryGateway />
 
