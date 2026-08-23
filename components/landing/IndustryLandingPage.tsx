@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useId, useState } from 'react'
+import { useEffect, useId, useState, type ReactNode } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Navbar from '@/components/sections/Navbar'
@@ -143,7 +143,7 @@ function SectionHeading({ tag, title, subhead }: { tag: string; title: string; s
   )
 }
 
-export default function IndustryLandingPage({ content }: { content: LandingContent }) {
+export default function IndustryLandingPage({ content, growthSystem }: { content: LandingContent; growthSystem?: ReactNode }) {
   const cycle = useCyclingWord(content.hero.cyclingWords)
   const bookHref = content.bookingUrl ?? '#lead-form'
   const extProps = (href: string) => href.startsWith('http') ? { target: '_blank', rel: 'noopener noreferrer' as const } : {}
@@ -242,6 +242,8 @@ export default function IndustryLandingPage({ content }: { content: LandingConte
             </div>
           </section>
         )}
+
+        {growthSystem}
 
         <section className={styles.section} aria-label="Services">
           <div className="container-x">
