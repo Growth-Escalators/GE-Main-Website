@@ -34,7 +34,7 @@ export const COACHING_JAIPUR_CONTENT: LandingContent = {
     statPills: [
       { emoji: '📉', value: '₹420 → ₹88', label: 'Cost per lead in 6 weeks' },
       { emoji: '📞', value: '2 → 20', label: 'Sales calls / day' },
-      { emoji: '📍', value: 'Jaipur', label: 'HQ · Sector 26, Pratap Nagar' },
+      { emoji: '📍', value: 'Jaipur', label: 'HQ · Durgapura' },
     ],
     image: {
       src: '/industries/coaching/hero.jpg',
@@ -71,7 +71,7 @@ export const COACHING_JAIPUR_CONTENT: LandingContent = {
       "Education runs on trust and timing. Our AI is built to surface serious students, respond instantly, and keep demand alive between admission windows.",
     cards: [
       { emoji: '🧠', title: 'AI lead-intent scoring', body: 'Every enquiry is scored on real enrolment-intent signals — course, class, timeline, budget — so counsellors call the students actually ready to join first.' },
-      { emoji: '💬', title: 'Instant WhatsApp & call follow-up', body: 'Automated, personal follow-up the moment a lead comes in — booking demo classes while interest is hot, instead of hours later when it has cooled.' },
+      { emoji: '💬', title: 'Instant WhatsApp & call follow-up', body: 'Automated, personal follow-up the moment a lead arrives — booking demo classes while interest is hot, instead of hours later when it has cooled.' },
       { emoji: '🎯', title: 'Always-on demand engine', body: 'AI-managed campaigns and retargeting keep your programs in front of prospective students between seasons, so admission windows open with a full pipeline.' },
       { emoji: '🏆', title: 'Results-content at scale', body: 'AI-assisted creation turns your toppers, outcomes, and testimonials into a steady stream of proof content that pre-sells the next batch.' },
     ],
@@ -113,7 +113,7 @@ export const COACHING_JAIPUR_CONTENT: LandingContent = {
   whyUsTag: 'WHY GROWTH ESCALATORS',
   whyUsHeadline: 'The Jaipur education agency that reports admissions, not form fills',
   whyUs: [
-    { title: 'Right here in Jaipur', body: 'Based in Pratap Nagar — Jaipur is one of India’s biggest coaching and test-prep hubs, and we market to those exact students and parents every day.' },
+    { title: 'Right here in Jaipur', body: 'Based in Durgapura — Jaipur is one of India’s biggest coaching and test-prep hubs, and we market to those exact students and parents every day.' },
     { title: 'We optimise for enrolments', body: 'We report cost-per-admission, not cheap leads — because a full batch is the only metric that pays your faculty and your rent.' },
     { title: 'Proven in education', body: 'For an EdTech founder we cut cost-per-lead from ₹420 to ₹88 in six weeks and 10×’d daily sales calls.' },
     { title: 'Real proof, not just promises', body: '₹10Cr+ in ad spend managed, 4.9★ across 187 Google reviews, and 97% client retention — across 100+ brands, based in Jaipur.' },
