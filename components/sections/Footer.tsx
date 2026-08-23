@@ -120,7 +120,7 @@ export default function Footer() {
               <span>Jaipur, India</span>
             </div>
             <div className="ge-footer-contact-links">
-              <span><MapPin size={16} /> Sector 26, Pratap Nagar, Jaipur 302033</span>
+              <span><MapPin size={16} /> Office No: 607-608, 6th Floor, Class of Pearl, Income Tax Colony, Durgapura, Jaipur, Rajasthan 302018, India</span>
               <a href="tel:+917733888883" onClick={() => trackLead('call')}><Phone size={16} /> +91-7733888883</a>
               <a href="mailto:jatin@growthescalators.com" onClick={() => trackLead('email')}><Mail size={16} /> jatin@growthescalators.com</a>
             </div>
