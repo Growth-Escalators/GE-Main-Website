@@ -156,6 +156,7 @@ export const DOCTORS_CONTENT: LandingContent = {
       { label: 'Marketing Agency for Doctors in Jaipur', href: '/doctors-marketing-agency-jaipur', blurb: 'Local healthcare marketing for Jaipur clinics & hospitals — GBP, Maps & compliant ads.' },
       { label: 'Patient Acquisition Agency', href: '/patient-acquisition-agency', blurb: 'Fill your calendar — appointment-booking funnels and lower no-shows.' },
       { label: 'Personal Branding for Doctors', href: '/personal-branding-for-doctors', blurb: 'Build authority and inbound consults on LinkedIn, Instagram & YouTube.' },
+      { label: 'Why performance marketing for doctors is different', href: '/blog/why-performance-marketing-for-doctors-is-different', blurb: 'The compliance, trust, attribution, and patient-intent differences generic ad playbooks miss.' },
       { label: 'Case Studies', href: '/work', blurb: 'Real brands, real numbers, real growth.' },
     ],
   },
