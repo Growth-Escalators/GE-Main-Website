@@ -87,7 +87,7 @@ export default function D2CRevenueSystem() {
             <span className={styles.measurementIcon}>↗</span>
             <div>
               <strong>Measurement &amp; unit economics run across every stage.</strong>
-              <p>We track the commercial truth at each step — CAC, conversion, AOV, margin, retention and profitability — not platform ROAS in isolation.</p>
+              <p>We track the commercial truth at each step — CAC, conversion, AOV, margin, retention and profitability — rather than optimizing platform ROAS in isolation.</p>
             </div>
           </div>
         </div>
