@@ -87,7 +87,7 @@ export default function ContactPage() {
               <a className={styles.channel} href="mailto:jatin@growthescalators.com" onClick={() => trackLead('email', { source: 'contact_page_channel' })}><div>jatin@growthescalators.com<small>Project briefs, partnerships and enquiries</small></div><span>↗</span></a>
               <a className={styles.channel} href="https://cal.com/growth-escalators/discovery-call" target="_blank" rel="noopener noreferrer" onClick={() => trackLead('booking', { source: 'contact_page_channel' })}><div>Book a discovery call<small>Choose a time that works for you</small></div><span>↗</span></a>
             </div>
-            <div className={styles.office} data-p2-reveal><h3>Growth Escalators · Jaipur</h3><p>264/103-104, Sector 26, Sanganer, Pratap Nagar, Jaipur, Rajasthan 302033, India</p><div className={styles.map}><iframe title="Growth Escalators office map" loading="lazy" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3559.2!2d75.83!3d26.81!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zR3Jvd3RoIEVzY2FsYXRvcnM!5e0!3m2!1sen!2sin" /></div></div>
+            <div className={styles.office} data-p2-reveal><h3>Growth Escalators · Jaipur</h3><p>Office No: 607-608, 6th Floor, Class of Pearl, Income Tax Colony, Durgapura, Jaipur, Rajasthan 302018, India</p><div className={styles.map}><iframe title="Growth Escalators office map" loading="lazy" src="https://www.google.com/maps?q=Office%20No%3A%20607-608%2C%206th%20Floor%2C%20Class%20of%20Pearl%2C%20Income%20Tax%20Colony%2C%20Durgapura%2C%20Jaipur%2C%20Rajasthan%20302018%2C%20India&output=embed" /></div></div>
           </div>
 
           <div className={styles.formCard} id="book" data-p2-card>
