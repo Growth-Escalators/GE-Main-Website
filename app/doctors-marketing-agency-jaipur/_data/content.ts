@@ -169,6 +169,7 @@ export const DOCTORS_JAIPUR_CONTENT: LandingContent = {
       { label: 'Patient Acquisition Agency', href: '/patient-acquisition-agency', blurb: 'Our national patient-acquisition service — booking funnels, treatment-level ads, no-show fixes.' },
       { label: 'Personal Branding for Doctors', href: '/personal-branding-for-doctors', blurb: 'Building the individual physician\'s authority and LinkedIn presence, not just the clinic.' },
       { label: 'Marketing for Doctors & Clinics', href: '/doctors', blurb: 'Our national doctors hub — the full picture of how we work with healthcare clients.' },
+      { label: 'Why performance marketing for doctors is different', href: '/blog/why-performance-marketing-for-doctors-is-different', blurb: 'How healthcare campaigns differ on compliance, trust, patient intent, and appointment attribution.' },
       { label: 'Case Studies', href: '/work', blurb: 'Real brands, real numbers, real growth.' },
     ],
   },

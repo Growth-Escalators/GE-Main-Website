@@ -154,6 +154,7 @@ export const JAIPUR_CONTENT: LandingContent = {
       { label: 'Real Estate Marketing Agency in Jaipur', href: '/real-estate-marketing-agency-jaipur', blurb: 'Our Jaipur real-estate spoke — for builders & developers.' },
       { label: 'Marketing Agency for Doctors in Jaipur', href: '/doctors-marketing-agency-jaipur', blurb: 'Our Jaipur healthcare spoke — for clinics & practices.' },
       { label: 'Top 5 Performance Marketing Agencies in Jaipur (2026)', href: '/blog/top-5-performance-marketing-agencies-jaipur', blurb: 'How to choose the right agency — and how we stack up.' },
+      { label: 'AI marketing agency vs in-house vs freelancer', href: '/blog/ai-marketing-agency-vs-in-house-vs-freelancer-cost-math', blurb: 'A practical cost and capability comparison for deciding how to build your growth team.' },
       { label: 'Our Services', href: '/services', blurb: 'The full stack: ads, funnels, web, SEO, and branding.' },
       { label: 'Case Studies', href: '/work', blurb: 'Real brands, real numbers, real growth.' },
     ],
