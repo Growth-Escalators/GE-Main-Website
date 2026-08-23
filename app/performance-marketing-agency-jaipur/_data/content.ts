@@ -102,7 +102,7 @@ export const JAIPUR_CONTENT: LandingContent = {
 
   whyUsHeadline: 'Why choose Growth Escalators as your performance marketing agency in Jaipur',
   whyUs: [
-    { title: 'Right here in Jaipur',            body: 'Based in Pratap Nagar, Jaipur — same time zone, real meetings, a local team that answers. Plus clients served across India.' },
+    { title: 'Right here in Jaipur',            body: 'Based in Durgapura, Jaipur — same time zone, real meetings, a local team that answers. Plus clients served across India.' },
     { title: '4.9★ from 187+ reviews',          body: 'A 97% client-retention rate and 187+ Google reviews at 4.9 stars. We keep clients because we keep delivering.' },
     { title: '₹10Cr+ managed, 10,000+ campaigns', body: 'Senior operators who have spent real money at scale — not interns learning on your budget.' },
     { title: 'Profit-first, skin in the game',  body: 'We optimise return-adjusted ROAS and will structure performance-based deals around your CAC targets, not just a retainer.' },
