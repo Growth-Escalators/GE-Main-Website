@@ -20,7 +20,8 @@
 
 .eyebrow,
 .systemHeader p,
-.methodTitle p {
+.methodTitle p,
+.decisionHeading > p {
   margin: 0;
   font-size: 10px;
   line-height: 1;
@@ -70,7 +71,8 @@
 }
 
 .systemCard,
-.methodCard {
+.methodCard,
+.decisionSection {
   border: 1px solid rgba(23, 6, 83, .12);
   background: #fff;
   box-shadow: 0 24px 70px rgba(23, 6, 83, .055);
@@ -92,7 +94,8 @@
 }
 
 .systemHeader h3,
-.methodTitle h3 {
+.methodTitle h3,
+.decisionHeading h3 {
   margin: 8px 0 0;
   text-transform: uppercase;
   letter-spacing: -.03em;
@@ -228,6 +231,74 @@
   color: #676d7c;
 }
 
+.decisionSection {
+  margin-top: 24px;
+  overflow: hidden;
+  border-radius: 30px;
+}
+
+.decisionHeading {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, .65fr);
+  gap: 24px 60px;
+  align-items: end;
+  padding: clamp(28px, 3.2vw, 44px);
+  border-bottom: 1px solid rgba(23, 6, 83, .1);
+}
+
+.decisionHeading > p { grid-column: 1 / -1; }
+
+.decisionHeading h3 {
+  max-width: 720px;
+  font-size: clamp(34px, 4vw, 54px);
+  line-height: .94;
+}
+
+.decisionHeading > span {
+  color: #6b7080;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.decisionGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.decisionCard {
+  min-height: 230px;
+  padding: 28px;
+  border-right: 1px solid rgba(23, 6, 83, .1);
+}
+
+.decisionCard:last-child { border-right: 0; }
+
+.decisionCard small {
+  display: block;
+  color: #777d8c;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+}
+
+.decisionCard strong {
+  display: block;
+  margin-top: 34px;
+  color: #170653;
+  font-size: clamp(25px, 2.4vw, 34px);
+  line-height: .96;
+  letter-spacing: -.025em;
+  text-transform: uppercase;
+}
+
+.decisionCard p {
+  margin: 14px 0 0;
+  color: #626879;
+  font-size: 12px;
+  line-height: 1.58;
+}
+
 .methodCard {
   margin-top: 24px;
   border-radius: 30px;
@@ -320,6 +391,8 @@
   text-transform: uppercase;
 }
 
+.mobileSticky { display: none; }
+
 @media (max-width: 1080px) {
   .intro { grid-template-columns: 1fr; max-width: 930px; }
   .introSide { max-width: 650px; }
@@ -329,10 +402,12 @@
   .stage:last-child { grid-column: 1 / -1; min-height: 230px; }
   .stageArrow { display: none; }
   .methodTitle { align-items: start; flex-direction: column; }
+  .decisionHeading { grid-template-columns: 1fr; }
+  .decisionHeading > p { grid-column: auto; }
 }
 
 @media (max-width: 760px) {
-  .section { padding: 82px 0; }
+  .section { padding: 82px 0 118px; }
   .intro { gap: 26px; margin-bottom: 38px; }
   .intro h2 { font-size: clamp(44px, 13vw, 62px); }
   .systemHeader { align-items: flex-start; flex-direction: column; }
@@ -344,9 +419,46 @@
   .stage > p { min-height: 0; max-width: 440px; }
   .stage small { margin-top: 17px; }
   .measurementRail { align-items: flex-start; margin: 0 11px 11px; padding: 18px; }
+  .decisionGrid { grid-template-columns: 1fr; }
+  .decisionCard { min-height: 0; border-right: 0; border-bottom: 1px solid rgba(23, 6, 83, .1); }
+  .decisionCard:last-child { border-bottom: 0; }
+  .decisionCard strong { margin-top: 22px; }
   .dmaicGrid { grid-template-columns: 1fr; }
   .dmaicItem { padding: 17px 0; border-bottom: 1px solid rgba(23, 6, 83, .1); }
   .dmaicItem + .dmaicItem { padding-left: 0; border-left: 0; }
   .dmaicItem:last-child { border-bottom: 0; }
   .closingBand { align-items: flex-start; flex-direction: column; }
+
+  .mobileSticky {
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: max(12px, env(safe-area-inset-bottom));
+    z-index: 95;
+    display: grid;
+    grid-template-columns: 1.15fr .85fr;
+    gap: 8px;
+    padding: 8px;
+    border: 1px solid rgba(23, 6, 83, .14);
+    border-radius: 18px;
+    background: rgba(255,255,255,.96);
+    box-shadow: 0 18px 48px rgba(23, 6, 83, .24);
+    backdrop-filter: blur(14px);
+  }
+
+  .mobileSticky a {
+    min-height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    font-size: 10px;
+    font-weight: 900;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+
+  .mobileAudit { background: #170653; color: #fff; }
+  .mobileWhatsapp { border: 1px solid rgba(23, 6, 83, .16); background: #f3f1ff; color: #170653; }
 }
