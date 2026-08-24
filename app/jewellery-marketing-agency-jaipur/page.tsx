@@ -1,5 +1,5 @@
-import PriorityLocalLanding from '@/components/seo/PriorityLocalLanding'
+import PriorityCommercialPage from '@/components/commercial/PriorityCommercialPage'
 
 export default function JewelleryMarketingJaipurPage() {
-  return <PriorityLocalLanding pageKey="jewelleryJaipur" />
+  return <PriorityCommercialPage pageKey="jewelleryJaipur" />
 }
