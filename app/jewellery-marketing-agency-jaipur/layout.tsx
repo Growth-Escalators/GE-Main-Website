@@ -24,11 +24,9 @@ export const metadata: Metadata = {
   },
 }
 
-/* Page-level JSON-LD — a Jaipur-scoped ProfessionalService (jewellery
-   marketing) node linked back to the global #organization graph. Server-
-   rendered so AI crawlers (which don't run JS) see it in raw HTML. NAP is the
-   real registered office; geo lat/long is approximate — confirm against the
-   verified Google Business Profile and update if it differs. */
+/* Jaipur-scoped ProfessionalService linked to the global organization.
+   Keep NAP identical to app/layout.tsx + the visible footer. Add geo only
+   after the current Google Business Profile pin is verified. */
 const SCHEMA = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -40,18 +38,17 @@ const SCHEMA = {
       image: `${SITE}/og-image.jpg`,
       description:
         'Marketing agency in Jaipur for jewellery brands, showrooms and D2C jewellery labels — performance campaigns, Instagram content, Google Maps local SEO, and showroom-footfall funnels.',
-      telephone: '+91-77338-88883',
-      email: 'Info@growthescalators.com',
+      telephone: '+91-7733888883',
+      email: 'jatin@growthescalators.com',
       priceRange: '₹₹',
       address: {
         '@type': 'PostalAddress',
-        streetAddress: '264/103-104, Sector 26, Sanganer, Pratap Nagar',
+        streetAddress: 'Office No: 607-608, 6th Floor, Class of Pearl, Income Tax Colony, Durgapura',
         addressLocality: 'Jaipur',
         addressRegion: 'Rajasthan',
-        postalCode: '302033',
+        postalCode: '302018',
         addressCountry: 'IN',
       },
-      geo: { '@type': 'GeoCoordinates', latitude: 26.81, longitude: 75.83 },
       areaServed: [
         { '@type': 'City', name: 'Jaipur' },
         { '@type': 'Country', name: 'India' },
