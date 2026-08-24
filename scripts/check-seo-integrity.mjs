@@ -12,6 +12,7 @@ const layout = read('app/layout.tsx')
 const CRITICAL_MONEY_ROUTES = [
   '/d2c',
   '/d2c/fashion',
+  '/d2c/fashion/womens-clothing',
   '/d2c/beauty',
   '/ecommerce-advertising-agency',
   '/meta-ads-agency-for-ecommerce',
@@ -21,10 +22,12 @@ const CRITICAL_MONEY_ROUTES = [
   '/seo-lead-generation-agency-jaipur',
   '/jewellery-marketing-agency-jaipur',
   '/real-estate-marketing-agency-jaipur',
+  '/real-estate/project-launch-marketing',
   '/restaurant-marketing-agency-jaipur',
   '/law-firm-marketing-agency-jaipur',
   '/wedding-event-marketing-agency-jaipur',
   '/travel-agency-marketing-jaipur',
+  '/travel-marketing-agency',
   '/coaching-institute-marketing-agency-jaipur',
   '/gym-fitness-marketing-agency-jaipur',
   '/salon-spa-marketing-agency-jaipur',
@@ -33,6 +36,8 @@ const CRITICAL_MONEY_ROUTES = [
   '/car-detailing-marketing-agency-jaipur',
   '/doctors',
   '/doctors-marketing-agency-jaipur',
+  '/ivf-marketing-agency-jaipur',
+  '/orthopedic-marketing-agency-jaipur',
   '/dental-clinic-marketing-agency-jaipur',
   '/patient-acquisition-agency',
   '/personal-branding-for-doctors',
@@ -46,6 +51,7 @@ const CRITICAL_MONEY_ROUTES = [
   '/white-label-software-development',
   '/white-label-shopify-development-agency',
   '/white-label-performance-marketing-agency',
+  '/white-label-seo-agency',
   '/staffing',
   '/uk-offshore-tech-resources',
   '/uae-offshore-tech-resources',
@@ -67,6 +73,7 @@ const WHITE_LABEL_ROUTES = [
   '/white-label-software-development',
   '/white-label-shopify-development-agency',
   '/white-label-performance-marketing-agency',
+  '/white-label-seo-agency',
 ]
 
 const RESTORED_ROUTES = [

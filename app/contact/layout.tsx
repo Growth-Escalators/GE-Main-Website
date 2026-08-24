@@ -25,16 +25,11 @@ const LOCAL_BUSINESS_SCHEMA = {
   priceRange: '₹₹',
   address: {
     '@type': 'PostalAddress',
-    streetAddress: '264/103-104, Sector 26, Sanganer, Pratap Nagar',
+    streetAddress: 'Office No: 607-608, 6th Floor, Class of Pearl, Income Tax Colony, Durgapura',
     addressLocality: 'Jaipur',
     addressRegion: 'Rajasthan',
-    postalCode: '302033',
+    postalCode: '302018',
     addressCountry: 'IN',
-  },
-  geo: {
-    '@type': 'GeoCoordinates',
-    latitude: 26.8189,
-    longitude: 75.7950,
   },
   openingHoursSpecification: [
     {
