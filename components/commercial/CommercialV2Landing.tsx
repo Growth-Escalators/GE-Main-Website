@@ -18,6 +18,8 @@ export type CommercialDecision = {
   then: string
 }
 
+export type CommercialSectionKey = 'diagnosis' | 'system' | 'method' | 'decisions' | 'proof' | 'capabilities' | 'ai' | 'form' | 'faq' | 'resources'
+
 export type CommercialStrategy = {
   eyebrow: string
   systemLabel: string
@@ -31,7 +33,7 @@ export type CommercialStrategy = {
   formVariant?: LeadFormVariant
   businessVertical?: string
   service?: string
-  sectionOrder?: Array<'diagnosis' | 'system' | 'method' | 'decisions' | 'proof' | 'capabilities' | 'ai' | 'form' | 'faq' | 'resources'>
+  sectionOrder: CommercialSectionKey[]
 }
 
 const METHOD = [
@@ -70,10 +72,10 @@ function SectionHeading({ eyebrow, title, copy }: { eyebrow: string; title: stri
 }
 
 export default function CommercialV2Landing({ content, strategy }: { content: LandingContent; strategy: CommercialStrategy }) {
-  const order = strategy.sectionOrder ?? ['diagnosis', 'system', 'method', 'decisions', 'proof', 'capabilities', 'ai', 'form', 'faq', 'resources']
+  const order = strategy.sectionOrder
   const result = content.resultHighlight
 
-  const renderSection = (section: CommercialStrategy['sectionOrder'][number]) => {
+  const renderSection = (section: CommercialSectionKey) => {
     if (section === 'diagnosis') {
       return (
         <section className={styles.lightSection} aria-labelledby="commercial-diagnosis" key={section}>
