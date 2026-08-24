@@ -25,10 +25,6 @@ export const metadata: Metadata = {
   },
 }
 
-/* Page-level JSON-LD — a Jaipur healthcare ProfessionalService node linked to
-   the global #organization graph (app/layout.tsx). Server-rendered so AI
-   crawlers see it in raw HTML. Real NAP + 4.9★/187 rating (from app/contact).
-   geo is approximate (site map embed) — confirm against the verified GBP. */
 const SCHEMA = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -40,18 +36,17 @@ const SCHEMA = {
       image: `${SITE}/og-image.jpg`,
       description:
         'Marketing agency for doctors, clinics, and hospitals in Jaipur — Google Business Profile & local SEO, healthcare-compliant Google and Meta ads, WhatsApp appointment automation.',
-      telephone: '+91-77338-88883',
+      telephone: '+91-7733888883',
       email: 'Info@growthescalators.com',
       priceRange: '₹₹₹',
       address: {
         '@type': 'PostalAddress',
-        streetAddress: '264/103-104, Sector 26, Sanganer, Pratap Nagar',
+        streetAddress: 'Office No: 607-608, 6th Floor, Class of Pearl, Income Tax Colony, Durgapura',
         addressLocality: 'Jaipur',
         addressRegion: 'Rajasthan',
-        postalCode: '302033',
+        postalCode: '302018',
         addressCountry: 'IN',
       },
-      geo: { '@type': 'GeoCoordinates', latitude: 26.81, longitude: 75.83 },
       areaServed: [
         { '@type': 'City', name: 'Jaipur' },
         { '@type': 'State', name: 'Rajasthan' },

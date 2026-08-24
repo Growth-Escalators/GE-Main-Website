@@ -6,7 +6,7 @@ const PATH = '/performance-marketing-agency-jaipur'
 export const metadata: Metadata = {
   title: 'Performance Marketing Agency in Jaipur',
   description:
-    "Jaipur's AI-first performance marketing agency — ₹10Cr+ ad spend managed, 10,000+ campaigns, rated 4.9★ by 187+ clients. Meta & Google Ads built to scale ROAS. Book a free call.",
+    "Jaipur's performance marketing agency — ₹10Cr+ ad spend managed and 10,000+ campaigns across Meta, Google, funnels and CRO. Book a free growth audit.",
   keywords: [
     'performance marketing agency in jaipur',
     'performance marketing agency jaipur',
@@ -20,18 +20,12 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Performance Marketing Agency in Jaipur — Growth Escalators',
     description:
-      'AI-first Meta & Google Ads in Jaipur. ₹10Cr+ managed, 10,000+ campaigns, 4.9★ from 187+ clients. ROAS that scales profitably.',
+      'Meta and Google acquisition, funnels and CRO from our Jaipur team. ₹10Cr+ ad spend managed and 10,000+ campaigns delivered.',
     url: PATH,
     type: 'website',
   },
 }
 
-/* Page-level JSON-LD — a Jaipur-scoped ProfessionalService node that links back
-   to the global #organization graph (app/layout.tsx). Server-rendered so AI
-   crawlers (which don't run JS) see it in raw HTML. All values are real/published
-   (NAP from app/contact; 4.9★/187 from the contact page).
-   NOTE: geo lat/long is approximate (from the site's map embed) — confirm against
-   the verified Google Business Profile and update if it differs. */
 const SCHEMA = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -42,19 +36,18 @@ const SCHEMA = {
       url: `${SITE}${PATH}`,
       image: `${SITE}/og-image.jpg`,
       description:
-        'AI-first performance marketing agency in Jaipur. Meta & Google Ads, funnels, and CRO that scale ROAS profitably.',
-      telephone: '+91-77338-88883',
+        'Performance marketing agency in Jaipur for Meta Ads, Google Ads, funnels, conversion optimisation and measurable growth.',
+      telephone: '+91-7733888883',
       email: 'Info@growthescalators.com',
       priceRange: '₹₹',
       address: {
         '@type': 'PostalAddress',
-        streetAddress: '264/103-104, Sector 26, Sanganer, Pratap Nagar',
+        streetAddress: 'Office No: 607-608, 6th Floor, Class of Pearl, Income Tax Colony, Durgapura',
         addressLocality: 'Jaipur',
         addressRegion: 'Rajasthan',
-        postalCode: '302033',
+        postalCode: '302018',
         addressCountry: 'IN',
       },
-      geo: { '@type': 'GeoCoordinates', latitude: 26.81, longitude: 75.83 },
       areaServed: [
         { '@type': 'City', name: 'Jaipur' },
         { '@type': 'Country', name: 'India' },
@@ -87,10 +80,7 @@ const SCHEMA = {
 export default function JaipurLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA) }} />
       {children}
     </>
   )
