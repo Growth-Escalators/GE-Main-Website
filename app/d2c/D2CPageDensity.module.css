@@ -12,7 +12,9 @@
 .page :global(section[aria-label="AI advantage"]),
 .page :global(section[aria-label="Services"]),
 .page :global(section[aria-label="Featured result"]),
-.page :global(section[aria-label="FAQ"]) {
+.page :global(section[aria-label="FAQ"]),
+.page :global(section[aria-label="Free calculator"]),
+.page :global(section[aria-label="Lead form"]) {
   padding-top: clamp(68px, 7vw, 88px) !important;
   padding-bottom: clamp(68px, 7vw, 88px) !important;
 }
@@ -79,7 +81,9 @@
   .page :global(section[aria-label="AI advantage"]),
   .page :global(section[aria-label="Services"]),
   .page :global(section[aria-label="Featured result"]),
-  .page :global(section[aria-label="FAQ"]) {
+  .page :global(section[aria-label="FAQ"]),
+  .page :global(section[aria-label="Free calculator"]),
+  .page :global(section[aria-label="Lead form"]) {
     padding-top: 54px !important;
     padding-bottom: 58px !important;
   }
