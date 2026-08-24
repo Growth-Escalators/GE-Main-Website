@@ -6,7 +6,7 @@ const PATH = '/travel-agency-marketing-jaipur'
 export const metadata: Metadata = {
   title: 'Travel Agency Marketing in Jaipur',
   description:
-    'Jaipur-based marketing agency for travel companies, tour operators & DMCs. We generate qualified booking enquiries with intent-based ads and instant WhatsApp follow-up. Cut Flight Ticket Fare’s cost-per-lead ₹380→₹94, 4× conversion, 500+ leads/mo. Free audit.',
+    'Jaipur marketing for travel companies, tour operators and DMCs focused on direct enquiries through Meta Ads, Google Ads, landing pages and WhatsApp follow-up.',
   keywords: [
     'travel agency marketing jaipur',
     'travel company marketing jaipur',
@@ -20,16 +20,12 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Travel Agency Marketing in Jaipur — Growth Escalators',
     description:
-      'Qualified booking enquiries for Jaipur travel companies via intent-based ads + instant WhatsApp follow-up. Real result: Flight Ticket Fare — ₹380→₹94 CPL, 4× conversion, 500+ leads/mo.',
+      'Direct travel enquiry acquisition for Jaipur travel companies through Meta, Google, landing pages and WhatsApp qualification.',
     url: PATH,
     type: 'website',
   },
 }
 
-/* Page-level JSON-LD — a Jaipur-scoped ProfessionalService (travel marketing)
-   node linked back to the global #organization graph. Server-rendered so AI
-   crawlers see it in raw HTML. NAP is the real registered office; geo is
-   approximate — confirm against the verified Google Business Profile. */
 const SCHEMA = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -40,19 +36,18 @@ const SCHEMA = {
       url: `${SITE}${PATH}`,
       image: `${SITE}/og-image.jpg`,
       description:
-        'Marketing agency in Jaipur for travel companies, tour operators and DMCs — intent-based ads, instant WhatsApp lead response, enquiry funnels, and cost-per-booking tracking.',
-      telephone: '+91-77338-88883',
+        'Marketing agency in Jaipur for travel companies, tour operators and DMCs — Meta and Google acquisition, landing pages, WhatsApp qualification and direct-enquiry tracking.',
+      telephone: '+91-7733888883',
       email: 'Info@growthescalators.com',
       priceRange: '₹₹',
       address: {
         '@type': 'PostalAddress',
-        streetAddress: '264/103-104, Sector 26, Sanganer, Pratap Nagar',
+        streetAddress: 'Office No: 607-608, 6th Floor, Class of Pearl, Income Tax Colony, Durgapura',
         addressLocality: 'Jaipur',
         addressRegion: 'Rajasthan',
-        postalCode: '302033',
+        postalCode: '302018',
         addressCountry: 'IN',
       },
-      geo: { '@type': 'GeoCoordinates', latitude: 26.81, longitude: 75.83 },
       areaServed: [
         { '@type': 'City', name: 'Jaipur' },
         { '@type': 'Country', name: 'India' },
@@ -80,10 +75,7 @@ const SCHEMA = {
 export default function TravelJaipurLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA) }} />
       {children}
     </>
   )
