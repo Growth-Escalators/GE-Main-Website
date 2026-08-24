@@ -34,12 +34,37 @@ const STAGES = [
   },
 ] as const
 
-const DMAIC = [
-  ['Define', 'Set the revenue or profit objective.'],
-  ['Measure', 'Baseline CAC, CVR, AOV, margin and retention.'],
-  ['Analyze', 'Find the constraint with the highest commercial impact.'],
-  ['Improve', 'Apply only the levers that address that constraint.'],
-  ['Control', 'Protect the gain as traffic, spend and volume increase.'],
+const OPERATING_METHOD = [
+  {
+    title: 'Define',
+    copy: 'Set the revenue or profit objective.',
+    meta: 'DMAIC core',
+  },
+  {
+    title: 'Measure',
+    copy: 'Baseline CAC, CVR, AOV, margin and retention.',
+    meta: 'DMAIC core',
+  },
+  {
+    title: 'Analyze',
+    copy: 'Find the constraint with the highest commercial impact.',
+    meta: 'DMAIC core',
+  },
+  {
+    title: 'Improve',
+    copy: 'Apply only the levers that address that constraint.',
+    meta: 'DMAIC core',
+  },
+  {
+    title: 'Control',
+    copy: 'Protect the gain as traffic, spend and volume increase.',
+    meta: 'DMAIC core',
+  },
+  {
+    title: 'Scale',
+    copy: 'Expand the proven improvement without breaking the economics.',
+    meta: 'GE extension',
+  },
 ] as const
 
 const COMMERCIAL_DECISIONS = [
@@ -130,24 +155,27 @@ export default function D2CRevenueSystem() {
         <div className={styles.methodCard}>
           <div className={styles.methodTitle}>
             <div>
-              <p>THE OPERATING METHOD</p>
-              <h3>Six Sigma-inspired diagnosis, applied to growth economics.</h3>
+              <p>THE SIX-PART OPERATING METHOD</p>
+              <h3>Six Sigma core. One commercial extension for scale.</h3>
             </div>
-            <span>DMAIC is how we decide what deserves attention first, how we prove an improvement and how we stop the gain disappearing when the brand scales.</span>
+            <span>
+              Standard DMAIC has five phases: Define, Measure, Analyze, Improve and Control. Growth Escalators adds a sixth commercial phase — Scale — so a proven gain is expanded only after the economics are under control.
+            </span>
           </div>
           <div className={styles.dmaicGrid}>
-            {DMAIC.map(([title, copy], index) => (
-              <div className={styles.dmaicItem} key={title}>
+            {OPERATING_METHOD.map((step, index) => (
+              <div className={`${styles.dmaicItem} ${step.meta === 'GE extension' ? styles.extensionItem : ''}`} key={step.title}>
                 <span>0{index + 1}</span>
-                <strong>{title}</strong>
-                <p>{copy}</p>
+                <strong>{step.title}</strong>
+                <p>{step.copy}</p>
+                <small>{step.meta}</small>
               </div>
             ))}
           </div>
         </div>
 
         <div className={styles.closingBand}>
-          <p>We don&apos;t call growth solved until the improvement can be sustained profitably.</p>
+          <p>Diagnose. Improve. Control. Then scale what has actually been proven.</p>
           <Link href="#lead-form">Get a D2C growth audit <span>↗</span></Link>
         </div>
       </div>
