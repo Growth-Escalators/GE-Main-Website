@@ -16,7 +16,7 @@ export const D2C_CONTENT: LandingContent = {
     cyclingWords: ['Built for D2C brands.', 'Built for Shopify stores.', 'Built for e-commerce.', 'Built for founders.'],
     subhead:
       "We help D2C brands that are stuck at a plateaued ROAS scale profitably again — by rebuilding the account, not running the same playbook harder.",
-    primaryCta: { label: 'Book a Free Strategy Call', href: '#lead-form' },
+    primaryCta: { label: 'Get a Free D2C Growth Audit', href: '#lead-form' },
     secondaryCta: { label: 'See Real Results ↓', href: '#results' },
     statPills: [
       { emoji: '📊', value: '10,000+', label: 'Campaigns Run'   },
@@ -63,7 +63,7 @@ export const D2C_CONTENT: LandingContent = {
   },
 
   servicesHeadline: 'Everything a plateaued D2C account actually needs',
-  servicesSubhead: 'Not a service supermarket — the specific things that move ROAS when it’s stuck.',
+  servicesSubhead: 'We use the channel, creative, CRO and data levers that solve the diagnosed constraint — not a fixed agency package.',
   services: [
     { title: 'Meta Ads Account Rebuilds',    body: 'Full ICP, audience architecture, and campaign-structure rebuild for accounts that have plateaued — not incremental tweaks to what’s already broken.' },
     { title: 'Creative Testing Systems',     body: 'Structured angle/hook/format rotation across cold, warm, and hot temperatures, so fresh creative keeps feeding the account instead of fatiguing silently.' },
@@ -87,10 +87,10 @@ export const D2C_CONTENT: LandingContent = {
   },
 
   process: [
-    { step: '01', title: 'Account Diagnostic',   body: "A free audit of your current account — where spend is leaking, why ROAS plateaued, and what we'd rebuild first." },
-    { step: '02', title: 'Rebuild the Foundation', body: 'ICP targeting, audience architecture, and attribution get fixed before a single rupee of new scaling spend goes out.' },
-    { step: '03', title: 'Systematic Testing',    body: 'Structured creative and angle testing across cold/warm/hot, on a fixed cadence — not one-off campaigns.' },
-    { step: '04', title: 'Scale What’s Proven', body: 'Disciplined, rules-based budget increases on the winners — so scaling grows ROAS instead of breaking it.' },
+    { step: '01', title: 'Account Diagnostic',   body: "We establish the commercial baseline and identify where revenue, margin or paid efficiency is actually leaking." },
+    { step: '02', title: 'Fix the Constraint', body: 'We prioritize the highest-impact bottleneck first — whether it sits in acquisition, creative, CRO, attribution, monetization or retention.' },
+    { step: '03', title: 'Prove the Improvement',    body: 'Changes are measured against the baseline so we know whether the intervention improved the economics, not just a dashboard metric.' },
+    { step: '04', title: 'Scale What’s Proven', body: 'Budget and volume increase only after the system is healthier, with controls around CAC, conversion, margin and profitability.' },
   ],
 
   whyUs: [
@@ -129,9 +129,9 @@ export const D2C_CONTENT: LandingContent = {
   ],
 
   finalCta: {
-    title: 'Ready to get off the plateau?',
-    subhead: "Book a free account diagnostic. We'll tell you exactly what's leaking spend and what we'd rebuild first — no obligation.",
-    ctaLabel: 'Book a Free Strategy Call',
+    title: 'Find the constraint before you spend more.',
+    subhead: "Share your current revenue and ad-spend range. We'll review where the D2C system is most likely leaking value and tell you what we would investigate first — no generic sales deck and no obligation.",
+    ctaLabel: 'Get My Free D2C Growth Audit',
   },
 
   videoTestimonialsTag: 'HEAR FROM D2C FOUNDERS',
@@ -145,15 +145,15 @@ export const D2C_CONTENT: LandingContent = {
   leadForm: {
     recipient: 'Info@growthescalators.com',
     subjectPrefix: 'New D2C Lead',
-    headline: 'Tell us about your brand',
-    subhead: "Fill this in and we'll get back within 24 hours with a no-obligation account diagnostic.",
-    tag: "LET'S TALK",
+    headline: 'Find what is stopping your D2C brand from scaling profitably',
+    subhead: "Share a few numbers about the business. We'll review the acquisition and conversion journey and tell you where we believe the biggest commercial constraint is — and what we would investigate first.",
+    tag: 'FREE D2C GROWTH AUDIT',
   },
 
   relatedResources: {
-    tag: 'GO DEEPER',
-    headline: 'By category, and the playbooks behind the work',
-    subhead: 'Specialized pages and the frameworks we apply to every D2C account.',
+    tag: 'D2C GROWTH LIBRARY',
+    headline: 'Go deeper on the systems behind profitable D2C scaling',
+    subhead: 'Category pages and practical playbooks covering acquisition, creative, unit economics and channel sequencing — useful if you want to see how we think before speaking with us.',
     links: [
       { label: 'Meta ads for fashion & apparel brands', href: '/d2c/fashion', blurb: 'Return-adjusted ROAS, seasonal catalogs, and drop-cycle creative — performance marketing built for fashion.' },
       { label: 'Beauty & skincare brand marketing', href: '/d2c/beauty', blurb: 'UGC, sampling funnels, and compliant claims creative — performance marketing built for beauty D2C.' },
