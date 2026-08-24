@@ -8,7 +8,7 @@ on:
 jobs:
   seo-integrity:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -22,8 +22,14 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Check sitemap, redirects and internal links
+      - name: Check sitemap, redirects, NAP and internal links
         run: node scripts/check-seo-integrity.mjs
 
-      - name: Production build
+      - name: Check Commercial V2 preservation contracts
+        run: node scripts/check-commercial-v2.mjs
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Production build and static generation
         run: npm run build
