@@ -1,6 +1,5 @@
-import IndustryLandingPage from '@/components/landing/IndustryLandingPage'
-import { DOCTORS_JAIPUR_CONTENT } from './_data/content'
+import PriorityLocalLanding from '@/components/seo/PriorityLocalLanding'
 
 export default function DoctorsMarketingAgencyJaipurPage() {
-  return <IndustryLandingPage content={DOCTORS_JAIPUR_CONTENT} />
+  return <PriorityLocalLanding pageKey="doctorsJaipur" />
 }
