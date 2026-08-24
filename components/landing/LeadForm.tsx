@@ -87,6 +87,7 @@ export default function LeadForm({
 
   const variant = requestedVariant ?? inferLeadFormVariant(subjectPrefix, headline)
   const vertical = businessVertical || (variant === 'generic' ? 'general' : variant)
+  const isMainD2CAudit = variant === 'd2c' && subjectPrefix.trim().toLowerCase() === 'new d2c lead'
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -141,6 +142,7 @@ export default function LeadForm({
   }
 
   const submitting = status === 'submitting'
+  const submitLabel = isMainD2CAudit ? 'Get My D2C Growth Audit →' : 'Send my enquiry'
 
   return (
     <section id="lead-form" className={styles.section} aria-label="Lead form">
@@ -155,10 +157,34 @@ export default function LeadForm({
             <span className="section-tag">{tag}</span>
             <h2 className={styles.headline}>{headline}</h2>
             <p className={styles.subhead}>{subhead}</p>
+
+            {isMainD2CAudit && (
+              <div className={styles.proofPanel}>
+                <span className={styles.proofKicker}>A RECENT D2C REBUILD</span>
+                <strong>Paraiso</strong>
+                <div className={styles.proofMetrics}>
+                  <span><b>1.9× → 3.2×</b><small>ROAS</small></span>
+                  <span><b>6×</b><small>Revenue growth</small></span>
+                  <span><b>60 days</b><small>To the new run-rate</small></span>
+                </div>
+              </div>
+            )}
+
             <ul className={styles.bullets}>
-              <li>✓ No commitment — the first strategy session is free</li>
-              <li>✓ Reply within 24 hours, weekdays</li>
-              <li>✓ Your enquiry is reviewed by a real person</li>
+              {isMainD2CAudit ? (
+                <>
+                  <li>✓ We identify the highest-impact revenue constraint first</li>
+                  <li>✓ You get a clear view of what we would fix before adding more spend</li>
+                  <li>✓ A real strategist reviews the numbers — not a template</li>
+                  <li>✓ No commitment required to use the recommendations</li>
+                </>
+              ) : (
+                <>
+                  <li>✓ No commitment — the first strategy session is free</li>
+                  <li>✓ Reply within 24 hours, weekdays</li>
+                  <li>✓ Your enquiry is reviewed by a real person</li>
+                </>
+              )}
             </ul>
           </div>
 
@@ -172,7 +198,7 @@ export default function LeadForm({
               aria-live="polite"
             >
               <div className={styles.successCheck} aria-hidden>✓</div>
-              <h3 className={styles.successTitle}>Thanks — we got it.</h3>
+              <h3 className={styles.successTitle}>{isMainD2CAudit ? 'Your audit request is in.' : 'Thanks — we got it.'}</h3>
               <p className={styles.successBody}>
                 We&rsquo;ll review your details and reply within 24 hours (weekdays). If you&rsquo;d like to fast-track, you can also reach us at{' '}
                 <a href={`mailto:${recipient}`} onClick={() => trackLead('email')}>{recipient}</a> or on WhatsApp at +91 77338 88883.
@@ -194,7 +220,18 @@ export default function LeadForm({
 
               <TextField name="email" label="Work email" type="email" required autoComplete="email" placeholder="you@company.com" />
 
-              {variant === 'd2c' && (
+              {variant === 'd2c' && isMainD2CAudit && (
+                <>
+                  <TextField name="website" label="Brand / website" placeholder="yourbrand.com" />
+                  <div className={styles.row}>
+                    <SelectField name="monthlyRevenue" label="Monthly online revenue" options={D2C_REVENUE} />
+                    <SelectField name="budget" label="Monthly ad / marketing spend" options={MARKETING_SPEND} />
+                  </div>
+                  <TextAreaField label="What feels stuck right now? (optional)" placeholder="ROAS plateau, low conversion rate, creative fatigue, weak repeat purchase, scaling issues…" />
+                </>
+              )}
+
+              {variant === 'd2c' && !isMainD2CAudit && (
                 <>
                   <div className={styles.row}>
                     <TextField name="company" label="Brand name" placeholder="Your brand" />
@@ -239,8 +276,10 @@ export default function LeadForm({
               )}
 
               <button type="submit" className={`btn-primary ${styles.submit}`} disabled={submitting}>
-                {submitting ? 'Sending…' : 'Send my enquiry'}
+                {submitting ? 'Sending…' : submitLabel}
               </button>
+
+              {isMainD2CAudit && <p className={styles.auditNote}>We use these numbers to make the first conversation useful. No generic sales deck.</p>}
 
               {status === 'error' && (
                 <p className={styles.errorPanel} role="alert">
