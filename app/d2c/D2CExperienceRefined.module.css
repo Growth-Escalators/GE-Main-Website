@@ -1,0 +1,247 @@
+.refined {
+  --refine-line: rgba(23, 6, 83, .12);
+}
+
+/* Keep major sections airy, but remove repeated empty scroll. */
+.refined :global(section[aria-label="Free calculator"]),
+.refined :global(section[aria-label="Lead form"]) {
+  padding-top: clamp(58px, 5.5vw, 72px) !important;
+  padding-bottom: clamp(58px, 5.5vw, 72px) !important;
+}
+
+.decisionBlock {
+  margin-top: 18px;
+  padding: 26px;
+  border: 1px solid var(--refine-line);
+  border-radius: 28px;
+  background: #fff;
+}
+
+.decisionHeading {
+  display: grid;
+  grid-template-columns: minmax(0, .75fr) minmax(280px, .45fr);
+  gap: 36px;
+  align-items: end;
+  margin-bottom: 18px;
+}
+
+.decisionHeading > span {
+  grid-column: 1 / -1;
+  color: #3154ff;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+}
+
+.decisionHeading h3 {
+  margin: 0;
+  font-family: 'Arial Narrow', var(--font-jakarta), sans-serif;
+  font-size: clamp(34px, 3.8vw, 54px);
+  font-weight: 800;
+  line-height: .92;
+  letter-spacing: -.035em;
+  text-transform: uppercase;
+  color: #170653;
+}
+
+.decisionHeading p {
+  margin: 0;
+  color: #6c7182;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.decisionCards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.decisionCards article {
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--refine-line);
+  border-radius: 20px;
+  background: linear-gradient(150deg, #fafaff 0%, #fff 72%);
+}
+
+.decisionNumber {
+  position: absolute;
+  right: 16px;
+  top: 14px;
+  color: rgba(23, 6, 83, .23);
+  font-size: 9px;
+  font-weight: 900;
+}
+
+.decisionCards article > div {
+  min-height: 92px;
+  padding: 18px;
+  border-bottom: 1px solid var(--refine-line);
+}
+
+.decisionCards article > div:last-child { border-bottom: 0; }
+.decisionCards small { display: block; color: #9a9eaa; font-size: 7px; font-weight: 900; letter-spacing: .12em; }
+.decisionCards strong { display: block; margin-top: 11px; color: #170653; font-size: 11px; line-height: 1.45; }
+.thenCell { background: #f0efff; }
+.thenCell small { color: #3154ff; }
+.thenCell strong { font-size: 12px; }
+
+.auditJourney {
+  padding: clamp(58px, 5.5vw, 74px) 0;
+  border-top: 1px solid var(--refine-line);
+  background: linear-gradient(180deg, #f7f6ff 0%, #f2f0ff 100%);
+}
+
+.auditJourneyHeader {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, .48fr);
+  gap: clamp(34px, 5vw, 76px);
+  align-items: end;
+  margin-bottom: 30px;
+}
+
+.auditJourneyHeader h2 {
+  max-width: 900px;
+  margin: 15px 0 0;
+  font-family: 'Arial Narrow', var(--font-jakarta), sans-serif;
+  font-size: clamp(44px, 5vw, 70px);
+  font-weight: 800;
+  line-height: .9;
+  letter-spacing: -.04em;
+  text-transform: uppercase;
+  color: #170653;
+}
+
+.auditJourneyHeader > p {
+  margin: 0;
+  color: #666c7e;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.auditSteps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  overflow: hidden;
+  border: 1px solid var(--refine-line);
+  border-radius: 24px;
+  background: #fff;
+}
+
+.auditSteps article {
+  min-height: 190px;
+  padding: 22px;
+  border-right: 1px solid var(--refine-line);
+}
+
+.auditSteps article:last-child { border-right: 0; }
+.auditSteps article > span { color: #3154ff; font-size: 8px; font-weight: 900; letter-spacing: .08em; }
+.auditSteps strong { display: block; margin-top: 30px; color: #170653; font-size: 15px; text-transform: uppercase; }
+.auditSteps p { margin: 10px 0 0; color: #707587; font-size: 10px; line-height: 1.55; }
+
+.auditPrinciples {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1px;
+  margin-top: 12px;
+  overflow: hidden;
+  border: 1px solid var(--refine-line);
+  border-radius: 20px;
+  background: var(--refine-line);
+}
+
+.auditPrinciples > div {
+  min-height: 122px;
+  padding: 18px;
+  background: rgba(255,255,255,.72);
+}
+.auditPrinciples strong { display: block; color: #170653; font-size: 10px; text-transform: uppercase; }
+.auditPrinciples p { margin: 8px 0 0; color: #75798a; font-size: 9px; line-height: 1.5; }
+
+.auditFormWrap {
+  border-top: 1px solid var(--refine-line);
+}
+
+/* Bigger, clearer FAQ expansion/retraction controls. */
+.faqSection details summary {
+  min-height: 82px;
+  transition: color .18s ease;
+}
+
+.faqSection details summary:hover { color: #3154ff; }
+
+.faqSection details summary b {
+  width: 44px !important;
+  height: 44px !important;
+  border-width: 1.5px !important;
+  border-color: rgba(23, 6, 83, .18) !important;
+  background: #fff;
+  color: #170653;
+  font-size: 24px !important;
+  font-weight: 700 !important;
+  line-height: 1 !important;
+  box-shadow: 0 8px 22px rgba(23, 6, 83, .06);
+  transition: transform .2s ease, background .2s ease, color .2s ease, border-color .2s ease !important;
+}
+
+.faqSection details summary:hover b {
+  background: #f1efff;
+  border-color: rgba(49, 84, 255, .32) !important;
+}
+
+.faqSection details[open] summary b {
+  transform: rotate(45deg);
+  background: #170653 !important;
+  color: #fff !important;
+  border-color: #170653 !important;
+}
+
+.faqSection details > p {
+  max-width: 980px;
+  padding-right: 60px;
+  font-size: 12.5px;
+}
+
+@media (max-width: 1120px) {
+  .decisionCards { grid-template-columns: 1fr; }
+  .decisionCards article { display: grid; grid-template-columns: repeat(3, 1fr); }
+  .decisionCards article > div { min-height: 104px; border-right: 1px solid var(--refine-line); border-bottom: 0; }
+  .decisionCards article > div:last-child { border-right: 0; }
+  .decisionNumber { display: none; }
+  .auditJourneyHeader { grid-template-columns: 1fr; gap: 18px; }
+  .auditSteps, .auditPrinciples { grid-template-columns: repeat(2, 1fr); }
+  .auditSteps article:nth-child(2) { border-right: 0; }
+  .auditSteps article:nth-child(-n+2) { border-bottom: 1px solid var(--refine-line); }
+}
+
+@media (max-width: 720px) {
+  .decisionBlock { padding: 20px; border-radius: 22px; }
+  .decisionHeading { grid-template-columns: 1fr; gap: 12px; margin-bottom: 14px; }
+  .decisionHeading > span { grid-column: auto; }
+  .decisionHeading h3 { font-size: 38px; }
+  .decisionCards article { display: block; }
+  .decisionCards article > div { min-height: 76px; border-right: 0; border-bottom: 1px solid var(--refine-line); padding: 16px; }
+  .decisionCards article > div:last-child { border-bottom: 0; }
+
+  .auditJourney { padding: 52px 0; }
+  .auditJourneyHeader { margin-bottom: 24px; }
+  .auditJourneyHeader h2 { font-size: clamp(40px, 12vw, 54px); }
+  .auditSteps, .auditPrinciples { display: block; }
+  .auditSteps article { min-height: 0; padding: 20px; border-right: 0; border-bottom: 1px solid var(--refine-line); }
+  .auditSteps article:last-child { border-bottom: 0; }
+  .auditSteps strong { margin-top: 20px; }
+  .auditPrinciples > div { min-height: 0; padding: 17px; border-bottom: 1px solid var(--refine-line); }
+  .auditPrinciples > div:last-child { border-bottom: 0; }
+
+  .faqSection details summary { min-height: 76px; gap: 16px; }
+  .faqSection details summary b { width: 42px !important; height: 42px !important; font-size: 23px !important; }
+  .faqSection details > p { padding-right: 0; }
+
+  .refined :global(section[aria-label="Free calculator"]),
+  .refined :global(section[aria-label="Lead form"]) {
+    padding-top: 50px !important;
+    padding-bottom: 54px !important;
+  }
+}
