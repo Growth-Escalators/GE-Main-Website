@@ -35,11 +35,29 @@ const STAGES = [
 ] as const
 
 const DMAIC = [
-  ['Define', 'Set the commercial objective.'],
-  ['Measure', 'Establish the truth in the numbers.'],
-  ['Analyze', 'Find the highest-impact constraint.'],
-  ['Improve', 'Apply the right intervention.'],
-  ['Control', 'Make sure the gain lasts.'],
+  ['Define', 'Set the revenue or profit objective.'],
+  ['Measure', 'Baseline CAC, CVR, AOV, margin and retention.'],
+  ['Analyze', 'Find the constraint with the highest commercial impact.'],
+  ['Improve', 'Apply only the levers that address that constraint.'],
+  ['Control', 'Protect the gain as traffic, spend and volume increase.'],
+] as const
+
+const COMMERCIAL_DECISIONS = [
+  {
+    signal: 'Traffic is qualified',
+    issue: 'Conversion is weak',
+    action: 'Fix PDP, offer and checkout friction before buying more traffic.',
+  },
+  {
+    signal: 'CAC is healthy',
+    issue: 'Repeat purchase is weak',
+    action: 'Fix retention, lifecycle and the post-purchase journey before scaling harder.',
+  },
+  {
+    signal: 'ROAS looks good',
+    issue: 'Contribution margin is weak',
+    action: 'Fix unit economics before allowing platform ROAS to justify more spend.',
+  },
 ] as const
 
 export default function D2CRevenueSystem() {
@@ -48,13 +66,13 @@ export default function D2CRevenueSystem() {
       <div className={styles.shell}>
         <div className={styles.intro}>
           <div>
-            <p className={styles.eyebrow}>Our D2C growth system</p>
-            <h2 id="d2c-revenue-system-heading">We don&apos;t start with ads.<br />We find where revenue is leaking.</h2>
+            <p className={styles.eyebrow}>Our D2C revenue system</p>
+            <h2 id="d2c-revenue-system-heading">We don&apos;t start with ads.<br />We find the constraint limiting revenue.</h2>
           </div>
           <div className={styles.introSide}>
             <p>
-              Meta, Google, CRO, Shopify, creative, email and automation are tools. We look across the complete
-              D2C revenue journey, identify the constraint with the biggest economic impact, fix it and measure what changed.
+              Meta, Google, CRO, Shopify, creative, email and automation are tools — not the strategy. We diagnose the complete
+              revenue journey, quantify the biggest commercial leak, fix that constraint first and measure whether the economics improved.
             </p>
             <Link href="#lead-form" className={styles.introLink}>Find your biggest growth constraint <span>↗</span></Link>
           </div>
@@ -87,8 +105,25 @@ export default function D2CRevenueSystem() {
             <span className={styles.measurementIcon}>↗</span>
             <div>
               <strong>Measurement &amp; unit economics run across every stage.</strong>
-              <p>We track the commercial truth at each step — CAC, conversion, AOV, margin, retention and profitability — rather than optimizing platform ROAS in isolation.</p>
+              <p>We track CAC, conversion, AOV, contribution margin, repeat purchase and profitability — rather than letting platform ROAS become the only definition of success.</p>
             </div>
+          </div>
+        </div>
+
+        <div className={styles.decisionSection}>
+          <div className={styles.decisionHeading}>
+            <p>WHAT THIS CHANGES COMMERCIALLY</p>
+            <h3>More spend is not always the answer.</h3>
+            <span>We choose the intervention from the economics, not from the service we want to sell.</span>
+          </div>
+          <div className={styles.decisionGrid}>
+            {COMMERCIAL_DECISIONS.map((decision) => (
+              <article key={decision.issue} className={styles.decisionCard}>
+                <small>{decision.signal}</small>
+                <strong>{decision.issue}</strong>
+                <p>{decision.action}</p>
+              </article>
+            ))}
           </div>
         </div>
 
@@ -96,9 +131,9 @@ export default function D2CRevenueSystem() {
           <div className={styles.methodTitle}>
             <div>
               <p>THE OPERATING METHOD</p>
-              <h3>Built using our Six Sigma-inspired growth methodology.</h3>
+              <h3>Six Sigma-inspired diagnosis, applied to growth economics.</h3>
             </div>
-            <span>DMAIC is how we diagnose and improve the system; it is not another marketing funnel.</span>
+            <span>DMAIC is how we decide what deserves attention first, how we prove an improvement and how we stop the gain disappearing when the brand scales.</span>
           </div>
           <div className={styles.dmaicGrid}>
             {DMAIC.map(([title, copy], index) => (
@@ -112,9 +147,21 @@ export default function D2CRevenueSystem() {
         </div>
 
         <div className={styles.closingBand}>
-          <p>We don&apos;t call growth solved until the improvement can be sustained.</p>
+          <p>We don&apos;t call growth solved until the improvement can be sustained profitably.</p>
           <Link href="#lead-form">Get a D2C growth audit <span>↗</span></Link>
         </div>
+      </div>
+
+      <div className={styles.mobileSticky} aria-label="D2C growth actions">
+        <Link href="#lead-form" className={styles.mobileAudit}>Get Free Audit</Link>
+        <a
+          href="https://wa.me/917733888883?text=Hi%20Growth%20Escalators%2C%20I%27d%20like%20a%20D2C%20growth%20audit."
+          target="_blank"
+          rel="noopener noreferrer"
+          className={styles.mobileWhatsapp}
+        >
+          WhatsApp
+        </a>
       </div>
     </section>
   )
