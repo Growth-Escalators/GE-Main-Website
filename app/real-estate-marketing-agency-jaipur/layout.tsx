@@ -6,7 +6,7 @@ const PATH = '/real-estate-marketing-agency-jaipur'
 export const metadata: Metadata = {
   title: 'Real Estate Marketing Agency in Jaipur',
   description:
-    "Jaipur's real estate marketing agency for builders & developers — ₹500Cr+ inventory marketed, AI buyer-quality scoring, +340% bookings on a Jaipur project. RERA-compliant. Book a free project audit.",
+    'Jaipur real estate marketing agency for builders and developers — Meta and Google Ads, project landing pages, lead qualification, CRM follow-up and site-visit measurement. Verified project proof: 3× more qualified site visits in 60 days.',
   keywords: [
     'real estate marketing agency in jaipur',
     'real estate marketing agency jaipur',
@@ -19,16 +19,15 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Real Estate Marketing Agency in Jaipur — Growth Escalators',
     description:
-      'AI-powered real estate marketing for Jaipur builders & developers. ₹500Cr+ inventory marketed, qualified site visits, RERA-compliant. Book a free project audit.',
+      'Performance marketing and lead-generation systems for Jaipur builders and developers. Verified project proof: 3× more qualified site visits in 60 days.',
     url: PATH,
     type: 'website',
   },
 }
 
-/* Page-level JSON-LD — a Jaipur real-estate ProfessionalService node linked to
-   the global #organization graph (app/layout.tsx). Server-rendered so AI crawlers
-   see it in raw HTML. Real NAP + 4.9★/187 rating (from app/contact). geo is
-   approximate (site map embed) — confirm against the verified GBP. */
+/* Jaipur real-estate ProfessionalService linked to the global organization.
+   Keep NAP identical to app/layout.tsx + the visible footer. Add geo only
+   after the current Google Business Profile pin is verified. */
 const SCHEMA = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -39,19 +38,18 @@ const SCHEMA = {
       url: `${SITE}${PATH}`,
       image: `${SITE}/og-image.jpg`,
       description:
-        'Real estate marketing agency in Jaipur for builders and developers — AI buyer-quality scoring, premium-project performance marketing, RERA-compliant.',
-      telephone: '+91-77338-88883',
-      email: 'Info@growthescalators.com',
+        'Real estate marketing agency in Jaipur for builders and developers — paid acquisition, project landing pages, lead qualification, CRM follow-up and site-visit measurement.',
+      telephone: '+91-7733888883',
+      email: 'jatin@growthescalators.com',
       priceRange: '₹₹₹',
       address: {
         '@type': 'PostalAddress',
-        streetAddress: '264/103-104, Sector 26, Sanganer, Pratap Nagar',
+        streetAddress: 'Office No: 607-608, 6th Floor, Class of Pearl, Income Tax Colony, Durgapura',
         addressLocality: 'Jaipur',
         addressRegion: 'Rajasthan',
-        postalCode: '302033',
+        postalCode: '302018',
         addressCountry: 'IN',
       },
-      geo: { '@type': 'GeoCoordinates', latitude: 26.81, longitude: 75.83 },
       areaServed: [
         { '@type': 'City', name: 'Jaipur' },
         { '@type': 'State', name: 'Rajasthan' },
@@ -64,12 +62,6 @@ const SCHEMA = {
         'https://www.instagram.com/growthescalators',
         'https://www.linkedin.com/company/growth-escalators',
       ],
-      aggregateRating: {
-        '@type': 'AggregateRating',
-        ratingValue: '4.9',
-        reviewCount: '187',
-        bestRating: '5',
-      },
     },
     {
       '@type': 'BreadcrumbList',
