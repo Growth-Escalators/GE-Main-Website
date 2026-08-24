@@ -2,17 +2,15 @@ name: SEO Performance Audit
 
 on:
   workflow_dispatch:
-  push:
-    branches:
-      - feat/homepage-tinuiti-reference-rebuild
-    paths:
-      - .github/workflows/lighthouse-audit.yml
+  schedule:
+    # Monday 09:00 IST / 03:30 UTC. Runs against the live production domain.
+    - cron: '30 3 * * 1'
 
 jobs:
   lighthouse:
-    name: Mobile Lighthouse baseline
+    name: Mobile Lighthouse production sample
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
 
     steps:
       - name: Run Lighthouse on representative live pages
@@ -21,6 +19,9 @@ jobs:
           urls: |
             https://www.growthescalators.com/
             https://www.growthescalators.com/d2c
-            https://www.growthescalators.com/jewellery-marketing-agency-jaipur
+            https://www.growthescalators.com/doctors-marketing-agency-jaipur
+            https://www.growthescalators.com/real-estate/project-launch-marketing
+            https://www.growthescalators.com/travel-marketing-agency
+            https://www.growthescalators.com/white-label-seo-agency
           uploadArtifacts: true
           temporaryPublicStorage: true
