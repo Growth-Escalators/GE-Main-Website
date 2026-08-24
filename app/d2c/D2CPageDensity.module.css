@@ -1,0 +1,111 @@
+.page {
+  background: #fff;
+}
+
+/* D2C-specific density pass: keep breathing room without paying for empty scroll. */
+.page :global(section[aria-label="Hero"]) {
+  padding-top: clamp(62px, 7vw, 92px) !important;
+  padding-bottom: clamp(58px, 6vw, 82px) !important;
+}
+
+.page :global(section[aria-label="Pain points"]),
+.page :global(section[aria-label="AI advantage"]),
+.page :global(section[aria-label="Services"]),
+.page :global(section[aria-label="Featured result"]),
+.page :global(section[aria-label="FAQ"]) {
+  padding-top: clamp(68px, 7vw, 88px) !important;
+  padding-bottom: clamp(68px, 7vw, 88px) !important;
+}
+
+.page :global(section[aria-label="Process"]),
+.page :global(section[aria-label="Why us"]),
+.page :global(section[aria-label="Related resources"]) {
+  padding-top: clamp(54px, 6vw, 74px) !important;
+  padding-bottom: clamp(54px, 6vw, 74px) !important;
+}
+
+.page :global(section[aria-label="Final call to action"]) {
+  padding-top: clamp(76px, 8vw, 104px) !important;
+  padding-bottom: clamp(76px, 8vw, 104px) !important;
+}
+
+/* Cards should be aligned by content, not by large arbitrary minimum heights. */
+.page :global(section[aria-label="Pain points"] article),
+.page :global(section[aria-label="Why us"] article) {
+  min-height: 188px !important;
+  padding-top: 24px !important;
+  padding-bottom: 26px !important;
+}
+
+.page :global(section[aria-label="AI advantage"] article) {
+  min-height: 218px !important;
+  padding: 24px !important;
+}
+
+.page :global(section[aria-label="AI advantage"] article > div:first-child) {
+  margin-bottom: 30px !important;
+}
+
+.page :global(section[aria-label="Services"] article),
+.page :global(section[aria-label="Related resources"] article) {
+  min-height: 188px !important;
+  padding: 24px !important;
+}
+
+.page :global(section[aria-label="Process"] article) {
+  min-height: 214px !important;
+  padding-top: 22px !important;
+  padding-bottom: 22px !important;
+}
+
+.page :global(section[aria-label="Related resources"] h2) {
+  max-width: 760px !important;
+  font-size: clamp(46px, 5.4vw, 76px) !important;
+  line-height: .88 !important;
+}
+
+/* The proof block should feel substantial, not oversized. */
+.page :global(section[aria-label="Featured result"] blockquote) {
+  max-width: 650px;
+}
+
+@media (max-width: 640px) {
+  .page :global(section[aria-label="Hero"]) {
+    padding-top: 54px !important;
+    padding-bottom: 58px !important;
+  }
+
+  .page :global(section[aria-label="Pain points"]),
+  .page :global(section[aria-label="AI advantage"]),
+  .page :global(section[aria-label="Services"]),
+  .page :global(section[aria-label="Featured result"]),
+  .page :global(section[aria-label="FAQ"]) {
+    padding-top: 54px !important;
+    padding-bottom: 58px !important;
+  }
+
+  .page :global(section[aria-label="Process"]),
+  .page :global(section[aria-label="Why us"]),
+  .page :global(section[aria-label="Related resources"]) {
+    padding-top: 44px !important;
+    padding-bottom: 48px !important;
+  }
+
+  .page :global(section[aria-label="Final call to action"]) {
+    padding-top: 64px !important;
+    padding-bottom: 76px !important;
+  }
+
+  .page :global(section[aria-label="Pain points"] article),
+  .page :global(section[aria-label="Why us"] article),
+  .page :global(section[aria-label="AI advantage"] article),
+  .page :global(section[aria-label="Services"] article),
+  .page :global(section[aria-label="Related resources"] article),
+  .page :global(section[aria-label="Process"] article) {
+    min-height: 0 !important;
+  }
+
+  .page :global(section[aria-label="Related resources"] h2) {
+    font-size: clamp(42px, 13vw, 58px) !important;
+  }
+}
