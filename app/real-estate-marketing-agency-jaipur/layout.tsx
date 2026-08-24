@@ -6,7 +6,7 @@ const PATH = '/real-estate-marketing-agency-jaipur'
 export const metadata: Metadata = {
   title: 'Real Estate Marketing Agency in Jaipur',
   description:
-    "Jaipur's real estate marketing agency for builders & developers — ₹500Cr+ inventory marketed, AI buyer-quality scoring, +340% bookings on a Jaipur project. RERA-compliant. Book a free project audit.",
+    'Jaipur real estate marketing for builders and developers — paid acquisition, project landing pages, lead qualification, site-visit growth, CRM follow-up and booking attribution.',
   keywords: [
     'real estate marketing agency in jaipur',
     'real estate marketing agency jaipur',
@@ -19,16 +19,12 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Real Estate Marketing Agency in Jaipur — Growth Escalators',
     description:
-      'AI-powered real estate marketing for Jaipur builders & developers. ₹500Cr+ inventory marketed, qualified site visits, RERA-compliant. Book a free project audit.',
+      'Performance marketing for Jaipur builders and developers focused on qualified enquiries, site visits, CRM follow-up and measurable project outcomes.',
     url: PATH,
     type: 'website',
   },
 }
 
-/* Page-level JSON-LD — a Jaipur real-estate ProfessionalService node linked to
-   the global #organization graph (app/layout.tsx). Server-rendered so AI crawlers
-   see it in raw HTML. Real NAP + 4.9★/187 rating (from app/contact). geo is
-   approximate (site map embed) — confirm against the verified GBP. */
 const SCHEMA = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -39,19 +35,18 @@ const SCHEMA = {
       url: `${SITE}${PATH}`,
       image: `${SITE}/og-image.jpg`,
       description:
-        'Real estate marketing agency in Jaipur for builders and developers — AI buyer-quality scoring, premium-project performance marketing, RERA-compliant.',
-      telephone: '+91-77338-88883',
+        'Real estate marketing agency in Jaipur for builders and developers — paid acquisition, project landing pages, lead qualification, site-visit growth, CRM follow-up and booking attribution.',
+      telephone: '+91-7733888883',
       email: 'Info@growthescalators.com',
       priceRange: '₹₹₹',
       address: {
         '@type': 'PostalAddress',
-        streetAddress: '264/103-104, Sector 26, Sanganer, Pratap Nagar',
+        streetAddress: 'Office No: 607-608, 6th Floor, Class of Pearl, Income Tax Colony, Durgapura',
         addressLocality: 'Jaipur',
         addressRegion: 'Rajasthan',
-        postalCode: '302033',
+        postalCode: '302018',
         addressCountry: 'IN',
       },
-      geo: { '@type': 'GeoCoordinates', latitude: 26.81, longitude: 75.83 },
       areaServed: [
         { '@type': 'City', name: 'Jaipur' },
         { '@type': 'State', name: 'Rajasthan' },
