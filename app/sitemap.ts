@@ -7,6 +7,7 @@ const BRAND_ARCH_2026_08_21 = '2026-08-21T12:06:00+05:30'
 const SEO_CLUSTER_2026_08_21 = '2026-08-21T16:33:00+05:30'
 const WHITE_LABEL_2026_08_21 = '2026-08-21T19:55:00+05:30'
 const INDEXING_LINKS_2026_08_23 = '2026-08-23T21:50:00+05:30'
+const PRIORITY_8020_2026_08_24 = '2026-08-24T13:03:00+05:30'
 
 /*
  * `lastModified` is intentionally tied to real, significant page changes.
@@ -40,10 +41,11 @@ const STATIC_ROUTES: {
   { path: '/seo-lead-generation-agency-jaipur',        priority: 0.95, changeFrequency: 'monthly', lastModified: BRAND_ARCH_2026_08_21 },
 
   // US white-label agency cluster — national commercial intent, India delivery disclosed honestly.
-  { path: '/white-label-digital-marketing-agency',      priority: 0.95, changeFrequency: 'monthly', lastModified: WHITE_LABEL_2026_08_21 },
+  { path: '/white-label-digital-marketing-agency',      priority: 0.95, changeFrequency: 'monthly', lastModified: PRIORITY_8020_2026_08_24 },
+  { path: '/white-label-seo-agency',                    priority: 0.95, changeFrequency: 'monthly', lastModified: PRIORITY_8020_2026_08_24 },
   { path: '/white-label-web-development-agency',        priority: 0.9, changeFrequency: 'monthly', lastModified: WHITE_LABEL_2026_08_21 },
-  { path: '/white-label-shopify-development-agency',    priority: 0.9, changeFrequency: 'monthly', lastModified: WHITE_LABEL_2026_08_21 },
-  { path: '/white-label-performance-marketing-agency',  priority: 0.9, changeFrequency: 'monthly', lastModified: WHITE_LABEL_2026_08_21 },
+  { path: '/white-label-shopify-development-agency',    priority: 0.9, changeFrequency: 'monthly', lastModified: PRIORITY_8020_2026_08_24 },
+  { path: '/white-label-performance-marketing-agency',  priority: 0.9, changeFrequency: 'monthly', lastModified: PRIORITY_8020_2026_08_24 },
 
   // Shopify / web / software / fashion SEO cluster — unique search intent pages.
   { path: '/shopify-development-agency',                      priority: 0.9, changeFrequency: 'monthly', lastModified: SEO_CLUSTER_2026_08_21 },
@@ -53,29 +55,35 @@ const STATIC_ROUTES: {
   { path: '/custom-software-development-company-jaipur',      priority: 0.85, changeFrequency: 'monthly', lastModified: SEO_CLUSTER_2026_08_21 },
   { path: '/web-app-development-company-jaipur',              priority: 0.85, changeFrequency: 'monthly', lastModified: SEO_CLUSTER_2026_08_21 },
   { path: '/saas-development-company-jaipur',                 priority: 0.85, changeFrequency: 'monthly', lastModified: SEO_CLUSTER_2026_08_21 },
-  { path: '/d2c/fashion/womens-clothing',                     priority: 0.85, changeFrequency: 'monthly', lastModified: SEO_CLUSTER_2026_08_21 },
+  { path: '/d2c/fashion/womens-clothing',                     priority: 0.9, changeFrequency: 'monthly', lastModified: PRIORITY_8020_2026_08_24 },
   { path: '/d2c/fashion/kurti',                               priority: 0.85, changeFrequency: 'monthly', lastModified: SEO_CLUSTER_2026_08_21 },
   { path: '/d2c/fashion/meta-ads',                            priority: 0.85, changeFrequency: 'monthly', lastModified: SEO_CLUSTER_2026_08_21 },
+
+  // High-value vertical pages selected for 80/20 commercial upside.
+  { path: '/ivf-marketing-agency-jaipur',               priority: 0.95, changeFrequency: 'monthly', lastModified: PRIORITY_8020_2026_08_24 },
+  { path: '/orthopedic-marketing-agency-jaipur',        priority: 0.95, changeFrequency: 'monthly', lastModified: PRIORITY_8020_2026_08_24 },
+  { path: '/real-estate/project-launch-marketing',      priority: 0.95, changeFrequency: 'monthly', lastModified: PRIORITY_8020_2026_08_24 },
+  { path: '/travel-marketing-agency',                   priority: 0.95, changeFrequency: 'monthly', lastModified: PRIORITY_8020_2026_08_24 },
 
   // Shared IndustryLandingPage money pages — materially redesigned on 2026-08-20.
   { path: '/d2c/fashion',                              priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/d2c/beauty',                               priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/performance-marketing-agency-jaipur',      priority: 0.9, changeFrequency: 'monthly', lastModified: INDEXING_LINKS_2026_08_23 },
-  { path: '/real-estate-marketing-agency-jaipur',      priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
+  { path: '/real-estate-marketing-agency-jaipur',      priority: 0.95, changeFrequency: 'monthly', lastModified: PRIORITY_8020_2026_08_24 },
   { path: '/travel-agency-marketing-jaipur',           priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/dental-clinic-marketing-agency-jaipur',    priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/coaching-institute-marketing-agency-jaipur', priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/gym-fitness-marketing-agency-jaipur',      priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
-  { path: '/jewellery-marketing-agency-jaipur',        priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
+  { path: '/jewellery-marketing-agency-jaipur',        priority: 0.95, changeFrequency: 'monthly', lastModified: PRIORITY_8020_2026_08_24 },
   { path: '/salon-spa-marketing-agency-jaipur',        priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/hotel-resort-marketing-agency-jaipur',     priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/interior-designer-marketing-agency-jaipur', priority: 0.8, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/car-detailing-marketing-agency-jaipur',    priority: 0.8, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
-  { path: '/doctors-marketing-agency-jaipur',          priority: 0.9, changeFrequency: 'monthly', lastModified: INDEXING_LINKS_2026_08_23 },
+  { path: '/doctors-marketing-agency-jaipur',          priority: 0.95, changeFrequency: 'monthly', lastModified: PRIORITY_8020_2026_08_24 },
   { path: '/patient-acquisition-agency',               priority: 0.8, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/personal-branding-for-doctors',            priority: 0.8, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/ecommerce-advertising-agency',             priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
-  { path: '/meta-ads-agency-for-ecommerce',            priority: 0.8, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
+  { path: '/meta-ads-agency-for-ecommerce',             priority: 0.8, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/ecommerce-scaling-agency',                 priority: 0.8, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/skincare-retention-marketing',             priority: 0.8, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },
   { path: '/b2b-lead-generation-agency',               priority: 0.9, changeFrequency: 'monthly', lastModified: REBUILD_2026_08_20 },

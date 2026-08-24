@@ -1,8 +1,8 @@
-import WhiteLabelSeoLanding, { WHITE_LABEL_PAGES, getWhiteLabelMetadata } from '@/components/seo/WhiteLabelSeoLanding'
+import WhiteLabelMoneyLanding, { getWhiteLabelMoneyMetadata } from '@/components/seo/WhiteLabelMoneyLanding'
 
-const baseMetadata = getWhiteLabelMetadata('digitalMarketing')
-export const metadata = { ...baseMetadata, title: { absolute: WHITE_LABEL_PAGES.digitalMarketing.title } }
+const baseMetadata = getWhiteLabelMoneyMetadata('digitalMarketing')
+export const metadata = { ...baseMetadata, title: { absolute: 'White Label Digital Marketing Agency for US Agencies | Growth Escalators' } }
 
 export default function WhiteLabelDigitalMarketingAgencyPage() {
-  return <WhiteLabelSeoLanding pageKey="digitalMarketing" />
+  return <WhiteLabelMoneyLanding pageKey="digitalMarketing" />
 }

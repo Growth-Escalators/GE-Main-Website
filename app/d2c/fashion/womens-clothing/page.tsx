@@ -1,4 +1,8 @@
-import SeoClusterLanding, { SEO_CLUSTER_PAGES, getSeoClusterMetadata } from '@/components/seo/SeoClusterLanding'
-const baseMetadata = getSeoClusterMetadata('womensClothing')
-export const metadata = { ...baseMetadata, title: { absolute: SEO_CLUSTER_PAGES.womensClothing.title } }
-export default function Page(){ return <SeoClusterLanding pageKey="womensClothing" /> }
+import PriorityVerticalLanding, { getPriorityVerticalMetadata } from '@/components/seo/PriorityVerticalLanding'
+
+const baseMetadata = getPriorityVerticalMetadata('womensClothing')
+export const metadata = { ...baseMetadata, title: { absolute: "Performance Marketing for Women's Clothing Brands | Growth Escalators" } }
+
+export default function WomensClothingPerformanceMarketingPage() {
+  return <PriorityVerticalLanding pageKey="womensClothing" />
+}

@@ -6,7 +6,7 @@ import styles from './LeadForm.module.css'
 import { trackLead } from '@/lib/analytics'
 import { getLeadAttribution } from '@/lib/leadAttribution'
 
-export type LeadFormVariant = 'generic' | 'd2c' | 'clinic'
+export type LeadFormVariant = 'generic' | 'd2c' | 'clinic' | 'agency'
 
 type Props = {
   /** Email address used in the mailto fallback link if /api/lead errors. */
@@ -48,6 +48,15 @@ const CLINIC_SERVICES = [
   'Full Clinic Growth Support',
 ]
 
+const AGENCY_SERVICES = [
+  'SEO & AI Search',
+  'Performance Marketing',
+  'Shopify Development',
+  'Website Development',
+  'Software / App Development',
+  'Multiple Services',
+]
+
 const D2C_REVENUE = [
   'Under ₹5L / month',
   '₹5L–₹25L / month',
@@ -65,10 +74,26 @@ const MARKETING_SPEND = [
   '₹10L+ / month',
 ]
 
+const AGENCY_PROJECT_VOLUME = [
+  '1 active client / project',
+  '2–5 client projects / month',
+  '6–10 client projects / month',
+  '10+ client projects / month',
+  'Exploring capacity before demand',
+]
+
+const AGENCY_REQUIREMENT_STATUS = [
+  'Yes — active requirement now',
+  'Likely within 30 days',
+  'Building a recurring fulfilment partner',
+  'Researching options for later',
+]
+
 function inferLeadFormVariant(subjectPrefix: string, headline: string): LeadFormVariant {
   const context = `${subjectPrefix} ${headline}`.toLowerCase()
+  if (/(white[- ]?label|agency partner|agency fulfil|agency fulfill|outsourced? delivery|fulfilment partner|fulfillment partner)/.test(context)) return 'agency'
   if (/(d2c|e-?commerce|shopify|fashion|beauty|skincare|apparel)/.test(context)) return 'd2c'
-  if (/(clinic|doctor|dental|dentist|healthcare|medical|patient|hospital|orthop|dermat)/.test(context)) return 'clinic'
+  if (/(clinic|doctor|dental|dentist|healthcare|medical|patient|hospital|orthop|dermat|ivf|fertility)/.test(context)) return 'clinic'
   return 'generic'
 }
 
@@ -88,6 +113,7 @@ export default function LeadForm({
   const variant = requestedVariant ?? inferLeadFormVariant(subjectPrefix, headline)
   const vertical = businessVertical || (variant === 'generic' ? 'general' : variant)
   const isMainD2CAudit = variant === 'd2c' && subjectPrefix.trim().toLowerCase() === 'new d2c lead'
+  const isAgency = variant === 'agency'
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault()
@@ -142,7 +168,11 @@ export default function LeadForm({
   }
 
   const submitting = status === 'submitting'
-  const submitLabel = isMainD2CAudit ? 'Get My D2C Growth Audit →' : 'Send my enquiry'
+  const submitLabel = isMainD2CAudit
+    ? 'Get My D2C Growth Audit →'
+    : isAgency
+      ? 'Send Client Requirement →'
+      : 'Send my enquiry'
 
   return (
     <section id="lead-form" className={styles.section} aria-label="Lead form">
@@ -178,6 +208,12 @@ export default function LeadForm({
                   <li>✓ A real strategist reviews the numbers — not a template</li>
                   <li>✓ No commitment required to use the recommendations</li>
                 </>
+              ) : isAgency ? (
+                <>
+                  <li>✓ Start with one client or one contained project</li>
+                  <li>✓ NDA, client-protection and visibility rules agreed before kickoff</li>
+                  <li>✓ We reply with scope, dependencies and the practical next step</li>
+                </>
               ) : (
                 <>
                   <li>✓ No commitment — the first strategy session is free</li>
@@ -198,7 +234,9 @@ export default function LeadForm({
               aria-live="polite"
             >
               <div className={styles.successCheck} aria-hidden>✓</div>
-              <h3 className={styles.successTitle}>{isMainD2CAudit ? 'Your audit request is in.' : 'Thanks — we got it.'}</h3>
+              <h3 className={styles.successTitle}>
+                {isMainD2CAudit ? 'Your audit request is in.' : isAgency ? 'Your client requirement is in.' : 'Thanks — we got it.'}
+              </h3>
               <p className={styles.successBody}>
                 We&rsquo;ll review your details and reply within 24 hours (weekdays). If you&rsquo;d like to fast-track, you can also reach us at{' '}
                 <a href={`mailto:${recipient}`} onClick={() => trackLead('email')}>{recipient}</a> or on WhatsApp at +91 77338 88883.
@@ -261,6 +299,21 @@ export default function LeadForm({
                 </>
               )}
 
+              {variant === 'agency' && (
+                <>
+                  <div className={styles.row}>
+                    <TextField name="agency" label="Agency name" placeholder="Your agency" />
+                    <TextField name="website" label="Agency website" type="url" placeholder="https://youragency.com" />
+                  </div>
+                  <div className={styles.row}>
+                    {!service && <SelectField name="service" label="What do you need fulfilled?" options={AGENCY_SERVICES} />}
+                    <SelectField name="requirementStatus" label="Do you have an active requirement?" options={AGENCY_REQUIREMENT_STATUS} />
+                  </div>
+                  <SelectField name="projectVolume" label="Typical client / project volume" options={AGENCY_PROJECT_VOLUME} />
+                  <TextAreaField label="Client requirement / delivery need" placeholder="Share the service, scope, deadline, client visibility preference and anything we should know before scoping it." />
+                </>
+              )}
+
               {variant === 'generic' && (
                 <>
                   <div className={styles.row}>
@@ -280,6 +333,7 @@ export default function LeadForm({
               </button>
 
               {isMainD2CAudit && <p className={styles.auditNote}>We use these numbers to make the first conversation useful. No generic sales deck.</p>}
+              {isAgency && <p className={styles.auditNote}>A single client requirement is enough to test the partnership. No need to move your entire fulfilment stack.</p>}
 
               {status === 'error' && (
                 <p className={styles.errorPanel} role="alert">
