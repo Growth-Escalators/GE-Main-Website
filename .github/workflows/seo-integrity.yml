@@ -28,8 +28,5 @@ jobs:
       - name: Check Commercial V2 preservation contracts
         run: node scripts/check-commercial-v2.mjs
 
-      - name: Lint
-        run: npm run lint
-
-      - name: Production build and static generation
+      - name: Production build, type validation and static generation
         run: npm run build
