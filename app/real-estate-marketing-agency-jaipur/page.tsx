@@ -1,6 +1,5 @@
-import IndustryLandingPage from '@/components/landing/IndustryLandingPage'
-import { JAIPUR_REAL_ESTATE_CONTENT } from './_data/content'
+import PriorityLocalLanding from '@/components/seo/PriorityLocalLanding'
 
 export default function JaipurRealEstatePage() {
-  return <IndustryLandingPage content={JAIPUR_REAL_ESTATE_CONTENT} />
+  return <PriorityLocalLanding pageKey="realEstateJaipur" />
 }
