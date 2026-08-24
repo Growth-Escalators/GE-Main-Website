@@ -6,7 +6,7 @@ const PATH = '/jewellery-marketing-agency-jaipur'
 export const metadata: Metadata = {
   title: 'Jewellery Marketing Agency in Jaipur',
   description:
-    'Jaipur-based marketing agency for jewellery brands & showrooms. We drive online sales, showroom footfall, and real ROAS tracking — not just likes. Real D2C proof: Paraiso 10× monthly sales in 30 days, ROAS 1.9×→3.2×. Free growth audit.',
+    'Jaipur-based marketing agency for jewellery brands & showrooms. D2C acquisition, showroom demand, local SEO, CRO and attribution with real adjacent-category proof labelled honestly.',
   keywords: [
     'jewellery marketing agency jaipur',
     'jewellery digital marketing jaipur',
@@ -18,17 +18,12 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Jewellery Marketing Agency in Jaipur — Growth Escalators',
     description:
-      'Online sales, showroom footfall, and real ROAS tracking for Jaipur jewellery brands. Real D2C result: Paraiso — ₹33k→₹3.4L monthly sales in 30 days, ROAS 1.9×→3.2×.',
+      'Marketing for Jaipur jewellery showrooms and D2C jewellery brands across Meta, Google, local SEO, CRO and attribution. Adjacent D2C proof is labelled transparently.',
     url: PATH,
     type: 'website',
   },
 }
 
-/* Page-level JSON-LD — a Jaipur-scoped ProfessionalService (jewellery
-   marketing) node linked back to the global #organization graph. Server-
-   rendered so AI crawlers (which don't run JS) see it in raw HTML. NAP is the
-   real registered office; geo lat/long is approximate — confirm against the
-   verified Google Business Profile and update if it differs. */
 const SCHEMA = {
   '@context': 'https://schema.org',
   '@graph': [
@@ -39,19 +34,18 @@ const SCHEMA = {
       url: `${SITE}${PATH}`,
       image: `${SITE}/og-image.jpg`,
       description:
-        'Marketing agency in Jaipur for jewellery brands, showrooms and D2C jewellery labels — performance campaigns, Instagram content, Google Maps local SEO, and showroom-footfall funnels.',
-      telephone: '+91-77338-88883',
+        'Marketing agency in Jaipur for jewellery brands, showrooms and D2C jewellery labels — performance campaigns, product storytelling, Google Maps local SEO, ecommerce CRO and showroom-demand funnels.',
+      telephone: '+91-7733888883',
       email: 'Info@growthescalators.com',
       priceRange: '₹₹',
       address: {
         '@type': 'PostalAddress',
-        streetAddress: '264/103-104, Sector 26, Sanganer, Pratap Nagar',
+        streetAddress: 'Office No: 607-608, 6th Floor, Class of Pearl, Income Tax Colony, Durgapura',
         addressLocality: 'Jaipur',
         addressRegion: 'Rajasthan',
-        postalCode: '302033',
+        postalCode: '302018',
         addressCountry: 'IN',
       },
-      geo: { '@type': 'GeoCoordinates', latitude: 26.81, longitude: 75.83 },
       areaServed: [
         { '@type': 'City', name: 'Jaipur' },
         { '@type': 'Country', name: 'India' },
@@ -79,10 +73,7 @@ const SCHEMA = {
 export default function JewelleryJaipurLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(SCHEMA) }} />
       {children}
     </>
   )
