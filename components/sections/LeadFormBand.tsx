@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { motion } from 'framer-motion'
 import { Check, Star } from 'lucide-react'
 import { trackLead } from '@/lib/analytics'
 
@@ -23,8 +22,6 @@ const BUDGET_OPTIONS = [
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
 type LeadFormBandProps = { submitLabel?: string }
-
-const ease: [number, number, number, number] = [0.16, 1, 0.3, 1]
 
 export default function LeadFormBand({ submitLabel = 'Book My Free Call →' }: LeadFormBandProps) {
   const [status, setStatus] = useState<Status>('idle')
@@ -66,13 +63,7 @@ export default function LeadFormBand({ submitLabel = 'Book My Free Call →' }: 
     <section id="book" className="audit-chapter">
       <div className="audit-grid-bg" aria-hidden />
       <div className="audit-shell">
-        <motion.div
-          className="audit-copy"
-          initial={{ opacity: 0, y: 42 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-90px' }}
-          transition={{ duration: 0.8, ease }}
-        >
+        <div className="audit-copy">
           <span className="audit-eyebrow">Grow faster · waste less</span>
           <h2>GET YOUR<br />FREE GROWTH<br />AUDIT.</h2>
           <p>
@@ -99,15 +90,9 @@ export default function LeadFormBand({ submitLabel = 'Book My Free Call →' }: 
             <strong>4.9/5</strong>
             <small>187+ Google reviews</small>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div
-          className="audit-form-card"
-          initial={{ opacity: 0, y: 46, scale: 0.985 }}
-          whileInView={{ opacity: 1, y: 0, scale: 1 }}
-          viewport={{ once: true, margin: '-70px' }}
-          transition={{ duration: 0.82, delay: 0.08, ease }}
-        >
+        <div className="audit-form-card">
           <div className="form-kicker"><span>01</span><b>Tell us where growth is stuck.</b></div>
 
           {status === 'success' ? (
@@ -153,7 +138,7 @@ export default function LeadFormBand({ submitLabel = 'Book My Free Call →' }: 
               )}
             </form>
           )}
-        </motion.div>
+        </div>
       </div>
 
       <style jsx>{`
