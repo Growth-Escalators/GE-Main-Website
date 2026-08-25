@@ -11,7 +11,8 @@ import type { LandingMarket } from '@/lib/content/international-landing/types'
  *
  * Optional env vars:
  *   RESEND_API_KEY
- *   LEAD_NOTIFY_EMAIL
+ *   LEAD_NOTIFY_EMAIL             — primary internal notification recipient.
+ *   LEAD_NOTIFY_FALLBACK_EMAIL    — fallback internal recipient if primary delivery fails.
  *   LEAD_FROM_EMAIL
  *   LEAD_WEBHOOK_URL
  *   CRM_WEBSITE_LEAD_URL   — CRM POST /api/leads/website endpoint.
@@ -235,11 +236,20 @@ function clientIp(req: Request): string {
   return req.headers.get('x-real-ip') ?? 'unknown'
 }
 
-async function sendViaResend(lead: LeadPayload): Promise<{ ok: boolean; reason?: string }> {
+type LeadNotificationResult = {
+  ok: boolean
+  reason?: string
+  recipient?: string
+  fallbackUsed?: boolean
+  primaryFailure?: string
+}
+
+async function sendViaResend(lead: LeadPayload): Promise<LeadNotificationResult> {
   const key = process.env.RESEND_API_KEY
   if (!key) return { ok: false, reason: 'no-key' }
 
-  const to = process.env.LEAD_NOTIFY_EMAIL || 'Info@growthescalators.com'
+  const primaryTo = process.env.LEAD_NOTIFY_EMAIL || 'jatin@growthescalators.com'
+  const fallbackTo = process.env.LEAD_NOTIFY_FALLBACK_EMAIL || 'info@growthescalators.com'
   const from = process.env.LEAD_FROM_EMAIL || 'Growth Escalators <onboarding@resend.dev>'
 
   const subject = `New ${lead.source || 'website'} lead: ${lead.name}`
@@ -290,30 +300,52 @@ async function sendViaResend(lead: LeadPayload): Promise<{ ok: boolean; reason?:
     ? [{ filename: lead.jdFileName, content: lead.jdFileBase64 }]
     : undefined
 
-  try {
-    const res = await fetch('https://api.resend.com/emails', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${key}`,
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        from,
-        to,
-        subject,
-        text: lines.join('\n'),
-        html,
-        reply_to: lead.email,
-        ...(attachments ? { attachments } : {}),
-      }),
-    })
-    if (!res.ok) {
-      const detail = await res.text().catch(() => '')
-      return { ok: false, reason: `resend-${res.status}: ${detail.slice(0, 200)}` }
+  async function deliver(to: string): Promise<{ ok: boolean; reason?: string }> {
+    try {
+      const res = await fetch('https://api.resend.com/emails', {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${key}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          from,
+          to,
+          subject,
+          text: lines.join('\n'),
+          html,
+          reply_to: lead.email,
+          ...(attachments ? { attachments } : {}),
+        }),
+      })
+      if (!res.ok) {
+        const detail = await res.text().catch(() => '')
+        return { ok: false, reason: `resend-${res.status}: ${detail.slice(0, 200)}` }
+      }
+      return { ok: true }
+    } catch (e) {
+      return { ok: false, reason: `resend-throw: ${(e as Error).message}` }
     }
-    return { ok: true }
-  } catch (e) {
-    return { ok: false, reason: `resend-throw: ${(e as Error).message}` }
+  }
+
+  const primary = await deliver(primaryTo)
+  if (primary.ok) return { ok: true, recipient: primaryTo, fallbackUsed: false }
+
+  if (fallbackTo.toLowerCase() === primaryTo.toLowerCase()) {
+    return { ok: false, reason: primary.reason, recipient: primaryTo, fallbackUsed: false }
+  }
+
+  const fallback = await deliver(fallbackTo)
+  if (fallback.ok) {
+    return { ok: true, recipient: fallbackTo, fallbackUsed: true, primaryFailure: primary.reason }
+  }
+
+  return {
+    ok: false,
+    reason: `primary=${primary.reason || 'unknown'}; fallback=${fallback.reason || 'unknown'}`,
+    recipient: fallbackTo,
+    fallbackUsed: true,
+    primaryFailure: primary.reason,
   }
 }
 
@@ -401,7 +433,7 @@ async function sendAutoResponder(lead: LeadPayload): Promise<{ ok: boolean; reas
   if (!lead.email) return { ok: false, reason: 'no-email' }
 
   const from = process.env.LEAD_FROM_EMAIL || 'Growth Escalators <onboarding@resend.dev>'
-  const replyTo = process.env.LEAD_NOTIFY_EMAIL || 'Info@growthescalators.com'
+  const replyTo = process.env.LEAD_NOTIFY_EMAIL || 'jatin@growthescalators.com'
   const firstName = (lead.name || 'there').split(' ')[0]
   const { caseStudy, resourceLine } = resourceFor(lead)
 
