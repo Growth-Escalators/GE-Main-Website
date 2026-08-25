@@ -1,12 +1,10 @@
 import type { Metadata } from 'next'
 import { Plus_Jakarta_Sans } from 'next/font/google'
 import './globals.css'
-import dynamic from 'next/dynamic'
 import GoogleAnalytics from '@/components/analytics/GoogleAnalytics'
 import LeadAttributionCapture from '@/components/analytics/LeadAttributionCapture'
 import ContactIdentityGuard from '@/components/ui/ContactIdentityGuard'
-
-const GrowthBot = dynamic(() => import('@/components/ui/GrowthBot'), { ssr: false })
+import DeferredGrowthBot from '@/components/ui/DeferredGrowthBot'
 
 const jakarta = Plus_Jakarta_Sans({
   subsets: ['latin'],
@@ -171,7 +169,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <LeadAttributionCapture />
         <ContactIdentityGuard />
         {children}
-        <GrowthBot />
+        <DeferredGrowthBot />
       </body>
     </html>
   )
