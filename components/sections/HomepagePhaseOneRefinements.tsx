@@ -1,15 +1,14 @@
-'use client'
-
 /**
  * Phase 1 responsive correction layer.
  *
  * Kept separate from the main reference module so the reference-led desktop
  * art direction stays readable while viewport-specific corrections remain
- * easy to audit before the later shared-design-system rollout.
+ * easy to audit before the later shared-design-system rollout. This is plain
+ * server-rendered CSS; it does not need a client hydration boundary.
  */
 export default function HomepagePhaseOneRefinements() {
   return (
-    <style jsx global>{`
+    <style>{`
       @media (min-width: 981px) {
         .ge-nav { --nav-h: 94px !important; }
         .ge-nav.is-scrolled { --nav-h: 78px !important; }
