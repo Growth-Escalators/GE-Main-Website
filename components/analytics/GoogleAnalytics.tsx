@@ -2,28 +2,34 @@ import Script from 'next/script'
 
 // GA4 property "Growth Escalators" (growthescalators.com), Measurement ID G-3WTBJEK0S9.
 //
-// This was previously assumed (see the old comment in lib/analytics.ts) to be
-// injected "outside this codebase" via Google Search Console site verification.
-// That's not how GA4 works — GSC verification does not install the gtag.js tag.
-// The tag was never actually added anywhere, which is why GA4 reported
-// "Data collection isn't active for your website." This component is the
-// actual gtag.js bootstrap; lib/analytics.ts's trackLead() sends events
-// through the window.gtag global this defines.
+// Keep a tiny synchronous queue available from the first HTML parse so lead
+// events can be recorded even before gtag.js arrives. The external Google
+// script itself is non-critical to rendering and is intentionally loaded after
+// the window load event. When gtag.js initializes it consumes the queued calls.
 const GA_MEASUREMENT_ID = 'G-3WTBJEK0S9'
 
 export default function GoogleAnalytics() {
   return (
     <>
+      <script
+        id="ga4-queue-bootstrap"
+        dangerouslySetInnerHTML={{
+          __html: `
+            window.dataLayer = window.dataLayer || [];
+            window.gtag = window.gtag || function(){window.dataLayer.push(arguments);};
+          `,
+        }}
+      />
       <Script
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-        strategy="afterInteractive"
+        strategy="lazyOnload"
       />
-      <Script id="ga4-init" strategy="afterInteractive">
+      <Script id="ga4-init" strategy="lazyOnload">
         {`
           window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', '${GA_MEASUREMENT_ID}');
+          window.gtag = window.gtag || function(){window.dataLayer.push(arguments);};
+          window.gtag('js', new Date());
+          window.gtag('config', '${GA_MEASUREMENT_ID}');
         `}
       </Script>
     </>
