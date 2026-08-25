@@ -2,18 +2,38 @@ name: SEO Performance Audit
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/lighthouse-audit.yml'
+      - '.lighthouserc.mobile.json'
+      - '.lighthouserc.desktop.json'
+      - 'app/layout.tsx'
+      - 'app/page.tsx'
+      - 'components/sections/**'
+      - 'components/ui/**'
+      - 'components/analytics/**'
+      - 'public/**'
+      - 'next.config.*'
+      - 'package.json'
+      - 'package-lock.json'
   schedule:
     # Monday 09:00 IST / 03:30 UTC. Runs against the live production domain.
     - cron: '30 3 * * 1'
 
+permissions:
+  contents: read
+
 jobs:
-  lighthouse:
+  mobile-lighthouse:
     name: Mobile Lighthouse production sample
     runs-on: ubuntu-latest
     timeout-minutes: 20
 
     steps:
-      - name: Run Lighthouse on representative live pages
+      - uses: actions/checkout@v4
+      - name: Run mobile Lighthouse on representative live pages
         uses: treosh/lighthouse-ci-action@v12
         with:
           urls: |
@@ -23,5 +43,27 @@ jobs:
             https://www.growthescalators.com/real-estate/project-launch-marketing
             https://www.growthescalators.com/travel-marketing-agency
             https://www.growthescalators.com/white-label-seo-agency
+          configPath: './.lighthouserc.mobile.json'
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+
+  desktop-lighthouse:
+    name: Desktop Lighthouse production sample
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run desktop Lighthouse on representative live pages
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            https://www.growthescalators.com/
+            https://www.growthescalators.com/d2c
+            https://www.growthescalators.com/doctors-marketing-agency-jaipur
+            https://www.growthescalators.com/real-estate/project-launch-marketing
+            https://www.growthescalators.com/travel-marketing-agency
+            https://www.growthescalators.com/white-label-seo-agency
+          configPath: './.lighthouserc.desktop.json'
           uploadArtifacts: true
           temporaryPublicStorage: true
