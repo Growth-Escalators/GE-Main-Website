@@ -1,0 +1,39 @@
+name: Priority IndexNow Submit
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - '.github/workflows/indexnow-priority-submit.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  submit-priority-urls:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Submit priority commercial URLs to IndexNow
+        run: |
+          npx --yes tsx scripts/indexnow-ping.ts \
+            https://www.growthescalators.com/doctors-marketing-agency-jaipur \
+            https://www.growthescalators.com/ivf-marketing-agency-jaipur \
+            https://www.growthescalators.com/orthopedic-marketing-agency-jaipur \
+            https://www.growthescalators.com/jewellery-marketing-agency-jaipur \
+            https://www.growthescalators.com/real-estate-marketing-agency-jaipur \
+            https://www.growthescalators.com/real-estate/project-launch-marketing \
+            https://www.growthescalators.com/d2c/fashion/womens-clothing \
+            https://www.growthescalators.com/travel-marketing-agency \
+            https://www.growthescalators.com/white-label-digital-marketing-agency \
+            https://www.growthescalators.com/white-label-seo-agency
