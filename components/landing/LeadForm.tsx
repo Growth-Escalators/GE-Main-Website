@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import styles from './LeadForm.module.css'
 import { trackLead } from '@/lib/analytics'
 import { getLeadAttribution } from '@/lib/leadAttribution'
+import { WhatsAppConsentField } from '@/components/landing/WhatsAppConsent'
 
 export type LeadFormVariant = 'generic' | 'd2c' | 'clinic' | 'agency'
 
@@ -327,6 +328,9 @@ export default function LeadForm({
                   <TextAreaField label="What do you want help with? (optional)" placeholder="Tell us what you want to grow, improve or fix." />
                 </>
               )}
+
+              <WhatsAppConsentField />
+
 
               <button type="submit" className={`btn-primary ${styles.submit}`} disabled={submitting}>
                 {submitting ? 'Sending…' : submitLabel}

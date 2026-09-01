@@ -9,6 +9,7 @@ import Phase2Motion from '@/components/phase2/Phase2Motion'
 import { trackLead } from '@/lib/analytics'
 import styles from '@/components/phase2/Phase2Core.module.css'
 import staffing from '@/components/phase2/StaffingPhase2.module.css'
+import { WhatsAppConsentField } from '@/components/landing/WhatsAppConsent'
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
 
@@ -203,6 +204,8 @@ export default function StaffingPage() {
                 <div className={staffing.fieldGrid}><Field name="email" label="Work email" type="email" required /><Field name="phone" label="Phone / WhatsApp" type="tel" /></div>
                 <div className={staffing.fieldGrid}><Field name="role" label="Role / requirement" required /><Field name="location" label="Location / work mode" /></div>
                 <label className={staffing.field}><span>Requirement details</span><textarea className={`${staffing.control} ${staffing.textarea}`} name="message" placeholder="Skills, experience, budget, notice period, interview process…" /></label>
+                <WhatsAppConsentField />
+
                 <button className={staffing.submit} disabled={status === 'submitting'}>{status === 'submitting' ? 'Sending…' : 'Send requirement →'}</button>
                 {status === 'error' && <p className={staffing.status} role="alert">Couldn’t send{error ? ` (${error})` : ''}. Please use the contact page or email jatin@growthescalators.com.</p>}
               </form>}
