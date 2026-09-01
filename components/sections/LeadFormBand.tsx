@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Check, Star } from 'lucide-react'
 import { trackLead } from '@/lib/analytics'
+import { WhatsAppConsentField } from '@/components/landing/WhatsAppConsent'
 
 const SERVICE_OPTIONS = [
   'Performance Ads',
@@ -113,6 +114,9 @@ export default function LeadFormBand({ submitLabel = 'Book My Free Call →' }: 
                 <SelectField name="service" label="I need help with" options={SERVICE_OPTIONS} />
                 <SelectField name="budget" label="Monthly budget" options={BUDGET_OPTIONS} />
               </div>
+
+              <WhatsAppConsentField />
+
 
               <button type="submit" className="audit-submit" disabled={status === 'submitting'}>
                 {status === 'submitting' ? 'Sending…' : submitLabel}

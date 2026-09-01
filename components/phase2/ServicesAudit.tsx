@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { trackLead } from '@/lib/analytics'
+import { WhatsAppConsentField } from '@/components/landing/WhatsAppConsent'
 
 const SERVICE_OPTIONS=['Performance Marketing','Funnels & Automation','Web & Commerce','Creative & Social','SEO & Organic','Software & AI','Technology Talent']
 
@@ -42,6 +43,8 @@ export default function ServicesAudit(){
           <label><span>Work email *</span><input name="email" type="email" required placeholder="you@company.com"/></label>
           <label><span>Business / website</span><input name="company" placeholder="company.com"/></label>
           <label><span>Where do you think growth is stuck?</span><select name="service" defaultValue=""><option value="" disabled>Select a capability</option>{SERVICE_OPTIONS.map(x=><option key={x}>{x}</option>)}</select></label>
+          <WhatsAppConsentField />
+
           <button disabled={status==='submitting'}>{status==='submitting'?'Sending…':'Get My Free Audit ↗'}</button>
           <a href="https://wa.me/917733888883?text=Hi%20Growth%20Escalators%2C%20I%27d%20like%20a%20free%20growth%20audit." target="_blank" rel="noopener noreferrer" onClick={()=>trackLead('whatsapp')}>Or chat on WhatsApp ↗</a>
           {status==='error'&&<p className="svc-error">Couldn&apos;t send. Email <a href="mailto:jatin@growthescalators.com">jatin@growthescalators.com</a>.</p>}

@@ -4,6 +4,7 @@ import { useMemo, useState } from 'react'
 import { motion } from 'framer-motion'
 import styles from './LeadMagnetCalculator.module.css'
 import { trackLead } from '@/lib/analytics'
+import { WhatsAppConsentField } from '@/components/landing/WhatsAppConsent'
 
 /* ── Config shapes ─────────────────────────────────────────────────────────
    A single, config-driven calculator that powers every niche page. Three
@@ -333,6 +334,8 @@ export default function LeadMagnetCalculator({ config }: { config: CalculatorCon
                   <input name="phone" type="tel" required autoComplete="tel" placeholder="Phone" aria-label="Phone" />
                 </div>
                 <input name="email" type="email" required autoComplete="email" placeholder="Email" aria-label="Email" />
+                <WhatsAppConsentField />
+
                 <button type="submit" className={`btn-primary ${styles.submit}`} disabled={submitting}>
                   {submitting ? 'Crunching…' : 'Show me the full breakdown'}
                 </button>

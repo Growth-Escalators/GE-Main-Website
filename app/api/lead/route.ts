@@ -76,6 +76,13 @@ interface LeadPayload {
   referrerUrl?: string
   /** Page where the lead actually converted/submitted. */
   landingPageRoute?: string
+  /** Unchecked-by-default WhatsApp consent from the shared consent component. */
+  whatsappConsent?: boolean
+  whatsappConsentVersion?: string
+  preferredCallTime?: string
+  /** Server-derived; forwarded to the CRM for the consent audit trail. */
+  clientIp?: string
+  userAgent?: string
   whatsappClicked?: boolean
   whatsappClickSource?: string
 
@@ -96,7 +103,8 @@ function validate(body: unknown): { ok: true; data: LeadPayload } | { ok: false;
   if (!body || typeof body !== 'object') return { ok: false, error: 'Body must be a JSON object' }
   const b = body as Record<string, unknown>
   const str = (v: unknown) => (typeof v === 'string' ? v.trim() : '')
-  const bool = (v: unknown) => v === true || v === 'true' || v === 1 || v === '1'
+  const bool = (v: unknown) =>
+    v === true || v === 'true' || v === 1 || v === '1' || v === 'yes' || v === 'on'
 
   const name = str(b.name)
   const email = str(b.email)
@@ -204,6 +212,9 @@ function validate(body: unknown): { ok: true; data: LeadPayload } | { ok: false;
       utmCampaign: str(b.utmCampaign).slice(0, 250),
       utmTerm: str(b.utmTerm).slice(0, 250),
       utmContent: str(b.utmContent).slice(0, 250),
+      whatsappConsent: bool(b.whatsappConsent),
+      whatsappConsentVersion: str(b.whatsappConsentVersion).slice(0, 60),
+      preferredCallTime: str(b.preferredCallTime).slice(0, 120),
       whatsappClicked: bool(b.whatsappClicked),
       whatsappClickSource: str(b.whatsappClickSource).slice(0, 200),
 
@@ -499,25 +510,40 @@ export async function POST(req: Request) {
   const v = validate(body)
   if (!v.ok) return NextResponse.json({ error: v.error }, { status: 400 })
 
+  // Request context is derived server-side, never trusted from the client, and
+  // forwarded only to the CRM — it is part of the consent audit trail.
+  const lead: LeadPayload = {
+    ...v.data,
+    clientIp: ip,
+    userAgent: (req.headers.get('user-agent') ?? '').slice(0, 400),
+  }
+
   const [resendResult, webhookResult, crmResult, autoResponderResult] = await Promise.all([
-    sendViaResend(v.data),
-    sendViaWebhook(v.data),
-    sendViaCrm(v.data),
-    sendAutoResponder(v.data),
+    sendViaResend(lead),
+    sendViaWebhook(lead),
+    sendViaCrm(lead),
+    sendAutoResponder(lead),
   ])
 
-  const logSafeLead = {
-    ...v.data,
-    jdFileBase64: v.data.jdFileBase64
-      ? `[redacted, ${Buffer.from(v.data.jdFileBase64, 'base64').length} bytes]`
-      : undefined,
-  }
+  // PII-safe logging. The previous version wrote the visitor's full name,
+  // phone, email and message into stdout on every submission, where it landed
+  // in Vercel log retention. Only non-identifying routing context is logged now;
+  // the lead itself lives in the CRM, which is access-controlled.
   console.log(
     '[lead]',
     JSON.stringify({
       receivedAt: new Date().toISOString(),
-      ip,
-      lead: logSafeLead,
+      source: lead.source,
+      formType: lead.formType,
+      market: lead.market,
+      service: lead.service,
+      landingPageRoute: lead.landingPageRoute,
+      utmSource: lead.utmSource,
+      utmMedium: lead.utmMedium,
+      utmCampaign: lead.utmCampaign,
+      hasPhone: Boolean(lead.phone),
+      hasJd: Boolean(lead.jdFileBase64),
+      whatsappConsent: Boolean(lead.whatsappConsent),
       resend: resendResult,
       webhook: webhookResult,
       crm: crmResult,

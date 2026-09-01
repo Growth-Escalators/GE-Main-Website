@@ -9,6 +9,7 @@ import {
 import { trackLead, trackLandingEvent } from '@/lib/analytics'
 import CtaButton from './CtaButton'
 import type { LandingMarket, LeadFormSectionContent } from '@/lib/content/international-landing/types'
+import { WhatsAppConsentField } from '@/components/landing/WhatsAppConsent'
 
 const easeOut = [0.16, 1, 0.3, 1] as const
 
@@ -384,6 +385,8 @@ export default function LeadForm({ content, market, eventPrefix, leadSourceLabel
               <input type="hidden" name="utmContent" value={attribution.utmContent} readOnly />
               <input type="hidden" name="referrerUrl" value={attribution.referrerUrl} readOnly />
               <input type="hidden" name="landingPageRoute" value={attribution.landingPageRoute} readOnly />
+
+              <WhatsAppConsentField />
 
               <button
                 type="submit"

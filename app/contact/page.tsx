@@ -8,6 +8,7 @@ import Phase2Motion from '@/components/phase2/Phase2Motion'
 import { trackLead } from '@/lib/analytics'
 import { getLeadAttribution } from '@/lib/leadAttribution'
 import styles from '@/components/phase2/Phase2Core.module.css'
+import { WhatsAppConsentField } from '@/components/landing/WhatsAppConsent'
 
 type Status = 'idle' | 'submitting' | 'success' | 'error'
 type BusinessType = '' | 'd2c' | 'clinic' | 'staffing' | 'other'
@@ -128,6 +129,8 @@ export default function ContactPage() {
               </>}
 
               <label className={styles.field}><span>What are you trying to solve?</span><textarea className={`${styles.control} ${styles.textarea}`} name="message" placeholder="A little context helps us make the first reply useful." /></label>
+              <WhatsAppConsentField />
+
               <button className={styles.submit} disabled={status === 'submitting'}>{status === 'submitting' ? 'Sending…' : 'Send my brief →'}</button>
               {status === 'error' && <p role="alert">Couldn&apos;t send{error ? ` (${error})` : ''}. Email us at <a href="mailto:jatin@growthescalators.com">jatin@growthescalators.com</a>.</p>}
             </form>}
