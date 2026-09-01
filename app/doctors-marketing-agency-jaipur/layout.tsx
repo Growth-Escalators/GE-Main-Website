@@ -4,22 +4,25 @@ const SITE = 'https://www.growthescalators.com'
 const PATH = '/doctors-marketing-agency-jaipur'
 
 export const metadata: Metadata = {
-  title: 'Marketing Agency for Doctors in Jaipur',
+  title: 'Digital Marketing Agency for Doctors in Jaipur',
   description:
-    'Jaipur marketing agency for doctors & clinics — Google Maps SEO, compliant ads, WhatsApp no-show fixes. Real clinic: +220% bookings in 4 months.',
+    'Digital marketing agency for doctors in Jaipur — Google Maps SEO, healthcare-compliant Google & Meta ads, WhatsApp appointment follow-up, and clinic growth focused on booked patients.',
   keywords: [
+    'digital marketing agency for doctors in jaipur',
     'marketing agency for doctors in jaipur',
     'healthcare marketing agency jaipur',
     'clinic marketing jaipur',
     'doctor marketing agency jaipur',
     'hospital marketing agency jaipur',
     'medical marketing agency jaipur',
+    'doctor digital marketing jaipur',
+    'patient acquisition for doctors jaipur',
   ],
   alternates: { canonical: PATH },
   openGraph: {
-    title: 'Marketing Agency for Doctors in Jaipur — Growth Escalators',
+    title: 'Digital Marketing Agency for Doctors in Jaipur — Growth Escalators',
     description:
-      'Jaipur marketing agency for doctors & clinics. Google Maps SEO, healthcare-compliant ads, WhatsApp no-show fixes. Real clinic: +220% bookings in 4 months.',
+      'Jaipur-focused digital marketing for doctors & clinics: Google Maps SEO, compliant ads, WhatsApp appointment follow-up, and booked-patient growth.',
     url: PATH,
     type: 'website',
   },
@@ -31,11 +34,11 @@ const SCHEMA = {
     {
       '@type': 'ProfessionalService',
       '@id': `${SITE}${PATH}#business`,
-      name: 'Growth Escalators — Marketing Agency for Doctors in Jaipur',
+      name: 'Growth Escalators — Digital Marketing Agency for Doctors in Jaipur',
       url: `${SITE}${PATH}`,
       image: `${SITE}/og-image.jpg`,
       description:
-        'Marketing agency for doctors, clinics, and hospitals in Jaipur — Google Business Profile & local SEO, healthcare-compliant Google and Meta ads, WhatsApp appointment automation.',
+        'Digital marketing agency for doctors, clinics, and hospitals in Jaipur — Google Business Profile & local SEO, healthcare-compliant Google and Meta ads, WhatsApp appointment automation, and patient acquisition.',
       telephone: '+91-7733888883',
       email: 'Info@growthescalators.com',
       priceRange: '₹₹₹',
@@ -51,7 +54,12 @@ const SCHEMA = {
         { '@type': 'City', name: 'Jaipur' },
         { '@type': 'State', name: 'Rajasthan' },
       ],
-      serviceType: 'Healthcare Marketing',
+      serviceType: [
+        'Healthcare Marketing',
+        'Digital Marketing for Doctors',
+        'Local SEO for Clinics',
+        'Patient Acquisition for Doctors',
+      ],
       openingHours: 'Mo-Sa 10:00-19:00',
       parentOrganization: { '@id': `${SITE}/#organization` },
       sameAs: [
@@ -71,7 +79,7 @@ const SCHEMA = {
       '@id': `${SITE}${PATH}#breadcrumb`,
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE}/` },
-        { '@type': 'ListItem', position: 2, name: 'Marketing Agency for Doctors in Jaipur', item: `${SITE}${PATH}` },
+        { '@type': 'ListItem', position: 2, name: 'Digital Marketing Agency for Doctors in Jaipur', item: `${SITE}${PATH}` },
       ],
     },
   ],
