@@ -1,14 +1,14 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Marketing for Doctors & Clinics',
+  title: 'Healthcare Marketing for Doctors & Clinics in India',
   description:
-    "More patients. Less ad spend. AI-first performance marketing, content, and conversion-focused websites built specifically for doctors, clinics, and hospitals.",
+    'India-wide healthcare marketing for doctors, clinics, hospitals, and surgeons — patient acquisition, local SEO, compliant ads, content, and conversion-focused websites.',
   alternates: { canonical: '/doctors' },
   openGraph: {
-    title: 'Marketing for Doctors & Clinics — Growth Escalators',
+    title: 'Healthcare Marketing for Doctors & Clinics in India — Growth Escalators',
     description:
-      'More patients. Less ad spend. AI-first marketing built specifically for doctors and clinics.',
+      'India-wide patient acquisition and healthcare marketing for doctors, clinics, hospitals, and surgeons.',
     url: '/doctors',
     type: 'website',
   },
