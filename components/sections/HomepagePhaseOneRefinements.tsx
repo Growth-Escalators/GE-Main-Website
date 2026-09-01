@@ -6,9 +6,7 @@
  * easy to audit before the later shared-design-system rollout. This is plain
  * server-rendered CSS; it does not need a client hydration boundary.
  */
-export default function HomepagePhaseOneRefinements() {
-  return (
-    <style>{`
+const CSS = `
       @media (min-width: 981px) {
         .ge-nav { --nav-h: 94px !important; }
         .ge-nav.is-scrolled { --nav-h: 78px !important; }
@@ -45,7 +43,7 @@ export default function HomepagePhaseOneRefinements() {
         }
         #home-hero-heading {
           margin: 20px 0 25px !important;
-          font-size: clamp(72px, 14vw, 108px) !important;
+          font-size: clamp(68px, 12.2vw, 104px) !important;
           line-height: .8 !important;
         }
         section[aria-labelledby='home-hero-heading'] > div:nth-child(2) > div:first-child { max-width: 780px; }
@@ -80,7 +78,7 @@ export default function HomepagePhaseOneRefinements() {
         }
         #home-hero-heading {
           margin: 17px 0 21px !important;
-          font-size: clamp(58px, 18vw, 76px) !important;
+          font-size: clamp(44px, 12.2vw, 78px) !important;
           line-height: .82 !important;
           letter-spacing: -.04em !important;
         }
@@ -159,12 +157,14 @@ export default function HomepagePhaseOneRefinements() {
       }
 
       @media (max-width: 390px) {
-        #home-hero-heading { font-size: 57px !important; }
+        #home-hero-heading { font-size: clamp(36px, 12vw, 47px) !important; }
         section[aria-labelledby='home-hero-heading'] > div:nth-child(2) > div:nth-child(2) {
           min-height: 360px !important;
           height: 360px !important;
         }
       }
-    `}</style>
-  )
+    `
+
+export default function HomepagePhaseOneRefinements() {
+  return <style dangerouslySetInnerHTML={{ __html: CSS }} />
 }

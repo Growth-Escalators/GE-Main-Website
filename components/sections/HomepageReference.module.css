@@ -23,9 +23,9 @@
 /* HERO */
 .hero { position: relative; background: #fff; padding: clamp(44px, 5vw, 72px) 0 0; border-top: 4px solid var(--ink); }
 .heroBackdrop { position: absolute; inset: 0; pointer-events: none; opacity: .38; background-image: radial-gradient(circle at 76% 28%, rgba(76, 55, 255, .16), transparent 25%), linear-gradient(rgba(23, 6, 83, .035) 1px, transparent 1px), linear-gradient(90deg, rgba(23, 6, 83, .035) 1px, transparent 1px); background-size: auto, 48px 48px, 48px 48px; mask-image: linear-gradient(to bottom, #000 0, transparent 78%); }
-.heroShell { position: relative; width: min(100%, 1440px); margin: 0 auto; min-height: clamp(650px, 77vh, 840px); padding: 0 clamp(24px, 5vw, 76px) 60px; display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(38px, 5vw, 78px); align-items: center; }
+.heroShell { position: relative; width: min(100%, 1440px); margin: 0 auto; min-height: clamp(650px, 77vh, 840px); padding: 0 clamp(24px, 5vw, 76px) 60px; display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: clamp(38px, 5vw, 78px); align-items: center; }
 .heroCopy { position: relative; z-index: 2; padding-top: 14px; }
-.heroTitle { margin: 22px 0 32px; font-family: var(--font-display), var(--font-jakarta), sans-serif; font-size: clamp(76px, 9.2vw, 146px); font-weight: 800; line-height: .76; letter-spacing: -.045em; text-transform: uppercase; color: var(--ink); }
+.heroTitle { margin: 22px 0 32px; font-family: var(--font-display), var(--font-jakarta), sans-serif; font-size: clamp(72px, 6.1vw, 98px); font-weight: 800; line-height: .76; letter-spacing: -.045em; text-transform: uppercase; color: var(--ink); }
 .heroLine { display: block; overflow: hidden; padding-bottom: .08em; }
 .heroLine i { display: block; font-style: normal; will-change: transform; }
 .heroLead { max-width: 610px; margin: 0; font-size: clamp(17px, 1.55vw, 21px); line-height: 1.55; letter-spacing: -.02em; color: #40485a; }
@@ -208,8 +208,8 @@
 .supportingNumber { font-family: var(--font-display), sans-serif; font-size: 35px; opacity: .35; }.supportingInsight h3{margin:9px 0 0;font-family:var(--font-display),sans-serif;font-size:30px;line-height:.92;text-transform:uppercase}.articleArrow{width:30px;height:30px;border:1px solid rgba(23,6,83,.24);border-radius:50%;display:grid;place-items:center;font-size:13px}
 
 @media (max-width: 1120px) {
-  .heroShell { grid-template-columns: .95fr 1.05fr; }
-  .heroTitle { font-size: clamp(72px, 9vw, 112px); }
+  .heroShell { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr); }
+  .heroTitle { font-size: clamp(60px, 6.3vw, 76px); }
   .serviceContent { padding: 34px 30px 0; }
   .serviceCard { min-height: 520px; }
   .caseCard { grid-template-columns: 44% 56%; }
