@@ -18,6 +18,11 @@ type ToolResultPayload = {
   summary?: string
 }
 
+type ValidatedToolResult = Required<Pick<
+  ToolResultPayload,
+  'email' | 'toolId' | 'toolName' | 'postSlug' | 'postTitle' | 'priority' | 'headline' | 'metrics' | 'recommendations' | 'summary'
+>>
+
 function clean(value: unknown, max = 500): string {
   return typeof value === 'string' ? value.trim().slice(0, max) : ''
 }
@@ -31,14 +36,14 @@ function escapeHtml(value: string) {
     .replace(/'/g, '&#39;')
 }
 
-function validate(body: unknown): { ok: true; data: Required<Pick<ToolResultPayload, 'email' | 'toolId' | 'toolName' | 'postSlug' | 'postTitle' | 'priority' | 'headline' | 'metrics' | 'recommendations' | 'summary'>> } | { ok: false; error: string } {
+function validate(body: unknown): { ok: true; data: ValidatedToolResult } | { ok: false; error: string } {
   if (!body || typeof body !== 'object') return { ok: false, error: 'Invalid request' }
   const raw = body as Record<string, unknown>
   const email = clean(raw.email, 200)
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return { ok: false, error: 'Valid email required' }
 
-  const priority = raw.priority === 'P1' ? 'P1' : 'P2'
-  const metrics = Array.isArray(raw.metrics)
+  const priority: Priority = raw.priority === 'P1' ? 'P1' : 'P2'
+  const metrics: Metric[] = Array.isArray(raw.metrics)
     ? raw.metrics.slice(0, 8).map((item) => {
         const metric = item && typeof item === 'object' ? item as Record<string, unknown> : {}
         return { label: clean(metric.label, 120), value: clean(metric.value, 160) }
@@ -48,7 +53,7 @@ function validate(body: unknown): { ok: true; data: Required<Pick<ToolResultPayl
     ? raw.recommendations.slice(0, 6).map((item) => clean(item, 500)).filter(Boolean)
     : []
 
-  const data = {
+  const data: ValidatedToolResult = {
     email,
     toolId: clean(raw.toolId, 100),
     toolName: clean(raw.toolName, 140),
@@ -65,7 +70,7 @@ function validate(body: unknown): { ok: true; data: Required<Pick<ToolResultPayl
   return { ok: true, data }
 }
 
-async function sendPriorityAlert(data: ReturnType<typeof validate> extends { ok: true; data: infer T } ? T : never) {
+async function sendPriorityAlert(data: ValidatedToolResult) {
   if (data.priority !== 'P1') return
   const url = process.env.PRIORITY_LEAD_WHATSAPP_WEBHOOK_URL
   if (!url) return
@@ -111,7 +116,7 @@ export async function POST(request: Request) {
   const subject = `Your ${data.toolName} result`
 
   const text = [
-    `Hi,`,
+    'Hi,',
     '',
     `Here is the ${data.toolName} result you just requested on Growth Escalators.`,
     '',
@@ -127,7 +132,7 @@ export async function POST(request: Request) {
     `Article: ${data.postTitle}`,
     articleUrl,
     '',
-    `If you want a second opinion, reply to this email with your store/account URL and I’ll tell you what I would investigate first.`,
+    'If you want a second opinion, reply to this email with your store/account URL and I’ll tell you what I would investigate first.',
     '',
     'Jatin',
     'Growth Escalators',
