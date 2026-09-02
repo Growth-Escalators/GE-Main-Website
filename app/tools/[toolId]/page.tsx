@@ -8,6 +8,8 @@ import BlogGrowthTool from '@/components/blog/BlogGrowthTool'
 import { GROWTH_TOOL_IDS, getGrowthTool } from '@/lib/growthTools'
 import styles from '../tools.module.css'
 
+const SITE = 'https://www.growthescalators.com'
+
 export function generateStaticParams() {
   return GROWTH_TOOL_IDS.map((toolId) => ({ toolId }))
 }
@@ -33,10 +35,35 @@ export default function GrowthToolPage({ params }: { params: { toolId: string } 
   const tool = getGrowthTool(params.toolId)
   if (!tool) notFound()
 
+  const toolJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebApplication',
+    name: tool.shortTitle,
+    url: `${SITE}/tools/${tool.id}`,
+    description: tool.description,
+    applicationCategory: 'BusinessApplication',
+    operatingSystem: 'Web',
+    isAccessibleForFree: true,
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'INR',
+    },
+    provider: {
+      '@type': 'Organization',
+      name: 'Growth Escalators',
+      url: SITE,
+    },
+  }
+
   return (
     <>
       <Navbar />
       <main className={styles.page}>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(toolJsonLd) }}
+        />
         <section className={styles.detailHero}>
           <div className={styles.shell}>
             <Link href="/tools" className={styles.back}>← All Growth Tools</Link>
