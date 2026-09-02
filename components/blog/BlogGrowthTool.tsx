@@ -1,6 +1,6 @@
 'use client'
 
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { ArrowRight, Check, ChevronDown, Mail } from 'lucide-react'
 import { getLeadAttribution } from '@/lib/leadAttribution'
 import { trackLead } from '@/lib/analytics'
@@ -402,8 +402,23 @@ export default function BlogGrowthTool({
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<SubmitStatus>('idle')
   const [error, setError] = useState('')
+  const [stickyEligible, setStickyEligible] = useState(false)
 
   const resultId = useMemo(() => `${tool.id}-${trackingKey}`.replace(/[^a-z0-9-]/gi, '-'), [tool.id, trackingKey])
+
+  useEffect(() => {
+    if (defaultOpen) return
+
+    const updateStickyEligibility = () => {
+      const scrollable = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1)
+      const progress = window.scrollY / scrollable
+      setStickyEligible(progress >= 0.18)
+    }
+
+    updateStickyEligibility()
+    window.addEventListener('scroll', updateStickyEligibility, { passive: true })
+    return () => window.removeEventListener('scroll', updateStickyEligibility)
+  }, [defaultOpen])
 
   async function sendResult(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -556,7 +571,7 @@ export default function BlogGrowthTool({
         </div>
       )}
 
-      {!open && (
+      {!open && stickyEligible && (
         <button
           type="button"
           className={styles.mobileSticky}
