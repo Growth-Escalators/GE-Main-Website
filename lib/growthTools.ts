@@ -71,16 +71,28 @@ export function getGrowthTool(id: string): GrowthToolDefinition | null {
   return GROWTH_TOOLS[id as GrowthToolId] ?? null
 }
 
+function explicitGrowthTool(post: Pick<PostMeta, 'leadMagnetId'>): GrowthToolDefinition | null | undefined {
+  if (post.leadMagnetId === 'none') return null
+  if (!post.leadMagnetId) return undefined
+  return getGrowthTool(post.leadMagnetId)
+}
+
 /**
- * V1 intentionally maps only the D2C / ecommerce intent clusters we can serve
- * with a genuinely relevant interactive tool. Other editorial categories stay
- * ungated until their own tool engine is ready.
+ * Mapping priority is deliberately conservative:
+ * 1) explicit frontmatter mapping,
+ * 2) strong query-intent inference,
+ * 3) no tool.
  *
- * Search intent outranks broad editorial category. This is deliberately
- * conservative: a mismatched tool is worse than no tool at all.
+ * This means future title/tag changes cannot silently override an editorially
+ * approved resource, while legacy posts still get sensible V1 behaviour.
  */
-export function resolveGrowthTool(post: Pick<PostMeta, 'title' | 'slug' | 'tags' | 'primaryKeyword' | 'categoryLabel'>): GrowthToolDefinition | null {
-  const haystack = [post.title, post.slug, post.primaryKeyword ?? '', post.categoryLabel, ...post.tags]
+export function resolveGrowthTool(
+  post: Pick<PostMeta, 'title' | 'slug' | 'tags' | 'primaryKeyword' | 'categoryLabel' | 'leadMagnetId' | 'intentCluster'>,
+): GrowthToolDefinition | null {
+  const explicit = explicitGrowthTool(post)
+  if (explicit !== undefined) return explicit
+
+  const haystack = [post.title, post.slug, post.primaryKeyword ?? '', post.intentCluster ?? '', post.categoryLabel, ...post.tags]
     .join(' ')
     .toLowerCase()
 
@@ -88,27 +100,25 @@ export function resolveGrowthTool(post: Pick<PostMeta, 'title' | 'slug' | 'tags'
   const isWhiteLabelOrDev = /(white[- ]label|outsourc|development partner|web development|software development|shopify development|staff augmentation)/.test(haystack)
 
   if (isD2cCommerce
-      && /(top\s+\d+|best .*agenc|agencies|agency vs|choose .*agency|agency comparison|hire .*agency|select .*agency)/.test(haystack)) {
+      && /(top\s+\d+|best .*agenc|agencies|agency vs|choose .*agency|agency comparison|hire .*agency|select .*agency|vendor evaluation)/.test(haystack)) {
     return GROWTH_TOOLS['d2c-agency-scorecard']
   }
 
   if (isD2cCommerce
-      && /(how much.*(spend|budget)|ad spend|advertising budget|media budget|meta ads|google ads|roas|scale .*ads|scaling .*ads)/.test(haystack)) {
+      && /(how much.*(spend|budget)|ad spend|advertising budget|media budget|meta ads|google ads|roas|scale .*ads|scaling .*ads|paid-media-budgeting)/.test(haystack)) {
     return GROWTH_TOOLS['meta-budget-planner']
   }
 
   if (isD2cCommerce
-      && /(cac|ltv|customer acquisition cost|lifetime value|profit|margin|unit economics|break[- ]even|contribution margin|payback)/.test(haystack)) {
+      && /(cac|ltv|customer acquisition cost|lifetime value|profit|margin|unit economics|break[- ]even|contribution margin|payback|d2c-unit-economics)/.test(haystack)) {
     return GROWTH_TOOLS['d2c-profit-calculator']
   }
 
   if (!isWhiteLabelOrDev
       && isD2cCommerce
-      && /(shopify.*(cro|conversion|store|product page|pdp)|conversion rate|conversion optimisation|conversion optimization|\bcro\b|product page|\bpdp\b|cart|checkout|store conversion)/.test(haystack)) {
+      && /(shopify.*(cro|conversion|store|product page|pdp)|conversion rate|conversion optimisation|conversion optimization|\bcro\b|product page|\bpdp\b|cart|checkout|store conversion|shopify-cro-diagnostic)/.test(haystack)) {
     return GROWTH_TOOLS['shopify-cro-scorecard']
   }
 
-  // No generic D2C fallback. If the query intent does not cleanly match one of
-  // the four V1 engines, the article stays editorial until the right tool exists.
   return null
 }
