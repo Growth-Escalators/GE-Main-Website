@@ -108,9 +108,7 @@ export function resolveGrowthTool(post: Pick<PostMeta, 'title' | 'slug' | 'tags'
     return GROWTH_TOOLS['shopify-cro-scorecard']
   }
 
-  if (isD2cCommerce && !isWhiteLabelOrDev) {
-    return GROWTH_TOOLS['d2c-profit-calculator']
-  }
-
+  // No generic D2C fallback. If the query intent does not cleanly match one of
+  // the four V1 engines, the article stays editorial until the right tool exists.
   return null
 }
