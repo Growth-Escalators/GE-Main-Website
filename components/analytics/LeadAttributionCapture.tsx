@@ -9,8 +9,9 @@ import { trackContactInteraction, trackFormInteraction } from '@/lib/analytics'
  *
  * It captures first + last acquisition context, catches the three high-intent
  * contact link types we care about, and measures the minimal form funnel:
- * form seen -> form started -> generate_lead (the latter fires on success in
- * LeadForm). No individual fields or noisy clicks are recorded.
+ * form seen -> form started -> form submitted OR form abandoned.
+ * Successful submissions still use the existing `generate_lead` event in
+ * LeadForm. No individual fields or field values are recorded.
  */
 export default function LeadAttributionCapture() {
   useEffect(() => {
@@ -41,42 +42,81 @@ export default function LeadAttributionCapture() {
       }
     }
 
-    const watchedForms = new WeakSet<HTMLFormElement>()
-    const startedForms = new WeakSet<HTMLFormElement>()
+    type FormState = {
+      context: string
+      started: boolean
+      submitted: boolean
+      abandoned: boolean
+    }
+
+    const formStates = new Map<HTMLFormElement, FormState>()
     const viewObservers = new Map<HTMLFormElement, IntersectionObserver>()
 
-    const watchForm = (form: HTMLFormElement) => {
-      if (watchedForms.has(form)) return
-      watchedForms.add(form)
+    const markAbandoned = (form: HTMLFormElement, state: FormState) => {
+      if (!state.started || state.submitted || state.abandoned) return
+      state.abandoned = true
+      trackFormInteraction('form_abandon', { form_context: state.context })
+      viewObservers.get(form)?.disconnect()
+      viewObservers.delete(form)
+      formStates.delete(form)
+    }
 
-      const formContext = form.closest('section')?.id || form.id || 'lead-form'
+    const watchForm = (form: HTMLFormElement) => {
+      if (formStates.has(form)) return
+
+      const state: FormState = {
+        context: form.closest('section')?.id || form.id || 'lead-form',
+        started: false,
+        submitted: false,
+        abandoned: false,
+      }
+      formStates.set(form, state)
 
       const markStarted = () => {
-        if (startedForms.has(form)) return
-        startedForms.add(form)
-        trackFormInteraction('form_start', { form_context: formContext })
+        if (state.started) return
+        state.started = true
+        trackFormInteraction('form_start', { form_context: state.context })
+      }
+
+      const markSubmitted = () => {
+        state.submitted = true
       }
 
       form.addEventListener('focusin', markStarted, { once: true })
       form.addEventListener('input', markStarted, { once: true })
       form.addEventListener('change', markStarted, { once: true })
+      // Native submit only fires after browser validation passes. We mark the
+      // funnel as submitted here; the existing generate_lead event remains the
+      // source of truth for a successful server-side lead creation.
+      form.addEventListener('submit', markSubmitted, { once: true })
 
       if ('IntersectionObserver' in window) {
         const observer = new IntersectionObserver((entries) => {
           if (!entries.some((entry) => entry.isIntersecting && entry.intersectionRatio >= 0.25)) return
-          trackFormInteraction('form_view', { form_context: formContext })
+          trackFormInteraction('form_view', { form_context: state.context })
           observer.disconnect()
           viewObservers.delete(form)
         }, { threshold: [0.25] })
         observer.observe(form)
         viewObservers.set(form, observer)
       } else {
-        trackFormInteraction('form_view', { form_context: formContext })
+        trackFormInteraction('form_view', { form_context: state.context })
       }
     }
 
+    const sweepRemovedForms = () => {
+      formStates.forEach((state, form) => {
+        if (!form.isConnected) markAbandoned(form, state)
+      })
+    }
+
     const scanForms = () => {
+      sweepRemovedForms()
       document.querySelectorAll<HTMLFormElement>('#lead-form form').forEach(watchForm)
+    }
+
+    const handlePageHide = () => {
+      formStates.forEach((state, form) => markAbandoned(form, state))
     }
 
     scanForms()
@@ -84,11 +124,18 @@ export default function LeadAttributionCapture() {
     mutationObserver.observe(document.body, { childList: true, subtree: true })
 
     document.addEventListener('click', handleClick, { capture: true })
+    window.addEventListener('pagehide', handlePageHide)
+
     return () => {
       document.removeEventListener('click', handleClick, { capture: true })
+      window.removeEventListener('pagehide', handlePageHide)
       mutationObserver.disconnect()
       viewObservers.forEach((observer) => observer.disconnect())
       viewObservers.clear()
+      // Do not emit abandonment merely because React tears down/restarts this
+      // effect (e.g. Strict Mode). Real exits are handled by pagehide or by the
+      // form being removed from the document during SPA navigation.
+      formStates.clear()
     }
   }, [])
 
