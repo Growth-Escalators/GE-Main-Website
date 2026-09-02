@@ -13,6 +13,7 @@ import { marked } from 'marked'
 const BLOG_DIR = path.join(process.cwd(), 'content', 'blog')
 
 export type BlogGradient = 'orange' | 'violet' | 'teal' | 'mixed'
+export type BlogReaderStage = 'awareness' | 'problem-aware' | 'solution-research' | 'vendor-evaluation' | 'ready-to-act'
 export type BlogContentType =
   | 'playbook'
   | 'guide'
@@ -53,6 +54,17 @@ export interface PostFrontmatter {
   heroImage?: string
   /** Optional keyword kept in content metadata for the editorial workflow. */
   primaryKeyword?: string
+
+  /**
+   * Conversion metadata. Explicit mapping always wins over inferred title/tag
+   * rules so future headline edits cannot silently change the resource shown.
+   */
+  intentCluster?: string
+  readerStage?: BlogReaderStage
+  leadMagnetId?: string
+  secondaryMagnetId?: string
+  businessCluster?: string
+  primaryCommercialPage?: string
 }
 
 export interface PostMeta extends PostFrontmatter {
