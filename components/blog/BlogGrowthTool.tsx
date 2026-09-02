@@ -728,11 +728,13 @@ export default function BlogGrowthTool({
         <button
           type="button"
           className={styles.mobileSticky}
+          style={{ bottom: 'calc(92px + env(safe-area-inset-bottom))' }}
           onClick={() => {
             setOpen(true)
             trackGrowthToolInteraction('growth_tool_opened', { ...analyticsContext, source: 'mobile_sticky' })
             document.getElementById(resultId)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
           }}
+          aria-label={`${tool.ctaLabel} — open ${tool.shortTitle}`}
         >
           {tool.ctaLabel} <ArrowRight size={15} />
         </button>
