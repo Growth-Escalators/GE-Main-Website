@@ -65,6 +65,12 @@ export const GROWTH_TOOLS: Record<GrowthToolId, GrowthToolDefinition> = {
   },
 }
 
+export const GROWTH_TOOL_IDS = Object.keys(GROWTH_TOOLS) as GrowthToolId[]
+
+export function getGrowthTool(id: string): GrowthToolDefinition | null {
+  return GROWTH_TOOLS[id as GrowthToolId] ?? null
+}
+
 /**
  * V1 intentionally maps only the D2C / ecommerce intent clusters we can serve
  * with a genuinely relevant interactive tool. Other editorial categories stay
@@ -81,39 +87,27 @@ export function resolveGrowthTool(post: Pick<PostMeta, 'title' | 'slug' | 'tags'
   const isD2cCommerce = /(d2c|dtc|ecommerce|e-commerce|fashion|apparel|skincare|beauty brand|jewellery brand|jewelry brand|online store)/.test(haystack)
   const isWhiteLabelOrDev = /(white[- ]label|outsourc|development partner|web development|software development|shopify development|staff augmentation)/.test(haystack)
 
-  // Agency-selection intent is valuable, but the D2C scorecard should only
-  // appear when the reader is actually evaluating an ecommerce/D2C partner.
   if (isD2cCommerce
       && /(top\s+\d+|best .*agenc|agencies|agency vs|choose .*agency|agency comparison|hire .*agency|select .*agency)/.test(haystack)) {
     return GROWTH_TOOLS['d2c-agency-scorecard']
   }
 
-  // Paid-media budget/scaling questions get the planner before any broader
-  // ecommerce fallback. This covers spend-by-revenue-stage and ROAS scaling.
   if (isD2cCommerce
       && /(how much.*(spend|budget)|ad spend|advertising budget|media budget|meta ads|google ads|roas|scale .*ads|scaling .*ads)/.test(haystack)) {
     return GROWTH_TOOLS['meta-budget-planner']
   }
 
-  // Unit-economics intent must outrank the broad "CRO" category label. This
-  // prevents CAC/LTV/profit articles from receiving a storefront diagnostic.
   if (isD2cCommerce
       && /(cac|ltv|customer acquisition cost|lifetime value|profit|margin|unit economics|break[- ]even|contribution margin|payback)/.test(haystack)) {
     return GROWTH_TOOLS['d2c-profit-calculator']
   }
 
-  // Only explicit storefront/conversion intent gets the CRO scorecard. A
-  // white-label Shopify-development article, for example, should get no D2C
-  // store diagnostic at all.
   if (!isWhiteLabelOrDev
       && isD2cCommerce
       && /(shopify.*(cro|conversion|store|product page|pdp)|conversion rate|conversion optimisation|conversion optimization|\bcro\b|product page|\bpdp\b|cart|checkout|store conversion)/.test(haystack)) {
     return GROWTH_TOOLS['shopify-cro-scorecard']
   }
 
-  // Conservative D2C fallback: a general commerce article can still offer the
-  // evergreen economics calculator, unless the article is really about an
-  // outsourcing/development engagement rather than operating an ecommerce brand.
   if (isD2cCommerce && !isWhiteLabelOrDev) {
     return GROWTH_TOOLS['d2c-profit-calculator']
   }
