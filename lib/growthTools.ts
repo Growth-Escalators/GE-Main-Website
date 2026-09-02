@@ -67,24 +67,39 @@ export const GROWTH_TOOLS: Record<GrowthToolId, GrowthToolDefinition> = {
 
 export const GROWTH_TOOL_IDS = Object.keys(GROWTH_TOOLS) as GrowthToolId[]
 
+/**
+ * Current V1 articles are pinned so ordinary headline/tag edits cannot silently
+ * swap the resource. New posts should prefer `leadMagnetId` in frontmatter.
+ */
+const APPROVED_TOOL_BY_SLUG: Partial<Record<string, GrowthToolId>> = {
+  'cac-vs-ltv-ecommerce-ad-spend-math': 'd2c-profit-calculator',
+  'dtc-marketing-2026-ios-17-killed-old-playbook': 'd2c-profit-calculator',
+  'how-much-should-d2c-brand-spend-on-ads-by-revenue-stage': 'meta-budget-planner',
+  'meta-ads-for-d2c-brands-scale-roas-past-plateau': 'meta-budget-planner',
+  'google-ads-vs-meta-ecommerce-2026': 'meta-budget-planner',
+}
+
 export function getGrowthTool(id: string): GrowthToolDefinition | null {
   return GROWTH_TOOLS[id as GrowthToolId] ?? null
 }
 
-function explicitGrowthTool(post: Pick<PostMeta, 'leadMagnetId'>): GrowthToolDefinition | null | undefined {
+function explicitGrowthTool(
+  post: Pick<PostMeta, 'slug' | 'leadMagnetId'>,
+): GrowthToolDefinition | null | undefined {
   if (post.leadMagnetId === 'none') return null
-  if (!post.leadMagnetId) return undefined
-  return getGrowthTool(post.leadMagnetId)
+  if (post.leadMagnetId) return getGrowthTool(post.leadMagnetId)
+
+  const approved = APPROVED_TOOL_BY_SLUG[post.slug]
+  if (approved) return GROWTH_TOOLS[approved]
+  return undefined
 }
 
 /**
  * Mapping priority is deliberately conservative:
  * 1) explicit frontmatter mapping,
- * 2) strong query-intent inference,
- * 3) no tool.
- *
- * This means future title/tag changes cannot silently override an editorially
- * approved resource, while legacy posts still get sensible V1 behaviour.
+ * 2) approved V1 slug mapping,
+ * 3) strong query-intent inference,
+ * 4) no tool.
  */
 export function resolveGrowthTool(
   post: Pick<PostMeta, 'title' | 'slug' | 'tags' | 'primaryKeyword' | 'categoryLabel' | 'leadMagnetId' | 'intentCluster'>,
