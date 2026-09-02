@@ -90,6 +90,9 @@ const AGENCY_REQUIREMENT_STATUS = [
   'Researching options for later',
 ]
 
+const SALES_CALL_URL = 'https://cal.com/jatin-agrawal'
+const SALES_WHATSAPP_URL = 'https://wa.me/917733888883'
+
 function inferLeadFormVariant(subjectPrefix: string, headline: string): LeadFormVariant {
   const context = `${subjectPrefix} ${headline}`.toLowerCase()
   if (/(white[- ]?label|agency partner|agency fulfil|agency fulfill|outsourced? delivery|fulfilment partner|fulfillment partner)/.test(context)) return 'agency'
@@ -148,6 +151,10 @@ export default function LeadForm({
         const body = (await res.json().catch(() => ({}))) as { error?: string }
         throw new Error(body.error || `Server returned ${res.status}`)
       }
+      // Tell the site-wide funnel tracker only after the server has accepted the
+      // lead. A failed POST remains eligible for form_abandon if the visitor
+      // leaves instead of correcting/retrying it.
+      form.dispatchEvent(new CustomEvent('ge:lead-form-success', { bubbles: true }))
       setStatus('success')
       trackLead('form', {
         source: subjectPrefix,
@@ -174,6 +181,29 @@ export default function LeadForm({
     : isAgency
       ? 'Send Client Requirement →'
       : 'Send my enquiry'
+
+  const successCopy = isMainD2CAudit
+    ? 'We’ll review your revenue, spend and growth constraint before the first conversation so the call starts with the highest-impact opportunity.'
+    : isAgency
+      ? 'We’ll review the client requirement and come back with the practical scope, dependencies and delivery approach. If the requirement is active, you can book the scoping call now.'
+      : variant === 'clinic'
+        ? 'We’ll review your practice, market and patient-growth requirement before we respond. You can book a growth review now if you want to move faster.'
+        : variant === 'd2c'
+          ? 'We’ll review your brand, current spend and growth requirement before we respond. You can book a focused growth review now if you want to move faster.'
+          : 'We’ll review the enquiry before we respond so the first conversation is useful. You can book a strategy call now if you want to move faster.'
+
+  const bookingLabel = isAgency
+    ? 'Book a delivery scoping call →'
+    : variant === 'clinic'
+      ? 'Book a clinic growth review →'
+      : variant === 'd2c'
+        ? 'Book a D2C growth review →'
+        : 'Book a strategy call →'
+
+  const whatsappMessage = isAgency
+    ? 'Hi Growth Escalators, I just submitted an agency/client requirement on the website and would like to fast-track it.'
+    : `Hi Growth Escalators, I just submitted a ${variant === 'clinic' ? 'clinic growth' : variant === 'd2c' ? 'D2C growth' : 'website'} enquiry and would like to fast-track it.`
+  const whatsappHref = `${SALES_WHATSAPP_URL}?text=${encodeURIComponent(whatsappMessage)}`
 
   return (
     <section id="lead-form" className={styles.section} aria-label="Lead form">
@@ -238,9 +268,29 @@ export default function LeadForm({
               <h3 className={styles.successTitle}>
                 {isMainD2CAudit ? 'Your audit request is in.' : isAgency ? 'Your client requirement is in.' : 'Thanks — we got it.'}
               </h3>
-              <p className={styles.successBody}>
-                We&rsquo;ll review your details and reply within 24 hours (weekdays). If you&rsquo;d like to fast-track, you can also reach us at{' '}
-                <a href={`mailto:${recipient}`} onClick={() => trackLead('email')}>{recipient}</a> or on WhatsApp at +91 77338 88883.
+              <p className={styles.successBody}>{successCopy}</p>
+              <div className={styles.successActions}>
+                <a
+                  href={SALES_CALL_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  data-track-source={`${variant}_form_success_booking`}
+                  className={styles.successPrimary}
+                >
+                  {bookingLabel}
+                </a>
+                <a
+                  href={whatsappHref}
+                  target="_blank"
+                  rel="noreferrer"
+                  data-track-source={`${variant}_form_success_whatsapp`}
+                  className={styles.successSecondary}
+                >
+                  Fast-track on WhatsApp
+                </a>
+              </div>
+              <p className={styles.successFootnote}>
+                Prefer email? <a href={`mailto:${recipient}`}>{recipient}</a>. Otherwise we&rsquo;ll reply within 24 hours on weekdays.
               </p>
             </motion.div>
           ) : (
@@ -330,7 +380,6 @@ export default function LeadForm({
               )}
 
               <WhatsAppConsentField />
-
 
               <button type="submit" className={`btn-primary ${styles.submit}`} disabled={submitting}>
                 {submitting ? 'Sending…' : submitLabel}
