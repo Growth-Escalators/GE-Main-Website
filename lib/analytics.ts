@@ -4,7 +4,7 @@ import { getLeadAttribution, markWhatsAppClick } from '@/lib/leadAttribution'
 
 export type LeadMethod = 'whatsapp' | 'call' | 'email' | 'booking' | 'form'
 export type ContactInteraction = 'whatsapp_click' | 'phone_click' | 'booking_click'
-export type FormInteraction = 'form_view' | 'form_start'
+export type FormInteraction = 'form_view' | 'form_start' | 'form_abandon'
 
 type GtagFn = (
   command: string,
@@ -79,8 +79,8 @@ export function trackLead(method: LeadMethod, extra?: Record<string, unknown>): 
 }
 
 /**
- * Only the two form-funnel events that are decision-useful are captured. We do
- * not track individual fields, keystrokes or other noisy interactions.
+ * Minimal form-funnel events only. We intentionally do not record individual
+ * fields, field values, keystrokes or other noisy/PII-adjacent interactions.
  */
 export function trackFormInteraction(
   eventName: FormInteraction,
