@@ -4,6 +4,7 @@ import { getLeadAttribution, markWhatsAppClick } from '@/lib/leadAttribution'
 
 export type LeadMethod = 'whatsapp' | 'call' | 'email' | 'booking' | 'form'
 export type ContactInteraction = 'whatsapp_click' | 'phone_click' | 'booking_click'
+export type FormInteraction = 'form_view' | 'form_start'
 
 type GtagFn = (
   command: string,
@@ -24,11 +25,20 @@ function attributionParams(): Record<string, unknown> {
     page_path: window.location?.pathname,
     first_landing_page: attribution.firstLandingPage,
     first_referrer: attribution.firstReferrerUrl,
+    first_touch_at: attribution.firstTouchAt,
     utm_source: attribution.utmSource,
     utm_medium: attribution.utmMedium,
     utm_campaign: attribution.utmCampaign,
     utm_term: attribution.utmTerm,
     utm_content: attribution.utmContent,
+    last_landing_page: attribution.lastLandingPage,
+    last_referrer: attribution.lastReferrerUrl,
+    last_touch_at: attribution.lastTouchAt,
+    last_utm_source: attribution.lastUtmSource,
+    last_utm_medium: attribution.lastUtmMedium,
+    last_utm_campaign: attribution.lastUtmCampaign,
+    last_utm_term: attribution.lastUtmTerm,
+    last_utm_content: attribution.lastUtmContent,
     whatsapp_clicked: attribution.whatsappClicked,
     whatsapp_click_source: attribution.whatsappClickSource,
   }
@@ -69,8 +79,23 @@ export function trackLead(method: LeadMethod, extra?: Record<string, unknown>): 
 }
 
 /**
+ * Only the two form-funnel events that are decision-useful are captured. We do
+ * not track individual fields, keystrokes or other noisy interactions.
+ */
+export function trackFormInteraction(
+  eventName: FormInteraction,
+  extra?: Record<string, unknown>,
+): void {
+  if (typeof window === 'undefined') return
+  fireEvent(eventName, {
+    ...attributionParams(),
+    ...extra,
+  })
+}
+
+/**
  * Clean channel events used for reporting WhatsApp, phone and booking clicks.
- * These are intentionally the only globally captured interaction events.
+ * These are intentionally the only globally captured contact interaction events.
  */
 export function trackContactInteraction(
   eventName: ContactInteraction,
