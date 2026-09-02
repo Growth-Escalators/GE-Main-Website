@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server'
+import { POST as submitGrowthTool } from '../tool-result/route'
 
 export const runtime = 'nodejs'
 
@@ -19,13 +20,15 @@ export async function GET(request: Request) {
   if (!email) return NextResponse.json({ error: 'Email required' }, { status: 400 })
 
   const origin = url.origin
-  const response = await fetch(`${origin}/api/tool-result`, {
+  const smokeRequest = new Request(`${origin}/api/tool-result`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
       Origin: origin,
       Referer: `${origin}/tools/d2c-profit-calculator`,
       'x-forwarded-host': url.host,
+      'x-forwarded-for': '127.0.0.1',
+      'user-agent': 'GE Growth Tool preview smoke test',
     },
     body: JSON.stringify({
       email,
@@ -60,6 +63,7 @@ export async function GET(request: Request) {
     }),
   })
 
+  const response = await submitGrowthTool(smokeRequest)
   const body = await response.json().catch(() => ({ error: 'Non-JSON smoke response' }))
   return NextResponse.json({ status: response.status, body }, { status: response.ok ? 200 : 502 })
 }
