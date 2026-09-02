@@ -12,6 +12,9 @@ export type LeadAttribution = {
 
   // Last-touch acquisition: refreshed once per browser session so a later
   // campaign/direct visit can be distinguished from the original acquisition.
+  // lastUtmSource/Medium are normalized source/medium values: when no explicit
+  // UTM exists they can be `direct / none`, `google / organic`, or a referral
+  // host / `referral`. The legacy first-touch UTM fields remain untouched.
   lastLandingPage: string
   lastReferrerUrl: string
   lastUtmSource: string
@@ -113,6 +116,27 @@ function currentTouch(capturedAt = nowIso()) {
   }
 }
 
+function normalizedSourceMedium(touch: ReturnType<typeof currentTouch>): { source: string; medium: string } {
+  if (touch.utmSource) {
+    return { source: touch.utmSource, medium: touch.utmMedium || 'campaign' }
+  }
+
+  if (!touch.referrerUrl) return { source: 'direct', medium: 'none' }
+
+  try {
+    const host = new URL(touch.referrerUrl).hostname.replace(/^www\./, '').toLowerCase()
+    if (host === 'google.com' || host.endsWith('.google.com') || host.startsWith('google.')) {
+      return { source: 'google', medium: 'organic' }
+    }
+    if (host === 'bing.com' || host.endsWith('.bing.com')) return { source: 'bing', medium: 'organic' }
+    if (host === 'yahoo.com' || host.endsWith('.yahoo.com')) return { source: 'yahoo', medium: 'organic' }
+    if (host === 'duckduckgo.com' || host.endsWith('.duckduckgo.com')) return { source: 'duckduckgo', medium: 'organic' }
+    return { source: host || 'referral', medium: 'referral' }
+  } catch {
+    return { source: 'referral', medium: 'referral' }
+  }
+}
+
 function sessionTouchAlreadyCaptured(): boolean {
   if (typeof window === 'undefined') return true
   try {
@@ -132,11 +156,24 @@ function markSessionTouchCaptured(): void {
   }
 }
 
+function lastTouchFields(touch: ReturnType<typeof currentTouch>) {
+  const sourceMedium = normalizedSourceMedium(touch)
+  return {
+    lastLandingPage: touch.landingPage,
+    lastReferrerUrl: touch.referrerUrl,
+    lastUtmSource: sourceMedium.source,
+    lastUtmMedium: sourceMedium.medium,
+    lastUtmCampaign: touch.utmCampaign,
+    lastUtmTerm: touch.utmTerm,
+    lastUtmContent: touch.utmContent,
+    lastTouchAt: touch.capturedAt,
+  }
+}
+
 /**
  * Capture the original acquisition for up to 90 days and refresh last-touch
- * once per browser session. Blank UTM values are deliberately valid: a later
- * direct visit should be visible as a direct last touch without destroying the
- * original paid/organic acquisition.
+ * once per browser session. Blank first-touch UTM values are deliberately
+ * preserved so a later campaign never destroys the original acquisition.
  */
 export function captureLeadAttribution(): StoredAttribution {
   if (typeof window === 'undefined') return { ...EMPTY_STORED }
@@ -156,14 +193,7 @@ export function captureLeadAttribution(): StoredAttribution {
       utmTerm: touch.utmTerm,
       utmContent: touch.utmContent,
       firstTouchAt: touch.capturedAt,
-      lastLandingPage: touch.landingPage,
-      lastReferrerUrl: touch.referrerUrl,
-      lastUtmSource: touch.utmSource,
-      lastUtmMedium: touch.utmMedium,
-      lastUtmCampaign: touch.utmCampaign,
-      lastUtmTerm: touch.utmTerm,
-      lastUtmContent: touch.utmContent,
-      lastTouchAt: touch.capturedAt,
+      ...lastTouchFields(touch),
     }
     writeStored(stored)
     markSessionTouchCaptured()
@@ -179,29 +209,16 @@ export function captureLeadAttribution(): StoredAttribution {
   if (!sessionTouchAlreadyCaptured()) {
     stored = {
       ...stored,
-      lastLandingPage: touch.landingPage,
-      lastReferrerUrl: touch.referrerUrl,
-      lastUtmSource: touch.utmSource,
-      lastUtmMedium: touch.utmMedium,
-      lastUtmCampaign: touch.utmCampaign,
-      lastUtmTerm: touch.utmTerm,
-      lastUtmContent: touch.utmContent,
-      lastTouchAt: touch.capturedAt,
+      ...lastTouchFields(touch),
     }
     writeStored(stored)
     markSessionTouchCaptured()
   } else if (!stored.lastTouchAt) {
-    // Same-session migration fallback for a legacy stored record.
+    // Same-session migration fallback for a legacy stored record. Use the
+    // current session for normalized source/medium while preserving first touch.
     stored = {
       ...stored,
-      lastLandingPage: stored.firstLandingPage,
-      lastReferrerUrl: stored.firstReferrerUrl,
-      lastUtmSource: stored.utmSource,
-      lastUtmMedium: stored.utmMedium,
-      lastUtmCampaign: stored.utmCampaign,
-      lastUtmTerm: stored.utmTerm,
-      lastUtmContent: stored.utmContent,
-      lastTouchAt: stored.firstTouchAt,
+      ...lastTouchFields(touch),
     }
     writeStored(stored)
   }
@@ -230,7 +247,7 @@ export function getLeadAttribution(): LeadAttribution {
     utmContent: stored.utmContent,
     firstTouchAt: stored.firstTouchAt,
     lastLandingPage: stored.lastLandingPage || stored.firstLandingPage,
-    lastReferrerUrl: stored.lastReferrerUrl || stored.firstReferrerUrl,
+    lastReferrerUrl: stored.lastReferrerUrl,
     lastUtmSource: stored.lastUtmSource,
     lastUtmMedium: stored.lastUtmMedium,
     lastUtmCampaign: stored.lastUtmCampaign,
