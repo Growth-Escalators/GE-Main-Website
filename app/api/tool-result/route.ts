@@ -116,10 +116,9 @@ function hitBucket(
 
   // Serverless instances are short-lived, but keep accidental long-lived maps bounded.
   if (buckets.size > 5_000) {
-    for (const [bucketKey, values] of buckets) {
+    buckets.forEach((values, bucketKey) => {
       if (!values.some((time) => now - time < windowMs)) buckets.delete(bucketKey)
-      if (buckets.size <= 4_000) break
-    }
+    })
   }
   return false
 }
