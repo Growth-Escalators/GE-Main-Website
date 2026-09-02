@@ -445,6 +445,8 @@ function CroScorecard({ onResult }: { onResult: (result: ResultPacket) => void }
     })
   }
 
+  const choices = [[0, 'No'], [1, 'Partly'], [2, 'Yes']] as const
+
   return (
     <div className={styles.toolForm}>
       <label className={styles.selectField}>
@@ -460,7 +462,7 @@ function CroScorecard({ onResult }: { onResult: (result: ResultPacket) => void }
           <div className={styles.croQuestion} key={name}>
             <div><strong>{name}</strong><span>{question}</span></div>
             <div className={styles.choiceButtons} role="group" aria-label={name}>
-              {[[0, 'No'], [1, 'Partly'], [2, 'Yes']] as const).map(([value, label]) => (
+              {choices.map(([value, label]) => (
                 <button
                   type="button"
                   key={label}
