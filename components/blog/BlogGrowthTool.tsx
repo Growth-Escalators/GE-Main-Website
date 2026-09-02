@@ -1,14 +1,22 @@
 'use client'
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { ArrowRight, Check, ChevronDown, Mail } from 'lucide-react'
 import { getLeadAttribution } from '@/lib/leadAttribution'
-import { trackLead } from '@/lib/analytics'
+import { trackGrowthToolInteraction, trackLead } from '@/lib/analytics'
 import type { GrowthToolDefinition, GrowthToolId } from '@/lib/growthTools'
 import styles from './BlogGrowthTool.module.css'
 
 type Priority = 'P1' | 'P2'
 type SubmitStatus = 'idle' | 'sending' | 'sent' | 'partial' | 'error'
+
+type Qualification = {
+  revenueLakh: number
+  adSpendLakh: number
+  targetRevenueLakh: number
+  score: number
+  stage: string
+}
 
 type ResultPacket = {
   headline: string
@@ -17,6 +25,7 @@ type ResultPacket = {
   summary: string
   priority: Priority
   monthlyRevenue?: string
+  qualification: Qualification
 }
 
 type ToolProps = {
@@ -28,14 +37,26 @@ type ToolProps = {
   defaultOpen?: boolean
 }
 
+const EMPTY_QUALIFICATION: Qualification = {
+  revenueLakh: 0,
+  adSpendLakh: 0,
+  targetRevenueLakh: 0,
+  score: 0,
+  stage: '',
+}
+
 const INR = new Intl.NumberFormat('en-IN', {
   style: 'currency',
   currency: 'INR',
   maximumFractionDigits: 0,
 })
 
+function positive(value: number) {
+  return Number.isFinite(value) ? Math.max(0, value) : 0
+}
+
 function lakhToRupees(value: number) {
-  return Math.max(0, value) * 100_000
+  return positive(value) * 100_000
 }
 
 function money(value: number) {
@@ -72,6 +93,7 @@ function Field({
       <div className={styles.inputWrap}>
         <input
           type="number"
+          inputMode="decimal"
           min={min}
           step={step}
           value={Number.isFinite(value) ? value : 0}
@@ -112,25 +134,38 @@ function ProfitCalculator({ onResult }: { onResult: (result: ResultPacket) => vo
   const [margin, setMargin] = useState(60)
   const [adSpend, setAdSpend] = useState(2.5)
   const [conversionRate, setConversionRate] = useState(1.4)
+  const [validation, setValidation] = useState('')
 
   function calculate() {
-    const revenueRs = lakhToRupees(revenue)
-    const spendRs = lakhToRupees(adSpend)
-    const marginRate = clamp(margin / 100, 0.01, 0.95)
+    const cleanRevenue = positive(revenue)
+    const cleanAov = positive(aov)
+    const cleanMargin = clamp(positive(margin), 1, 95)
+    const cleanSpend = positive(adSpend)
+    const cleanConversion = positive(conversionRate)
+    if (!cleanRevenue || !cleanAov || !cleanConversion) {
+      setValidation('Please enter revenue, AOV and conversion rate above zero to calculate a useful result.')
+      return
+    }
+    setValidation('')
+
+    const revenueRs = lakhToRupees(cleanRevenue)
+    const spendRs = lakhToRupees(cleanSpend)
+    const marginRate = cleanMargin / 100
     const breakEvenRoas = 1 / marginRate
-    const allowableCac = aov * marginRate
+    const allowableCac = cleanAov * marginRate
     const contributionAfterMedia = revenueRs * marginRate - spendRs
     const adSpendShare = revenueRs > 0 ? (spendRs / revenueRs) * 100 : 0
-    const cvr = Math.max(conversionRate, 0.1)
+    const cvr = Math.max(cleanConversion, 0.1)
     const improvedRevenue = revenueRs * ((cvr + 0.3) / cvr)
     const extraRevenueScenario = improvedRevenue - revenueRs
+    const priority: Priority = cleanRevenue >= 10 && cleanSpend >= 1.5 ? 'P1' : 'P2'
 
     const recommendations = [
-      adSpendShare > margin
+      adSpendShare > cleanMargin
         ? 'Your media spend is consuming a large share of gross margin. Validate CAC by product and new-vs-returning customer before scaling.'
         : 'Your media-spend share is not automatically a red flag; next validate contribution margin after shipping, payment fees, returns and discounts.',
       `Treat ${decimal(breakEvenRoas)}× as a simplified gross-margin break-even ROAS, not a scaling target. Your actual floor should include fulfilment, discounts, returns and overhead.`,
-      conversionRate < 1.5
+      cleanConversion < 1.5
         ? 'Conversion is the first place I would investigate before materially increasing spend.'
         : 'Your conversion input is healthy enough to justify looking next at creative efficiency, CAC and repeat purchase behaviour.',
     ]
@@ -144,9 +179,14 @@ function ProfitCalculator({ onResult }: { onResult: (result: ResultPacket) => vo
         { label: '+0.3pp CVR scenario', value: `+${money(extraRevenueScenario)}/mo` },
       ],
       recommendations,
-      summary: `Monthly revenue ${money(revenueRs)}; AOV ${money(aov)}; gross margin ${margin}%; ad spend ${money(spendRs)}; conversion rate ${conversionRate}%. Simplified break-even ROAS ${decimal(breakEvenRoas)}x; gross-margin CAC ceiling ${money(allowableCac)}; contribution after media ${money(contributionAfterMedia)}; +0.3 percentage-point conversion scenario ${money(extraRevenueScenario)} additional monthly revenue at the same traffic level.`,
-      priority: revenue >= 10 && (adSpend >= 1.5 || revenue >= 25) ? 'P1' : 'P2',
-      monthlyRevenue: `₹${revenue}L/month`,
+      summary: `Monthly revenue ${money(revenueRs)}; AOV ${money(cleanAov)}; gross margin ${cleanMargin}%; ad spend ${money(spendRs)}; conversion rate ${cleanConversion}%. Simplified break-even ROAS ${decimal(breakEvenRoas)}x; gross-margin CAC ceiling ${money(allowableCac)}; contribution after media ${money(contributionAfterMedia)}; +0.3 percentage-point conversion scenario ${money(extraRevenueScenario)} additional monthly revenue at the same traffic level.`,
+      priority,
+      monthlyRevenue: `₹${cleanRevenue}L/month`,
+      qualification: {
+        ...EMPTY_QUALIFICATION,
+        revenueLakh: cleanRevenue,
+        adSpendLakh: cleanSpend,
+      },
     })
   }
 
@@ -159,6 +199,7 @@ function ProfitCalculator({ onResult }: { onResult: (result: ResultPacket) => vo
         <Field label="Monthly ad spend" suffix="₹ lakh" value={adSpend} onChange={setAdSpend} />
         <Field label="Store conversion rate" suffix="%" value={conversionRate} onChange={setConversionRate} />
       </div>
+      {validation && <p className={styles.error} role="alert">{validation}</p>}
       <button type="button" className={styles.primaryButton} onClick={calculate}>Calculate my economics <ArrowRight size={16} /></button>
       <p className={styles.disclaimer}>Scenario only. Break-even calculations use the gross margin you enter and do not include returns, shipping, payment fees, discounts, taxes or fixed overhead unless already reflected in that margin.</p>
     </div>
@@ -172,19 +213,33 @@ function BudgetPlanner({ onResult }: { onResult: (result: ResultPacket) => void 
   const [margin, setMargin] = useState(60)
   const [roas, setRoas] = useState(2.5)
   const [currentSpend, setCurrentSpend] = useState(2)
+  const [validation, setValidation] = useState('')
 
   function calculate() {
-    const currentRs = lakhToRupees(currentRevenue)
-    const targetRs = lakhToRupees(Math.max(targetRevenue, currentRevenue))
+    const current = positive(currentRevenue)
+    const target = positive(targetRevenue)
+    const cleanAov = positive(aov)
+    const cleanMargin = clamp(positive(margin), 1, 95)
+    const cleanRoas = positive(roas)
+    const spend = positive(currentSpend)
+    if (!current || !target || !cleanAov || !cleanRoas) {
+      setValidation('Please enter current revenue, target revenue, AOV and ROAS above zero.')
+      return
+    }
+    setValidation('')
+
+    const currentRs = lakhToRupees(current)
+    const targetRs = lakhToRupees(Math.max(target, current))
     const gap = Math.max(0, targetRs - currentRs)
-    const safeRoas = Math.max(roas, 0.5)
-    const marginRate = clamp(margin / 100, 0.01, 0.95)
+    const safeRoas = Math.max(cleanRoas, 0.5)
+    const marginRate = cleanMargin / 100
     const requiredAtCurrent = gap / safeRoas
     const efficientCase = gap / (safeRoas * 1.15)
     const softerCase = gap / Math.max(safeRoas * 0.85, 0.5)
     const breakEvenRoas = 1 / marginRate
-    const allowableCac = aov * marginRate
-    const incrementalCustomers = aov > 0 ? gap / aov : 0
+    const allowableCac = cleanAov * marginRate
+    const incrementalCustomers = cleanAov > 0 ? gap / cleanAov : 0
+    const priority: Priority = current >= 10 && spend >= 1.5 && target > current ? 'P1' : 'P2'
 
     onResult({
       headline: gap > 0
@@ -199,15 +254,21 @@ function BudgetPlanner({ onResult }: { onResult: (result: ResultPacket) => void 
         { label: 'Gross-margin CAC ceiling', value: money(allowableCac) },
       ],
       recommendations: [
-        roas <= breakEvenRoas * 1.15
+        cleanRoas <= breakEvenRoas * 1.15
           ? 'Your current ROAS is close to the simplified margin break-even level. Improve economics before treating more spend as the primary growth lever.'
           : 'Your current ROAS input leaves some theoretical headroom, but scale should be released in steps rather than all at once.',
         'Allocate a specific testing budget for new creative instead of forcing every rupee into the current winning ads.',
         'Recalculate with contribution margin after shipping, discounts, returns and payment fees before using this as an operating budget.',
       ],
-      summary: `Current revenue ${money(currentRs)}; target revenue ${money(targetRs)}; AOV ${money(aov)}; gross margin ${margin}%; current ROAS ${roas}x; current ad spend ${money(lakhToRupees(currentSpend))}. Incremental target ${money(gap)}; incremental spend implied at current ROAS ${money(requiredAtCurrent)}; scenario range ${money(efficientCase)} to ${money(softerCase)}; simplified break-even ROAS ${decimal(breakEvenRoas)}x.`,
-      priority: currentRevenue >= 10 && (currentSpend >= 1.5 || targetRevenue >= 20) ? 'P1' : 'P2',
-      monthlyRevenue: `₹${currentRevenue}L/month`,
+      summary: `Current revenue ${money(currentRs)}; target revenue ${money(targetRs)}; AOV ${money(cleanAov)}; gross margin ${cleanMargin}%; current ROAS ${cleanRoas}x; current ad spend ${money(lakhToRupees(spend))}. Incremental target ${money(gap)}; incremental spend implied at current ROAS ${money(requiredAtCurrent)}; scenario range ${money(efficientCase)} to ${money(softerCase)}; simplified break-even ROAS ${decimal(breakEvenRoas)}x.`,
+      priority,
+      monthlyRevenue: `₹${current}L/month`,
+      qualification: {
+        ...EMPTY_QUALIFICATION,
+        revenueLakh: current,
+        targetRevenueLakh: target,
+        adSpendLakh: spend,
+      },
     })
   }
 
@@ -221,6 +282,7 @@ function BudgetPlanner({ onResult }: { onResult: (result: ResultPacket) => void 
         <Field label="Current blended ROAS" suffix="×" value={roas} onChange={setRoas} />
         <Field label="Current monthly ad spend" suffix="₹ lakh" value={currentSpend} onChange={setCurrentSpend} />
       </div>
+      {validation && <p className={styles.error} role="alert">{validation}</p>}
       <button type="button" className={styles.primaryButton} onClick={calculate}>Model the target <ArrowRight size={16} /></button>
       <p className={styles.disclaimer}>This models what your target implies if performance stayed within the selected ROAS range. It is not a forecast, guarantee or Growth Escalators service quote.</p>
     </div>
@@ -243,6 +305,8 @@ const AGENCY_QUESTIONS = [
 function AgencyScorecard({ onResult }: { onResult: (result: ResultPacket) => void }) {
   const [scores, setScores] = useState<number[]>(Array(AGENCY_QUESTIONS.length).fill(3))
   const [stage, setStage] = useState('research')
+  const [revenueLakh, setRevenueLakh] = useState(5)
+  const [adSpendLakh, setAdSpendLakh] = useState(0.75)
 
   function calculate() {
     const score = Math.round((scores.reduce((sum, value) => sum + value, 0) / (AGENCY_QUESTIONS.length * 5)) * 100)
@@ -259,6 +323,8 @@ function AgencyScorecard({ onResult }: { onResult: (result: ResultPacket) => voi
         : score >= 55
           ? 'Material gaps to investigate'
           : 'High-risk agency fit'
+    const buyingNow = stage === 'shortlisting' || stage === 'switching'
+    const priority: Priority = buyingNow && revenueLakh >= 10 && adSpendLakh >= 1.5 && score < 80 ? 'P1' : 'P2'
 
     onResult({
       headline: `${score}/100 — ${label}`,
@@ -267,21 +333,47 @@ function AgencyScorecard({ onResult }: { onResult: (result: ResultPacket) => voi
         { label: 'Decision stage', value: stage === 'switching' ? 'Considering a switch' : stage === 'shortlisting' ? 'Shortlisting now' : 'Researching' },
       ],
       recommendations: weakest.map((item) => `Ask for evidence that: ${item.charAt(0).toLowerCase()}${item.slice(1)}`),
-      summary: `Agency evaluation score ${score}/100. Decision stage: ${stage}. Weakest checks: ${weakest.join(' | ')}`,
-      priority: (stage === 'shortlisting' || stage === 'switching') && score < 80 ? 'P1' : 'P2',
+      summary: `Agency evaluation score ${score}/100. Decision stage: ${stage}. Revenue qualification: approximately ₹${revenueLakh}L/month band. Ad-spend qualification: approximately ₹${adSpendLakh}L/month band. Weakest checks: ${weakest.join(' | ')}`,
+      priority,
+      monthlyRevenue: revenueLakh >= 25 ? '₹25L+/month' : revenueLakh >= 10 ? '₹10L–₹25L/month' : 'Under ₹10L/month',
+      qualification: {
+        ...EMPTY_QUALIFICATION,
+        revenueLakh,
+        adSpendLakh,
+        score,
+        stage,
+      },
     })
   }
 
   return (
     <div className={styles.toolForm}>
-      <label className={styles.selectField}>
-        <span>Where are you right now?</span>
-        <select value={stage} onChange={(event) => setStage(event.target.value)}>
-          <option value="research">Researching agencies</option>
-          <option value="shortlisting">Shortlisting agencies now</option>
-          <option value="switching">Considering switching an existing agency</option>
-        </select>
-      </label>
+      <div className={styles.fieldsGrid}>
+        <label className={styles.selectField}>
+          <span>Where are you right now?</span>
+          <select value={stage} onChange={(event) => setStage(event.target.value)}>
+            <option value="research">Researching agencies</option>
+            <option value="shortlisting">Shortlisting agencies now</option>
+            <option value="switching">Considering switching an existing agency</option>
+          </select>
+        </label>
+        <label className={styles.selectField}>
+          <span>Monthly online revenue</span>
+          <select value={revenueLakh} onChange={(event) => setRevenueLakh(Number(event.target.value))}>
+            <option value={5}>Under ₹10 lakh</option>
+            <option value={15}>₹10–₹25 lakh</option>
+            <option value={30}>₹25 lakh+</option>
+          </select>
+        </label>
+        <label className={styles.selectField}>
+          <span>Monthly ad spend</span>
+          <select value={adSpendLakh} onChange={(event) => setAdSpendLakh(Number(event.target.value))}>
+            <option value={0.75}>Under ₹1.5 lakh</option>
+            <option value={2.5}>₹1.5–₹5 lakh</option>
+            <option value={7.5}>₹5 lakh+</option>
+          </select>
+        </label>
+      </div>
       <div className={styles.scoreQuestions}>
         {AGENCY_QUESTIONS.map((question, index) => (
           <div className={styles.scoreQuestion} key={question}>
@@ -294,6 +386,7 @@ function AgencyScorecard({ onResult }: { onResult: (result: ResultPacket) => voi
                   className={scores[index] === value ? styles.scoreActive : ''}
                   onClick={() => setScores((current) => current.map((item, itemIndex) => itemIndex === index ? value : item))}
                   aria-label={`${value} out of 5`}
+                  aria-pressed={scores[index] === value}
                 >{value}</button>
               ))}
             </div>
@@ -301,7 +394,7 @@ function AgencyScorecard({ onResult }: { onResult: (result: ResultPacket) => voi
         ))}
       </div>
       <button type="button" className={styles.primaryButton} onClick={calculate}>Calculate the agency score <ArrowRight size={16} /></button>
-      <p className={styles.disclaimer}>Use this as a decision framework, not a substitute for reference checks, account access, contract review or commercial due diligence.</p>
+      <p className={styles.disclaimer}>Revenue and ad-spend bands help us keep priority alerts meaningful. They do not affect the agency score itself.</p>
     </div>
   )
 }
@@ -323,7 +416,7 @@ const CRO_QUESTIONS = [
 
 function CroScorecard({ onResult }: { onResult: (result: ResultPacket) => void }) {
   const [answers, setAnswers] = useState<number[]>(Array(CRO_QUESTIONS.length).fill(1))
-  const [revenueBand, setRevenueBand] = useState('under-10')
+  const [revenueLakh, setRevenueLakh] = useState(5)
 
   function calculate() {
     const score = Math.round((answers.reduce((sum, value) => sum + value, 0) / (CRO_QUESTIONS.length * 2)) * 100)
@@ -332,6 +425,7 @@ function CroScorecard({ onResult }: { onResult: (result: ResultPacket) => void }
       .sort((a, b) => a.value - b.value)
       .slice(0, 3)
       .map(({ index }) => CRO_QUESTIONS[index])
+    const priority: Priority = revenueLakh >= 10 && score < 75 ? 'P1' : 'P2'
 
     onResult({
       headline: `${score}/100 — ${score >= 80 ? 'strong foundation' : score >= 65 ? 'good base with visible leaks' : score >= 45 ? 'several conversion gaps worth prioritising' : 'the store needs foundational CRO work'}`,
@@ -340,9 +434,14 @@ function CroScorecard({ onResult }: { onResult: (result: ResultPacket) => void }
         { label: 'Priority gaps', value: weak.map(([name]) => name).join(', ') },
       ],
       recommendations: weak.map(([name, detail]) => `${name}: validate whether ${detail.charAt(0).toLowerCase()}${detail.slice(1)}`),
-      summary: `Shopify CRO score ${score}/100. Revenue band ${revenueBand}. Priority gaps: ${weak.map(([name]) => name).join(', ')}.`,
-      priority: (revenueBand === '10-25' || revenueBand === '25-plus') && score < 75 ? 'P1' : 'P2',
-      monthlyRevenue: revenueBand === '25-plus' ? '₹25L+/month' : revenueBand === '10-25' ? '₹10L–₹25L/month' : 'Under ₹10L/month',
+      summary: `Shopify CRO score ${score}/100. Revenue qualification: approximately ₹${revenueLakh}L/month band. Priority gaps: ${weak.map(([name]) => name).join(', ')}.`,
+      priority,
+      monthlyRevenue: revenueLakh >= 25 ? '₹25L+/month' : revenueLakh >= 10 ? '₹10L–₹25L/month' : 'Under ₹10L/month',
+      qualification: {
+        ...EMPTY_QUALIFICATION,
+        revenueLakh,
+        score,
+      },
     })
   }
 
@@ -350,10 +449,10 @@ function CroScorecard({ onResult }: { onResult: (result: ResultPacket) => void }
     <div className={styles.toolForm}>
       <label className={styles.selectField}>
         <span>Monthly online revenue (used only to prioritise the recommendations)</span>
-        <select value={revenueBand} onChange={(event) => setRevenueBand(event.target.value)}>
-          <option value="under-10">Under ₹10 lakh</option>
-          <option value="10-25">₹10–₹25 lakh</option>
-          <option value="25-plus">₹25 lakh+</option>
+        <select value={revenueLakh} onChange={(event) => setRevenueLakh(Number(event.target.value))}>
+          <option value={5}>Under ₹10 lakh</option>
+          <option value={15}>₹10–₹25 lakh</option>
+          <option value={30}>₹25 lakh+</option>
         </select>
       </label>
       <div className={styles.croQuestions}>
@@ -361,12 +460,13 @@ function CroScorecard({ onResult }: { onResult: (result: ResultPacket) => void }
           <div className={styles.croQuestion} key={name}>
             <div><strong>{name}</strong><span>{question}</span></div>
             <div className={styles.choiceButtons} role="group" aria-label={name}>
-              {[[0, 'No'], [1, 'Partly'], [2, 'Yes']].map(([value, label]) => (
+              {[[0, 'No'], [1, 'Partly'], [2, 'Yes']] as const).map(([value, label]) => (
                 <button
                   type="button"
                   key={label}
                   className={answers[index] === value ? styles.choiceActive : ''}
-                  onClick={() => setAnswers((current) => current.map((item, itemIndex) => itemIndex === index ? Number(value) : item))}
+                  onClick={() => setAnswers((current) => current.map((item, itemIndex) => itemIndex === index ? value : item))}
+                  aria-pressed={answers[index] === value}
                 >{label}</button>
               ))}
             </div>
@@ -403,22 +503,64 @@ export default function BlogGrowthTool({
   const [status, setStatus] = useState<SubmitStatus>('idle')
   const [error, setError] = useState('')
   const [stickyEligible, setStickyEligible] = useState(false)
+  const sectionRef = useRef<HTMLElement | null>(null)
+  const shownTracked = useRef(false)
+  const emailViewKey = useRef('')
 
   const resultId = useMemo(() => `${tool.id}-${trackingKey}`.replace(/[^a-z0-9-]/gi, '-'), [tool.id, trackingKey])
+  const analyticsContext = useMemo(() => ({
+    tool_id: tool.id,
+    intent_cluster: tool.intentCluster,
+    blog_slug: postSlug ?? '',
+    source_path: resolvedSourcePath,
+  }), [tool.id, tool.intentCluster, postSlug, resolvedSourcePath])
+
+  useEffect(() => {
+    const node = sectionRef.current
+    if (!node || shownTracked.current) return
+
+    if (!('IntersectionObserver' in window)) {
+      shownTracked.current = true
+      trackGrowthToolInteraction('growth_tool_shown', analyticsContext)
+      return
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      if (entries.some((entry) => entry.isIntersecting) && !shownTracked.current) {
+        shownTracked.current = true
+        trackGrowthToolInteraction('growth_tool_shown', analyticsContext)
+        observer.disconnect()
+      }
+    }, { threshold: 0.2 })
+    observer.observe(node)
+    return () => observer.disconnect()
+  }, [analyticsContext])
 
   useEffect(() => {
     if (defaultOpen) return
-
     const updateStickyEligibility = () => {
       const scrollable = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1)
-      const progress = window.scrollY / scrollable
-      setStickyEligible(progress >= 0.18)
+      setStickyEligible(window.scrollY / scrollable >= 0.18)
     }
-
     updateStickyEligibility()
     window.addEventListener('scroll', updateStickyEligibility, { passive: true })
     return () => window.removeEventListener('scroll', updateStickyEligibility)
   }, [defaultOpen])
+
+  useEffect(() => {
+    if (!result || emailViewKey.current === result.summary) return
+    emailViewKey.current = result.summary
+    trackGrowthToolInteraction('growth_tool_email_viewed', {
+      ...analyticsContext,
+      lead_priority: result.priority,
+    })
+  }, [result, analyticsContext])
+
+  function toggleOpen() {
+    const nextOpen = !open
+    setOpen(nextOpen)
+    if (nextOpen) trackGrowthToolInteraction('growth_tool_opened', analyticsContext)
+  }
 
   async function sendResult(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -426,69 +568,64 @@ export default function BlogGrowthTool({
     setStatus('sending')
     setError('')
 
+    const form = new FormData(event.currentTarget)
+    const companyWebsite = String(form.get('companyWebsite') || '')
     const attribution = getLeadAttribution()
-    const leadPayload = {
-      name: 'Growth tool user',
-      email,
-      source: `Growth Tool: ${tool.shortTitle}`,
-      service: tool.service,
-      businessVertical: tool.businessVertical,
-      formType: `growth-tool:${tool.id}`,
-      monthlyRevenue: result.monthlyRevenue ?? '',
-      message: [
-        `Tool: ${tool.shortTitle}`,
-        `Intent cluster: ${tool.intentCluster}`,
-        `Lead priority: ${result.priority}`,
-        `Source: ${resolvedSourceTitle} (${resolvedSourcePath})`,
-        '',
-        result.summary,
-      ].join('\n'),
-      ...attribution,
-    }
-
-    const emailPayload = {
-      email,
-      toolId: tool.id,
-      toolName: tool.shortTitle,
-      sourcePath: resolvedSourcePath,
-      sourceTitle: resolvedSourceTitle,
-      postSlug: postSlug ?? '',
-      postTitle: postTitle ?? '',
-      priority: result.priority,
-      headline: result.headline,
-      metrics: result.metrics,
-      recommendations: result.recommendations,
-      summary: result.summary,
-    }
 
     try {
-      const [leadResponse, resultResponse] = await Promise.all([
-        fetch('/api/lead', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(leadPayload),
+      const response = await fetch('/api/tool-result', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email,
+          companyWebsite,
+          toolId: tool.id,
+          intentCluster: tool.intentCluster,
+          sourcePath: resolvedSourcePath,
+          sourceTitle: resolvedSourceTitle,
+          postSlug: postSlug ?? '',
+          postTitle: postTitle ?? '',
+          headline: result.headline,
+          metrics: result.metrics,
+          recommendations: result.recommendations,
+          summary: result.summary,
+          monthlyRevenue: result.monthlyRevenue ?? '',
+          qualification: result.qualification,
+          attribution: {
+            ...attribution,
+            landingPageRoute: resolvedSourcePath,
+          },
         }),
-        fetch('/api/tool-result', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(emailPayload),
-        }),
-      ])
-
-      if (!leadResponse.ok) throw new Error('We could not save your result.')
-
-      trackLead('form', {
-        source: 'Growth Tool',
-        tool_id: tool.id,
-        intent_cluster: tool.intentCluster,
-        blog_slug: postSlug ?? '',
-        source_path: resolvedSourcePath,
-        lead_priority: result.priority,
       })
+      const payload = await response.json().catch(() => ({})) as {
+        error?: string
+        leadCaptured?: boolean
+        crmSaved?: boolean
+        emailDelivered?: boolean
+        priority?: Priority
+      }
 
-      if (resultResponse.ok) {
+      if (!response.ok) throw new Error(payload.error || 'We could not save your result.')
+
+      const priority = payload.priority ?? result.priority
+      if (payload.leadCaptured) {
+        trackLead('form', {
+          source: 'Growth Tool',
+          ...analyticsContext,
+          lead_priority: priority,
+        })
+        trackGrowthToolInteraction('growth_tool_email_submitted', {
+          ...analyticsContext,
+          lead_priority: priority,
+        })
+      }
+      if (payload.crmSaved) trackGrowthToolInteraction('growth_tool_crm_saved', analyticsContext)
+      if (payload.emailDelivered) trackGrowthToolInteraction('growth_tool_email_delivered', analyticsContext)
+
+      if (payload.leadCaptured && payload.emailDelivered) {
         setStatus('sent')
       } else {
+        trackGrowthToolInteraction('growth_tool_delivery_partial', analyticsContext)
         setStatus('partial')
       }
     } catch (err) {
@@ -500,13 +637,18 @@ export default function BlogGrowthTool({
   function handleResult(next: ResultPacket) {
     setResult(next)
     setStatus('idle')
+    setError('')
+    trackGrowthToolInteraction('growth_tool_calculated', {
+      ...analyticsContext,
+      lead_priority: next.priority,
+    })
     setTimeout(() => {
       document.getElementById(`${resultId}-result`)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
     }, 50)
   }
 
   return (
-    <section className={styles.wrap} id={resultId}>
+    <section className={styles.wrap} id={resultId} ref={sectionRef}>
       <div className={styles.intro}>
         <div>
           <span className={styles.eyebrow}>{tool.eyebrow}</span>
@@ -516,8 +658,9 @@ export default function BlogGrowthTool({
         <button
           type="button"
           className={styles.openButton}
-          onClick={() => setOpen((value) => !value)}
+          onClick={toggleOpen}
           aria-expanded={open}
+          aria-controls={`${resultId}-workspace`}
         >
           {open ? 'Close tool' : tool.ctaLabel}
           {open ? <ChevronDown size={17} /> : <ArrowRight size={17} />}
@@ -525,7 +668,7 @@ export default function BlogGrowthTool({
       </div>
 
       {open && (
-        <div className={styles.workspace}>
+        <div className={styles.workspace} id={`${resultId}-workspace`}>
           <ToolBody toolId={tool.id} onResult={handleResult} />
 
           {result && (
@@ -537,7 +680,7 @@ export default function BlogGrowthTool({
                     <Check size={20} />
                     <div>
                       <strong>Sent.</strong>
-                      <span>Your full result is on its way. Reply to the email if you want Jatin to look at the numbers with you.</span>
+                      <span>Your result is on its way. Reply to the email if you want Jatin to look at the numbers with you.</span>
                     </div>
                   </div>
                 ) : (
@@ -548,6 +691,14 @@ export default function BlogGrowthTool({
                       <p>No newsletter opt-in is bundled into this. This email is the result you requested.</p>
                     </div>
                     <form onSubmit={sendResult} className={styles.emailForm}>
+                      <input
+                        type="text"
+                        name="companyWebsite"
+                        tabIndex={-1}
+                        autoComplete="off"
+                        aria-hidden="true"
+                        style={{ position: 'absolute', left: '-10000px', width: 1, height: 1, overflow: 'hidden' }}
+                      />
                       <input
                         type="email"
                         required
@@ -561,8 +712,8 @@ export default function BlogGrowthTool({
                         {status === 'sending' ? 'Sending…' : 'Email my result'}
                       </button>
                     </form>
-                    {status === 'partial' && <p className={styles.notice}>Your lead was saved, but email delivery could not be confirmed. The full result remains visible above.</p>}
-                    {status === 'error' && <p className={styles.error}>{error}</p>}
+                    {status === 'partial' && <p className={styles.notice} role="status">Your result is still visible above. One delivery step could not be confirmed, so you can retry or reply through the site if needed.</p>}
+                    {status === 'error' && <p className={styles.error} role="alert">{error}</p>}
                   </>
                 )}
               </div>
@@ -577,6 +728,7 @@ export default function BlogGrowthTool({
           className={styles.mobileSticky}
           onClick={() => {
             setOpen(true)
+            trackGrowthToolInteraction('growth_tool_opened', { ...analyticsContext, source: 'mobile_sticky' })
             document.getElementById(resultId)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
           }}
         >
