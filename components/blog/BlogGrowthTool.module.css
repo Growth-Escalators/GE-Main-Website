@@ -1,0 +1,496 @@
+.wrap {
+  margin: 56px 0 42px;
+  border: 1px solid rgba(18, 18, 18, 0.14);
+  border-radius: 26px;
+  background: #f6f3ed;
+  overflow: hidden;
+  box-shadow: 0 18px 50px rgba(20, 18, 15, 0.07);
+}
+
+.intro {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 28px;
+  align-items: end;
+  padding: 34px;
+}
+
+.eyebrow,
+.resultEyebrow,
+.emailEyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 10px;
+  font-size: 11px;
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: #8a3f18;
+}
+
+.intro h3 {
+  max-width: 720px;
+  margin: 0;
+  font-size: clamp(28px, 3vw, 42px);
+  line-height: 1.02;
+  letter-spacing: -0.045em;
+  color: #171512;
+}
+
+.intro p {
+  max-width: 720px;
+  margin: 14px 0 0;
+  font-size: 16px;
+  line-height: 1.6;
+  color: rgba(23, 21, 18, 0.7);
+}
+
+.openButton,
+.primaryButton,
+.emailForm button {
+  border: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border-radius: 999px;
+  background: #171512;
+  color: #fff;
+  font: inherit;
+  font-weight: 750;
+  transition: transform 160ms ease, opacity 160ms ease;
+}
+
+.openButton {
+  min-height: 46px;
+  padding: 0 20px;
+  white-space: nowrap;
+}
+
+.openButton:hover,
+.primaryButton:hover,
+.emailForm button:hover {
+  transform: translateY(-1px);
+}
+
+.workspace {
+  border-top: 1px solid rgba(18, 18, 18, 0.11);
+  background: #fff;
+}
+
+.toolForm {
+  padding: 32px 34px 36px;
+}
+
+.fieldsGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.field,
+.selectField {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #171512;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.inputWrap {
+  display: flex;
+  align-items: center;
+  min-height: 50px;
+  border: 1px solid rgba(18, 18, 18, 0.16);
+  border-radius: 14px;
+  background: #fbfaf7;
+  overflow: hidden;
+}
+
+.inputWrap input {
+  min-width: 0;
+  flex: 1;
+  border: 0;
+  outline: 0;
+  padding: 0 15px;
+  font: inherit;
+  font-size: 16px;
+  color: #171512;
+  background: transparent;
+}
+
+.inputWrap em {
+  padding: 0 14px;
+  font-size: 12px;
+  font-style: normal;
+  color: rgba(23, 21, 18, 0.56);
+}
+
+.selectField {
+  margin-bottom: 22px;
+}
+
+.selectField select {
+  min-height: 50px;
+  border: 1px solid rgba(18, 18, 18, 0.16);
+  border-radius: 14px;
+  padding: 0 14px;
+  outline: none;
+  background: #fbfaf7;
+  color: #171512;
+  font: inherit;
+  font-weight: 600;
+}
+
+.primaryButton {
+  margin-top: 22px;
+  min-height: 48px;
+  padding: 0 22px;
+}
+
+.primaryButton:disabled,
+.emailForm button:disabled {
+  opacity: 0.6;
+  cursor: wait;
+}
+
+.disclaimer {
+  max-width: 780px;
+  margin: 15px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: rgba(23, 21, 18, 0.54);
+}
+
+.resultWrap {
+  scroll-margin-top: 110px;
+  border-top: 1px solid rgba(18, 18, 18, 0.1);
+}
+
+.resultPanel {
+  padding: 34px;
+  background: #171512;
+  color: #fff;
+}
+
+.resultPanel h4 {
+  max-width: 760px;
+  margin: 0 0 24px;
+  font-size: clamp(26px, 3vw, 38px);
+  line-height: 1.08;
+  letter-spacing: -0.035em;
+  color: #fff;
+}
+
+.resultPanel .resultEyebrow {
+  color: #f3ad72;
+}
+
+.metricGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.metric {
+  min-height: 112px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #211f1b;
+}
+
+.metric span {
+  font-size: 12px;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.58);
+}
+
+.metric strong {
+  margin-top: 12px;
+  font-size: clamp(20px, 2.5vw, 30px);
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  overflow-wrap: anywhere;
+}
+
+.recommendations {
+  margin-top: 26px;
+}
+
+.recommendations > span {
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #f3ad72;
+}
+
+.recommendations ol {
+  margin: 14px 0 0;
+  padding-left: 22px;
+}
+
+.recommendations li {
+  margin: 9px 0;
+  padding-left: 5px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.emailGate {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(300px, 0.8fr);
+  gap: 28px;
+  align-items: end;
+  padding: 30px 34px 34px;
+  background: #fff;
+}
+
+.emailGate strong {
+  display: block;
+  font-size: 21px;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+  color: #171512;
+}
+
+.emailGate p {
+  margin: 8px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(23, 21, 18, 0.58);
+}
+
+.emailForm {
+  display: flex;
+  gap: 9px;
+}
+
+.emailForm input {
+  min-width: 0;
+  flex: 1;
+  min-height: 48px;
+  border: 1px solid rgba(18, 18, 18, 0.18);
+  border-radius: 999px;
+  padding: 0 17px;
+  outline: none;
+  font: inherit;
+  background: #fbfaf7;
+}
+
+.emailForm button {
+  min-height: 48px;
+  padding: 0 18px;
+  white-space: nowrap;
+}
+
+.sentState {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  padding: 8px 0;
+  color: #171512;
+}
+
+.sentState svg {
+  flex: none;
+  margin-top: 2px;
+}
+
+.sentState span {
+  display: block;
+  margin-top: 4px;
+  line-height: 1.5;
+  color: rgba(23, 21, 18, 0.64);
+}
+
+.notice,
+.error {
+  grid-column: 1 / -1;
+  margin-top: 4px !important;
+}
+
+.error {
+  color: #a92f22 !important;
+}
+
+.scoreQuestions,
+.croQuestions {
+  display: grid;
+  gap: 1px;
+  border: 1px solid rgba(18, 18, 18, 0.12);
+  border-radius: 18px;
+  overflow: hidden;
+  background: rgba(18, 18, 18, 0.1);
+}
+
+.scoreQuestion,
+.croQuestion {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 20px;
+  align-items: center;
+  padding: 16px 18px;
+  background: #fff;
+}
+
+.scoreQuestion > span {
+  font-size: 14px;
+  line-height: 1.45;
+  color: #27231e;
+}
+
+.scoreButtons,
+.choiceButtons {
+  display: flex;
+  gap: 5px;
+}
+
+.scoreButtons button,
+.choiceButtons button {
+  min-width: 34px;
+  height: 34px;
+  border: 1px solid rgba(18, 18, 18, 0.15);
+  border-radius: 9px;
+  cursor: pointer;
+  background: #f7f5f0;
+  color: #302d28;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 750;
+}
+
+.scoreButtons .scoreActive,
+.choiceButtons .choiceActive {
+  border-color: #171512;
+  background: #171512;
+  color: #fff;
+}
+
+.croQuestion > div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.croQuestion strong {
+  font-size: 14px;
+  color: #171512;
+}
+
+.croQuestion span {
+  max-width: 680px;
+  font-size: 12px;
+  line-height: 1.45;
+  color: rgba(23, 21, 18, 0.62);
+}
+
+.choiceButtons button {
+  min-width: 58px;
+}
+
+.mobileSticky {
+  display: none;
+}
+
+@media (max-width: 820px) {
+  .wrap {
+    margin: 42px 0 34px;
+    border-radius: 20px;
+  }
+
+  .intro {
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 25px 22px;
+  }
+
+  .intro h3 {
+    font-size: 30px;
+  }
+
+  .openButton {
+    width: 100%;
+  }
+
+  .toolForm,
+  .resultPanel,
+  .emailGate {
+    padding-left: 22px;
+    padding-right: 22px;
+  }
+
+  .fieldsGrid,
+  .metricGrid,
+  .emailGate {
+    grid-template-columns: 1fr;
+  }
+
+  .metric {
+    min-height: 96px;
+  }
+
+  .emailForm {
+    flex-direction: column;
+  }
+
+  .emailForm button {
+    width: 100%;
+  }
+
+  .scoreQuestion,
+  .croQuestion {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .scoreButtons,
+  .choiceButtons {
+    width: 100%;
+  }
+
+  .scoreButtons button,
+  .choiceButtons button {
+    flex: 1;
+  }
+
+  .mobileSticky {
+    position: fixed;
+    z-index: 35;
+    right: 14px;
+    bottom: 14px;
+    left: 14px;
+    min-height: 48px;
+    border: 0;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 0 18px;
+    box-shadow: 0 14px 40px rgba(0, 0, 0, 0.22);
+    background: #171512;
+    color: #fff;
+    font: inherit;
+    font-weight: 800;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .openButton,
+  .primaryButton,
+  .emailForm button {
+    transition: none;
+  }
+}
