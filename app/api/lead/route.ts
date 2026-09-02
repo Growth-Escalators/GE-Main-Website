@@ -65,7 +65,8 @@ interface LeadPayload {
   auStateOrTimeZone?: string
   budgetRange?: string
 
-  // Acquisition context. UTMs are first-touch values captured client-side.
+  // Acquisition context. Legacy utm* fields remain first-touch for backwards
+  // compatibility; last* fields carry the most recent browser-session touch.
   utmSource?: string
   utmMedium?: string
   utmCampaign?: string
@@ -73,6 +74,15 @@ interface LeadPayload {
   utmContent?: string
   firstReferrerUrl?: string
   firstLandingPage?: string
+  firstTouchAt?: string
+  lastLandingPage?: string
+  lastReferrerUrl?: string
+  lastUtmSource?: string
+  lastUtmMedium?: string
+  lastUtmCampaign?: string
+  lastUtmTerm?: string
+  lastUtmContent?: string
+  lastTouchAt?: string
   referrerUrl?: string
   /** Page where the lead actually converted/submitted. */
   landingPageRoute?: string
@@ -205,6 +215,15 @@ function validate(body: unknown): { ok: true; data: LeadPayload } | { ok: false;
 
       firstReferrerUrl: str(b.firstReferrerUrl).slice(0, 700),
       firstLandingPage: str(b.firstLandingPage).slice(0, 300),
+      firstTouchAt: str(b.firstTouchAt).slice(0, 100),
+      lastLandingPage: str(b.lastLandingPage).slice(0, 300),
+      lastReferrerUrl: str(b.lastReferrerUrl).slice(0, 700),
+      lastUtmSource: str(b.lastUtmSource).slice(0, 200),
+      lastUtmMedium: str(b.lastUtmMedium).slice(0, 200),
+      lastUtmCampaign: str(b.lastUtmCampaign).slice(0, 250),
+      lastUtmTerm: str(b.lastUtmTerm).slice(0, 250),
+      lastUtmContent: str(b.lastUtmContent).slice(0, 250),
+      lastTouchAt: str(b.lastTouchAt).slice(0, 100),
       referrerUrl: str(b.referrerUrl).slice(0, 700),
       landingPageRoute: str(b.landingPageRoute).slice(0, 300),
       utmSource: str(b.utmSource).slice(0, 200),
@@ -295,9 +314,12 @@ async function sendViaResend(lead: LeadPayload): Promise<LeadNotificationResult>
     lead.budgetRange && `Budget / rate range: ${lead.budgetRange}`,
     lead.jdFileName && `JD attached: ${lead.jdFileName}`,
     (lead.utmSource || lead.utmMedium || lead.utmCampaign || lead.utmTerm || lead.utmContent)
-      && `UTM: source=${lead.utmSource || '-'} medium=${lead.utmMedium || '-'} campaign=${lead.utmCampaign || '-'} term=${lead.utmTerm || '-'} content=${lead.utmContent || '-'}`,
+      && `First touch: source=${lead.utmSource || '-'} medium=${lead.utmMedium || '-'} campaign=${lead.utmCampaign || '-'} term=${lead.utmTerm || '-'} content=${lead.utmContent || '-'}`,
+    (lead.lastUtmSource || lead.lastUtmMedium || lead.lastUtmCampaign || lead.lastUtmTerm || lead.lastUtmContent)
+      && `Last touch: source=${lead.lastUtmSource || '-'} medium=${lead.lastUtmMedium || '-'} campaign=${lead.lastUtmCampaign || '-'} term=${lead.lastUtmTerm || '-'} content=${lead.lastUtmContent || '-'}`,
     lead.firstReferrerUrl && `First referrer: ${lead.firstReferrerUrl}`,
     lead.firstLandingPage && `First landing page: ${lead.firstLandingPage}`,
+    lead.lastLandingPage && `Last landing page: ${lead.lastLandingPage}`,
     lead.landingPageRoute && `Conversion page: ${lead.landingPageRoute}`,
     lead.whatsappClicked && `WhatsApp used before form: yes${lead.whatsappClickSource ? ` (${lead.whatsappClickSource})` : ''}`,
     `Source: ${lead.source}`,
@@ -541,6 +563,9 @@ export async function POST(req: Request) {
       utmSource: lead.utmSource,
       utmMedium: lead.utmMedium,
       utmCampaign: lead.utmCampaign,
+      lastUtmSource: lead.lastUtmSource,
+      lastUtmMedium: lead.lastUtmMedium,
+      lastUtmCampaign: lead.lastUtmCampaign,
       hasPhone: Boolean(lead.phone),
       hasJd: Boolean(lead.jdFileBase64),
       whatsappConsent: Boolean(lead.whatsappConsent),
