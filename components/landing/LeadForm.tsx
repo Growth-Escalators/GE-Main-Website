@@ -151,6 +151,10 @@ export default function LeadForm({
         const body = (await res.json().catch(() => ({}))) as { error?: string }
         throw new Error(body.error || `Server returned ${res.status}`)
       }
+      // Tell the site-wide funnel tracker only after the server has accepted the
+      // lead. A failed POST remains eligible for form_abandon if the visitor
+      // leaves instead of correcting/retrying it.
+      form.dispatchEvent(new CustomEvent('ge:lead-form-success', { bubbles: true }))
       setStatus('success')
       trackLead('form', {
         source: subjectPrefix,
