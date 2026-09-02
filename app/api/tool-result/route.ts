@@ -9,6 +9,8 @@ type ToolResultPayload = {
   email?: string
   toolId?: string
   toolName?: string
+  sourcePath?: string
+  sourceTitle?: string
   postSlug?: string
   postTitle?: string
   priority?: Priority
@@ -20,11 +22,16 @@ type ToolResultPayload = {
 
 type ValidatedToolResult = Required<Pick<
   ToolResultPayload,
-  'email' | 'toolId' | 'toolName' | 'postSlug' | 'postTitle' | 'priority' | 'headline' | 'metrics' | 'recommendations' | 'summary'
+  'email' | 'toolId' | 'toolName' | 'sourcePath' | 'sourceTitle' | 'postSlug' | 'postTitle' | 'priority' | 'headline' | 'metrics' | 'recommendations' | 'summary'
 >>
 
 function clean(value: unknown, max = 500): string {
   return typeof value === 'string' ? value.trim().slice(0, max) : ''
+}
+
+function safeInternalPath(value: unknown): string {
+  const path = clean(value, 300)
+  return /^\/[a-zA-Z0-9/_-]*$/.test(path) ? path : ''
 }
 
 function escapeHtml(value: string) {
@@ -53,12 +60,21 @@ function validate(body: unknown): { ok: true; data: ValidatedToolResult } | { ok
     ? raw.recommendations.slice(0, 6).map((item) => clean(item, 500)).filter(Boolean)
     : []
 
+  const postSlug = clean(raw.postSlug, 180)
+  const postTitle = clean(raw.postTitle, 300)
+  const requestedSourcePath = safeInternalPath(raw.sourcePath)
+  const fallbackPath = postSlug ? `/blog/${postSlug.replace(/[^a-zA-Z0-9_-]/g, '')}` : ''
+  const sourcePath = requestedSourcePath || fallbackPath || '/tools'
+  const sourceTitle = clean(raw.sourceTitle, 300) || postTitle || clean(raw.toolName, 140)
+
   const data: ValidatedToolResult = {
     email,
     toolId: clean(raw.toolId, 100),
     toolName: clean(raw.toolName, 140),
-    postSlug: clean(raw.postSlug, 180),
-    postTitle: clean(raw.postTitle, 300),
+    sourcePath,
+    sourceTitle,
+    postSlug,
+    postTitle,
     priority,
     headline: clean(raw.headline, 500),
     metrics,
@@ -90,7 +106,8 @@ async function sendPriorityAlert(data: ValidatedToolResult) {
         toolId: data.toolId,
         toolName: data.toolName,
         email: data.email,
-        article: data.postTitle,
+        sourceTitle: data.sourceTitle,
+        sourcePath: data.sourcePath,
         summary: data.summary,
       }),
     })
@@ -112,7 +129,7 @@ export async function POST(request: Request) {
   }
 
   const data = parsed.data
-  const articleUrl = data.postSlug ? `https://www.growthescalators.com/blog/${encodeURIComponent(data.postSlug)}` : 'https://www.growthescalators.com/blog'
+  const sourceUrl = `https://www.growthescalators.com${data.sourcePath}`
   const subject = `Your ${data.toolName} result`
 
   const text = [
@@ -129,8 +146,8 @@ export async function POST(request: Request) {
     '',
     'This is a working diagnostic based on the inputs you provided, not a guarantee, financial forecast or service quote.',
     '',
-    `Article: ${data.postTitle}`,
-    articleUrl,
+    `You ran this from: ${data.sourceTitle}`,
+    sourceUrl,
     '',
     'If you want a second opinion, reply to this email with your store/account URL and I’ll tell you what I would investigate first.',
     '',
@@ -149,7 +166,7 @@ export async function POST(request: Request) {
       <p style="margin-top:28px"><strong>What I would inspect next</strong></p>
       <ol>${data.recommendations.map((item) => `<li style="margin:8px 0">${escapeHtml(item)}</li>`).join('')}</ol>
       <p style="font-size:13px;color:#6a645b">This is a working diagnostic based on the inputs you provided, not a guarantee, financial forecast or service quote.</p>
-      <p>For context, you ran this from <a href="${articleUrl}" style="color:#171512">${escapeHtml(data.postTitle)}</a>.</p>
+      <p>For context, you ran this from <a href="${escapeHtml(sourceUrl)}" style="color:#171512">${escapeHtml(data.sourceTitle)}</a>.</p>
       <p>If you want a second opinion, reply to this email with your store/account URL and I’ll tell you what I would investigate first.</p>
       <p>Jatin<br/>Growth Escalators</p>
     </div>
