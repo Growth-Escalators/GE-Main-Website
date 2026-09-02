@@ -9,7 +9,7 @@ import { trackContactInteraction, trackFormInteraction } from '@/lib/analytics'
  *
  * It captures first + last acquisition context, catches the three high-intent
  * contact link types we care about, and measures the minimal form funnel:
- * form seen -> form started -> form submitted OR form abandoned.
+ * form seen -> form started -> successful lead OR form abandoned.
  * Successful submissions still use the existing `generate_lead` event in
  * LeadForm. No individual fields or field values are recorded.
  */
@@ -85,10 +85,10 @@ export default function LeadAttributionCapture() {
       form.addEventListener('focusin', markStarted, { once: true })
       form.addEventListener('input', markStarted, { once: true })
       form.addEventListener('change', markStarted, { once: true })
-      // Native submit only fires after browser validation passes. We mark the
-      // funnel as submitted here; the existing generate_lead event remains the
-      // source of truth for a successful server-side lead creation.
-      form.addEventListener('submit', markSubmitted, { once: true })
+      // LeadForm emits this only after /api/lead accepted the lead. A native
+      // submit attempt can still fail server-side, so it must not suppress a
+      // later abandonment signal.
+      form.addEventListener('ge:lead-form-success', markSubmitted, { once: true })
 
       if ('IntersectionObserver' in window) {
         const observer = new IntersectionObserver((entries) => {
