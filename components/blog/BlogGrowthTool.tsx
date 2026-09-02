@@ -21,8 +21,11 @@ type ResultPacket = {
 
 type ToolProps = {
   tool: GrowthToolDefinition
-  postSlug: string
-  postTitle: string
+  postSlug?: string
+  postTitle?: string
+  sourcePath?: string
+  sourceTitle?: string
+  defaultOpen?: boolean
 }
 
 const INR = new Intl.NumberFormat('en-IN', {
@@ -123,9 +126,13 @@ function ProfitCalculator({ onResult }: { onResult: (result: ResultPacket) => vo
     const extraRevenueScenario = improvedRevenue - revenueRs
 
     const recommendations = [
-      adSpendShare > margin ? 'Your media spend is consuming a large share of gross margin. Validate CAC by product and new-vs-returning customer before scaling.' : 'Your media-spend share is not automatically a red flag; next validate contribution margin after shipping, payment fees, returns and discounts.',
+      adSpendShare > margin
+        ? 'Your media spend is consuming a large share of gross margin. Validate CAC by product and new-vs-returning customer before scaling.'
+        : 'Your media-spend share is not automatically a red flag; next validate contribution margin after shipping, payment fees, returns and discounts.',
       `Treat ${decimal(breakEvenRoas)}× as a simplified gross-margin break-even ROAS, not a scaling target. Your actual floor should include fulfilment, discounts, returns and overhead.`,
-      conversionRate < 1.5 ? 'Conversion is the first place I would investigate before materially increasing spend.' : 'Your conversion input is healthy enough to justify looking next at creative efficiency, CAC and repeat purchase behaviour.',
+      conversionRate < 1.5
+        ? 'Conversion is the first place I would investigate before materially increasing spend.'
+        : 'Your conversion input is healthy enough to justify looking next at creative efficiency, CAC and repeat purchase behaviour.',
     ]
 
     onResult({
@@ -180,17 +187,21 @@ function BudgetPlanner({ onResult }: { onResult: (result: ResultPacket) => void 
     const incrementalCustomers = aov > 0 ? gap / aov : 0
 
     onResult({
-      headline: gap > 0 ? 'This is the media requirement implied by your target — not a promise that the market will absorb it.' : 'Your target is already at or below your current revenue input.',
+      headline: gap > 0
+        ? 'This is the media requirement implied by your target — not a promise that the market will absorb it.'
+        : 'Your target is already at or below your current revenue input.',
       metrics: [
         { label: 'Incremental revenue target', value: money(gap) },
-        { label: 'Spend at current ROAS', value: money(requiredAtCurrent) },
-        { label: 'Scenario range', value: `${money(efficientCase)}–${money(softerCase)}` },
+        { label: 'Incremental spend at current ROAS', value: money(requiredAtCurrent) },
+        { label: 'Incremental spend scenario', value: `${money(efficientCase)}–${money(softerCase)}` },
         { label: 'Incremental orders', value: `${Math.ceil(incrementalCustomers).toLocaleString('en-IN')}/mo` },
         { label: 'Simplified break-even ROAS', value: `${decimal(breakEvenRoas)}×` },
         { label: 'Gross-margin CAC ceiling', value: money(allowableCac) },
       ],
       recommendations: [
-        roas <= breakEvenRoas * 1.15 ? 'Your current ROAS is close to the simplified margin break-even level. Improve economics before treating more spend as the primary growth lever.' : 'Your current ROAS input leaves some theoretical headroom, but scale should be released in steps rather than all at once.',
+        roas <= breakEvenRoas * 1.15
+          ? 'Your current ROAS is close to the simplified margin break-even level. Improve economics before treating more spend as the primary growth lever.'
+          : 'Your current ROAS input leaves some theoretical headroom, but scale should be released in steps rather than all at once.',
         'Allocate a specific testing budget for new creative instead of forcing every rupee into the current winning ads.',
         'Recalculate with contribution margin after shipping, discounts, returns and payment fees before using this as an operating budget.',
       ],
@@ -241,7 +252,13 @@ function AgencyScorecard({ onResult }: { onResult: (result: ResultPacket) => voi
       .slice(0, 3)
       .map(({ index }) => AGENCY_QUESTIONS[index])
 
-    const label = score >= 85 ? 'Strong operating fit' : score >= 70 ? 'Promising, but validate the gaps' : score >= 55 ? 'Material gaps to investigate' : 'High-risk agency fit'
+    const label = score >= 85
+      ? 'Strong operating fit'
+      : score >= 70
+        ? 'Promising, but validate the gaps'
+        : score >= 55
+          ? 'Material gaps to investigate'
+          : 'High-risk agency fit'
 
     onResult({
       headline: `${score}/100 — ${label}`,
@@ -369,14 +386,24 @@ function ToolBody({ toolId, onResult }: { toolId: GrowthToolId; onResult: (resul
   return <CroScorecard onResult={onResult} />
 }
 
-export default function BlogGrowthTool({ tool, postSlug, postTitle }: ToolProps) {
-  const [open, setOpen] = useState(false)
+export default function BlogGrowthTool({
+  tool,
+  postSlug,
+  postTitle,
+  sourcePath,
+  sourceTitle,
+  defaultOpen = false,
+}: ToolProps) {
+  const resolvedSourcePath = sourcePath ?? (postSlug ? `/blog/${postSlug}` : `/tools/${tool.id}`)
+  const resolvedSourceTitle = sourceTitle ?? postTitle ?? tool.shortTitle
+  const trackingKey = postSlug ?? tool.id
+  const [open, setOpen] = useState(defaultOpen)
   const [result, setResult] = useState<ResultPacket | null>(null)
   const [email, setEmail] = useState('')
   const [status, setStatus] = useState<SubmitStatus>('idle')
   const [error, setError] = useState('')
 
-  const resultId = useMemo(() => `${tool.id}-${postSlug}`.replace(/[^a-z0-9-]/gi, '-'), [tool.id, postSlug])
+  const resultId = useMemo(() => `${tool.id}-${trackingKey}`.replace(/[^a-z0-9-]/gi, '-'), [tool.id, trackingKey])
 
   async function sendResult(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
@@ -397,7 +424,7 @@ export default function BlogGrowthTool({ tool, postSlug, postTitle }: ToolProps)
         `Tool: ${tool.shortTitle}`,
         `Intent cluster: ${tool.intentCluster}`,
         `Lead priority: ${result.priority}`,
-        `Article: ${postTitle} (/blog/${postSlug})`,
+        `Source: ${resolvedSourceTitle} (${resolvedSourcePath})`,
         '',
         result.summary,
       ].join('\n'),
@@ -408,8 +435,10 @@ export default function BlogGrowthTool({ tool, postSlug, postTitle }: ToolProps)
       email,
       toolId: tool.id,
       toolName: tool.shortTitle,
-      postSlug,
-      postTitle,
+      sourcePath: resolvedSourcePath,
+      sourceTitle: resolvedSourceTitle,
+      postSlug: postSlug ?? '',
+      postTitle: postTitle ?? '',
       priority: result.priority,
       headline: result.headline,
       metrics: result.metrics,
@@ -437,7 +466,8 @@ export default function BlogGrowthTool({ tool, postSlug, postTitle }: ToolProps)
         source: 'Growth Tool',
         tool_id: tool.id,
         intent_cluster: tool.intentCluster,
-        blog_slug: postSlug,
+        blog_slug: postSlug ?? '',
+        source_path: resolvedSourcePath,
         lead_priority: result.priority,
       })
 
@@ -527,7 +557,14 @@ export default function BlogGrowthTool({ tool, postSlug, postTitle }: ToolProps)
       )}
 
       {!open && (
-        <button type="button" className={styles.mobileSticky} onClick={() => { setOpen(true); document.getElementById(resultId)?.scrollIntoView({ behavior: 'smooth', block: 'center' }) }}>
+        <button
+          type="button"
+          className={styles.mobileSticky}
+          onClick={() => {
+            setOpen(true)
+            document.getElementById(resultId)?.scrollIntoView({ behavior: 'smooth', block: 'center' })
+          }}
+        >
           {tool.ctaLabel} <ArrowRight size={15} />
         </button>
       )}
