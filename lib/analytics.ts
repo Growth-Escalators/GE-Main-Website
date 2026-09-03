@@ -5,6 +5,15 @@ import { getLeadAttribution, markWhatsAppClick } from '@/lib/leadAttribution'
 export type LeadMethod = 'whatsapp' | 'call' | 'email' | 'booking' | 'form'
 export type ContactInteraction = 'whatsapp_click' | 'phone_click' | 'booking_click'
 export type FormInteraction = 'form_view' | 'form_start' | 'form_abandon'
+export type GrowthToolInteraction =
+  | 'growth_tool_shown'
+  | 'growth_tool_opened'
+  | 'growth_tool_calculated'
+  | 'growth_tool_email_viewed'
+  | 'growth_tool_email_submitted'
+  | 'growth_tool_email_delivered'
+  | 'growth_tool_crm_saved'
+  | 'growth_tool_delivery_partial'
 
 type GtagFn = (
   command: string,
@@ -84,6 +93,21 @@ export function trackLead(method: LeadMethod, extra?: Record<string, unknown>): 
  */
 export function trackFormInteraction(
   eventName: FormInteraction,
+  extra?: Record<string, unknown>,
+): void {
+  if (typeof window === 'undefined') return
+  fireEvent(eventName, {
+    ...attributionParams(),
+    ...extra,
+  })
+}
+
+/**
+ * Growth-tool funnel events. Inputs, email addresses and result text are never
+ * sent to analytics; only non-PII routing and funnel state is recorded.
+ */
+export function trackGrowthToolInteraction(
+  eventName: GrowthToolInteraction,
   extra?: Record<string, unknown>,
 ): void {
   if (typeof window === 'undefined') return

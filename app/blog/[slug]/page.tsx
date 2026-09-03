@@ -4,8 +4,9 @@ import type { Metadata } from 'next'
 import Navbar from '@/components/sections/Navbar'
 import Footer from '@/components/sections/Footer'
 import BackToTop from '@/components/ui/BackToTop'
-import BlogLeadCapture from '@/components/blog/BlogLeadCapture'
+import BlogGrowthTool from '@/components/blog/BlogGrowthTool'
 import EditorialVisual from '@/components/blog/EditorialVisual'
+import { resolveGrowthTool } from '@/lib/growthTools'
 import {
   getAllPostSlugs,
   getPost,
@@ -110,6 +111,7 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
   if (!post) notFound()
 
   const related = getRelatedPosts(post, 3)
+  const growthTool = resolveGrowthTool(post)
 
   return (
     <>
@@ -176,6 +178,13 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
                   <div className={styles.railRule} />
                   <span>{post.categoryLabel}</span>
                   <span>{post.readingTimeMins} min read</span>
+                  {growthTool && (
+                    <>
+                      <div className={styles.railRule} />
+                      <span>Free tool: {growthTool.shortTitle}</span>
+                      <a href={`#${growthTool.id}-${post.slug}`}>Use the tool ↓</a>
+                    </>
+                  )}
                 </div>
               </aside>
 
@@ -196,21 +205,24 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
 
                 <div className={styles.prose} dangerouslySetInnerHTML={{ __html: post.bodyHtml }} />
 
-                <BlogLeadCapture
-                  postSlug={post.slug}
-                  postTitle={post.title}
-                  contactHref={post.ctaHref ?? '/contact'}
-                />
+                {growthTool && (
+                  <BlogGrowthTool
+                    tool={growthTool}
+                    postSlug={post.slug}
+                    postTitle={post.title}
+                  />
+                )}
 
                 <div className={styles.endCta}>
-                  <p>Turn the insight into an operating decision.</p>
-                  <h2>Want us to apply this to your growth system?</h2>
+                  <p>{growthTool ? 'Need a second opinion?' : 'Turn the insight into an operating decision.'}</p>
+                  <h2>{growthTool ? 'Want us to sanity-check the result against the real business?' : 'Want help applying this to your growth system?'}</h2>
                   <span>
-                    We&apos;ll review the acquisition, website and conversion path and show you the highest-leverage
-                    fixes before asking you to buy anything.
+                    {growthTool
+                      ? 'Share the relevant store, account or funnel context and we’ll tell you what we would investigate first. No public GE service pricing is baked into the tool.'
+                      : 'We can review the relevant acquisition, website, conversion or delivery context and point out the highest-leverage next checks before discussing an engagement.'}
                   </span>
                   <Link href={post.ctaHref ?? '/contact'} className={styles.ctaButton}>
-                    {post.ctaLabel ?? 'Get a free growth audit'} ↗
+                    {post.ctaLabel ?? 'Ask for a second opinion'} ↗
                   </Link>
                 </div>
               </article>

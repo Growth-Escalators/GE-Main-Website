@@ -4,27 +4,28 @@ import Navbar from '@/components/sections/Navbar'
 import Footer from '@/components/sections/Footer'
 import BackToTop from '@/components/ui/BackToTop'
 import EditorialVisual from '@/components/blog/EditorialVisual'
+import GrowthToolsShelf from '@/components/blog/GrowthToolsShelf'
 import InsightsExplorer from '@/components/blog/InsightsExplorer'
 import { formatPostDate, getAllPosts, getFeaturedPost } from '@/lib/blog'
 import styles from './page.module.css'
 
 export const metadata: Metadata = {
-  title: 'Insights — Growth, Performance, Commerce & AI',
+  title: 'Growth Library — Insights, Calculators & Playbooks',
   description:
-    'Field notes, playbooks and points of view on performance marketing, ecommerce growth, creative, SEO, AI automation and building better growth systems.',
+    'Practical growth field notes, calculators, scorecards and playbooks for D2C performance, ecommerce, creative, SEO, AI automation and better operating decisions.',
   alternates: { canonical: '/blog' },
   openGraph: {
-    title: 'Insights — Growth Escalators',
+    title: 'Growth Library — Growth Escalators',
     description:
-      'Growth thinking built from the work: performance, commerce, creative, search, AI and scalable acquisition systems.',
+      'Useful growth thinking and tools built from the work: performance, commerce, creative, search, AI and scalable acquisition systems.',
     url: '/blog',
     type: 'website',
   },
   twitter: {
     card: 'summary',
-    title: 'Insights — Growth Escalators',
+    title: 'Growth Library — Growth Escalators',
     description:
-      'Field notes on performance, commerce, creative, search, AI and scalable growth systems.',
+      'Field notes, calculators and playbooks for performance, commerce, creative, search, AI and scalable growth systems.',
   },
 }
 
@@ -34,9 +35,9 @@ function InsightsCollectionJsonLd({ posts }: { posts: ReturnType<typeof getAllPo
     '@type': 'CollectionPage',
     '@id': 'https://www.growthescalators.com/blog#collection',
     url: 'https://www.growthescalators.com/blog',
-    name: 'Growth Escalators Insights',
+    name: 'Growth Escalators Growth Library',
     description:
-      'Field notes, playbooks and points of view on performance marketing, ecommerce growth, creative, SEO, AI automation and scalable growth systems.',
+      'Practical field notes, calculators, scorecards and playbooks on performance marketing, ecommerce growth, creative, SEO, AI automation and scalable growth systems.',
     isPartOf: {
       '@type': 'WebSite',
       '@id': 'https://www.growthescalators.com/#website',
@@ -73,16 +74,15 @@ export default function BlogIndex() {
           <div className={styles.shell}>
             <div className={styles.heroGrid}>
               <div>
-                <p className={styles.eyebrow}>Insights / Growth intelligence</p>
-                <h1 id="insights-title">Ideas for finding<br />and compounding growth.</h1>
+                <p className={styles.eyebrow}>Growth Library / Insights + tools</p>
+                <h1 id="insights-title">Useful enough<br />to act on.</h1>
               </div>
               <div className={styles.heroAside}>
                 <p>
-                  Performance, commerce, creative, search and AI — written from the work, not from the sidelines.
-                  Practical thinking for teams that need better decisions, not more marketing noise.
+                  Practical systems, calculators and field notes for teams trying to make better growth decisions — before they buy another tool, increase spend or hire an agency.
                 </p>
                 <div className={styles.heroRule}>
-                  <span>{posts.length} field notes</span>
+                  <span>{posts.length} field notes + 4 live tools</span>
                   <span>Built in Jaipur · applied globally</span>
                 </div>
               </div>
@@ -125,20 +125,20 @@ export default function BlogIndex() {
         )}
 
         <div className={styles.shell}>
+          <GrowthToolsShelf />
           <InsightsExplorer posts={archivePosts} />
         </div>
 
         <section className={styles.closingBand}>
           <div className={styles.shell}>
             <div className={styles.closingGrid}>
-              <p className={styles.eyebrow}>From insight to action</p>
-              <h2>Found the problem?<br />Now fix the system.</h2>
+              <p className={styles.eyebrow}>From reading to deciding</p>
+              <h2>Run the tool.<br />Then ask the better question.</h2>
               <div>
                 <p>
-                  If an article exposed a leak in acquisition, conversion, technology or delivery, we can audit the
-                  system and show you the highest-leverage next moves.
+                  Our V1 tools intentionally avoid public Growth Escalators pricing. They help you understand the economics, risks or gaps first. If you want context on the result, reply to the analysis or ask us for a second opinion.
                 </p>
-                <Link href="/#book" className={styles.closingCta}>Get a free growth audit ↗</Link>
+                <Link href="/tools" className={styles.closingCta}>Explore Growth Tools ↗</Link>
               </div>
             </div>
           </div>

@@ -8,6 +8,7 @@ const SEO_CLUSTER_2026_08_21 = '2026-08-21T16:33:00+05:30'
 const WHITE_LABEL_2026_08_21 = '2026-08-21T19:55:00+05:30'
 const INDEXING_LINKS_2026_08_23 = '2026-08-23T21:50:00+05:30'
 const PRIORITY_8020_2026_08_24 = '2026-08-24T13:03:00+05:30'
+const GROWTH_TOOLS_2026_09_03 = '2026-09-03T00:20:00+05:30'
 
 /*
  * `lastModified` is intentionally tied to real, significant page changes.
@@ -32,7 +33,12 @@ const STATIC_ROUTES: {
   { path: '/portfolio',              priority: 0.9, changeFrequency: 'weekly',   lastModified: '2026-05-21T11:11:56+05:30' },
   { path: '/about',                  priority: 0.7, changeFrequency: 'monthly', lastModified: '2026-08-17T12:00:00+05:30' },
   { path: '/contact',                priority: 0.8, changeFrequency: 'yearly', lastModified: '2026-06-22T17:18:21+05:30' },
-  { path: '/blog',                   priority: 0.9, changeFrequency: 'weekly', lastModified: '2026-04-30T01:03:34+05:30' },
+  { path: '/blog',                   priority: 0.9, changeFrequency: 'weekly', lastModified: GROWTH_TOOLS_2026_09_03 },
+  { path: '/tools',                  priority: 0.85, changeFrequency: 'weekly', lastModified: GROWTH_TOOLS_2026_09_03 },
+  { path: '/tools/d2c-profit-calculator', priority: 0.8, changeFrequency: 'monthly', lastModified: GROWTH_TOOLS_2026_09_03 },
+  { path: '/tools/meta-budget-planner', priority: 0.8, changeFrequency: 'monthly', lastModified: GROWTH_TOOLS_2026_09_03 },
+  { path: '/tools/d2c-agency-scorecard', priority: 0.8, changeFrequency: 'monthly', lastModified: GROWTH_TOOLS_2026_09_03 },
+  { path: '/tools/shopify-cro-scorecard', priority: 0.8, changeFrequency: 'monthly', lastModified: GROWTH_TOOLS_2026_09_03 },
 
   // Core brand / commercial pillars.
   { path: '/d2c',                                      priority: 0.95, changeFrequency: 'monthly', lastModified: BRAND_ARCH_2026_08_21 },
@@ -114,7 +120,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   // Blog posts are picked up automatically from content/blog/.
   const postEntries: MetadataRoute.Sitemap = getAllPosts().map((post) => ({
     url: `${SITE}/blog/${post.slug}`,
-    lastModified: new Date(post.date),
+    lastModified: new Date(post.updated || post.date),
     changeFrequency: 'monthly',
     priority: 0.7,
   }))
